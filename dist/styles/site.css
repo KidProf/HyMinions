@@ -67,6 +67,9 @@ body {
 .my-box a.read-more {
   color: #AAA;
 }
+#announcementsHeader {
+  background-color: #ff93ac;
+}
 #eventsHeader {
   background-color: #02D9C9;
 }
