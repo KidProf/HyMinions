@@ -7,7 +7,8 @@ const express = require('express');
 const env = require('dotenv');
 const path = require('path');
 const getMinionsApi = require('./routes/api/getMinionsApi');
-const getProfileApi = require('./routes/api/getMinionsApi');
+const getProfileApi = require('./routes/api/getProfileApi');
+
 
 //constants
 const app = express();
