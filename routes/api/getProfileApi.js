@@ -1,4 +1,3 @@
-var keystone = require('keystone');
 var fetch = require('cross-fetch');
 var itemNames = require("./itemNames.json")
 
