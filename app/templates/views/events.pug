@@ -1,0 +1,24 @@
+extends ../layouts/default
+
+block js
+    script(src="/js/eventsData.js")
+    script(src="/js/events.js")
+    	
+block append variables
+    - var currentPage = "events";
+    - var numberOfEvents = 6;
+
+block content
+    .container
+        h1 EVENTS
+        -let i = 0;
+        while i<numberOfEvents
+            .row(id="event"+i)
+                //-first row for PC, mobile
+                .col-md-2.col-2: img.events
+                .col-md-5.col-10: h3.name=(i==0 ? "Loading" : "")
+                //-second row for mobile
+                .offset-md-0.offset-2
+                .col-md-5.col-10: h3.timeDisplayed
+
+            -i++;

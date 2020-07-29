@@ -1,0 +1,143 @@
+extends ../layouts/default
+
+block js
+    script(src="/js/jquery/jquery.doubleScroll.js")
+    script(src="/js/minionsData.js")
+    script(src="/js/minionsOperation.js")
+    script(src="/js/minions.js")
+    	
+block append variables
+    - var currentPage = "minions";
+    - var numberOfMinions = 51;
+
+block content
+    .container
+        h1 MINIONS
+        h4 Overall Settings
+        #overall
+            .form-group
+                input#overallUseProfile.checkbox(type="checkbox" checked onchange="toggleUseProfile()")
+                label(for="overallUseProfile") &nbsp; Use Profile
+            .form-group#useProfile
+                p Minecraft Name: &nbsp; <input id="overallProfileName" class="form-control"/>
+                select#overallProfileProfile.form-control
+                    -let k=0
+                    while k<5
+                        option(id="overallProfileProfileOption"+k value=k)
+                        -k++;
+            
+            .form-group#useTier
+                label(for="overallTier") Tier: &nbsp;
+                select#overallTier.form-control
+                    -let j=1
+                    while j<=11
+                        option(selected = (j==11 ? "selected" : ""))=j
+                        -j++;
+                
+            .form-group
+                p Fuel: &nbsp; <input id="overallFuel" type="number" value="25" class="form-control" min="0"/> %
+            .form-group
+                input#overallDiamondSpreading.checkbox(type="checkbox" checked)
+                label(for="overallDiamondSpreading") &nbsp; Has Diamond Spreading
+            .form-group
+                label(for="overallProductForm") Form of products: &nbsp;
+                select#overallProductForm.form-control
+                    option(value="-3" selected="selected") Max profit (Super Compactors)
+                    option(value="-2") Max profit
+                    option(value="-1") Unenchanted form
+                    option(value="0") First enchanted form
+                    option(value="1") Second enchanted form (if applicable)
+                    
+            .form-group
+                label(for="overallSellingTo") Selling to: &nbsp;
+                select#overallSellingTo.form-control
+                    option(value="0") Max profit (NPC or bazaar)
+                    option(value="1") Bazaar only
+                    option(value="-1") NPC only
+            .form-group
+                label(for="overallSellingMethod") Selling method in bazaar: &nbsp;
+                select#overallSellingMethod.form-control
+                    option(value="0") Sell offer
+                    option(value="1") Sell instantly
+            button#overallSettings.btn(onclick="overallSettings()" disabled) Apply Overall Changes
+            br
+            br
+        #doubleScroll
+            table#minionsTable.table.table-dark.w-100
+                thead
+                    tr
+                        th(scope="col")
+                        th(scope="col") Minion
+                        th(scope="col") Tier
+                        th(scope="col") Items
+                        th(scope="col") Items Per Hour
+                        th(scope="col") Prices (Bazaar, 1% Tax)
+                        th(scope="col") Profit per Hour
+                        th(scope="col")
+                - let i = 0;
+                while i < numberOfMinions
+                    tr
+                        td="#"+(i+1)
+                        td(id="minion"+i+"Name")= i==0?"Loading...":""
+                        td(id="minion"+i+"Tier")
+                        td(id="minion"+i+"Items")
+                        td(id="minion"+i+"ItemsPerHour")
+                        td(id="minion"+i+"BazaarPrices")
+                        td(id="minion"+i+"Profit")
+                        td(id="minion"+i+"Settings"): button.btn.btn-blue(id="individualSettings"+i onclick="openIndividualSettings("+i+")" data-toggle="modal" data-target="#individualModal" disabled) Settings
+                    - i++;
+        #individualModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="individualModalLabel" aria-hidden="true")
+            .modal-dialog(role="document")
+                .modal-content
+                    .modal-header
+                        h5#individualModalLabel.modal-title Title
+                        button.close(type="button" data-dismiss="modal" aria-label="Close")
+                            span(aria-hidden="true") &times;
+                    .modal-body
+                        .form-group
+                            label(for="individualTier") Tier: &nbsp;
+                            select#individualTier.form-control
+                                -let l=1
+                                while l<=11
+                                    option(selected = (l==11 ? "selected" : ""))=l
+                                    -l++;
+                            
+                        .form-group
+                            p Fuel: &nbsp; <input id="individualFuel" type="number" value="25" class="form-control" min="0"/> %
+                        .form-group
+                            input#individualDiamondSpreading.checkbox(type="checkbox" checked onchange="toggleIndividualDiamondSpreading()")
+                            label(for="individualDiamondSpreading") &nbsp; Has Diamond Spreading
+                        .form-group#products
+                            label Form of products:
+                            br
+                            -let m = 0;
+                            -let n = 0;
+                            while m<10
+                                select(id="individualProduct"+m).form-control
+                                    -n=0;
+                                    while n<5
+                                        option(id="individualProduct"+m+"Option"+n value=n)
+                                        -n++;
+                                -m++;
+                            select(id="individualProductDiamondSpreading").form-control
+                                -n=0;
+                                while n<3
+                                    option(id="individualProductDiamondSpreadingOption"+n value=n)
+                                    -n++;
+                        .form-group
+                            label(for="individualSellingTo") Selling to: &nbsp;
+                            select#individualSellingTo.form-control
+                                option(value="0") Max profit (NPC or bazaar)
+                                option(value="1") Bazaar only
+                                option(value="-1") NPC only
+                        .form-group
+                            label(for="individualSellingMethod") Selling method in bazaar: &nbsp;
+                            select#individualSellingMethod.form-control
+                                option(value="0") Sell offer
+                                option(value="1") Sell instantly
+                    .modal-footer
+                        button.btn.btn-secondary(type="button" data-dismiss="modal") Cancel
+                        button.btn.btn-warning(type="button" data-dismiss="modal" onclick="applyIndividualSettings()") Apply
+
+            
+            

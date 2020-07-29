@@ -1,0 +1,57 @@
+extends ../layouts/default
+
+block js
+	script(src="/js/eventsData.js")
+	script(src="/js/minionsOperation.js")
+	script(src="/js/minionsData.js")
+	script(src="/js/index.js")
+
+block append variables 
+	- var currentPage = "home";
+	- var numberOfMinions = 51;
+
+block content
+	.container
+		h1 Welcome to HyMinions!
+		br
+		.my-box
+			.container
+				h4#eventsHeader.header EVENTS
+				h4#eventDescription Loading
+				a(href="/events") View other events
+
+		br
+		.my-box
+			.container
+				h4#minionsHeader.header MINIONS
+				h4 Top 10 minions
+				br
+				.row
+					.offset-2.col-5: h5 Minion
+					.col-5: h5 Total Profit per hour
+				- let i = 0
+				while i<10
+					.row
+						.col-2: p="#"+(i+1)
+						.col-5: p(id="minion"+i+"Name")= i==0?"Loading...":""
+						.col-5: p(id="minion"+i+"Profit")
+					- i++;
+				
+				
+				#collapseMinions.collapse
+					while i<numberOfMinions
+						.row
+							.col-2: p="#"+(i+1)
+							.col-5: p(id="minion"+i+"Name")
+							.col-5: p(id="minion"+i+"Profit")
+						- i++;	
+
+				a.read-more(data-toggle="collapse" href="#collapseMinions" aria-expanded="false" aria-controls="collapseMinions") Expand/ Collapse
+				
+				br
+				br
+				p: small Based on tier 11 minions, with Enchanted Lava Bucket, Diamond Spreading and Super Compactor 3000 equipped. You are expected to sell your products using sell offers. 
+
+				a(href="/minions") Customise your own minion list
+
+				

@@ -1,0 +1,38 @@
+.my-box{
+    border: 2px solid #AAA;
+    background-color: @bg-color;
+    margin-top: 1rem;
+    .header{ //make it overlap with the border
+        font-family: 'Noto Serif TC', sans-serif;
+        font-weight: 800;
+        position: relative;
+        bottom: 1rem;
+        background-color: @sharp-color-blue;
+        color: #000;
+        width: fit-content;
+        padding: 10px 10px 10px 10px;
+        border-radius: 1rem;
+        border: 2px solid #AAA;
+    }
+    .container{
+        margin: 0 1rem 1rem 1rem;
+        padding-right: 2rem;
+    }
+    a{
+        color: @sharp-color-green;
+    }
+    a.read-more{
+        color: #AAA;
+    }
+}
+
+#eventsHeader{
+    background-color: @sharp-color-blue;
+}
+
+#minionsHeader{
+    background-color: @sharp-color-green;
+}
+.live{
+    color: yellow;
+}

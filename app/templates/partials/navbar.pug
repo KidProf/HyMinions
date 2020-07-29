@@ -1,0 +1,10 @@
+nav#myNav.navbar.navbar-default.navbar-expand-lg.navbar-dark: .container.my-1
+    a.navbar-brand(href='/'): img(src="/images/aotd.png" width="30" height="30" alt="")
+    a.navbar-brand(href='/') HyMinions
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#orderNav')
+        span.navbar-toggler-icon.navbar-light
+    .collapse.navbar-collapse#orderNav
+        ul.nav.navbar-nav.mr-auto
+            li.nav-item: a.nav-link(href="/" class={'active': currentPage === 'home'}) Home
+            li.nav-item: a.nav-link(href="/events"  class={'active': currentPage === 'events'}) Events
+            li.nav-item: a.nav-link(href="/minions"  class={'active': currentPage === 'minions'}) Minions

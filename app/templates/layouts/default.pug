@@ -1,0 +1,113 @@
+include ../mixins/flash-messages
+
+doctype html
+html
+
+	//- HTML HEADER
+	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		meta(http-equiv="X-UA-Compatible" content="IE=edge")
+
+		title= title || 'HyMinions'
+		link(rel="shortcut icon", href="/images/aotd.png", type="image/png")
+
+
+		//- Adding Bootstrap V4.4.1
+		link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous")
+		
+		//- Adding favicons
+		link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.7.2/css/all.css", integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr", crossorigin="anonymous")
+		
+		//- adding noto sans
+		link(href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap" rel="stylesheet")
+		//- adding noto serif
+		link(href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC&display=swap" rel="stylesheet")
+		
+		//- Customise the stylesheet for your site by editing /public/styles/site.less
+		//- All .less files will be automatically compiled and minified in production.
+		link(href="/styles/site.css", rel="stylesheet")
+
+		//- This file provides the default styling for the KeystoneJS Content Editor
+		//- if user && user.canAccessKeystone
+		//- 	link(href="/keystone/styles/content/editor.min.css", rel="stylesheet")
+
+		//- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+		//- Safely remove this block if you are not targeting IE8
+		//-[if lt IE 9]
+			script(src="//cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.js")
+			script(src="//cdn.jsdelivr.net/respond/1.4.2/respond.min.js")
+		//-[endif]
+
+		block variables
+			//- default values of all variables
+			- var currentPage="";
+
+		//- Include template-specific stylesheets by extending the css block
+		block css
+
+		//- Add any other template-specific HEAD tags by extending the head block
+		block head
+
+	//- HTML BODY
+	body
+
+		//- HEADER
+		#header
+
+			//- Customise your site's navigation by changing the navLinks Array in ./routes/middleware.js
+			//- ... or completely change this header to suit your design.
+
+			include ../partials/navbar.pug
+
+		//- BODY
+		#body
+
+			//- NOTE:
+			//- There is no .container wrapping class around body blocks to allow more flexibility in design.
+			//- Remember to include it in your templates when you override the intro and content blocks!
+
+			//- The Intro block appears above flash messages (used for temporary information display)
+			block intro
+
+			//- Flash messages allow you to display once-off status messages to users, e.g. form
+			//- validation errors, success messages, etc.
+			+flash-messages(messages)
+
+			//- The content block should contain the body of your template's content
+			block content
+
+
+		//- FOOTER
+		.container: #footer
+			
+			include ../partials/footer.pug
+
+		//- JAVASCRIPT
+
+		//- OURSELVES BOOSTRAP V4.4.1
+		script(src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous")
+		script(src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous")
+		script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous")
+		
+		//- jQuery 1.11.3 is included by default, and required by both Bootstrap
+		//- and the KeystoneJS Content Editor. If you are not targeting IE8,
+		//- you can upgrade to 2.1.4 (also bundled) for better performance.
+		//-JQ V3.5.1
+		script(src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous")
+
+		//- Customise which Bootstrap javascript files are served by including
+		//- them specifically here, instead of bootstrap-3.3.5.min.js
+		//- script(src='/js/bootstrap/bootstrap-3.3.5.min.js')
+
+		//- The KeystoneJS Content Editor provides support for ks-editable data attributes,
+		//- which generate links to edit content for users who can access Keystone
+		//- if user && user.canAccessKeystone
+		//- 	script(src='/keystone/js/content/editor.js')
+
+		//- Add scripts that are globally required by your site here.
+		//- FONT AWESOME
+		script(src="https://kit.fontawesome.com/c4e8b064bf.js")
+
+		//- Include template-specific javascript files by extending the js block
+		block js
