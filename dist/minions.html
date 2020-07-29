@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>HyMinions</title>
+    <link rel="shortcut icon" href="/images/aotd.png" type="image/png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC&amp;display=swap" rel="stylesheet">
+    <link href="/styles/site.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="header">
+      <nav class="navbar navbar-default navbar-expand-lg navbar-dark" id="myNav">
+        <div class="container my-1"><a class="navbar-brand" href="/"><img src="/images/aotd.png" width="30" height="30" alt=""></a><a class="navbar-brand" href="/">HyMinions</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#orderNav"><span class="navbar-toggler-icon navbar-light"></span></button>
+          <div class="collapse navbar-collapse" id="orderNav">
+            <ul class="nav navbar-nav mr-auto">
+              <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="/events">Events</a></li>
+              <li class="nav-item"><a class="nav-link active" href="/minions">Minions</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div id="body">
+      <div class="container">
+        <h1>MINIONS</h1>
+        <h4>Overall Settings</h4>
+        <div id="overall">
+          <div class="form-group">
+            <input class="checkbox" id="overallUseProfile" type="checkbox" checked onchange="toggleUseProfile()">
+            <label for="overallUseProfile">&nbsp; Use Profile</label>
+          </div>
+          <div class="form-group" id="useProfile">
+            <p>Minecraft Name: &nbsp; <input id="overallProfileName" class="form-control"/></p>
+            <select class="form-control" id="overallProfileProfile">
+              <option id="overallProfileProfileOption0" value="0"></option>
+              <option id="overallProfileProfileOption1" value="1"></option>
+              <option id="overallProfileProfileOption2" value="2"></option>
+              <option id="overallProfileProfileOption3" value="3"></option>
+              <option id="overallProfileProfileOption4" value="4"></option>
+            </select>
+          </div>
+          <div class="form-group" id="useTier">
+            <label for="overallTier">Tier: &nbsp;</label>
+            <select class="form-control" id="overallTier">
+              <option selected="">1</option>
+              <option selected="">2</option>
+              <option selected="">3</option>
+              <option selected="">4</option>
+              <option selected="">5</option>
+              <option selected="">6</option>
+              <option selected="">7</option>
+              <option selected="">8</option>
+              <option selected="">9</option>
+              <option selected="">10</option>
+              <option selected="selected">11</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <p>Fuel: &nbsp; <input id="overallFuel" type="number" value="25" class="form-control" min="0"/> %</p>
+          </div>
+          <div class="form-group">
+            <input class="checkbox" id="overallDiamondSpreading" type="checkbox" checked>
+            <label for="overallDiamondSpreading">&nbsp; Has Diamond Spreading</label>
+          </div>
+          <div class="form-group">
+            <label for="overallProductForm">Form of products: &nbsp;</label>
+            <select class="form-control" id="overallProductForm">
+              <option value="-3" selected="selected">Max profit (Super Compactors)</option>
+              <option value="-2">Max profit</option>
+              <option value="-1">Unenchanted form</option>
+              <option value="0">First enchanted form</option>
+              <option value="1">Second enchanted form (if applicable)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="overallSellingTo">Selling to: &nbsp;</label>
+            <select class="form-control" id="overallSellingTo">
+              <option value="0">Max profit (NPC or bazaar)</option>
+              <option value="1">Bazaar only</option>
+              <option value="-1">NPC only</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="overallSellingMethod">Selling method in bazaar: &nbsp;</label>
+            <select class="form-control" id="overallSellingMethod">
+              <option value="0">Sell offer</option>
+              <option value="1">Sell instantly</option>
+            </select>
+          </div>
+          <button class="btn" id="overallSettings" onclick="overallSettings()" disabled>Apply Overall Changes</button><br><br>
+        </div>
+        <div id="doubleScroll">
+          <table class="table table-dark w-100" id="minionsTable">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Minion</th>
+                <th scope="col">Tier</th>
+                <th scope="col">Items</th>
+                <th scope="col">Items Per Hour</th>
+                <th scope="col">Prices (Bazaar, 1% Tax)</th>
+                <th scope="col">Profit per Hour</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tr>
+              <td>#1</td>
+              <td id="minion0Name">Loading...</td>
+              <td id="minion0Tier"></td>
+              <td id="minion0Items"></td>
+              <td id="minion0ItemsPerHour"></td>
+              <td id="minion0BazaarPrices"></td>
+              <td id="minion0Profit"></td>
+              <td id="minion0Settings">
+                <button class="btn btn-blue" id="individualSettings0" onclick="openIndividualSettings(0)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#2</td>
+              <td id="minion1Name"></td>
+              <td id="minion1Tier"></td>
+              <td id="minion1Items"></td>
+              <td id="minion1ItemsPerHour"></td>
+              <td id="minion1BazaarPrices"></td>
+              <td id="minion1Profit"></td>
+              <td id="minion1Settings">
+                <button class="btn btn-blue" id="individualSettings1" onclick="openIndividualSettings(1)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#3</td>
+              <td id="minion2Name"></td>
+              <td id="minion2Tier"></td>
+              <td id="minion2Items"></td>
+              <td id="minion2ItemsPerHour"></td>
+              <td id="minion2BazaarPrices"></td>
+              <td id="minion2Profit"></td>
+              <td id="minion2Settings">
+                <button class="btn btn-blue" id="individualSettings2" onclick="openIndividualSettings(2)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#4</td>
+              <td id="minion3Name"></td>
+              <td id="minion3Tier"></td>
+              <td id="minion3Items"></td>
+              <td id="minion3ItemsPerHour"></td>
+              <td id="minion3BazaarPrices"></td>
+              <td id="minion3Profit"></td>
+              <td id="minion3Settings">
+                <button class="btn btn-blue" id="individualSettings3" onclick="openIndividualSettings(3)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#5</td>
+              <td id="minion4Name"></td>
+              <td id="minion4Tier"></td>
+              <td id="minion4Items"></td>
+              <td id="minion4ItemsPerHour"></td>
+              <td id="minion4BazaarPrices"></td>
+              <td id="minion4Profit"></td>
+              <td id="minion4Settings">
+                <button class="btn btn-blue" id="individualSettings4" onclick="openIndividualSettings(4)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#6</td>
+              <td id="minion5Name"></td>
+              <td id="minion5Tier"></td>
+              <td id="minion5Items"></td>
+              <td id="minion5ItemsPerHour"></td>
+              <td id="minion5BazaarPrices"></td>
+              <td id="minion5Profit"></td>
+              <td id="minion5Settings">
+                <button class="btn btn-blue" id="individualSettings5" onclick="openIndividualSettings(5)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#7</td>
+              <td id="minion6Name"></td>
+              <td id="minion6Tier"></td>
+              <td id="minion6Items"></td>
+              <td id="minion6ItemsPerHour"></td>
+              <td id="minion6BazaarPrices"></td>
+              <td id="minion6Profit"></td>
+              <td id="minion6Settings">
+                <button class="btn btn-blue" id="individualSettings6" onclick="openIndividualSettings(6)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#8</td>
+              <td id="minion7Name"></td>
+              <td id="minion7Tier"></td>
+              <td id="minion7Items"></td>
+              <td id="minion7ItemsPerHour"></td>
+              <td id="minion7BazaarPrices"></td>
+              <td id="minion7Profit"></td>
+              <td id="minion7Settings">
+                <button class="btn btn-blue" id="individualSettings7" onclick="openIndividualSettings(7)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#9</td>
+              <td id="minion8Name"></td>
+              <td id="minion8Tier"></td>
+              <td id="minion8Items"></td>
+              <td id="minion8ItemsPerHour"></td>
+              <td id="minion8BazaarPrices"></td>
+              <td id="minion8Profit"></td>
+              <td id="minion8Settings">
+                <button class="btn btn-blue" id="individualSettings8" onclick="openIndividualSettings(8)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#10</td>
+              <td id="minion9Name"></td>
+              <td id="minion9Tier"></td>
+              <td id="minion9Items"></td>
+              <td id="minion9ItemsPerHour"></td>
+              <td id="minion9BazaarPrices"></td>
+              <td id="minion9Profit"></td>
+              <td id="minion9Settings">
+                <button class="btn btn-blue" id="individualSettings9" onclick="openIndividualSettings(9)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#11</td>
+              <td id="minion10Name"></td>
+              <td id="minion10Tier"></td>
+              <td id="minion10Items"></td>
+              <td id="minion10ItemsPerHour"></td>
+              <td id="minion10BazaarPrices"></td>
+              <td id="minion10Profit"></td>
+              <td id="minion10Settings">
+                <button class="btn btn-blue" id="individualSettings10" onclick="openIndividualSettings(10)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#12</td>
+              <td id="minion11Name"></td>
+              <td id="minion11Tier"></td>
+              <td id="minion11Items"></td>
+              <td id="minion11ItemsPerHour"></td>
+              <td id="minion11BazaarPrices"></td>
+              <td id="minion11Profit"></td>
+              <td id="minion11Settings">
+                <button class="btn btn-blue" id="individualSettings11" onclick="openIndividualSettings(11)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#13</td>
+              <td id="minion12Name"></td>
+              <td id="minion12Tier"></td>
+              <td id="minion12Items"></td>
+              <td id="minion12ItemsPerHour"></td>
+              <td id="minion12BazaarPrices"></td>
+              <td id="minion12Profit"></td>
+              <td id="minion12Settings">
+                <button class="btn btn-blue" id="individualSettings12" onclick="openIndividualSettings(12)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#14</td>
+              <td id="minion13Name"></td>
+              <td id="minion13Tier"></td>
+              <td id="minion13Items"></td>
+              <td id="minion13ItemsPerHour"></td>
+              <td id="minion13BazaarPrices"></td>
+              <td id="minion13Profit"></td>
+              <td id="minion13Settings">
+                <button class="btn btn-blue" id="individualSettings13" onclick="openIndividualSettings(13)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#15</td>
+              <td id="minion14Name"></td>
+              <td id="minion14Tier"></td>
+              <td id="minion14Items"></td>
+              <td id="minion14ItemsPerHour"></td>
+              <td id="minion14BazaarPrices"></td>
+              <td id="minion14Profit"></td>
+              <td id="minion14Settings">
+                <button class="btn btn-blue" id="individualSettings14" onclick="openIndividualSettings(14)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#16</td>
+              <td id="minion15Name"></td>
+              <td id="minion15Tier"></td>
+              <td id="minion15Items"></td>
+              <td id="minion15ItemsPerHour"></td>
+              <td id="minion15BazaarPrices"></td>
+              <td id="minion15Profit"></td>
+              <td id="minion15Settings">
+                <button class="btn btn-blue" id="individualSettings15" onclick="openIndividualSettings(15)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#17</td>
+              <td id="minion16Name"></td>
+              <td id="minion16Tier"></td>
+              <td id="minion16Items"></td>
+              <td id="minion16ItemsPerHour"></td>
+              <td id="minion16BazaarPrices"></td>
+              <td id="minion16Profit"></td>
+              <td id="minion16Settings">
+                <button class="btn btn-blue" id="individualSettings16" onclick="openIndividualSettings(16)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#18</td>
+              <td id="minion17Name"></td>
+              <td id="minion17Tier"></td>
+              <td id="minion17Items"></td>
+              <td id="minion17ItemsPerHour"></td>
+              <td id="minion17BazaarPrices"></td>
+              <td id="minion17Profit"></td>
+              <td id="minion17Settings">
+                <button class="btn btn-blue" id="individualSettings17" onclick="openIndividualSettings(17)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#19</td>
+              <td id="minion18Name"></td>
+              <td id="minion18Tier"></td>
+              <td id="minion18Items"></td>
+              <td id="minion18ItemsPerHour"></td>
+              <td id="minion18BazaarPrices"></td>
+              <td id="minion18Profit"></td>
+              <td id="minion18Settings">
+                <button class="btn btn-blue" id="individualSettings18" onclick="openIndividualSettings(18)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#20</td>
+              <td id="minion19Name"></td>
+              <td id="minion19Tier"></td>
+              <td id="minion19Items"></td>
+              <td id="minion19ItemsPerHour"></td>
+              <td id="minion19BazaarPrices"></td>
+              <td id="minion19Profit"></td>
+              <td id="minion19Settings">
+                <button class="btn btn-blue" id="individualSettings19" onclick="openIndividualSettings(19)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#21</td>
+              <td id="minion20Name"></td>
+              <td id="minion20Tier"></td>
+              <td id="minion20Items"></td>
+              <td id="minion20ItemsPerHour"></td>
+              <td id="minion20BazaarPrices"></td>
+              <td id="minion20Profit"></td>
+              <td id="minion20Settings">
+                <button class="btn btn-blue" id="individualSettings20" onclick="openIndividualSettings(20)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#22</td>
+              <td id="minion21Name"></td>
+              <td id="minion21Tier"></td>
+              <td id="minion21Items"></td>
+              <td id="minion21ItemsPerHour"></td>
+              <td id="minion21BazaarPrices"></td>
+              <td id="minion21Profit"></td>
+              <td id="minion21Settings">
+                <button class="btn btn-blue" id="individualSettings21" onclick="openIndividualSettings(21)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#23</td>
+              <td id="minion22Name"></td>
+              <td id="minion22Tier"></td>
+              <td id="minion22Items"></td>
+              <td id="minion22ItemsPerHour"></td>
+              <td id="minion22BazaarPrices"></td>
+              <td id="minion22Profit"></td>
+              <td id="minion22Settings">
+                <button class="btn btn-blue" id="individualSettings22" onclick="openIndividualSettings(22)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#24</td>
+              <td id="minion23Name"></td>
+              <td id="minion23Tier"></td>
+              <td id="minion23Items"></td>
+              <td id="minion23ItemsPerHour"></td>
+              <td id="minion23BazaarPrices"></td>
+              <td id="minion23Profit"></td>
+              <td id="minion23Settings">
+                <button class="btn btn-blue" id="individualSettings23" onclick="openIndividualSettings(23)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#25</td>
+              <td id="minion24Name"></td>
+              <td id="minion24Tier"></td>
+              <td id="minion24Items"></td>
+              <td id="minion24ItemsPerHour"></td>
+              <td id="minion24BazaarPrices"></td>
+              <td id="minion24Profit"></td>
+              <td id="minion24Settings">
+                <button class="btn btn-blue" id="individualSettings24" onclick="openIndividualSettings(24)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#26</td>
+              <td id="minion25Name"></td>
+              <td id="minion25Tier"></td>
+              <td id="minion25Items"></td>
+              <td id="minion25ItemsPerHour"></td>
+              <td id="minion25BazaarPrices"></td>
+              <td id="minion25Profit"></td>
+              <td id="minion25Settings">
+                <button class="btn btn-blue" id="individualSettings25" onclick="openIndividualSettings(25)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#27</td>
+              <td id="minion26Name"></td>
+              <td id="minion26Tier"></td>
+              <td id="minion26Items"></td>
+              <td id="minion26ItemsPerHour"></td>
+              <td id="minion26BazaarPrices"></td>
+              <td id="minion26Profit"></td>
+              <td id="minion26Settings">
+                <button class="btn btn-blue" id="individualSettings26" onclick="openIndividualSettings(26)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#28</td>
+              <td id="minion27Name"></td>
+              <td id="minion27Tier"></td>
+              <td id="minion27Items"></td>
+              <td id="minion27ItemsPerHour"></td>
+              <td id="minion27BazaarPrices"></td>
+              <td id="minion27Profit"></td>
+              <td id="minion27Settings">
+                <button class="btn btn-blue" id="individualSettings27" onclick="openIndividualSettings(27)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#29</td>
+              <td id="minion28Name"></td>
+              <td id="minion28Tier"></td>
+              <td id="minion28Items"></td>
+              <td id="minion28ItemsPerHour"></td>
+              <td id="minion28BazaarPrices"></td>
+              <td id="minion28Profit"></td>
+              <td id="minion28Settings">
+                <button class="btn btn-blue" id="individualSettings28" onclick="openIndividualSettings(28)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#30</td>
+              <td id="minion29Name"></td>
+              <td id="minion29Tier"></td>
+              <td id="minion29Items"></td>
+              <td id="minion29ItemsPerHour"></td>
+              <td id="minion29BazaarPrices"></td>
+              <td id="minion29Profit"></td>
+              <td id="minion29Settings">
+                <button class="btn btn-blue" id="individualSettings29" onclick="openIndividualSettings(29)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#31</td>
+              <td id="minion30Name"></td>
+              <td id="minion30Tier"></td>
+              <td id="minion30Items"></td>
+              <td id="minion30ItemsPerHour"></td>
+              <td id="minion30BazaarPrices"></td>
+              <td id="minion30Profit"></td>
+              <td id="minion30Settings">
+                <button class="btn btn-blue" id="individualSettings30" onclick="openIndividualSettings(30)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#32</td>
+              <td id="minion31Name"></td>
+              <td id="minion31Tier"></td>
+              <td id="minion31Items"></td>
+              <td id="minion31ItemsPerHour"></td>
+              <td id="minion31BazaarPrices"></td>
+              <td id="minion31Profit"></td>
+              <td id="minion31Settings">
+                <button class="btn btn-blue" id="individualSettings31" onclick="openIndividualSettings(31)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#33</td>
+              <td id="minion32Name"></td>
+              <td id="minion32Tier"></td>
+              <td id="minion32Items"></td>
+              <td id="minion32ItemsPerHour"></td>
+              <td id="minion32BazaarPrices"></td>
+              <td id="minion32Profit"></td>
+              <td id="minion32Settings">
+                <button class="btn btn-blue" id="individualSettings32" onclick="openIndividualSettings(32)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#34</td>
+              <td id="minion33Name"></td>
+              <td id="minion33Tier"></td>
+              <td id="minion33Items"></td>
+              <td id="minion33ItemsPerHour"></td>
+              <td id="minion33BazaarPrices"></td>
+              <td id="minion33Profit"></td>
+              <td id="minion33Settings">
+                <button class="btn btn-blue" id="individualSettings33" onclick="openIndividualSettings(33)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#35</td>
+              <td id="minion34Name"></td>
+              <td id="minion34Tier"></td>
+              <td id="minion34Items"></td>
+              <td id="minion34ItemsPerHour"></td>
+              <td id="minion34BazaarPrices"></td>
+              <td id="minion34Profit"></td>
+              <td id="minion34Settings">
+                <button class="btn btn-blue" id="individualSettings34" onclick="openIndividualSettings(34)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#36</td>
+              <td id="minion35Name"></td>
+              <td id="minion35Tier"></td>
+              <td id="minion35Items"></td>
+              <td id="minion35ItemsPerHour"></td>
+              <td id="minion35BazaarPrices"></td>
+              <td id="minion35Profit"></td>
+              <td id="minion35Settings">
+                <button class="btn btn-blue" id="individualSettings35" onclick="openIndividualSettings(35)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#37</td>
+              <td id="minion36Name"></td>
+              <td id="minion36Tier"></td>
+              <td id="minion36Items"></td>
+              <td id="minion36ItemsPerHour"></td>
+              <td id="minion36BazaarPrices"></td>
+              <td id="minion36Profit"></td>
+              <td id="minion36Settings">
+                <button class="btn btn-blue" id="individualSettings36" onclick="openIndividualSettings(36)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#38</td>
+              <td id="minion37Name"></td>
+              <td id="minion37Tier"></td>
+              <td id="minion37Items"></td>
+              <td id="minion37ItemsPerHour"></td>
+              <td id="minion37BazaarPrices"></td>
+              <td id="minion37Profit"></td>
+              <td id="minion37Settings">
+                <button class="btn btn-blue" id="individualSettings37" onclick="openIndividualSettings(37)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#39</td>
+              <td id="minion38Name"></td>
+              <td id="minion38Tier"></td>
+              <td id="minion38Items"></td>
+              <td id="minion38ItemsPerHour"></td>
+              <td id="minion38BazaarPrices"></td>
+              <td id="minion38Profit"></td>
+              <td id="minion38Settings">
+                <button class="btn btn-blue" id="individualSettings38" onclick="openIndividualSettings(38)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#40</td>
+              <td id="minion39Name"></td>
+              <td id="minion39Tier"></td>
+              <td id="minion39Items"></td>
+              <td id="minion39ItemsPerHour"></td>
+              <td id="minion39BazaarPrices"></td>
+              <td id="minion39Profit"></td>
+              <td id="minion39Settings">
+                <button class="btn btn-blue" id="individualSettings39" onclick="openIndividualSettings(39)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#41</td>
+              <td id="minion40Name"></td>
+              <td id="minion40Tier"></td>
+              <td id="minion40Items"></td>
+              <td id="minion40ItemsPerHour"></td>
+              <td id="minion40BazaarPrices"></td>
+              <td id="minion40Profit"></td>
+              <td id="minion40Settings">
+                <button class="btn btn-blue" id="individualSettings40" onclick="openIndividualSettings(40)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#42</td>
+              <td id="minion41Name"></td>
+              <td id="minion41Tier"></td>
+              <td id="minion41Items"></td>
+              <td id="minion41ItemsPerHour"></td>
+              <td id="minion41BazaarPrices"></td>
+              <td id="minion41Profit"></td>
+              <td id="minion41Settings">
+                <button class="btn btn-blue" id="individualSettings41" onclick="openIndividualSettings(41)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#43</td>
+              <td id="minion42Name"></td>
+              <td id="minion42Tier"></td>
+              <td id="minion42Items"></td>
+              <td id="minion42ItemsPerHour"></td>
+              <td id="minion42BazaarPrices"></td>
+              <td id="minion42Profit"></td>
+              <td id="minion42Settings">
+                <button class="btn btn-blue" id="individualSettings42" onclick="openIndividualSettings(42)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#44</td>
+              <td id="minion43Name"></td>
+              <td id="minion43Tier"></td>
+              <td id="minion43Items"></td>
+              <td id="minion43ItemsPerHour"></td>
+              <td id="minion43BazaarPrices"></td>
+              <td id="minion43Profit"></td>
+              <td id="minion43Settings">
+                <button class="btn btn-blue" id="individualSettings43" onclick="openIndividualSettings(43)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#45</td>
+              <td id="minion44Name"></td>
+              <td id="minion44Tier"></td>
+              <td id="minion44Items"></td>
+              <td id="minion44ItemsPerHour"></td>
+              <td id="minion44BazaarPrices"></td>
+              <td id="minion44Profit"></td>
+              <td id="minion44Settings">
+                <button class="btn btn-blue" id="individualSettings44" onclick="openIndividualSettings(44)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#46</td>
+              <td id="minion45Name"></td>
+              <td id="minion45Tier"></td>
+              <td id="minion45Items"></td>
+              <td id="minion45ItemsPerHour"></td>
+              <td id="minion45BazaarPrices"></td>
+              <td id="minion45Profit"></td>
+              <td id="minion45Settings">
+                <button class="btn btn-blue" id="individualSettings45" onclick="openIndividualSettings(45)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#47</td>
+              <td id="minion46Name"></td>
+              <td id="minion46Tier"></td>
+              <td id="minion46Items"></td>
+              <td id="minion46ItemsPerHour"></td>
+              <td id="minion46BazaarPrices"></td>
+              <td id="minion46Profit"></td>
+              <td id="minion46Settings">
+                <button class="btn btn-blue" id="individualSettings46" onclick="openIndividualSettings(46)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#48</td>
+              <td id="minion47Name"></td>
+              <td id="minion47Tier"></td>
+              <td id="minion47Items"></td>
+              <td id="minion47ItemsPerHour"></td>
+              <td id="minion47BazaarPrices"></td>
+              <td id="minion47Profit"></td>
+              <td id="minion47Settings">
+                <button class="btn btn-blue" id="individualSettings47" onclick="openIndividualSettings(47)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#49</td>
+              <td id="minion48Name"></td>
+              <td id="minion48Tier"></td>
+              <td id="minion48Items"></td>
+              <td id="minion48ItemsPerHour"></td>
+              <td id="minion48BazaarPrices"></td>
+              <td id="minion48Profit"></td>
+              <td id="minion48Settings">
+                <button class="btn btn-blue" id="individualSettings48" onclick="openIndividualSettings(48)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#50</td>
+              <td id="minion49Name"></td>
+              <td id="minion49Tier"></td>
+              <td id="minion49Items"></td>
+              <td id="minion49ItemsPerHour"></td>
+              <td id="minion49BazaarPrices"></td>
+              <td id="minion49Profit"></td>
+              <td id="minion49Settings">
+                <button class="btn btn-blue" id="individualSettings49" onclick="openIndividualSettings(49)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>#51</td>
+              <td id="minion50Name"></td>
+              <td id="minion50Tier"></td>
+              <td id="minion50Items"></td>
+              <td id="minion50ItemsPerHour"></td>
+              <td id="minion50BazaarPrices"></td>
+              <td id="minion50Profit"></td>
+              <td id="minion50Settings">
+                <button class="btn btn-blue" id="individualSettings50" onclick="openIndividualSettings(50)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="modal fade" id="individualModal" tabindex="-1" role="dialog" aria-labelledby="individualModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="individualModalLabel">Title</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="individualTier">Tier: &nbsp;</label>
+                  <select class="form-control" id="individualTier">
+                    <option selected="">1</option>
+                    <option selected="">2</option>
+                    <option selected="">3</option>
+                    <option selected="">4</option>
+                    <option selected="">5</option>
+                    <option selected="">6</option>
+                    <option selected="">7</option>
+                    <option selected="">8</option>
+                    <option selected="">9</option>
+                    <option selected="">10</option>
+                    <option selected="selected">11</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <p>Fuel: &nbsp; <input id="individualFuel" type="number" value="25" class="form-control" min="0"/> %</p>
+                </div>
+                <div class="form-group">
+                  <input class="checkbox" id="individualDiamondSpreading" type="checkbox" checked onchange="toggleIndividualDiamondSpreading()">
+                  <label for="individualDiamondSpreading">&nbsp; Has Diamond Spreading</label>
+                </div>
+                <div class="form-group" id="products">
+                  <label>Form of products:</label><br>
+                  <select class="form-control" id="individualProduct0">
+                    <option id="individualProduct0Option0" value="0"></option>
+                    <option id="individualProduct0Option1" value="1"></option>
+                    <option id="individualProduct0Option2" value="2"></option>
+                    <option id="individualProduct0Option3" value="3"></option>
+                    <option id="individualProduct0Option4" value="4"></option>
+                  </select>
+                  <select class="form-control" id="individualProduct1">
+                    <option id="individualProduct1Option0" value="0"></option>
+                    <option id="individualProduct1Option1" value="1"></option>
+                    <option id="individualProduct1Option2" value="2"></option>
+                    <option id="individualProduct1Option3" value="3"></option>
+                    <option id="individualProduct1Option4" value="4"></option>
+                  </select>
+                  <select class="form-control" id="individualProduct2">
+                    <option id="individualProduct2Option0" value="0"></option>
+                    <option id="individualProduct2Option1" value="1"></option>
+                    <option id="individualProduct2Option2" value="2"></option>
+                    <option id="individualProduct2Option3" value="3"></option>
+                    <option id="individualProduct2Option4" value="4"></option>
+                  </select>
+                  <select class="form-control" id="individualProduct3">
+                    <option id="individualProduct3Option0" value="0"></option>
+                    <option id="individualProduct3Option1" value="1"></option>
+                    <option id="individualProduct3Option2" value="2"></option>
+                    <option id="individualProduct3Option3" value="3"></option>
+                    <option id="individualProduct3Option4" value="4"></option>
+                  </select>
+                  <select class="form-control" id="individualProduct4">
+                    <option id="individualProduct4Option0" value="0"></option>
+                    <option id="individualProduct4Option1" value="1"></option>
+                    <option id="individualProduct4Option2" value="2"></option>
+                    <option id="individualProduct4Option3" value="3"></option>
+                    <option id="individualProduct4Option4" value="4"></option>
+                  </select>
+                  <select class="form-control" id="individualProduct5">
+                    <option id="individualProduct5Option0" value="0"></option>
+                    <option id="individualProduct5Option1" value="1"></option>
+                    <option id="individualProduct5Option2" value="2"></option>
+                    <option id="individualProduct5Option3" value="3"></option>
+                    <option id="individualProduct5Option4" value="4"></option>
+                  </select>
+                  <select class="form-control" id="individualProduct6">
+                    <option id="individualProduct6Option0" value="0"></option>
+                    <option id="individualProduct6Option1" value="1"></option>
+                    <option id="individualProduct6Option2" value="2"></option>
+                    <option id="individualProduct6Option3" value="3"></option>
+                    <option id="individualProduct6Option4" value="4"></option>
+                  </select>
+                  <select class="form-control" id="individualProduct7">
+                    <option id="individualProduct7Option0" value="0"></option>
+                    <option id="individualProduct7Option1" value="1"></option>
+                    <option id="individualProduct7Option2" value="2"></option>
+                    <option id="individualProduct7Option3" value="3"></option>
+                    <option id="individualProduct7Option4" value="4"></option>
+                  </select>
+                  <select class="form-control" id="individualProduct8">
+                    <option id="individualProduct8Option0" value="0"></option>
+                    <option id="individualProduct8Option1" value="1"></option>
+                    <option id="individualProduct8Option2" value="2"></option>
+                    <option id="individualProduct8Option3" value="3"></option>
+                    <option id="individualProduct8Option4" value="4"></option>
+                  </select>
+                  <select class="form-control" id="individualProduct9">
+                    <option id="individualProduct9Option0" value="0"></option>
+                    <option id="individualProduct9Option1" value="1"></option>
+                    <option id="individualProduct9Option2" value="2"></option>
+                    <option id="individualProduct9Option3" value="3"></option>
+                    <option id="individualProduct9Option4" value="4"></option>
+                  </select>
+                  <select class="form-control" id="individualProductDiamondSpreading">
+                    <option id="individualProductDiamondSpreadingOption0" value="0"></option>
+                    <option id="individualProductDiamondSpreadingOption1" value="1"></option>
+                    <option id="individualProductDiamondSpreadingOption2" value="2"></option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="individualSellingTo">Selling to: &nbsp;</label>
+                  <select class="form-control" id="individualSellingTo">
+                    <option value="0">Max profit (NPC or bazaar)</option>
+                    <option value="1">Bazaar only</option>
+                    <option value="-1">NPC only</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="individualSellingMethod">Selling method in bazaar: &nbsp;</label>
+                  <select class="form-control" id="individualSellingMethod">
+                    <option value="0">Sell offer</option>
+                    <option value="1">Sell instantly</option>
+                  </select>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-warning" type="button" data-dismiss="modal" onclick="applyIndividualSettings()">Apply</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div id="footer">
+        <p><small>Created by Kid0620</small></p>
+        <p><small>
+            Data source from <a href="https://docs.google.com/spreadsheets/d/1W8nGg2_x0Ne4HFKc5kLlCGSTcXlwUpJY_qvnVyiUpVw/edit" target="_blank">Minions Sheet by TBlazeWarriorT </a> and <a href="https://hypixel-skyblock.fandom.com/wiki/Minions">Hypixel SkyBlock Wiki</a>,
+            Skyblock by <a href="https://hypixel.net">Hypixel</a>, Minecraft by <a href="https://minecraft.net">Mojang</a>,
+            Powered by <a href="http://keystonejs.com" target="_blank">KeystoneJS</a></small></p>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/c4e8b064bf.js"></script>
+    <script src="/js/jquery/jquery.doubleScroll.js"></script>
+    <script src="/js/minionsData.js"></script>
+    <script src="/js/minionsOperation.js"></script>
+    <script src="/js/minions.js"></script>
+  </body>
+</html>
