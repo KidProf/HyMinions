@@ -6,7 +6,6 @@ var pug = require('gulp-pug');
 var changed = require('gulp-changed');
 var less = require('gulp-less');
 var eslint = require("gulp-eslint");
-var babel = require("gulp-babel");
 var imagemin = require("gulp-imagemin");
 
 //plugins of plugins
