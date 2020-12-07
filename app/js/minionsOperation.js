@@ -106,14 +106,15 @@ function calculateProductProfit(product, tierDelay, sellingMethod, tier, fuel, v
             });
         }
     }else if(variantIndex==-2){
+        let resultCandidate;
         product.variants.forEach((variant, index3)=>{
-            calculateProductProfitSpecificVariant(product, tierDelay, sellingMethod, tier, fuel, index3, npcPreference);
+            resultCandidate = calculateProductProfitSpecificVariant(product, tierDelay, sellingMethod, tier, fuel, index3, npcPreference);
             if(maxProfit<resultCandidate.profit){
                 maxProfit = resultCandidate.profit;
                 variantIndex = index3;
             }
         });
-        calculateProductProfitSpecificVariant(product, tierDelay, sellingMethod, tier, fuel, -1, npcPreference);
+        resultCandidate = calculateProductProfitSpecificVariant(product, tierDelay, sellingMethod, tier, fuel, -1, npcPreference);
         if(maxProfit<resultCandidate.profit){
             maxProfit = resultCandidate.profit;
             variantIndex = -1;

@@ -70,6 +70,9 @@ body {
 #announcementsHeader {
   background-color: #ff93ac;
 }
+#announcementsHeaderYellow {
+  background-color: #DAD602;
+}
 #eventsHeader {
   background-color: #02D9C9;
 }
