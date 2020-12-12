@@ -38,6 +38,7 @@ function openIndividualSettings(minionIndex){
 
     //create the dropdown for each product
     minions[minionIndex].products.forEach((product,index)=>{
+        //console.log(product);
         $("#individualProduct"+index).show();
         product.variants.forEach((variant,index2)=>{
             $("#individualProduct"+index+"Option"+index2).show();

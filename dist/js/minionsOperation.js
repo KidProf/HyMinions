@@ -74,6 +74,7 @@ function calculateMinionProfit(minion, sellingMethod, tier, fuel, variantIndex, 
 function calculateProductProfit(product, tierDelay, sellingMethod, tier, fuel, variantIndex, npcPreference){
     //this function: validate the variantIndex, then calculate the profit
     if(tier==0||variantIndex==-4){
+        if(variantIndex==-4) product.variantIndex = -4;
         return {
             profit: 0, 
             itemsHarvested: 0,
