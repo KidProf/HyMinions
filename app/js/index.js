@@ -8,11 +8,12 @@ function updateEvents(){
     //find the event that happen most quickly
     var eventIndex = 0;
     var eventTime = 10*24*3600*1000;
+    var currentTime = new Date();
     console.log("updated");
     //calculate the values displayed
     for(let i=0;i<numberOfEvents;i++){
         if(eventsData[i].major){
-            timeAfterEvent = (Date.now().valueOf() - eventsData[i].refTime.valueOf())%(eventsData[i].interval);
+            timeAfterEvent = (currentTime.valueOf() - eventsData[i].refTime.valueOf() + currentTime.getTimezoneOffset()*1000*60)%(eventsData[i].interval);
             if(timeAfterEvent<eventsData[i].duration){
                 eventsData[i].isLive = true;
                 eventsData[i].timeDisplayed = durationToString(eventsData[i].duration - timeAfterEvent);
