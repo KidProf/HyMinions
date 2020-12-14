@@ -8,9 +8,9 @@ function updateEvents(){
     //calculate the values displayed
     for(let i=0;i<numberOfEvents;i++){
         var currentTime = new Date();
-        console.log("currentTime"+currentTime.valueOf());
-        console.log("timezoneoffset"+currentTime.getTimezoneOffset());
-        console.log("eventsData[i].refTime()"+eventsData[i].refTime.valueOf());
+        // console.log("currentTime"+currentTime.valueOf());
+        // console.log("timezoneoffset"+currentTime.getTimezoneOffset());
+        // console.log("eventsData[i].refTime()"+eventsData[i].refTime.valueOf());
         timeAfterEvent = (currentTime.valueOf() - eventsData[i].refTime.valueOf() + currentTime.getTimezoneOffset()*1000*60)%(eventsData[i].interval);
         if(timeAfterEvent<eventsData[i].duration){
             eventsData[i].isLive = true;
