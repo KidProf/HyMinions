@@ -273,7 +273,7 @@ var minions = [
         name: "Wheat Minion",
         tierDelay : [15,15,13,13,11,11,10,10,9,9,8],
         noDiamondSpreading : 1,
-        warning: "Both compactor and super compactor are needed",
+        warning: "Both compactor and sc3000 are needed",
         products : [
             {
                 item : "Wheat",
@@ -281,11 +281,13 @@ var minions = [
                 npcPrice: 1,
                 variants: [
                     "Enchanted Hay Bale",
+                    "Tightly-Tied Hay Bale",
                     "Enchanted Bread",
                     "Hay Bale"
                 ],
                 variantsEquiv: [
                     1296,
+                    186624,
                     96,
                     9
                 ],
@@ -332,9 +334,11 @@ var minions = [
                 npcPrice: 4,
                 variants: [
                     "Enchanted Pumpkin",
+                    "Polished Pumpkin",
                 ],
                 variantsEquiv: [
                     160,
+                    25600,
                 ]
             },
         ]      
@@ -505,9 +509,11 @@ var minions = [
                 npcPrice: 3,
                 variants: [
                     "Enchanted Nether Wart",
+                    "Mutant Nether Wart",
                 ],
                 variantsEquiv: [
                     160,
+                    25600,
                 ]
             },
         ]      
