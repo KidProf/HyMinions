@@ -257,7 +257,12 @@ function printTable(){
         $("#minion"+index+"ItemsPerHour").html(minion.itemsPerHour);
         $("#minion"+index+"BazaarPrices").html(minion.bazaarPrices);
         $("#minion"+index+"Profit").html(roundedProfit);
-
+        if(minion.warning){
+            $("#minion"+index+"Warning").show();
+            $("#minion"+index+"Warning").html(minion.warning);
+        }else{
+            $("#minion"+index+"Warning").hide();
+        }
     });
 }
 

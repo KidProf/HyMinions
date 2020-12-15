@@ -80,7 +80,9 @@ block content
                         td="#"+(i+1)
                         td(id="minion"+i+"Name")= i==0?"Loading...":""
                         td(id="minion"+i+"Tier")
-                        td(id="minion"+i+"Items")
+                        td
+                            p(id="minion"+i+"Items").m-0
+                            p(id="minion"+i+"Warning").warning.m-0
                         td(id="minion"+i+"ItemsPerHour")
                         td(id="minion"+i+"BazaarPrices")
                         td(id="minion"+i+"Profit")

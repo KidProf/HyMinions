@@ -102,6 +102,9 @@ body {
 #minionsTable td {
   white-space: nowrap;
 }
+#minionsTable .warning {
+  color: yellow;
+}
 #overall input,
 #overall select {
   background-color: #111;

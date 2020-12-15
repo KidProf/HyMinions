@@ -11,6 +11,7 @@ function updateEvents(){
         // console.log("currentTime"+currentTime.valueOf());
         // console.log("timezoneoffset"+currentTime.getTimezoneOffset());
         // console.log("eventsData[i].refTime()"+eventsData[i].refTime.valueOf());
+        //since currentTime does not take timezones into account, while events reftime does, so gettimezoneoffset is used to balance off the data, which returns the timezone in MINUTES.
         timeAfterEvent = (currentTime.valueOf() - eventsData[i].refTime.valueOf() + currentTime.getTimezoneOffset()*1000*60)%(eventsData[i].interval);
         if(timeAfterEvent<eventsData[i].duration){
             eventsData[i].isLive = true;

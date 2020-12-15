@@ -134,6 +134,7 @@ var minions = [
         name: "Chicken Minion",
         tierDelay : [26,26,24,24,22,22,20,20,18,18,15],
         noDiamondSpreading : 1,
+        warning: "Enchanted egg is needed",
         products : [
             {
                 item : "Raw Chicken",
@@ -223,6 +224,7 @@ var minions = [
         name: "Gravel Minion",
         tierDelay : [26,26,24,24,22,22,19,19,16,16,13],
         noDiamondSpreading : 1,
+        warning: "Flint shovel is needed",
         products : [
             {
                 item : "Gravel",
@@ -271,6 +273,7 @@ var minions = [
         name: "Wheat Minion",
         tierDelay : [15,15,13,13,11,11,10,10,9,9,8],
         noDiamondSpreading : 1,
+        warning: "Both compactor and super compactor are needed",
         products : [
             {
                 item : "Wheat",
@@ -402,6 +405,7 @@ var minions = [
         name: "Cactus Minion",
         tierDelay : [27,27,25,25,23,23,21,21,18,18,15],
         noDiamondSpreading: 1,
+        warning: "Auto smelter is needed",
         products : [
             {
                 item : "Cactus",
@@ -527,6 +531,7 @@ var minions = [
         name: "Gold Minion",
         tierDelay : [22,22,20,20,18,18,16,16,14,14,11],
         noDiamondSpreading : 1,
+        warning: "Auto smelter is needed",
         products : [
             {
                 item : "Gold Ingot",
@@ -1110,6 +1115,7 @@ var minions = [
         name: "Iron Minion",
         tierDelay : [17,17,15,15,14,14,12,12,10,10,8],
         noDiamondSpreading : 1,
+        warning: "Auto smelter is needed",
         products : [
             {
                 item : "Iron Ingot",
