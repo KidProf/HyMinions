@@ -17,7 +17,7 @@ block content
         h1 EVENTS
         -let i = 0;
         while i<numberOfEvents
-            .row(id="event"+i)
+            .row(id="event"+i).mb-1.mt-1
                 //-first row for PC, mobile
                 .col-md-2.col-2: img.events
                 .col-md-5.col-10: h3.name=(i==0 ? "Loading" : "")

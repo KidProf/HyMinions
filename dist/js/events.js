@@ -4,6 +4,7 @@ setInterval(updateEvents,1000);
 function updateEvents(){
     var numberOfEvents = 9;
     
+    
     console.log("updated");
     //calculate the values displayed
     for(let i=0;i<numberOfEvents;i++){
