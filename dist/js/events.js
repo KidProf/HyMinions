@@ -2,7 +2,7 @@
 setInterval(updateEvents,1000);
 
 function updateEvents(){
-    var numberOfEvents = 6;
+    var numberOfEvents = 9;
     
     console.log("updated");
     //calculate the values displayed

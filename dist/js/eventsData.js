@@ -1,4 +1,4 @@
-//for ref time, month need to be -1, hours need to -8 (UTC time is needed)
+//for ref time, month need to be -1, hours need to -8 (UTC time is needed), the time is the start time of the event
 
 var eventsData = [
     {
@@ -37,5 +37,23 @@ var eventsData = [
         interval: 3600*1000, //1 hour
         duration: 0,
         major: false,
-    }
+    },{
+        name: "Bank Interest",
+        refTime: new Date(2020,3-1,11,21-8,55,0),
+        interval: 31*3600*1000, //31 hours
+        duration: 0,
+        major: false,
+    },{
+        name: "Mayor Election",
+        refTime: new Date(2020,12-1,18,10-8,15,0),
+        interval: (5*24+4)*3600*1000, //5 days 4 hours
+        duration: (3*24+21)*3600*1000, //3 days 21 hours
+        major: false,
+    },{
+        name: "Jacob's Farming Contest",
+        refTime: new Date(2020,12-1,18,16-8,15,0),
+        interval: 3600*1000, //1 hour
+        duration: 20*60*1000, //20 minutes
+        major: false,
+    },
 ];
