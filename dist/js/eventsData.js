@@ -1,4 +1,4 @@
-//for ref time, month need to be -1, hours need to -8 (UTC time is needed), the time is the start time of the event
+//for ref time, month need to be -1, hours need to -8 (UTC time is needed), the time is the start time of the event, the ref time must be a time from the past
 
 var eventsData = [
     {
@@ -32,10 +32,10 @@ var eventsData = [
         duration: 31*20*60*1000, //10 hours, 20 mins
         major: false,
     },{
-        name: "Dark Auction",
-        refTime: new Date(2020,3-1,11,12-8,55,0),
-        interval: 3600*1000, //1 hour
-        duration: 0,
+        name: "Mayor Election",
+        refTime: new Date(2020,12-1,18,10-8,15,0),
+        interval: (5*24+4)*3600*1000, //5 days 4 hours
+        duration: (3*24+21)*3600*1000, //3 days 21 hours
         major: false,
     },{
         name: "Bank Interest",
@@ -44,16 +44,16 @@ var eventsData = [
         duration: 0,
         major: false,
     },{
-        name: "Mayor Election",
-        refTime: new Date(2020,12-1,18,10-8,15,0),
-        interval: (5*24+4)*3600*1000, //5 days 4 hours
-        duration: (3*24+21)*3600*1000, //3 days 21 hours
-        major: false,
-    },{
         name: "Jacob's Farming Contest",
         refTime: new Date(2020,12-1,18,16-8,15,0),
         interval: 3600*1000, //1 hour
         duration: 20*60*1000, //20 minutes
+        major: false,
+    },{
+        name: "Dark Auction",
+        refTime: new Date(2020,3-1,11,12-8,55,0),
+        interval: 3600*1000, //1 hour
+        duration: 0,
         major: false,
     },
 ];

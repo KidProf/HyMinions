@@ -2,47 +2,99 @@
 setInterval(updateEvents,1000);
 
 function updateEvents(){
-    var numberOfEvents = 9;
+    let numberOfEvents = 9;
+    let numberOfMajorEvents = 4;
     
-    
+    let majorLivePointer = 0;
+    let majorPointer = 0;
+    let minorLivePointer = numberOfMajorEvents;
+    let minorPointer = numberOfMajorEvents;
+    //sequence = major live events,     major events,    minor live events,     minor events
+    //           ^majorLivePointer      ^ majorPointer   ^minorLivePointer      ^minorPointer
+
     console.log("updated");
     //calculate the values displayed
     for(let i=0;i<numberOfEvents;i++){
         var currentTime = new Date();
-        // console.log("currentTime"+currentTime.valueOf());
-        // console.log("timezoneoffset"+currentTime.getTimezoneOffset());
-        // console.log("eventsData[i].refTime()"+eventsData[i].refTime.valueOf());
         //since currentTime does not take timezones into account, while events reftime does, so gettimezoneoffset is used to balance off the data, which returns the timezone in MINUTES.
-        timeAfterEvent = (currentTime.valueOf() - eventsData[i].refTime.valueOf() + currentTime.getTimezoneOffset()*1000*60)%(eventsData[i].interval);
+        let timeDifference = currentTime.valueOf() - eventsData[i].refTime.valueOf() + currentTime.getTimezoneOffset()*1000*60;
+        timeAfterEvent = (timeDifference)%(eventsData[i].interval);
+        let numberOfEventsPassed = Math.floor((timeDifference)/(eventsData[i].interval));
+        
         if(timeAfterEvent<eventsData[i].duration){
             eventsData[i].isLive = true;
             eventsData[i].timeDisplayed = durationToString(eventsData[i].duration - timeAfterEvent);
+            //start time + duration
+            eventsData[i].exactDateTime = dateTimeToString((numberOfEventsPassed)*eventsData[i].interval+eventsData[i].duration+eventsData[i].refTime.valueOf() - currentTime.getTimezoneOffset()*1000*60);
+            
+            if(eventsData[i].major) majorPointer++; else minorPointer++;
         }else{
             eventsData[i].isLive = false;
             eventsData[i].timeDisplayed = durationToString(eventsData[i].interval - timeAfterEvent);
+            //previous start time + 1
+            eventsData[i].exactDateTime = dateTimeToString((numberOfEventsPassed+1)*eventsData[i].interval+eventsData[i].refTime.valueOf() - currentTime.getTimezoneOffset()*1000*60);
+        
+            // if(i==0){
+            //     console.log(numberOfEventsPassed);
+            //     console.log(eventsData[i].interval);
+            //     console.log(numberOfEventsPassed*eventsData[i].interval+eventsData[i].refTime.valueOf());
+            // }
         }
     }
 
-    let sequence = 0;
-    //print on screen using jquery (for live events)
+
+
     for(let i=0;i<numberOfEvents;i++){
+        let sequence;
         if(eventsData[i].isLive){
+            if(eventsData[i].major){
+                sequence = majorLivePointer;
+                majorLivePointer++;
+            }else{
+                sequence = minorLivePointer;
+                minorLivePointer++;
+            }
             $("#event"+sequence+" >> .name").html(eventsData[i].name + " LIVE!");
             $("#event"+sequence+" >> .timeDisplayed").html("Ending in "+ eventsData[i].timeDisplayed);
             $("#event"+sequence+" >> img").attr("src","/images/events/"+eventsData[i].name+".png")
+            $("#event"+sequence+" >> .exactDateTime").html("("+eventsData[i].exactDateTime+")");
             $("#event"+sequence).addClass("live")
-            sequence++;
-        }
-    }
-    //(for not live events)
-    for(let i=0;i<numberOfEvents;i++){
-        if(!eventsData[i].isLive){
+        }else{
+            if(eventsData[i].major){
+                sequence = majorPointer;
+                majorPointer++;
+            }else{
+                sequence = minorPointer;
+                minorPointer++;
+            }
             $("#event"+sequence+" >> .name").html(eventsData[i].name);
             $("#event"+sequence+" >> .timeDisplayed").html(eventsData[i].timeDisplayed);
             $("#event"+sequence+" >> img").attr("src","/images/events/"+eventsData[i].name+".png")
-            sequence++;
+            $("#event"+sequence+" >> .exactDateTime").html("("+eventsData[i].exactDateTime+")");
         }
+        //console.log(sequence);
     }
+
+    // let sequence = 0;
+    // //print on screen using jquery (for live events)
+    // for(let i=0;i<numberOfEvents;i++){
+    //     if(eventsData[i].isLive){
+    //         $("#event"+sequence+" >> .name").html(eventsData[i].name + " LIVE!");
+    //         $("#event"+sequence+" >> .timeDisplayed").html("Ending in "+ eventsData[i].timeDisplayed);
+    //         $("#event"+sequence+" >> img").attr("src","/images/events/"+eventsData[i].name+".png")
+    //         $("#event"+sequence).addClass("live")
+    //         sequence++;
+    //     }
+    // }
+    // //(for not live events)
+    // for(let i=0;i<numberOfEvents;i++){
+    //     if(!eventsData[i].isLive){
+    //         $("#event"+sequence+" >> .name").html(eventsData[i].name);
+    //         $("#event"+sequence+" >> .timeDisplayed").html(eventsData[i].timeDisplayed);
+    //         $("#event"+sequence+" >> img").attr("src","/images/events/"+eventsData[i].name+".png")
+    //         sequence++;
+    //     }
+    // }
 
     function durationToString(duration){
         if(duration>2*24*3600*1000){
@@ -54,6 +106,11 @@ function updateEvents(){
         }
     }
 
+    function dateTimeToString(dateTime){
+        let d = new Date(dateTime);
+        return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+" "+numberToString(d.getHours(),2)+":"+numberToString(d.getMinutes(),2)+":"+numberToString(d.getSeconds(),2)
+    }
+    //create leading zeros
     function numberToString(number, digits){
         var numberRemaining = number;
         var returnString = "";
