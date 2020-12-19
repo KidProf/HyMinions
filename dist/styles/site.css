@@ -67,6 +67,9 @@ body {
 .my-box a.read-more {
   color: #AAA;
 }
+.my-box a.live {
+  color: yellow;
+}
 #announcementsHeader {
   background-color: #ff93ac;
 }

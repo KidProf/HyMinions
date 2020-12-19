@@ -19,6 +19,8 @@ const port = process.env.PORT || 3000;
 app.get('/',(req,res)=>{res.sendFile(path.join(__dirname, '/dist', 'index.html'))});
 app.get('/events',(req,res)=>{res.sendFile(path.join(__dirname, '/dist', 'events.html'))});
 app.get('/minions',(req,res)=>{res.sendFile(path.join(__dirname, '/dist', 'minions.html'))});
+app.get('/abouts',(req,res)=>{res.sendFile(path.join(__dirname, '/dist', 'abouts.html'))});
+app.get('/contact',(req,res)=>{res.sendFile(path.join(__dirname, '/dist', 'contact.html'))});
 
 //api
 app.get('/api/get-minions-api',getMinionsApi);
