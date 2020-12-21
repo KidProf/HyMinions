@@ -71,6 +71,7 @@ function updateEvents(){
             $("#event"+sequence+" >> .timeDisplayed").html(eventsData[i].timeDisplayed);
             $("#event"+sequence+" >> img").attr("src","/images/events/"+eventsData[i].name+".png")
             $("#event"+sequence+" >> .exactDateTime").html("("+eventsData[i].exactDateTime+")");
+            $("#event"+sequence).removeClass("live")
         }
         //console.log(sequence);
     }

@@ -48,13 +48,17 @@ block content
 		.my-box
 			.container
 				h4#minionsHeader.header MINIONS
-				h4 Top 10 minions
+				a(href="/minions") Customise your own minion list
+				ul
+					li Tailor made for each profile
+					li Real time bazaar prices
 				br
+				h4 Top 5 minions
 				.row
 					.offset-2.col-5: h5 Minion
 					.col-5: h5 Total Profit per hour
 				- let i = 0
-				while i<10
+				while i<5
 					.row
 						.col-2: p="#"+(i+1)
 						.col-5: p(id="minion"+i+"Name")= i==0?"Loading...":""
