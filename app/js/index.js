@@ -66,7 +66,8 @@ function updateEvents(){
 
 
 //MINIONS
-initCalculateMinionsProfit(0, 11, 25, -3, 0, 1).then(()=>{
+initCalculateMinionsProfit(0, 12, 25, -3, 0, 1).then(()=>{
+    
     //async await
     //sort: descending order by profit
     minions.sort((a,b) =>{
