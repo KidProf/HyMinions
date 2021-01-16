@@ -61,17 +61,18 @@
           <div class="form-group" id="useTier">
             <label for="overallTier">Tier: &nbsp;</label>
             <select class="form-control" id="overallTier">
-              <option selected="">1</option>
-              <option selected="">2</option>
-              <option selected="">3</option>
-              <option selected="">4</option>
-              <option selected="">5</option>
-              <option selected="">6</option>
-              <option selected="">7</option>
-              <option selected="">8</option>
-              <option selected="">9</option>
-              <option selected="">10</option>
-              <option selected="selected">11</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
+              <option>11</option>
+              <option selected value="12">11/12</option>
             </select>
           </div>
           <div class="form-group">
@@ -887,6 +888,21 @@
                 <button class="btn btn-blue" id="individualSettings50" onclick="openIndividualSettings(50)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
               </td>
             </tr>
+            <tr>
+              <td>#52</td>
+              <td id="minion51Name"></td>
+              <td id="minion51Tier"></td>
+              <td>
+                <p class="m-0" id="minion51Items"></p>
+                <p class="warning m-0" id="minion51Warning"></p>
+              </td>
+              <td id="minion51ItemsPerHour"></td>
+              <td id="minion51BazaarPrices"></td>
+              <td id="minion51Profit"></td>
+              <td id="minion51Settings">
+                <button class="btn btn-blue" id="individualSettings51" onclick="openIndividualSettings(51)" data-toggle="modal" data-target="#individualModal" disabled>Settings</button>
+              </td>
+            </tr>
           </table>
         </div>
         <div class="modal fade" id="individualModal" tabindex="-1" role="dialog" aria-labelledby="individualModalLabel" aria-hidden="true">
@@ -900,17 +916,18 @@
                 <div class="form-group">
                   <label for="individualTier">Tier: &nbsp;</label>
                   <select class="form-control" id="individualTier">
-                    <option selected="">1</option>
-                    <option selected="">2</option>
-                    <option selected="">3</option>
-                    <option selected="">4</option>
-                    <option selected="">5</option>
-                    <option selected="">6</option>
-                    <option selected="">7</option>
-                    <option selected="">8</option>
-                    <option selected="">9</option>
-                    <option selected="">10</option>
-                    <option selected="selected">11</option>
+                    <option id="individualTierOption1" selected="">1</option>
+                    <option id="individualTierOption2" selected="">2</option>
+                    <option id="individualTierOption3" selected="">3</option>
+                    <option id="individualTierOption4" selected="">4</option>
+                    <option id="individualTierOption5" selected="">5</option>
+                    <option id="individualTierOption6" selected="">6</option>
+                    <option id="individualTierOption7" selected="">7</option>
+                    <option id="individualTierOption8" selected="">8</option>
+                    <option id="individualTierOption9" selected="">9</option>
+                    <option id="individualTierOption10" selected="">10</option>
+                    <option id="individualTierOption11" selected="">11</option>
+                    <option id="individualTierOption12" selected="selected">12</option>
                   </select>
                 </div>
                 <div class="form-group">

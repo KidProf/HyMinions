@@ -37,6 +37,8 @@ function calculateMinionsProfit(sellingMethod, tier, fuel, variantIndex, npcPref
 
 function calculateMinionProfit(minion, sellingMethod, tier, fuel, variantIndex, npcPreference, useDiamondSpreading){
     let isArray = Array.isArray(variantIndex);
+    tier = (minion.tierDelay.length==11&&tier==12) ? 11 : tier;
+    
     minion.profit = 0;
     minion.itemsHarvested = 0;
     minion.items = "";

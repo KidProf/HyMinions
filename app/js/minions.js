@@ -1,4 +1,5 @@
-initCalculateMinionsProfit(0, 11, 25, -3, 0, 1).then(()=>{
+initCalculateMinionsProfit(0, 12, 25, -3, 0, 1).then(()=>{
+    
     //async await
     printTable();
 
@@ -28,6 +29,12 @@ function openIndividualSettings(minionIndex){
     $("#individualSellingTo").val(minions[minionIndex].npcPreference);
     $("#individualSellingMethod").val(minions[minionIndex].sellingMethod);
     
+    //tier 12?
+    if(minions[minionIndex].tierDelay.length==12){
+        $("#individualTierOption12").show();
+    }else{
+        $("#individualTierOption12").hide();
+    }
     //hide all the options and dropdowns first
     for(i=0;i<10;i++){
         $("#individualProduct"+i).hide();

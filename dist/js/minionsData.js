@@ -204,7 +204,7 @@ var minions = [
         ]      
     },{ //6
         name: "Lapis Minion",
-        tierDelay : [29,29,27,27,25,25,23,23,21,21,18],
+        tierDelay : [29,29,27,27,25,25,23,23,21,21,18,16],
         products : [
             {
                 item : "Lapis Lazuli",
@@ -519,7 +519,7 @@ var minions = [
         ]      
     },{ //20
         name: "Cobblestone Minion",
-        tierDelay : [14,14,12,12,10,10,9,9,8,8,7],
+        tierDelay : [14,14,12,12,10,10,9,9,8,8,7,6],
         products : [
             {
                 item : "Cobblestone",
@@ -535,7 +535,7 @@ var minions = [
         ]      
     },{ //21
         name: "Gold Minion",
-        tierDelay : [22,22,20,20,18,18,16,16,14,14,11],
+        tierDelay : [22,22,20,20,18,18,16,16,14,14,11,9],
         noDiamondSpreading : 1,
         warning: "Auto smelter is needed",
         products : [
@@ -555,7 +555,7 @@ var minions = [
         ]      
     },{ //22
         name: "Diamond Minion",
-        tierDelay : [29,29,27,27,25,25,22,22,19,19,15],
+        tierDelay : [29,29,27,27,25,25,22,22,19,19,15,12],
         products : [
             {
                 item : "Diamond",
@@ -573,7 +573,7 @@ var minions = [
         ]      
     },{ //23
         name: "Emerald Minion",
-        tierDelay : [28,28,26,26,24,24,21,21,18,18,14],
+        tierDelay : [28,28,26,26,24,24,21,21,18,18,14,12],
         products : [
             {
                 item : "Emerald",
@@ -591,7 +591,7 @@ var minions = [
         ]      
     },{ //24
         name: "Redstone Minion",
-        tierDelay : [29,29,27,27,25,25,23,23,21,21,18],
+        tierDelay : [29,29,27,27,25,25,23,23,21,21,18,16],
         products : [
             {
                 item : "Redstone",
@@ -627,7 +627,7 @@ var minions = [
         ]      
     },{ //26
         name: "Obsidian Minion",
-        tierDelay : [45,45,42,42,39,39,35,35,30,30,24],
+        tierDelay : [45,45,42,42,39,39,35,35,30,30,24,21],
         products : [
             {
                 item : "Obsidian",
@@ -1101,7 +1101,7 @@ var minions = [
         ]      
     },{ //49
         name: "Coal Minion",
-        tierDelay : [15,15,13,13,12,12,10,10,9,9,7],
+        tierDelay : [15,15,13,13,12,12,10,10,9,9,7,6],
         products : [
             {
                 item : "Coal",
@@ -1119,7 +1119,7 @@ var minions = [
         ]      
     },{ //50
         name: "Iron Minion",
-        tierDelay : [17,17,15,15,14,14,12,12,10,10,8],
+        tierDelay : [17,17,15,15,14,14,12,12,10,10,8,7],
         noDiamondSpreading : 1,
         warning: "Auto smelter is needed",
         products : [
@@ -1137,8 +1137,26 @@ var minions = [
                 ]
             }
         ]      
+    },{ //51
+        name: "Mithril Minion",
+        tierDelay : [80,80,75,75,70,70,65,65,60,60,55,50],
+        noDiamondSpreading : 1,
+        //warning: "",
+        products : [
+            {
+                item : "Mithril",
+                perTime : 1,
+                npcPrice: 10,
+                variants: [
+                    "Enchanted Mirthril",
+                ],
+                variantsEquiv: [
+                    160,
+                ]
+            }
+        ]      
     },
 
-    //TOTAL: 51
+    //TOTAL: 52
     //without flower minion
 ];

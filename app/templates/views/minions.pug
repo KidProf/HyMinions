@@ -8,7 +8,7 @@ block js
     	
 block append variables
     - var currentPage = "minions";
-    - var numberOfMinions = 51;
+    - var numberOfMinions = 52;
 
 block meta
     meta(name="description" content="Know your most profitable minions! Tailor made for each profile, fully accurate.")
@@ -34,9 +34,9 @@ block content
                 select#overallTier.form-control
                     -let j=1
                     while j<=11
-                        option(selected = (j==11 ? "selected" : ""))=j
+                        option=j
                         -j++;
-                
+                    option(selected value="12") 11/12
             .form-group
                 p Fuel: &nbsp; <input id="overallFuel" type="number" value="25" class="form-control" min="0"/> %
             .form-group
@@ -103,8 +103,8 @@ block content
                             label(for="individualTier") Tier: &nbsp;
                             select#individualTier.form-control
                                 -let l=1
-                                while l<=11
-                                    option(selected = (l==11 ? "selected" : ""))=l
+                                while l<=12
+                                    option(id = "individualTierOption"+l selected = (l==12 ? "selected" : ""))=l
                                     -l++;
                             
                         .form-group
