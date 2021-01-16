@@ -1,23 +1,27 @@
 //Running once per second
 setInterval(updateEvents,1000);
+let manualTime = 0;
 
 function updateEvents(){
     let numberOfEvents = 9;
     let numberOfMajorEvents = 4;
     
+    //let currentTime = new Date();
+    let currentTime = new Date();
+    let totalTimezoneOffset = currentTime.getTimezoneOffset()*1000*60 + manualTime*3600*1000;
     let majorLivePointer = 0;
     let majorPointer = 0;
     let minorLivePointer = numberOfMajorEvents;
     let minorPointer = numberOfMajorEvents;
+
     //sequence = major live events,     major events,    minor live events,     minor events
     //           ^majorLivePointer      ^ majorPointer   ^minorLivePointer      ^minorPointer
 
-    console.log("updated");
+    console.log("updated" + manualTime);
     //calculate the values displayed
     for(let i=0;i<numberOfEvents;i++){
-        var currentTime = new Date();
         //since currentTime does not take timezones into account, while events reftime does, so gettimezoneoffset is used to balance off the data, which returns the timezone in MINUTES.
-        let timeDifference = currentTime.valueOf() - eventsData[i].refTime.valueOf() + currentTime.getTimezoneOffset()*1000*60;
+        let timeDifference = currentTime.valueOf() - eventsData[i].refTime.valueOf() +totalTimezoneOffset;
         timeAfterEvent = (timeDifference)%(eventsData[i].interval);
         let numberOfEventsPassed = Math.floor((timeDifference)/(eventsData[i].interval));
         
@@ -25,14 +29,14 @@ function updateEvents(){
             eventsData[i].isLive = true;
             eventsData[i].timeDisplayed = durationToString(eventsData[i].duration - timeAfterEvent);
             //start time + duration
-            eventsData[i].exactDateTime = dateTimeToString((numberOfEventsPassed)*eventsData[i].interval+eventsData[i].duration+eventsData[i].refTime.valueOf() - currentTime.getTimezoneOffset()*1000*60);
+            eventsData[i].exactDateTime = dateTimeToString((numberOfEventsPassed)*eventsData[i].interval+eventsData[i].duration+eventsData[i].refTime.valueOf() -totalTimezoneOffset);
             
             if(eventsData[i].major) majorPointer++; else minorPointer++;
         }else{
             eventsData[i].isLive = false;
             eventsData[i].timeDisplayed = durationToString(eventsData[i].interval - timeAfterEvent);
             //previous start time + 1
-            eventsData[i].exactDateTime = dateTimeToString((numberOfEventsPassed+1)*eventsData[i].interval+eventsData[i].refTime.valueOf() - currentTime.getTimezoneOffset()*1000*60);
+            eventsData[i].exactDateTime = dateTimeToString((numberOfEventsPassed+1)*eventsData[i].interval+eventsData[i].refTime.valueOf() -totalTimezoneOffset);
         
             // if(i==0){
             //     console.log(numberOfEventsPassed);
@@ -121,4 +125,8 @@ function updateEvents(){
         }
         return returnString;
     }
+}
+
+function applyManualTime(){
+    manualTime = $("#manualTime").val();
 }

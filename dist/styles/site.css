@@ -38,6 +38,12 @@ body {
   -webkit-box-shadow: 0 0 0 0.2rem rgba(82, 109, 136, 0.25);
           box-shadow: 0 0 0 0.2rem rgba(82, 109, 136, 0.25);
 }
+.live {
+  color: yellow;
+}
+a.read-more {
+  color: #AAA;
+}
 .my-box {
   border: 2px solid #AAA;
   background-color: #102A43;
@@ -64,9 +70,6 @@ body {
 .my-box a {
   color: #B8EDA5;
 }
-.my-box a.read-more {
-  color: #AAA;
-}
 .my-box a.live {
   color: yellow;
 }
@@ -82,9 +85,6 @@ body {
 #minionsHeader {
   background-color: #B8EDA5;
 }
-.live {
-  color: yellow;
-}
 .events {
   width: 50px;
 }
@@ -97,6 +97,31 @@ body {
 }
 .live {
   color: yellow;
+}
+#collapseManualTime input,
+#collapseManualTime select {
+  background-color: #111;
+  border: 1px solid #B8EDA5;
+  color: #FFF;
+  width: 100px;
+}
+#collapseManualTime .btn {
+  background-color: #4D4E50;
+  color: #B8EDA5;
+}
+#collapseManualTime .btn:hover {
+  background-color: #3D3E40;
+}
+#collapseManualTime .btn:focus {
+  -webkit-box-shadow: 0 0 0 0.3rem rgba(77, 78, 80, 0.25);
+          box-shadow: 0 0 0 0.3rem rgba(77, 78, 80, 0.25);
+}
+#collapseManualTime .form-control {
+  display: inline-block;
+}
+#collapseManualTime .form-control:focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 249, 233, 0.25);
+          box-shadow: 0 0 0 0.2rem rgba(0, 249, 233, 0.25);
 }
 #minionsTable {
   overflow-x: auto;

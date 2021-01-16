@@ -16,6 +16,14 @@ block meta
 block content
     .container
         h1 EVENTS
+        a(data-toggle="collapse" href="#collapseManualTime" aria-expanded="false" aria-controls="collapseManualTime").read-more Wrong time displayed?
+        #collapseManualTime.collapse
+            br
+            h2 Calibration
+            p The time may be inaccurate due to daylight saving time or timezone issues. You may calibrate the time here.
+            p Add hours to current time &nbsp; <input id="manualTime" class="form-control" value="1" /> &nbsp; hour(s).
+            button.btn(onclick="applyManualTime()") Apply
+        br
         h2 Major Events
         -let i = 0;
         while i<numberOfEvents
