@@ -1148,10 +1148,12 @@ var minions = [
                 perTime : 1,
                 npcPrice: 10,
                 variants: [
-                    "Enchanted Mirthril",
+                    "Enchanted Mithril",
+                    //"Refined Mithril",
                 ],
                 variantsEquiv: [
                     160,
+                    //25600,
                 ]
             }
         ]      
