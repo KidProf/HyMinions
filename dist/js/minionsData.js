@@ -1140,7 +1140,7 @@ var minions = [
     },{ //51
         name: "Mithril Minion",
         tierDelay : [80,80,75,75,70,70,65,65,60,60,55,50],
-        noDiamondSpreading : 1,
+        //noDiamondSpreading : 1,
         //warning: "",
         products : [
             {

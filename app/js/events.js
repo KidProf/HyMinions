@@ -24,7 +24,7 @@ function updateEvents(){
         let timeDifference = currentTime.valueOf() - eventsData[i].refTime.valueOf() +totalTimezoneOffset;
         timeAfterEvent = (timeDifference)%(eventsData[i].interval);
         let numberOfEventsPassed = Math.floor((timeDifference)/(eventsData[i].interval));
-        console.log(numberOfEventsPassed);
+        //console.log(numberOfEventsPassed);
         if(timeAfterEvent<eventsData[i].duration){
             eventsData[i].isLive = true;
             eventsData[i].timeDisplayed = durationToString(eventsData[i].duration - timeAfterEvent);

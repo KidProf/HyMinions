@@ -37,7 +37,7 @@ function updateEvents(){
         $("#eventDescription").addClass("live")
     }else{
         $("#eventDescription").html(eventsData[eventIndex].name + " will start in " + eventsData[eventIndex].timeDisplayed);
-        $("#event"+sequence).removeClass("live")
+        $("#eventDescription").removeClass("live")
     }
     
 
