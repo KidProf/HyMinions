@@ -10,10 +10,10 @@ exports = module.exports = function (req, res) {
         pricesAjax[0] = new Object();
         pricesAjax[1] = new Object();
         Object.keys(itemNames).forEach((id) =>{
-            //0 -> sell price (sell offer)
+            //0 -> sell price (sell offer) (buy instantly)
             //if it has sell offer, use sell offer, else use default price
             pricesAjax[0][itemNames[id]]= 0.99*(products[id]["buy_summary"][0] ? products[id]["buy_summary"][0]["pricePerUnit"] : products[id]["quick_status"]["buyPrice"]);
-            //1 -> buy price (sell instantly)
+            //1 -> buy price (sell instantly) (buy order)
             //if it has buy order, use buy order, else use default price
             pricesAjax[1][itemNames[id]]= 0.99*(products[id]["sell_summary"][0] ? products[id]["sell_summary"][0]["pricePerUnit"] : products[id]["quick_status"]["sellPrice"]);
         })

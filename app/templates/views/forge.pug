@@ -1,0 +1,43 @@
+extends ../layouts/default
+
+block js
+    script(src="/js/jquery/jquery.doubleScroll.js")
+    script(src="/js/forgeData.js")
+    script(src="/js/forge.js")
+    	
+block append variables
+    - var currentPage = "forge";
+    - var numberOfItems = 3;
+
+block meta
+    meta(name="description" content="Know your most profitable minions! Tailor made for each profile, fully accurate.")
+
+block content
+    .container
+        h1 FORGE
+        p You may earn money by buying the materials from bazaar, forge it, and resell it. It is calculated based on instant buy and sell price of bazaar.
+        #doubleScroll
+            table#forgeTable.table.table-dark.w-100
+                thead
+                    tr
+                        th(scope="col")
+                        th(scope="col") Product
+                        th(scope="col") Materials
+                        th(scope="col") Time Taken (Hours)
+                        th(scope="col") Cost of materials (Buy instantly)
+                        th(scope="col") Price of product (Sell instantly)
+                        th(scope="col") Net Profit 
+                        th(scope="col") Profit per Hour
+                - let i = 0;
+                while i < numberOfItems
+                    tr
+                        td="#"+(i+1)
+                        td(id="forge"+i+"Name")= i==0?"Loading...":""
+                        td(id="forge"+i+"MaterialsName")
+                        td(id="forge"+i+"Time")
+                        td(id="forge"+i+"Cost")
+                        td(id="forge"+i+"ProductPrice")
+                        td(id="forge"+i+"NetProfit")
+                        td(id="forge"+i+"ProfitPerHour")
+                        
+                    - i++;
