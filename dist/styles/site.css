@@ -126,16 +126,20 @@ a.read-more {
   -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 249, 233, 0.25);
           box-shadow: 0 0 0 0.2rem rgba(0, 249, 233, 0.25);
 }
-#minionsTable {
+#minionsTable,
+#forgeTable {
   overflow-x: auto;
   display: inline-block;
   max-width: 1150px;
 }
 #minionsTable th,
-#minionsTable td {
+#forgeTable th,
+#minionsTable td,
+#forgeTable td {
   white-space: nowrap;
 }
-#minionsTable .warning {
+#minionsTable .warning,
+#forgeTable .warning {
   color: yellow;
 }
 #overall input,
