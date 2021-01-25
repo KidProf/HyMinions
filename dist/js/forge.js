@@ -9,10 +9,14 @@ initCalculateForgeProfit().then(()=>{
         $("#forge"+index+"Name").html(forge.name + "<br />(" + Math.round(forge.profitPerHour*10)/10 + ")");
         $("#forge"+index+"MaterialsName").html(forge.materialsName);
         $("#forge"+index+"Time").html(forge.duration);
+        $("#forge"+index+"UnitCost").html(Math.round(forge.unitCost*10)/10);
         $("#forge"+index+"Cost").html(Math.round(forge.cost*10)/10);
         $("#forge"+index+"ProductPrice").html(Math.round(forge.productPrice*10)/10);
         $("#forge"+index+"NetProfit").html(Math.round(forge.netProfit*10)/10);
         $("#forge"+index+"ProfitPerHour").html(Math.round(forge.profitPerHour*10)/10);
+        if(forge.netProfit<0){
+            $("#forge"+index+"Name")
+        }
     });
 
     //enable double scroll
@@ -34,7 +38,8 @@ async function initCalculateForgeProfit(){
 }
 
 function calculateForgeProfit(forge, prices){
-    forge.cost = forge.materialsQuantity[0]*prices[0][forge.materials[0]];
+    forge.unitCost = prices[0][forge.materials[0]];
+    forge.cost = forge.materialsQuantity[0]*forge.unitCost;
     forge.productPrice = prices[1][forge.name];
     forge.netProfit = forge.productPrice-forge.cost;
     forge.profitPerHour = forge.netProfit/forge.duration;

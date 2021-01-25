@@ -43,7 +43,10 @@
     <div id="body">
       <div class="container">
         <h1>FORGE</h1>
-        <p>You may earn money by buying the materials from bazaar, forge it, and resell it. It is calculated based on instant buy and sell price of bazaar.</p>
+        <h2>Notes to Users</h2>
+        <p>It calculates the net profit and profit per hour generated from crafting items into upgraded version through the forge in the Dwarven Mines. </p>
+        <p class="live">The prices of the items fluctuate a lot. After forging is finished, the price may be different from now. So there is a risk of suffering from a loss even though the list says you would make a profit.</p>
+        <h2>General Profit</h2>
         <div id="doubleScroll">
           <table class="table table-dark w-100" id="forgeTable">
             <thead>
@@ -51,38 +54,42 @@
                 <th scope="col"></th>
                 <th scope="col">Product</th>
                 <th scope="col">Materials</th>
-                <th scope="col">Time Taken (Hours)</th>
-                <th scope="col">Cost of materials (Buy instantly)</th>
-                <th scope="col">Price of product (Sell instantly)</th>
+                <th scope="col">Time Taken <br /> (Hours)</th>
+                <th scope="col">Unit cost of material <br />(Buy instantly)</th>
+                <th scope="col">Cost of materials <br /> (Buy instantly)</th>
+                <th scope="col">Price of product <br /> (Sell instantly)</th>
                 <th scope="col">Net Profit </th>
                 <th scope="col">Profit per Hour</th>
               </tr>
             </thead>
-            <tr>
+            <tr id="forge0Row">
               <td>#1</td>
               <td id="forge0Name">Loading...</td>
               <td id="forge0MaterialsName"></td>
               <td id="forge0Time"></td>
+              <td id="forge0UnitCost"></td>
               <td id="forge0Cost"></td>
               <td id="forge0ProductPrice"></td>
               <td id="forge0NetProfit"></td>
               <td id="forge0ProfitPerHour"></td>
             </tr>
-            <tr>
+            <tr id="forge1Row">
               <td>#2</td>
               <td id="forge1Name"></td>
               <td id="forge1MaterialsName"></td>
               <td id="forge1Time"></td>
+              <td id="forge1UnitCost"></td>
               <td id="forge1Cost"></td>
               <td id="forge1ProductPrice"></td>
               <td id="forge1NetProfit"></td>
               <td id="forge1ProfitPerHour"></td>
             </tr>
-            <tr>
+            <tr id="forge2Row">
               <td>#3</td>
               <td id="forge2Name"></td>
               <td id="forge2MaterialsName"></td>
               <td id="forge2Time"></td>
+              <td id="forge2UnitCost"></td>
               <td id="forge2Cost"></td>
               <td id="forge2ProductPrice"></td>
               <td id="forge2NetProfit"></td>

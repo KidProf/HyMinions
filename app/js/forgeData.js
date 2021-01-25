@@ -13,7 +13,7 @@ var forges = [
 
     },{ //1
         name : "Refined Mithril",
-        materialsName : "160x Enchanted Mithril/ 25600x Mithril",
+        materialsName : "160x Enchanted Mithril/ <br />25600x Mithril",
         materials : [
             "Mithril",
         ],
@@ -24,7 +24,7 @@ var forges = [
         
     },{ //2
         name : "Refined Titanium",
-        materialsName : "16x Enchanted Titanium/ 2560x Titanium",
+        materialsName : "16x Enchanted Titanium/ <br />2560x Titanium",
         materials : [
             "Titanium",
         ],

@@ -214,3 +214,6 @@ a.read-more {
 #individualModal #products select {
   margin-top: 10px;
 }
+#forgeTable .loss {
+  color: #ff93ac;
+}
