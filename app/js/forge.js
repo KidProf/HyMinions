@@ -38,7 +38,7 @@ async function initCalculateForgeProfit(){
 }
 
 function calculateForgeProfit(forge, prices){
-    forge.unitCost = prices[0][forge.materials[0]];
+    forge.unitCost = prices[0][forge.materials[0]]/0.99*1.01; //for tax
     forge.cost = forge.materialsQuantity[0]*forge.unitCost;
     forge.productPrice = prices[1][forge.name];
     forge.netProfit = forge.productPrice-forge.cost;
