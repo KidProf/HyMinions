@@ -15,7 +15,7 @@ initCalculateForgeProfit().then(()=>{
         $("#forge"+index+"NetProfit").html(Math.round(forge.netProfit*10)/10);
         $("#forge"+index+"ProfitPerHour").html(Math.round(forge.profitPerHour*10)/10);
         if(forge.netProfit<0){
-            $("#forge"+index+"Name")
+            $("#forge"+index+"Row").addClass("loss");
         }
     });
 
