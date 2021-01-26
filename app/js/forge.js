@@ -2,11 +2,11 @@ initCalculateForgeProfit().then(()=>{
     //async await
     
     forges.sort((a,b)=>{
-        return b.profitPerHour - a.profitPerHour;
+        return b.netProfit - a.netProfit;
     });
 
     forges.forEach((forge,index)=>{
-        $("#forge"+index+"Name").html(forge.name + "<br />(" + Math.round(forge.profitPerHour*10)/10 + ")");
+        $("#forge"+index+"Name").html(forge.name + "<br />(" + Math.round(forge.netProfit*10)/10 + ")");
         $("#forge"+index+"MaterialsName").html(forge.materialsName);
         $("#forge"+index+"Time").html(forge.duration);
         $("#forge"+index+"UnitCost").html(Math.round(forge.unitCost*10)/10);
