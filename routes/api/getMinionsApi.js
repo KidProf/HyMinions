@@ -32,9 +32,6 @@ exports = module.exports = function (req, res) {
         pricesAjax[0]["Enchanted Wool"] = 320;
         pricesAjax[1]["Enchanted Wool"] = 320;
 
-        pricesAjax[0]["Enchanted Mithril"] = 1600;
-        pricesAjax[1]["Enchanted Mithril"] = 1600;
-
         pricesAjax[0]["Diamond (Spreading)"] = pricesAjax[0]["Diamond"];
         pricesAjax[1]["Diamond (Spreading)"] = pricesAjax[1]["Diamond"];
         pricesAjax[0]["Enchanted Diamond (Spreading)"] = pricesAjax[0]["Enchanted Diamond"];
