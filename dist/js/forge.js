@@ -6,14 +6,14 @@ initCalculateForgeProfit().then(()=>{
     });
 
     forges.forEach((forge,index)=>{
-        $("#forge"+index+"Name").html(forge.name + "<br />(" + Math.round(forge.netProfit*10)/10 + ")");
+        $("#forge"+index+"Name").html(forge.name + "<br />(" + moneyRepresentation(forge.netProfit) + ")");
         $("#forge"+index+"MaterialsName").html(forge.materialsNames);
         $("#forge"+index+"Time").html(forge.duration);
-        $("#forge"+index+"UnitCost").html(Math.round(forge.unitCost*10)/10);
-        $("#forge"+index+"Cost").html(Math.round(forge.cost*10)/10);
-        $("#forge"+index+"ProductPrice").html(Math.round(forge.productPrice*10)/10);
-        $("#forge"+index+"NetProfit").html(Math.round(forge.netProfit*10)/10);
-        $("#forge"+index+"ProfitPerHour").html(Math.round(forge.profitPerHour*10)/10);
+        $("#forge"+index+"UnitCost").html(moneyRepresentation(forge.unitCost));
+        $("#forge"+index+"Cost").html(moneyRepresentation(forge.cost));
+        $("#forge"+index+"ProductPrice").html(moneyRepresentation(forge.productPrice));
+        $("#forge"+index+"NetProfit").html(moneyRepresentation(forge.netProfit));
+        $("#forge"+index+"ProfitPerHour").html(moneyRepresentation(forge.profitPerHour));
         if(forge.netProfit<0){
             $("#forge"+index+"Row").addClass("loss");
         }

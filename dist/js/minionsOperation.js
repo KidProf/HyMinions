@@ -150,10 +150,10 @@ function calculateProductProfitSpecificVariant(product, tierDelay, sellingMethod
             <prices[sellingMethod][product.variants[variantIndex]])){
             //if bazaar only || max profit && npc<bazaar
             bazaarPrice = prices[sellingMethod][product.variants[variantIndex]]; //bazaar
-            result.bazaarPrices = Math.round(bazaarPrice*10)/10+"<br />";
+            result.bazaarPrices = moneyRepresentation(bazaarPrice)+"<br />";
         }else{
             bazaarPrice = product.variantsNpcPrices ? product.variantsNpcPrices[variantIndex] : product.npcPrice*product.variantsEquiv[variantIndex]; //NPC
-            result.bazaarPrices = Math.round(bazaarPrice*10)/10+" (NPC) <br />";
+            result.bazaarPrices = moneyRepresentation(bazaarPrice)+" (NPC) <br />";
         }
     }else{ //default (-1, unenchanted form)
         result.items = product.item+"<br />"; //get name (unenchanted form) 
@@ -164,10 +164,10 @@ function calculateProductProfitSpecificVariant(product, tierDelay, sellingMethod
         if(npcPreference==1||(npcPreference==0&&(product.npcPrice<prices[sellingMethod][product.item]))){
             //if bazaar only || max profit && npc<bazaar
             bazaarPrice = prices[sellingMethod][product.item]; //bazaar
-            result.bazaarPrices = Math.round(bazaarPrice*10)/10+"<br />";
+            result.bazaarPrices = moneyRepresentation(bazaarPrice)/10+"<br />";
         }else{
             bazaarPrice = product.npcPrice; //NPC
-            result.bazaarPrices = Math.round(bazaarPrice*10)/10+" (NPC) <br />";
+            result.bazaarPrices = moneyRepresentation(bazaarPrice)/10+" (NPC) <br />";
         }
 
     }

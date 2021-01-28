@@ -257,7 +257,7 @@ function printTable(){
     });
 
     minions.forEach((minion,index)=>{
-        let roundedProfit = Math.round(minion.profit*10)/10;
+        let roundedProfit = moneyRepresentation(minion.profit);
         $("#minion"+index+"Name").html(minion.name + "<br />(" + roundedProfit + ")");
         $("#minion"+index+"Tier").html(minion.tier);
         $("#minion"+index+"Items").html(minion.items);
