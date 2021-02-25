@@ -5,79 +5,39 @@ require('dotenv').config();
 // Require
 const express = require('express');
 const env = require('dotenv');
+const lessMiddleware = require('less-middleware');
 const path = require('path');
 const getMinionsApi = require('./routes/api/getMinionsApi');
 const getProfileApi = require('./routes/api/getProfileApi');
+const minionsView = require("./routes/views/minions.js");
 
 
 //constants
 const app = express();
 const port = process.env.PORT || 3000;
 
+
 //ROUTING
 //views
-app.get('/',(req,res)=>{res.sendFile(path.join(__dirname, '/dist', 'index.html'))});
-app.get('/events',(req,res)=>{res.sendFile(path.join(__dirname, '/dist', 'events.html'))});
-app.get('/minions',(req,res)=>{res.sendFile(path.join(__dirname, '/dist', 'minions.html'))});
-app.get('/forge',(req,res)=>{res.sendFile(path.join(__dirname, '/dist', 'forge.html'))});
-app.get('/abouts',(req,res)=>{res.sendFile(path.join(__dirname, '/dist', 'abouts.html'))});
-app.get('/contact',(req,res)=>{res.sendFile(path.join(__dirname, '/dist', 'contact.html'))});
+app.get('/',(req,res)=>{res.render("index");});
+app.get('/events',(req,res)=>{res.render("events");});
+//app.get('/minions',(req,res)=>{res.sendFile(path.join(__dirname, '/dist', 'minions.html'))});
+app.get('/minions',minionsView);
+app.get('/forge',(req,res)=>{res.render("forge");});
+app.get('/abouts',(req,res)=>{res.render("abouts");});
+app.get('/contact',(req,res)=>{res.render("contact");});
 
 //api
 app.get('/api/get-minions-api',getMinionsApi);
 app.get('/api/get-profile-api/:name',getProfileApi);
 
+//app.set, app.use
+app.set("view engine","pug");
+app.set('views','templates/views');
+
 //css, js
+app.use(lessMiddleware('dist'));
 app.use(express.static('dist'));
 
 //start
-app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
-
-
-
-
-
-// Initialise Keystone with your project's configuration.
-// See http://keystonejs.com/guide/config for available options
-// and documentation.
-
-// keystone.init({
-// 	'name': 'HyMinions',
-// 	'brand': 'HyMinions',
-
-// 	'less': 'public',
-// 	'static': 'public',
-// 	'favicon': 'public/favicon.ico',
-// 	'views': 'templates/views',
-// 	'view engine': 'pug',
-
-// 	'auto update': true,
-// 	'session': true,
-// 	'auth': true,
-// 	'user model': 'User',
-// });
-
-// // Setup common locals for your templates. The following are required for the
-// // bundled templates and layouts. Any runtime locals (that should be set uniquely
-// // for each request) should be added to ./routes/middleware.js
-// keystone.set('locals', {
-// 	_: require('lodash'),
-// 	env: keystone.get('env'),
-// 	utils: keystone.utils,
-// 	editable: keystone.content.editable,
-// });
-
-// // Load your project's Routes
-// express.set('routes', require('./routes'));
-
-
-// // Configure the navigation bar in Keystone's Admin UI
-// keystone.set('nav', {
-// 	users: 'users',
-// });
-
-// // Start Keystone to connect to your database and initialise the web server
-
-
-
-// keystone.start();
+app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
