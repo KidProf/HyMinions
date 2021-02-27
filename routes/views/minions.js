@@ -20,12 +20,11 @@ exports = module.exports = function (req, res) {
     if(!settings.fuel||settings.fuel<0){
         settings.fuel = 25;
     }
-    if(!settings.diamondSpreading||!isWithinList(settings.diamondSpreading,[0,1])){
-        settings.diamondSpreading = 1;
-    }
-
 
     //Advanced
+    if(!settings.diamondSpreading||!isWithinList(settings.diamondSpreading,[0,1,2])){
+        settings.diamondSpreading = 2;
+    }
     if(!settings.calculationType||!isWithinList(settings.calculationType,[0,1])){
         settings.calculationType = 1;
     }
@@ -35,8 +34,12 @@ exports = module.exports = function (req, res) {
     if(!settings.offlineTime||settings.offlineTime<=0){
         settings.offlineTime = 12;
     }
-    if(!settings.superCompactor||!isWithinList(settings.superCompactor,[0,1])){
-        settings.superCompactor = 1;
+    if(!settings.superCompactor||!isWithinList(settings.superCompactor,[0,1,2,3])){
+        settings.superCompactor = 3;
+    }
+    //increase diamondSpreading tolerance if dwarven compactors are used.
+    if(settings.superCompactor==3&&settings.diamondSpreading==1){
+        settings.diamondSpreading=2;
     }
     if(!settings.minionChest||!isWithinList(settings.minionChest,[0,3,9,15,21,27])){
         settings.minionChest = 9;

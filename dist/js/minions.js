@@ -299,7 +299,7 @@ function toggleCalculationType(){
     let calculationType = $("#overallCalculationType").children("option:selected").val();
     if(calculationType==1){
         $("#autoCalculationType").removeClass("d-none");
-        $("#manualCalculationType").hide();
+        $("#manualCalculationType").addClass("d-none");
     }else{
         $("#manualCalculationType").removeClass("d-none");
         $("#autoCalculationType").addClass("d-none");
@@ -308,8 +308,9 @@ function toggleCalculationType(){
 
 function toggleMinionChest(){
     console.log("toggleMinionChest");
-    let superCompactor = $("#overallSuperCompactor").prop("checked");
-    if(superCompactor==0){
+    let superCompactor = $("#overallSuperCompactor").children("option:selected").val();
+    console.log($("#overallSuperCompactor").children("option:selected").val());
+    if(superCompactor<=1){
         $("#minionChest").removeClass("d-none");
     }else{
         $("#minionChest").addClass("d-none");
@@ -331,10 +332,6 @@ function generateLink(){
         keys.push("fuel");
         values.push($("#overallFuel").val());
     }
-    if(!$("#overallDiamondSpreading").prop("checked")){
-        keys.push("diamondSpreading");
-        values.push($("#overallDiamondSpreading").prop("checked")? 1 : 0);
-    }
 
     //advanced
     if($("#overallCalculationType").children("option:selected").val()==1){
@@ -342,9 +339,19 @@ function generateLink(){
             keys.push("offlineTime");
             values.push($("#overallOfflineTime").val());
         }
-        if(!$("#overallSuperCompactor").prop("checked")){
+
+        if($("#overallSuperCompactor").children("option:selected").val()==3){
+            if(!$("#overallDiamondSpreading").prop("checked")){
+                keys.push("diamondSpreading");
+                values.push(0);
+            }
+        }else{
             keys.push("superCompactor");
-            values.push(0);
+            values.push($("#overallSuperCompactor").children("option:selected").val());
+            keys.push("diamondSpreading");
+            values.push($("#overallDiamondSpreading").prop("checked")? 1 : 0);
+        }
+        if($("#overallSuperCompactor").children("option:selected").val()<=1){
             if($("#overallMinionChest").children("option:selected").val()!=9){
                 keys.push("minionChest");
                 values.push($("#overallMinionChest").children("option:selected").val());
@@ -360,6 +367,10 @@ function generateLink(){
         if($("#overallProductForm").children("option:selected").val()!=-3){
             keys.push("productForm");
             values.push($("#overallProductForm").children("option:selected").val());
+        }
+        if($("#overallDiamondSpreadingDwarvenCompactor").children("option:selected").val()!=2){
+            keys.push("diamondSpreading");
+            values.push($("#overallDiamondSpreadingDwarvenCompactor").children("option:selected").val());
         }
     }
     

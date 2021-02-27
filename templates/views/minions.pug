@@ -47,9 +47,7 @@ block content
                             input#overallFuel.form-control(type="number" value=settings.fuel min="0")
                             span &nbsp; %
 
-                    .form-group
-                        input#overallDiamondSpreading.checkbox(type="checkbox" checked=(settings.diamondSpreading==1 ? 'checked' : undefined))
-                        label(for="overallDiamondSpreading") &nbsp; Has Diamond Spreading
+
                     
                 .col-lg-7.col-12  
                     #advanced
@@ -62,24 +60,42 @@ block content
                                 option(value="1" selected=(settings.calculationType==1?'selected':undefined)) Automatic (based on offline duration)
                             span &nbsp; 
                                 i.fas.fa-question-circle
-                        .form-group#manualCalculationType(class=(settings.calculationType==0 ? "":"d-none"))
-                            label(for="overallProductForm") Products form: &nbsp;
-                            select#overallProductForm.form-control
-                                option(value="-3" selected=(settings.productForm==-3?'selected':undefined)) Max profit (enchanted forms)
-                                option(value="-2" selected=(settings.productForm==-2?'selected':undefined)) Max profit
-                                option(value="-1" selected=(settings.productForm==-1?'selected':undefined)) Unenchanted form
-                                option(value="0" selected=(settings.productForm==0?'selected':undefined)) First enchanted form
-                                option(value="1" selected=(settings.productForm==1?'selected':undefined)) Second enchanted form (if applicable)
+                        #manualCalculationType(class=(settings.calculationType==0 ? "":"d-none"))
+                            .form-group
+                                label(for="overallProductForm") Products form: &nbsp;
+                                select#overallProductForm.form-control
+                                    option(value="-3" selected=(settings.productForm==-3?'selected':undefined)) Max profit (enchanted forms)
+                                    option(value="-2" selected=(settings.productForm==-2?'selected':undefined)) Max profit
+                                    option(value="-1" selected=(settings.productForm==-1?'selected':undefined)) Unenchanted form
+                                    option(value="0" selected=(settings.productForm==0?'selected':undefined)) First enchanted form
+                                    option(value="1" selected=(settings.productForm==1?'selected':undefined)) Second enchanted form (if applicable)
+                            .form-group
+                                label(for="overallDiamondSpreadingDwarvenCompactor") Diamond Spreading: &nbsp;
+                                select#overallDiamondSpreadingDwarvenCompactor.form-control
+                                    option(value="0" selected=(settings.diamondSpreading==0?'selected':undefined)) None
+                                    option(value="1" selected=(settings.diamondSpreading==1?'selected':undefined)) Diamond spreading only
+                                    option(value="2" selected=(settings.diamondSpreading==2?'selected':undefined)) Diamond spreading + Dwarven super compactor
+                                span &nbsp; 
+                                    i.fas.fa-question-circle
                         #autoCalculationType(class=(settings.calculationType==1 ? "":"d-none"))
                             .form-group
                                 p Offline time: &nbsp; 
                                     input#overallOfflineTime.form-control(type="number" value=settings.offlineTime min="0")
                                     span &nbsp; hours
                             .form-group
-                                input#overallSuperCompactor.checkbox(type="checkbox" checked=(settings.superCompactor==1 ? 'checked' : undefined) onchange="toggleMinionChest()")
-                                label(for="overallSuperCompactor") &nbsp; Has Super Compactor &nbsp;
+                                input#overallDiamondSpreading.checkbox(type="checkbox" checked=(settings.diamondSpreading>=1 ? 'checked' : undefined))
+                                label(for="overallDiamondSpreading") &nbsp; Has Diamond Spreading &nbsp;
                                 i.fas.fa-question-circle
-                            #minionChest(class=(settings.superCompactor==1 ? "d-none":""))
+                            .form-group
+                                label(for="overallSuperCompactor") Compactor: &nbsp;
+                                select#overallSuperCompactor.form-control(onchange="toggleMinionChest()")
+                                    option(value="0" selected=(settings.superCompactor==0?'selected':undefined)) None
+                                    option(value="1" selected=(settings.superCompactor==1?'selected':undefined)) Compactor
+                                    option(value="2" selected=(settings.superCompactor==2?'selected':undefined)) Super Compactor
+                                    option(value="3" selected=(settings.superCompactor==3?'selected':undefined)) Dwarven Super Compactor
+                                span &nbsp; 
+                                    i.fas.fa-question-circle
+                            #minionChest(class=(settings.superCompactor<=1 ? "":"d-none"))
                                 .form-group
                                     label(for="overallMinionChest") Minion Chest: &nbsp;
                                     select#overallMinionChest.form-control
@@ -150,58 +166,58 @@ block content
                         td(id="minion"+i+"Profit")
                         td(id="minion"+i+"Settings"): button.btn.btn-blue(id="individualSettings"+i onclick="openIndividualSettings("+i+")" data-toggle="modal" data-target="#individualModal" disabled) Settings
                     - i++;
-        #individualModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="individualModalLabel" aria-hidden="true")
-            .modal-dialog(role="document")
-                .modal-content
-                    .modal-header
-                        h5#individualModalLabel.modal-title Title
-                        button.close(type="button" data-dismiss="modal" aria-label="Close")
-                            span(aria-hidden="true") &times;
-                    .modal-body
-                        .form-group
-                            label(for="individualTier") Tier: &nbsp;
-                            select#individualTier.form-control
-                                -let l=1
-                                while l<=12
-                                    option(id = "individualTierOption"+l selected = (l==12 ? "selected" : ""))=l
-                                    -l++;
+        //- #individualModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="individualModalLabel" aria-hidden="true")
+        //-     .modal-dialog(role="document")
+        //-         .modal-content
+        //-             .modal-header
+        //-                 h5#individualModalLabel.modal-title Title
+        //-                 button.close(type="button" data-dismiss="modal" aria-label="Close")
+        //-                     span(aria-hidden="true") &times;
+        //-             .modal-body
+        //-                 .form-group
+        //-                     label(for="individualTier") Tier: &nbsp;
+        //-                     select#individualTier.form-control
+        //-                         -let l=1
+        //-                         while l<=12
+        //-                             option(id = "individualTierOption"+l selected = (l==12 ? "selected" : ""))=l
+        //-                             -l++;
                             
-                        .form-group
-                            p Fuel: &nbsp; <input id="individualFuel" type="number" value="25" class="form-control" min="0"/> %
-                        .form-group
-                            input#individualDiamondSpreading.checkbox(type="checkbox" checked onchange="toggleIndividualDiamondSpreading()")
-                            label(for="individualDiamondSpreading") &nbsp; Has Diamond Spreading
-                        .form-group#products
-                            label Form of products:
-                            br
-                            -let m = 0;
-                            -let n = 0;
-                            while m<10
-                                select(id="individualProduct"+m).form-control
-                                    -n=0;
-                                    while n<5
-                                        option(id="individualProduct"+m+"Option"+n value=n)
-                                        -n++;
-                                -m++;
-                            select(id="individualProductDiamondSpreading").form-control
-                                -n=0;
-                                while n<3
-                                    option(id="individualProductDiamondSpreadingOption"+n value=n)
-                                    -n++;
-                        .form-group
-                            label(for="individualSellingTo") Selling to: &nbsp;
-                            select#individualSellingTo.form-control
-                                option(value="0") Max profit (NPC or bazaar)
-                                option(value="1") Bazaar only
-                                option(value="-1") NPC only
-                        .form-group
-                            label(for="individualSellingMethod") Selling method in bazaar: &nbsp;
-                            select#individualSellingMethod.form-control
-                                option(value="0") Sell offer
-                                option(value="1") Sell instantly
-                    .modal-footer
-                        button.btn.btn-secondary(type="button" data-dismiss="modal") Cancel
-                        button.btn.btn-warning(type="button" data-dismiss="modal" onclick="applyIndividualSettings()") Apply
+        //-                 .form-group
+        //-                     p Fuel: &nbsp; <input id="individualFuel" type="number" value="25" class="form-control" min="0"/> %
+        //-                 .form-group
+        //-                     input#individualDiamondSpreading.checkbox(type="checkbox" checked onchange="toggleIndividualDiamondSpreading()")
+        //-                     label(for="individualDiamondSpreading") &nbsp; Has Diamond Spreading
+        //-                 .form-group#products
+        //-                     label Form of products:
+        //-                     br
+        //-                     -let m = 0;
+        //-                     -let n = 0;
+        //-                     while m<10
+        //-                         select(id="individualProduct"+m).form-control
+        //-                             -n=0;
+        //-                             while n<5
+        //-                                 option(id="individualProduct"+m+"Option"+n value=n)
+        //-                                 -n++;
+        //-                         -m++;
+        //-                     select(id="individualProductDiamondSpreading").form-control
+        //-                         -n=0;
+        //-                         while n<3
+        //-                             option(id="individualProductDiamondSpreadingOption"+n value=n)
+        //-                             -n++;
+        //-                 .form-group
+        //-                     label(for="individualSellingTo") Selling to: &nbsp;
+        //-                     select#individualSellingTo.form-control
+        //-                         option(value="0") Max profit (NPC or bazaar)
+        //-                         option(value="1") Bazaar only
+        //-                         option(value="-1") NPC only
+        //-                 .form-group
+        //-                     label(for="individualSellingMethod") Selling method in bazaar: &nbsp;
+        //-                     select#individualSellingMethod.form-control
+        //-                         option(value="0") Sell offer
+        //-                         option(value="1") Sell instantly
+        //-             .modal-footer
+        //-                 button.btn.btn-secondary(type="button" data-dismiss="modal") Cancel
+        //-                 button.btn.btn-warning(type="button" data-dismiss="modal" onclick="applyIndividualSettings()") Apply
 
             
             
