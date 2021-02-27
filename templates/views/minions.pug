@@ -13,6 +13,20 @@ block append variables
 block meta
     meta(name="description" content="Know your most profitable minions! Tailor made for each profile, fully accurate.")
 
+mixin infoBox(id,title, info)
+    i.fas.fa-question-circle(data-toggle="modal" data-target="#"+id)
+    .modal.fade(id=id tabindex="-1" role="dialog" aria-labelledby=ud+"Label" aria-hidden="true")
+                .modal-dialog(role="document")
+                    .modal-content
+                        .modal-header
+                            h5.modal-title(id=id+"Label")=title
+                            button.close(type="button" data-dismiss="modal" aria-label="Close")
+                                span(aria-hidden="true") &times;
+                        .modal-body
+                            p=info
+                        .modal-footer
+                            button.btn.btn-secondary(type="button" data-dismiss="modal") Close
+
 block content
     .container
         h1 MINIONS
@@ -59,7 +73,7 @@ block content
                                 option(value="0" selected=(settings.calculationType==0?'selected':undefined)) Manual
                                 option(value="1" selected=(settings.calculationType==1?'selected':undefined)) Automatic (based on offline duration)
                             span &nbsp; 
-                                i.fas.fa-question-circle
+                                +infoBox("calculationTypeModal","Calculation Type","I don't know either")
                         #manualCalculationType(class=(settings.calculationType==0 ? "":"d-none"))
                             .form-group
                                 label(for="overallProductForm") Products form: &nbsp;
@@ -76,7 +90,7 @@ block content
                                     option(value="1" selected=(settings.diamondSpreading==1?'selected':undefined)) Diamond spreading only
                                     option(value="2" selected=(settings.diamondSpreading==2?'selected':undefined)) Diamond spreading + Dwarven super compactor
                                 span &nbsp; 
-                                    i.fas.fa-question-circle
+                                    +infoBox("diamondSpreadingDwarvenCompactorModal","Diamond Spreading","I don't know either")
                         #autoCalculationType(class=(settings.calculationType==1 ? "":"d-none"))
                             .form-group
                                 p Offline time: &nbsp; 
@@ -85,7 +99,7 @@ block content
                             .form-group
                                 input#overallDiamondSpreading.checkbox(type="checkbox" checked=(settings.diamondSpreading>=1 ? 'checked' : undefined))
                                 label(for="overallDiamondSpreading") &nbsp; Has Diamond Spreading &nbsp;
-                                i.fas.fa-question-circle
+                                +infoBox("diamondSpreadingModal","Diamond Spreading","I don't know either")
                             .form-group
                                 label(for="overallSuperCompactor") Compactor: &nbsp;
                                 select#overallSuperCompactor.form-control(onchange="toggleMinionChest()")
@@ -94,7 +108,7 @@ block content
                                     option(value="2" selected=(settings.superCompactor==2?'selected':undefined)) Super Compactor
                                     option(value="3" selected=(settings.superCompactor==3?'selected':undefined)) Dwarven Super Compactor
                                 span &nbsp; 
-                                    i.fas.fa-question-circle
+                                    +infoBox("superCompactorModal","Dwarven Super Compactor","I don't know either")
                             #minionChest(class=(settings.superCompactor<=1 ? "":"d-none"))
                                 .form-group
                                     label(for="overallMinionChest") Minion Chest: &nbsp;
@@ -151,7 +165,6 @@ block content
                         th(scope="col") Items Per Hour
                         th(scope="col") Prices (Bazaar, 1% Tax)
                         th(scope="col") Profit per Hour
-                        th(scope="col")
                 - let i = 0;
                 while i < numberOfMinions
                     tr
@@ -164,7 +177,6 @@ block content
                         td(id="minion"+i+"ItemsPerHour")
                         td(id="minion"+i+"BazaarPrices")
                         td(id="minion"+i+"Profit")
-                        td(id="minion"+i+"Settings"): button.btn.btn-blue(id="individualSettings"+i onclick="openIndividualSettings("+i+")" data-toggle="modal" data-target="#individualModal" disabled) Settings
                     - i++;
         //- #individualModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="individualModalLabel" aria-hidden="true")
         //-     .modal-dialog(role="document")

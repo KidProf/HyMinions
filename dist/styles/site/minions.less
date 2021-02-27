@@ -28,16 +28,23 @@
         width: 100px;
     }
 
-    .btn{
+    .modal-content{
+        background-color: #333;
+    }
+    .close{
+        color: #FFF;
+    }
+    #overallSettings{
         background-color: #4D4E50;
         color: #B8EDA5;
+        :hover{
+            background-color: #3D3E40;
+        }
+        :focus{
+            box-shadow: 0 0 0 0.3rem rgba(77,78,80,.25);
+        }
     }
-    .btn:hover{
-        background-color: #3D3E40;
-    }
-    .btn:focus{
-        box-shadow: 0 0 0 0.3rem rgba(77,78,80,.25);
-    }
+
 
     #overallProfileProfile{
         display: none;
@@ -105,34 +112,34 @@
     // }
 }
 
-#individualModal{
-    .modal-content{
-        background-color: #333;
-    }
-    .close{
-        color: #FFF;
-    }
-    input, select{
-        background-color: #444;
-        border: 1px solid @sharp-color-blue;
-        color: #FFF;
-    }
-    .form-control{
-        width: fit-content;
-        display: inline-block;
+// #individualModal{
+//     .modal-content{
+//         background-color: #333;
+//     }
+//     .close{
+//         color: #FFF;
+//     }
+//     input, select{
+//         background-color: #444;
+//         border: 1px solid @sharp-color-blue;
+//         color: #FFF;
+//     }
+//     .form-control{
+//         width: fit-content;
+//         display: inline-block;
         
-    }
-    .form-control:focus{
-        box-shadow: 0 0 0 0.2rem rgba(0,249,233,.25);
-    }
-    .checkbox{
-        height: 1.2rem;
-        width: 1.2rem;
-    }
-    #individualFuel{
-        width: 100px;
-    }
-    #products select{
-        margin-top: 10px;
-    }
-}
+//     }
+//     .form-control:focus{
+//         box-shadow: 0 0 0 0.2rem rgba(0,249,233,.25);
+//     }
+//     .checkbox{
+//         height: 1.2rem;
+//         width: 1.2rem;
+//     }
+//     #individualFuel{
+//         width: 100px;
+//     }
+//     #products select{
+//         margin-top: 10px;
+//     }
+// }
