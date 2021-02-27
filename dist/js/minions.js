@@ -342,9 +342,9 @@ function generateLink(){
             keys.push("offlineTime");
             values.push($("#overallOfflineTime").val());
         }
-        if($("#overallSuperCompactor").children("option:selected").val()==0){
+        if(!$("#overallSuperCompactor").prop("checked")){
             keys.push("superCompactor");
-            values.push($("#overallSuperCompactor").children("option:selected").val());
+            values.push(0);
             if($("#overallMinionChest").children("option:selected").val()!=9){
                 keys.push("minionChest");
                 values.push($("#overallMinionChest").children("option:selected").val());
