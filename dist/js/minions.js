@@ -273,7 +273,7 @@ function printTable(){
     });
 }
 
-
+//functions to provide interactions
 function toggleUseProfile(){
     let useProfile = $("#overallUseProfile").prop("checked");
     if(useProfile){
@@ -285,6 +285,7 @@ function toggleUseProfile(){
     }
 }
 
+
 function toggleIndividualDiamondSpreading(){
     let useDiamondSpreading = $("#individualDiamondSpreading").prop("checked");
     if(useDiamondSpreading){
@@ -292,4 +293,93 @@ function toggleIndividualDiamondSpreading(){
     }else{
         $("#individualProductDiamondSpreading").hide();
     }
+}
+
+function toggleCalculationType(){
+    let calculationType = $("#overallCalculationType").children("option:selected").val();
+    if(calculationType==1){
+        $("#autoCalculationType").show();
+        $("#manualCalculationType").hide();
+    }else{
+        $("#manualCalculationType").show();
+        $("#autoCalculationType").hide();
+    }
+}
+
+function toggleMinionChest(){
+    console.log("toggleMinionChest");
+    let superCompactor = $("#overallSuperCompactor").prop("checked");
+    if(superCompactor==0){
+        $("#minionChest").show();
+    }else{
+        $("#minionChest").hide();
+    }
+}
+
+function generateLink(){
+    let keys = [], values = [];
+
+    //general
+    if($("#overallUseProfile").prop("checked")&&$("#overallProfileName").val()!=0){
+        keys.push("name");
+        values.push($("#overallProfileName").val());
+    }else if($("#overallTier").children("option:selected").val()!=12){
+        keys.push("tier");
+        values.push($("#overallTier").children("option:selected").val());
+    }
+    if($("#overallFuel").val()!=25){
+        keys.push("fuel");
+        values.push($("#overallFuel").val());
+    }
+    if(!$("#overallDiamondSpreading").prop("checked")){
+        keys.push("diamondSpreading");
+        values.push($("#overallDiamondSpreading").prop("checked")? 1 : 0);
+    }
+
+    //advanced
+    if($("#overallCalculationType").children("option:selected").val()==1){
+        if($("#overallOfflineTime").val()!=12){
+            keys.push("offlineTime");
+            values.push($("#overallOfflineTime").val());
+        }
+        if($("#overallSuperCompactor").children("option:selected").val()==0){
+            keys.push("superCompactor");
+            values.push($("#overallSuperCompactor").children("option:selected").val());
+            if($("#overallMinionChest").children("option:selected").val()!=9){
+                keys.push("minionChest");
+                values.push($("#overallMinionChest").children("option:selected").val());
+            }
+            if($("#overallAutomaticShipping").children("option:selected").val()!=0.5){
+                keys.push("automaticShipping");
+                values.push($("#overallAutomaticShipping").children("option:selected").val());
+            }
+        }
+    }else{
+        keys.push("calculationType");
+        values.push($("#overallCalculationType").children("option:selected").val());
+        if($("#overallProductForm").children("option:selected").val()!=-3){
+            keys.push("productForm");
+            values.push($("#overallProductForm").children("option:selected").val());
+        }
+    }
+    
+    //minor
+    if($("#overallSellingTo").children("option:selected").val()!=0){
+        keys.push("sellingTo");
+        values.push($("#overallSellingTo").children("option:selected").val());
+    }
+    if($("#overallSellingMethod").children("option:selected").val()!=0){
+        keys.push("sellingMethod");
+        values.push($("#overallSellingMethod").children("option:selected").val());
+    }
+    if($("#overallTax").val()!=-1){
+        keys.push("tax");
+        values.push($("#overallTax").val());
+    }
+    let string = "/minions/?"
+    for(let i=0;i<keys.length;i++){
+        string += keys[i]+"="+values[i]+"&";
+    }
+    string += "/#minionsTable";
+    window.location.href=string;
 }

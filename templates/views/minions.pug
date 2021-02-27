@@ -16,13 +16,16 @@ block meta
 block content
     .container
         h1 MINIONS
-        h4 Overall Settings
         #overall
+            br
+            h3 General
             .form-group
-                input#overallUseProfile.checkbox(type="checkbox" checked onchange="toggleUseProfile()")
+                //-pretick use profile to be true for first time visit
+                input#overallUseProfile.checkbox(type="checkbox" checked onchange="toggleUseProfile()") 
                 label(for="overallUseProfile") &nbsp; Use Profile
             .form-group#useProfile
-                p Minecraft Name: &nbsp; <input id="overallProfileName" class="form-control"/>
+                p Minecraft Name: &nbsp; 
+                    input#overallProfileName.form-control(value=settings.name)
                 select#overallProfileProfile.form-control
                     -let k=0
                     while k<5
@@ -34,35 +37,83 @@ block content
                 select#overallTier.form-control
                     -let j=1
                     while j<=11
-                        option=j
+                        option(selected=(settings.tier==j ? 'selected':undefined))=j
                         -j++;
-                    option(selected value="12") 11/12
+                    option(selected=(settings.tier==12 ? 'selected':undefined) value="12") 11/12
             .form-group
-                p Fuel: &nbsp; <input id="overallFuel" type="number" value="25" class="form-control" min="0"/> %
+                p Fuel: &nbsp; 
+                    input#overallFuel.form-control(type="number" value=settings.fuel min="0")
+                    span &nbsp; %
+
             .form-group
-                input#overallDiamondSpreading.checkbox(type="checkbox" checked)
+                input#overallDiamondSpreading.checkbox(type="checkbox" checked=(settings.diamondSpreading==1 ? 'checked' : undefined))
                 label(for="overallDiamondSpreading") &nbsp; Has Diamond Spreading
+            
+            
+            
+            br
+            h3 Advanced 
             .form-group
-                label(for="overallProductForm") Form of products: &nbsp;
+                label(for="overallCalculationType") Selection of products form: &nbsp;  
+                select#overallCalculationType.form-control(onchange="toggleCalculationType()")
+                    option(value="0" selected=(settings.calculationType==0?'selected':undefined)) Manual
+                    option(value="1" selected=(settings.calculationType==1?'selected':undefined)) Automatic (based on offline duration)
+                span &nbsp; 
+                    i.fas.fa-question-circle
+            .form-group#manualCalculationType
+                label(for="overallProductForm") Products form: &nbsp;
                 select#overallProductForm.form-control
-                    option(value="-3" selected="selected") Max profit (Super Compactors)
-                    option(value="-2") Max profit
-                    option(value="-1") Unenchanted form
-                    option(value="0") First enchanted form
-                    option(value="1") Second enchanted form (if applicable)
-                    
+                    option(value="-3" selected=(settings.productForm==-3?'selected':undefined)) Max profit (enchanted forms)
+                    option(value="-2" selected=(settings.productForm==-2?'selected':undefined)) Max profit
+                    option(value="-1" selected=(settings.productForm==-1?'selected':undefined)) Unenchanted form
+                    option(value="0" selected=(settings.productForm==0?'selected':undefined)) First enchanted form
+                    option(value="1" selected=(settings.productForm==1?'selected':undefined)) Second enchanted form (if applicable)
+            #autoCalculationType
+                .form-group
+                    p Offline time: &nbsp; 
+                        input#overallOfflineTime.form-control(type="number" value=settings.offlineTime min="0")
+                        span &nbsp; hours
+                .form-group
+                    input#overallSuperCompactor.checkbox(type="checkbox" checked=(settings.superCompactor==1 ? 'checked' : undefined) onchange="toggleMinionChest()")
+                    label(for="overallSuperCompactor") &nbsp; Has Super Compactor &nbsp;
+                    i.fas.fa-question-circle
+                #minionChest
+                    .form-group
+                        label(for="overallMinionChest") Minion Chest: &nbsp;
+                        select#overallMinionChest.form-control
+                            option(value="0" selected=(settings.minionChest==0?'selected':undefined)) None
+                            option(value="3" selected=(settings.minionChest==3?'selected':undefined)) Small Storage
+                            option(value="9" selected=(settings.minionChest==9?'selected':undefined)) Medium Storage
+                            option(value="15" selected=(settings.minionChest==15?'selected':undefined)) Large Storage
+                            option(value="21" selected=(settings.minionChest==21?'selected':undefined)) X-Large Storage
+                            option(value="27" selected=(settings.minionChest==27?'selected':undefined)) XX-Large Storage
+                    .form-group
+                        label(for="overallAutomaticShipping") Automated Shipping: &nbsp;
+                        select#overallAutomaticShipping.form-control
+                            option(value="0" selected=(settings.automaticShipping==0?'selected':undefined)) None
+                            option(value="0.5" selected=(settings.automaticShipping==0.5?'selected':undefined)) Budget Hopper
+                            option(value="0.9" selected=(settings.automaticShipping==0.9?'selected':undefined)) Enchanted Hopper
+            
+            
+            br
+            h3 Miscellaneous       
             .form-group
                 label(for="overallSellingTo") Selling to: &nbsp;
                 select#overallSellingTo.form-control
-                    option(value="0") Max profit (NPC or bazaar)
-                    option(value="1") Bazaar only
-                    option(value="-1") NPC only
+                    option(value="0" selected=(settings.sellingTo==0?'selected':undefined)) Max profit (NPC or bazaar)
+                    option(value="1" selected=(settings.sellingTo==1?'selected':undefined)) Bazaar only
+                    option(value="-1" selected=(settings.sellingTo==-1?'selected':undefined)) NPC only
             .form-group
                 label(for="overallSellingMethod") Selling method in bazaar: &nbsp;
                 select#overallSellingMethod.form-control
-                    option(value="0") Sell offer
-                    option(value="1") Sell instantly
-            button#overallSettings.btn(onclick="overallSettings()" disabled) Apply Overall Changes
+                    option(value="0" selected=(settings.sellingMethod==0?'selected':undefined)) Sell offer
+                    option(value="1" selected=(settings.sellingMethod==1?'selected':undefined)) Sell instantly
+            .form-group
+                p Tax in bazaar: &nbsp; 
+                    input#overallTax.form-control(type="number" value=settings.tax min="0")
+                    span &nbsp; %
+            br
+            button#overallSettings.btn(onclick="generateLink()" disabled) Apply
             br
             br
         #doubleScroll
