@@ -13,9 +13,21 @@
 #overall{
     input, select{
         background-color: #111;
-        border: 1px solid @sharp-color-green;
         color: #FFF;
     }
+    .form-control{
+        width: fit-content;
+        display: inline-block;
+        
+    }
+    .checkbox{
+        height: 1.2rem;
+        width: 1.2rem;
+    }
+    #overallFuel, #overallTax, #overallOfflineTime{
+        width: 100px;
+    }
+
     .btn{
         background-color: #4D4E50;
         color: #B8EDA5;
@@ -26,23 +38,39 @@
     .btn:focus{
         box-shadow: 0 0 0 0.3rem rgba(77,78,80,.25);
     }
-    .form-control{
-        width: fit-content;
-        display: inline-block;
-        
-    }
-    .form-control:focus{
-        box-shadow: 0 0 0 0.2rem rgba(184,237,165,.25);
-    }
-    .checkbox{
-        height: 1.2rem;
-        width: 1.2rem;
-    }
-    #overallFuel, #overallTax, #overallOfflineTime{
-        width: 100px;
-    }
+
     #overallProfileProfile{
         display: none;
+    }
+    #miscellaneousInline{
+        display: inline-flex;
+        a {
+            align-self: center;
+        }
+    }
+    #general{
+        .form-control:focus{
+            box-shadow: 0 0 0 0.2rem rgba(184,237,165,.25);
+        }
+        input, select{
+            border: 1px solid @sharp-color-green;
+        }
+    }
+    #advanced{
+        .form-control:focus{
+            box-shadow: 0 0 0 0.2rem rgba(199, 103, 6, 0.25);
+        }
+        input, select{
+            border: 1px solid @sharp-color-orange;
+        }
+    }
+    #miscellaneous{
+        .form-control:focus{
+            box-shadow: 0 0 0 0.2rem rgba(0,249,233,.25);
+        }
+        input, select{
+            border: 1px solid @sharp-color-blue;
+        }
     }
     //#useTier, #minionChest, #manualCalculationType
     // #individualProduct0{
@@ -95,7 +123,7 @@
         
     }
     .form-control:focus{
-        box-shadow: 0 0 0 0.2rem rgba(0,249,233,.25);
+        box-shadow: 0 0 0 0.2rem ;
     }
     .checkbox{
         height: 1.2rem;
