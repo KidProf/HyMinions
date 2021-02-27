@@ -21,9 +21,9 @@ block content
             h3 General
             .form-group
                 //-pretick use profile to be true for first time visit
-                input#overallUseProfile.checkbox(type="checkbox" checked onchange="toggleUseProfile()") 
+                input#overallUseProfile.checkbox(type="checkbox" onchange="toggleUseProfile()" checked=(settings.useProfile==false&&settings.tier!=12 ? undefined:"checked")) 
                 label(for="overallUseProfile") &nbsp; Use Profile
-            .form-group#useProfile
+            .form-group#useProfile(class=(settings.useProfile==false&&settings.tier!=12 ? "d-none":""))
                 p Minecraft Name: &nbsp; 
                     input#overallProfileName.form-control(value=settings.name)
                 select#overallProfileProfile.form-control
@@ -32,7 +32,7 @@ block content
                         option(id="overallProfileProfileOption"+k value=k)
                         -k++;
             
-            .form-group#useTier
+            .form-group#useTier(class=(settings.useProfile==false&&settings.tier!=12 ? "":"d-none"))
                 label(for="overallTier") Tier: &nbsp;
                 select#overallTier.form-control
                     -let j=1
@@ -60,7 +60,7 @@ block content
                     option(value="1" selected=(settings.calculationType==1?'selected':undefined)) Automatic (based on offline duration)
                 span &nbsp; 
                     i.fas.fa-question-circle
-            .form-group#manualCalculationType
+            .form-group#manualCalculationType(class=(settings.calculationType==0 ? "":"d-none"))
                 label(for="overallProductForm") Products form: &nbsp;
                 select#overallProductForm.form-control
                     option(value="-3" selected=(settings.productForm==-3?'selected':undefined)) Max profit (enchanted forms)
@@ -68,7 +68,7 @@ block content
                     option(value="-1" selected=(settings.productForm==-1?'selected':undefined)) Unenchanted form
                     option(value="0" selected=(settings.productForm==0?'selected':undefined)) First enchanted form
                     option(value="1" selected=(settings.productForm==1?'selected':undefined)) Second enchanted form (if applicable)
-            #autoCalculationType
+            #autoCalculationType(class=(settings.calculationType==1 ? "":"d-none"))
                 .form-group
                     p Offline time: &nbsp; 
                         input#overallOfflineTime.form-control(type="number" value=settings.offlineTime min="0")
@@ -77,7 +77,7 @@ block content
                     input#overallSuperCompactor.checkbox(type="checkbox" checked=(settings.superCompactor==1 ? 'checked' : undefined) onchange="toggleMinionChest()")
                     label(for="overallSuperCompactor") &nbsp; Has Super Compactor &nbsp;
                     i.fas.fa-question-circle
-                #minionChest
+                #minionChest(class=(settings.superCompactor==1 ? "d-none":""))
                     .form-group
                         label(for="overallMinionChest") Minion Chest: &nbsp;
                         select#overallMinionChest.form-control

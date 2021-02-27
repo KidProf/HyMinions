@@ -277,11 +277,11 @@ function printTable(){
 function toggleUseProfile(){
     let useProfile = $("#overallUseProfile").prop("checked");
     if(useProfile){
-        $("#useProfile").show();
-        $("#useTier").hide();
+        $("#useProfile").removeClass("d-none");
+        $("#useTier").addClass("d-none");
     }else{
-        $("#useTier").show();
-        $("#useProfile").hide();
+        $("#useTier").removeClass("d-none");
+        $("#useProfile").addClass("d-none");
     }
 }
 
@@ -289,20 +289,20 @@ function toggleUseProfile(){
 function toggleIndividualDiamondSpreading(){
     let useDiamondSpreading = $("#individualDiamondSpreading").prop("checked");
     if(useDiamondSpreading){
-        $("#individualProductDiamondSpreading").show();
+        $("#individualProductDiamondSpreading").removeClass("d-none");
     }else{
-        $("#individualProductDiamondSpreading").hide();
+        $("#individualProductDiamondSpreading").addClass("d-none");
     }
 }
 
 function toggleCalculationType(){
     let calculationType = $("#overallCalculationType").children("option:selected").val();
     if(calculationType==1){
-        $("#autoCalculationType").show();
+        $("#autoCalculationType").removeClass("d-none");
         $("#manualCalculationType").hide();
     }else{
-        $("#manualCalculationType").show();
-        $("#autoCalculationType").hide();
+        $("#manualCalculationType").removeClass("d-none");
+        $("#autoCalculationType").addClass("d-none");
     }
 }
 
@@ -310,9 +310,9 @@ function toggleMinionChest(){
     console.log("toggleMinionChest");
     let superCompactor = $("#overallSuperCompactor").prop("checked");
     if(superCompactor==0){
-        $("#minionChest").show();
+        $("#minionChest").removeClass("d-none");
     }else{
-        $("#minionChest").hide();
+        $("#minionChest").addClass("d-none");
     }
 }
 
@@ -372,7 +372,7 @@ function generateLink(){
         keys.push("sellingMethod");
         values.push($("#overallSellingMethod").children("option:selected").val());
     }
-    if($("#overallTax").val()!=-1){
+    if($("#overallTax").val()!=1){
         keys.push("tax");
         values.push($("#overallTax").val());
     }
