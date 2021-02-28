@@ -87,7 +87,7 @@ block content
                                 label(for="overallDiamondSpreadingDwarvenCompactor") Diamond Spreading: &nbsp;
                                 select#overallDiamondSpreadingDwarvenCompactor.form-control
                                     option(value="0" selected=(settings.diamondSpreading==0?'selected':undefined)) None
-                                    option(value="1" selected=(settings.diamondSpreading==1?'selected':undefined)) Diamond spreading only
+                                    option(value="1" selected=(settings.diamondSpreading==1||settings.diamondSpreading==3?'selected':undefined)) Diamond spreading only
                                     option(value="2" selected=(settings.diamondSpreading==2?'selected':undefined)) Diamond spreading + Dwarven super compactor
                                 span &nbsp; 
                                     +infoBox("diamondSpreadingDwarvenCompactorModal","Diamond Spreading","I don't know either")

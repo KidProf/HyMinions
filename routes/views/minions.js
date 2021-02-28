@@ -37,9 +37,15 @@ exports = module.exports = function (req, res) {
     if(!settings.superCompactor||!isWithinList(settings.superCompactor,[0,1,2,3])){
         settings.superCompactor = 3;
     }
-    //increase diamondSpreading tolerance if dwarven compactors are used.
-    if(settings.superCompactor==3&&settings.diamondSpreading==1){
+    //increase diamondSpreading tolerance if dwarven compactors/ no compactors are used.
+    if(settings.calculationType==1&&settings.superCompactor==3&&settings.diamondSpreading==1){
         settings.diamondSpreading=2;
+    }
+    if(settings.calculationType==1&&settings.superCompactor==0&&settings.diamondSpreading>=1){
+        settings.diamondSpreading=3;
+    }
+    if(settings.calculationType==0&&settings.productForm==-1&&settings.diamondSpreading>=1){
+        settings.diamondSpreading=3;
     }
     if(!settings.minionChest||!isWithinList(settings.minionChest,[0,3,9,15,21,27])){
         settings.minionChest = 9;
