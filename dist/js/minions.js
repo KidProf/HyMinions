@@ -1,17 +1,17 @@
-initCalculateMinionsProfit(0, 12, 25, -3, 0, 1).then(()=>{
+// initCalculateMinionsProfit(0, 12, 25, -3, 0, 1).then(()=>{
     
-    //async await
-    printTable();
+//     //async await
+//     printTable();
 
-    //enable double scroll
-    $("#minionsTable").doubleScroll();
+//     //enable double scroll
+//     $("#minionsTable").doubleScroll();
     
-    $("#overallSettings").prop('disabled', false);
+//     $("#overallSettings").prop('disabled', false);
 
-    minions.forEach((minion,index)=>{
-        $("#individualSettings"+index).prop('disabled', false);
-    })
-});
+//     minions.forEach((minion,index)=>{
+//         $("#individualSettings"+index).prop('disabled', false);
+//     })
+// });
 
 let minecraftName;
 let individualModalMinionIndex = 0;
@@ -324,6 +324,10 @@ function generateLink(){
     if($("#overallUseProfile").prop("checked")&&$("#overallProfileName").val()!=0){
         keys.push("name");
         values.push($("#overallProfileName").val());
+        if($("#overallProfileProfile")&&$("#overallProfileProfile").children("option:selected").val()==0){{
+            keys.push("profile");
+            values.push($("#overallProfileProfile").children("option:selected").val());
+        }}
     }else if($("#overallTier").children("option:selected").val()!=12){
         keys.push("tier");
         values.push($("#overallTier").children("option:selected").val());
@@ -335,7 +339,7 @@ function generateLink(){
 
     //advanced
     if($("#overallCalculationType").children("option:selected").val()==1){
-        if($("#overallOfflineTime").val()!=12){
+        if($("#overallOfflineTime").val()!=24){
             keys.push("offlineTime");
             values.push($("#overallOfflineTime").val());
         }
@@ -351,20 +355,20 @@ function generateLink(){
             keys.push("diamondSpreading");
             values.push($("#overallDiamondSpreading").prop("checked")? 1 : 0);
         }
-        if($("#overallSuperCompactor").children("option:selected").val()<=1){
-            if($("#overallMinionChest").children("option:selected").val()!=9){
-                keys.push("minionChest");
-                values.push($("#overallMinionChest").children("option:selected").val());
-            }
-            if($("#overallAutomaticShipping").children("option:selected").val()!=0.5){
-                keys.push("automaticShipping");
-                values.push($("#overallAutomaticShipping").children("option:selected").val());
-            }
-        }
+        // if($("#overallSuperCompactor").children("option:selected").val()<=1){
+        //     if($("#overallMinionChest").children("option:selected").val()!=9){
+        //         keys.push("minionChest");
+        //         values.push($("#overallMinionChest").children("option:selected").val());
+        //     }
+        //     if($("#overallAutomaticShipping").children("option:selected").val()!=0.5){
+        //         keys.push("automaticShipping");
+        //         values.push($("#overallAutomaticShipping").children("option:selected").val());
+        //     }
+        // }
     }else{
         keys.push("calculationType");
         values.push($("#overallCalculationType").children("option:selected").val());
-        if($("#overallProductForm").children("option:selected").val()!=-3){
+        if($("#overallProductForm").children("option:selected").val()!=-2){
             keys.push("productForm");
             values.push($("#overallProductForm").children("option:selected").val());
         }
@@ -375,11 +379,11 @@ function generateLink(){
     }
     
     //minor
-    if($("#overallSellingTo").children("option:selected").val()!=0){
+    if($("#overallSellingTo").children("option:selected").val()!=1){
         keys.push("sellingTo");
         values.push($("#overallSellingTo").children("option:selected").val());
     }
-    if($("#overallSellingMethod").children("option:selected").val()!=0){
+    if($("#overallSellingMethod").children("option:selected").val()!=1){
         keys.push("sellingMethod");
         values.push($("#overallSellingMethod").children("option:selected").val());
     }

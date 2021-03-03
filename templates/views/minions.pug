@@ -8,13 +8,13 @@ block append js
     	
 block append variables
     - var currentPage = "minions";
-    - var numberOfMinions = 52;
+    - var numberOfMinions = 53;
 
 block meta
     meta(name="description" content="Know your most profitable minions! Tailor made for each profile, fully accurate.")
 
 mixin infoBox(id,title, info)
-    i.fas.fa-question-circle(data-toggle="modal" data-target="#"+id)
+    i.fas.fa-question-circle.fa-lg(data-toggle="modal" data-target="#"+id)
     .modal.fade(id=id tabindex="-1" role="dialog" aria-labelledby=ud+"Label" aria-hidden="true")
                 .modal-dialog(role="document")
                     .modal-content
@@ -42,11 +42,13 @@ block content
                     .form-group#useProfile(class=(settings.useProfile==false&&settings.tier!=12 ? "d-none":""))
                         p Minecraft Name: &nbsp; 
                             input#overallProfileName.form-control(value=settings.name)
-                        select#overallProfileProfile.form-control
-                            -let k=0
-                            while k<5
-                                option(id="overallProfileProfileOption"+k value=k)
-                                -k++;
+                        if(settings.profileNames)
+                            label(for="overallProfileProfile") Profile: &nbsp;
+                            select#overallProfileProfile.form-control
+                                -let k=0
+                                while k<settings.profileNames.length
+                                    option(value=k selected=(settings.profile==k?'selected':undefined))=settings.profileNames[k]
+                                    -k++;
                     
                     .form-group#useTier(class=(settings.useProfile==false&&settings.tier!=12 ? "":"d-none"))
                         label(for="overallTier") Tier: &nbsp;
@@ -78,17 +80,17 @@ block content
                             .form-group
                                 label(for="overallProductForm") Products form: &nbsp;
                                 select#overallProductForm.form-control
-                                    option(value="-3" selected=(settings.productForm==-3?'selected':undefined)) Max profit (enchanted forms)
-                                    option(value="-2" selected=(settings.productForm==-2?'selected':undefined)) Max profit
-                                    option(value="-1" selected=(settings.productForm==-1?'selected':undefined)) Unenchanted form
-                                    option(value="0" selected=(settings.productForm==0?'selected':undefined)) First enchanted form
-                                    option(value="1" selected=(settings.productForm==1?'selected':undefined)) Second enchanted form (if applicable)
+                                    option(value="-2" selected=(settings.productForm==-2?'selected':undefined)) Max profit (enchanted forms)
+                                    option(value="-1" selected=(settings.productForm==-1?'selected':undefined)) Max profit
+                                    option(value="0" selected=(settings.productForm==0?'selected':undefined)) Unenchanted form
+                                    option(value="1" selected=(settings.productForm==1?'selected':undefined)) First enchanted form
+                                    option(value="2" selected=(settings.productForm==2?'selected':undefined)) Second enchanted form (if applicable)
                             .form-group
                                 label(for="overallDiamondSpreadingDwarvenCompactor") Diamond Spreading: &nbsp;
                                 select#overallDiamondSpreadingDwarvenCompactor.form-control
                                     option(value="0" selected=(settings.diamondSpreading==0?'selected':undefined)) None
                                     option(value="1" selected=(settings.diamondSpreading==1||settings.diamondSpreading==3?'selected':undefined)) Diamond spreading only
-                                    option(value="2" selected=(settings.diamondSpreading==2?'selected':undefined)) Diamond spreading + Dwarven super compactor
+                                    option(value="2" selected=(settings.diamondSpreading==2?'selected':undefined)) Diamond spreading + Dwarven compactor
                                 span &nbsp; 
                                     +infoBox("diamondSpreadingDwarvenCompactorModal","Diamond Spreading","I don't know either")
                         #autoCalculationType(class=(settings.calculationType==1 ? "":"d-none"))
@@ -109,22 +111,22 @@ block content
                                     option(value="3" selected=(settings.superCompactor==3?'selected':undefined)) Dwarven Super Compactor
                                 span &nbsp; 
                                     +infoBox("superCompactorModal","Dwarven Super Compactor","I don't know either")
-                            #minionChest(class=(settings.superCompactor<=1 ? "":"d-none"))
-                                .form-group
-                                    label(for="overallMinionChest") Minion Chest: &nbsp;
-                                    select#overallMinionChest.form-control
-                                        option(value="0" selected=(settings.minionChest==0?'selected':undefined)) None
-                                        option(value="3" selected=(settings.minionChest==3?'selected':undefined)) Small Storage
-                                        option(value="9" selected=(settings.minionChest==9?'selected':undefined)) Medium Storage
-                                        option(value="15" selected=(settings.minionChest==15?'selected':undefined)) Large Storage
-                                        option(value="21" selected=(settings.minionChest==21?'selected':undefined)) X-Large Storage
-                                        option(value="27" selected=(settings.minionChest==27?'selected':undefined)) XX-Large Storage
-                                .form-group
-                                    label(for="overallAutomaticShipping") Automated Shipping: &nbsp;
-                                    select#overallAutomaticShipping.form-control
-                                        option(value="0" selected=(settings.automaticShipping==0?'selected':undefined)) None
-                                        option(value="0.5" selected=(settings.automaticShipping==0.5?'selected':undefined)) Budget Hopper
-                                        option(value="0.9" selected=(settings.automaticShipping==0.9?'selected':undefined)) Enchanted Hopper
+                            //- #minionChest(class=(settings.superCompactor<=1 ? "":"d-none"))
+                            //-     .form-group
+                            //-         label(for="overallMinionChest") Minion Chest: &nbsp;
+                            //-         select#overallMinionChest.form-control
+                            //-             option(value="0" selected=(settings.minionChest==0?'selected':undefined)) None
+                            //-             option(value="3" selected=(settings.minionChest==3?'selected':undefined)) Small Storage
+                            //-             option(value="9" selected=(settings.minionChest==9?'selected':undefined)) Medium Storage
+                            //-             option(value="15" selected=(settings.minionChest==15?'selected':undefined)) Large Storage
+                            //-             option(value="21" selected=(settings.minionChest==21?'selected':undefined)) X-Large Storage
+                            //-             option(value="27" selected=(settings.minionChest==27?'selected':undefined)) XX-Large Storage
+                            //-     .form-group
+                            //-         label(for="overallAutomaticShipping") Automated Shipping: &nbsp;
+                            //-         select#overallAutomaticShipping.form-control
+                            //-             option(value="0" selected=(settings.automaticShipping==0?'selected':undefined)) None
+                            //-             option(value="0.5" selected=(settings.automaticShipping==0.5?'selected':undefined)) Budget Hopper
+                            //-             option(value="0.9" selected=(settings.automaticShipping==0.9?'selected':undefined)) Enchanted Hopper
                         
                     
                         
@@ -136,20 +138,20 @@ block content
                             .form-group
                                 label(for="overallSellingTo") Selling to: &nbsp;
                                 select#overallSellingTo.form-control
-                                    option(value="0" selected=(settings.sellingTo==0?'selected':undefined)) Max profit (NPC or bazaar)
-                                    option(value="1" selected=(settings.sellingTo==1?'selected':undefined)) Bazaar only
-                                    option(value="-1" selected=(settings.sellingTo==-1?'selected':undefined)) NPC only
+                                    option(value="1" selected=(settings.sellingTo==0?'selected':undefined)) Max profit (NPC or bazaar)
+                                    option(value="0" selected=(settings.sellingTo==-1?'selected':undefined)) NPC only
                             .form-group
                                 label(for="overallSellingMethod") Selling method in bazaar: &nbsp;
                                 select#overallSellingMethod.form-control
-                                    option(value="0" selected=(settings.sellingMethod==0?'selected':undefined)) Sell offer
                                     option(value="1" selected=(settings.sellingMethod==1?'selected':undefined)) Sell instantly
+                                    option(value="0" selected=(settings.sellingMethod==0?'selected':undefined)) Sell offer
+                                    
                             .form-group
                                 p Tax in bazaar: &nbsp; 
                                     input#overallTax.form-control(type="number" value=settings.tax min="0")
                                     span &nbsp; %
             br
-            button#overallSettings.btn(onclick="generateLink()" disabled) Apply
+            button#overallSettings.btn(onclick="generateLink()") Apply
             br
             br
             
@@ -159,24 +161,42 @@ block content
                 thead
                     tr
                         th(scope="col")
-                        th(scope="col") Minion
+                        th(scope="col") 
+                            if settings.calculationType==0
+                                | Minion (Profit Per Hour)
+                            else
+                                | Minion (Total Profit)
                         th(scope="col") Tier
                         th(scope="col") Items
-                        th(scope="col") Items Per Hour
-                        th(scope="col") Prices (Bazaar, 1% Tax)
-                        th(scope="col") Profit per Hour
-                - let i = 0;
-                while i < numberOfMinions
+                        th(scope="col") Number of Items
+                        th(scope="col") Unit Price (Bazaar)
+                        if settings.calculationType==1
+                            th(scope="col") Total Profit
+                        th(scope="col") Profit Per Hour
+                -let i=0;
+                each minion in minions
                     tr
                         td="#"+(i+1)
-                        td(id="minion"+i+"Name")= i==0?"Loading...":""
-                        td(id="minion"+i+"Tier")
-                        td
-                            p(id="minion"+i+"Items").m-0
-                            p(id="minion"+i+"Warning").warning.m-0
-                        td(id="minion"+i+"ItemsPerHour")
+                        td(id="minion"+i+"Name")
+                            | #{minion.name}
+                            br
+                            | (#{minion.totalProfit})
+                        td(id="minion"+i+"Tier")=minion.tier
+                        td(id="minion"+i+"Items")
+                            each product in minion.outputProducts
+                                | #{product.name}
+                                br
+                        td(id="minion"+i+"NumberOfItems")
+                            each product in minion.outputProducts
+                                | #{product.numberOfItems}
+                                br
                         td(id="minion"+i+"BazaarPrices")
-                        td(id="minion"+i+"Profit")
+                            each product in minion.outputProducts
+                                | #{product.unitPrice}
+                                br
+                        td(id="minion"+i+"TotalProfit")=minion.totalProfit
+                        if settings.calculationType==1
+                            td(id="minion"+i+"ProfitPer")
                     - i++;
         //- #individualModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="individualModalLabel" aria-hidden="true")
         //-     .modal-dialog(role="document")
