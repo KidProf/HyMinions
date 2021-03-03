@@ -1,7 +1,7 @@
 var minionsData = require("./minionsData.js");
 var fetch = require('cross-fetch');
 var itemNames = require("./itemNames.json");
-let minecraftName;
+let minecraftName, profileNames;
     
 exports.calculateMinionsProfit = async function(minions, settings){
     diamondSpreadingItem = minionsData.diamondSpreadingItem;
@@ -12,18 +12,45 @@ exports.calculateMinionsProfit = async function(minions, settings){
     }else{
         await findBazaar();
     }
+    if(settings.useProfile){
+        settings.profileNames=profileNames;
+        settings.profile=Math.min(settings.profile,settings.profileNames.length-1);
+
+    }
     if(settings.hasError){
         return;
     }
     console.log("finished findBazaar");
 
     minions.forEach((minion)=>{
+        calculateMinionProfit(settings,minion);
+    });
+
+    minions.forEach((minion)=>{
+        let totalProfit = 0; 
+        minion.outputProducts.forEach((product)=>{
+            totalProfit +=product.profitPerItem;
+            //for old cal type, it means profit per hour
+            //for new cal type, it means total profit
+        });
+
+        minion.totalProfit = moneyRepresentation(totalProfit);
+
+    });
+    minions.sort((a,b) =>{
+        return b.totalProfit-a.totalProfit;
+    });
+    minions.forEach((minion)=>{
+        //console.log(minion.outputProducts,minion.totalProfit);
+    })
+
+    function calculateMinionProfit(settings,minion){
         if(settings.useProfile){
             minion.tier=minion.profilesTier[settings.profile];
         }else{
             minion.tier = Math.min(settings.tier,minion.tierDelay.length);//some has tier 12 some don't
         }
-
+        
         if(!minion.diamondSpreadingCriteria){
             //if diamond spreading criteria does not exist
             minion.hasDiamondSpreading = 1;
@@ -37,12 +64,12 @@ exports.calculateMinionsProfit = async function(minions, settings){
         };
         minion.outputProducts = new Array();
         minion.itemsHarvested = 0;
-    });
 
-    if(settings.calculationType==0){
-        //old calculation type
-        if(settings.productForm==-2){ //max profit(enchnanted forms)
-            minions.forEach((minion)=>{
+        if(minion.tier==0) return;
+
+        if(settings.calculationType==0){
+            //old calculation type
+            if(settings.productForm==-2){ //max profit(enchnanted forms)
                 minion.products.forEach((product)=>{
                     let maxVariantIndex = 1, variantIndex = 1, maxProfit = 0;
                     while(variantIndex<product.variants.length){
@@ -71,10 +98,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
                     diamondSpreadingItem.perTime = minion.itemsHarvested*0.1;
                     calculateVariantProfit(settings,minion,diamondSpreadingItem,maxVariantIndex);
                 };
-                //console.log(minion.outputProducts);
-            });
-        }else if(settings.productForm==-1){ //max profit
-            minions.forEach((minion)=>{
+            }else if(settings.productForm==-1){ //max profit
                 minion.products.forEach((product)=>{
                     let maxVariantIndex = 0, variantIndex = 0, maxProfit = 0;
                     while(variantIndex<product.variants.length){
@@ -101,10 +125,8 @@ exports.calculateMinionsProfit = async function(minions, settings){
                     calculateVariantProfit(settings,minion,diamondSpreadingItem,maxVariantIndex);
                 };
                 //console.log(minion.outputProducts);
-            });
-        }else{
-            //just find that form
-            minions.forEach((minion)=>{
+            }else{
+                //just find that form
                 minion.products.forEach((product)=>{
                     //while the index refers to enchanted form && (it does not exists || (it is not the only enchanted form && it is not an enchanted form)) e.g. snow block falls in this category
                     let variantIndex = settings.productForm;
@@ -121,27 +143,21 @@ exports.calculateMinionsProfit = async function(minions, settings){
                     calculateVariantProfit(settings,minion,diamondSpreadingItem,settings.productForm);
                 };
                 //console.log(minion.outputProducts);
-            });
-            
+                
+            }
+        }else{
+            //new calculation type
         }
-    }else{
-        //new calculation type
-    }
-
-    minions.forEach((minion)=>{
+    
         let totalProfit = 0; 
         minion.outputProducts.forEach((product)=>{
             totalProfit +=product.profitPerItem;
             //for old cal type, it means profit per hour
             //for new cal type, it means total profit
         });
+
         minion.totalProfit = moneyRepresentation(totalProfit);
-        minions.sort((a,b) =>{
-            return b.totalProfit-a.totalProfit;
-        });
-    })
-
-
+    }
     function calculateVariantProfit(settings,minion,product,variantIndex){
         let result = new Object();
         let itemsPerHour, unitPrice;
@@ -314,11 +330,11 @@ exports.calculateMinionsProfit = async function(minions, settings){
                         minions.forEach((minion,index6)=>{
                             minion.profilesTier = new Array(profilesAjax.length);
                         });
-                        settings.profileNames = new Array(profilesAjax.length);
+                        profileNames = new Array(profilesAjax.length);
                         profilesAjax.forEach((profile,index)=>{ 
                             //store cute name for data input
                             //console.log(profile);
-                            settings.profileNames[index]=profile.cuteName;
+                            profileNames[index]=profile.cuteName;
                             minions.forEach((minion,index3)=>{
                                 minion.profilesTier[index] = 0;
                             });

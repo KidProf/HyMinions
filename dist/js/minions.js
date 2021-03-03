@@ -324,7 +324,9 @@ function generateLink(){
     if($("#overallUseProfile").prop("checked")&&$("#overallProfileName").val()!=0){
         keys.push("name");
         values.push($("#overallProfileName").val());
-        if($("#overallProfileProfile")&&$("#overallProfileProfile").children("option:selected").val()==0){{
+        console.log("profile: ",$("#overallProfileProfile")&&$("#overallProfileProfile").children("option:selected").val());
+        if($("#overallProfileProfile")&&$("#overallProfileProfile").children("option:selected").val()!=0){{
+            
             keys.push("profile");
             values.push($("#overallProfileProfile").children("option:selected").val());
         }}
