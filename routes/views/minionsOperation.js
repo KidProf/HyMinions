@@ -25,23 +25,11 @@ exports.calculateMinionsProfit = async function(minions, settings){
     minions.forEach((minion)=>{
         calculateMinionProfit(settings,minion);
     });
-
-    minions.forEach((minion)=>{
-        let totalProfit = 0; 
-        minion.outputProducts.forEach((product)=>{
-            totalProfit +=product.profitPerItem;
-            //for old cal type, it means profit per hour
-            //for new cal type, it means total profit
-        });
-
-        minion.totalProfit = moneyRepresentation(totalProfit);
-
-    });
     minions.sort((a,b) =>{
         return b.totalProfit-a.totalProfit;
     });
     minions.forEach((minion)=>{
-        //console.log(minion.outputProducts,minion.totalProfit);
+        console.log(minion.totalProfit);
     })
 
     function calculateMinionProfit(settings,minion){
@@ -83,7 +71,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
                         }
                         variantIndex++;                
                     }
-                    calculateVariantProfit(settings,minion,product,maxVariantIndex );
+                    calculateVariantProfitManual(settings,minion,product,maxVariantIndex );
                 });
                 if(minion.hasDiamondSpreading){
                     let maxVariantIndex = 1, variantIndex = 1, maxProfit = 0;
@@ -96,7 +84,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
                         variantIndex++;                
                     }
                     diamondSpreadingItem.perTime = minion.itemsHarvested*0.1;
-                    calculateVariantProfit(settings,minion,diamondSpreadingItem,maxVariantIndex);
+                    calculateVariantProfitManual(settings,minion,diamondSpreadingItem,maxVariantIndex);
                 };
             }else if(settings.productForm==-1){ //max profit
                 minion.products.forEach((product)=>{
@@ -109,7 +97,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
                         }
                         variantIndex++;                
                     }
-                    calculateVariantProfit(settings,minion,product,maxVariantIndex );
+                    calculateVariantProfitManual(settings,minion,product,maxVariantIndex );
                 });
                 if(minion.hasDiamondSpreading){
                     let maxVariantIndex = 0, variantIndex = 0, maxProfit = 0;
@@ -122,43 +110,100 @@ exports.calculateMinionsProfit = async function(minions, settings){
                         variantIndex++;                
                     }
                     diamondSpreadingItem.perTime = minion.itemsHarvested*0.1;
-                    calculateVariantProfit(settings,minion,diamondSpreadingItem,maxVariantIndex);
+                    calculateVariantProfitManual(settings,minion,diamondSpreadingItem,maxVariantIndex);
                 };
                 //console.log(minion.outputProducts);
             }else{
                 //just find that form
                 minion.products.forEach((product)=>{
-                    //while the index refers to enchanted form && (it does not exists || (it is not the only enchanted form && it is not an enchanted form)) e.g. snow block falls in this category
+                    
                     let variantIndex = settings.productForm;
 
+                    //while the index refers to enchanted form && (it does not exists || (it is not the only enchanted form && it is not an enchanted form)) e.g. snow block falls in this category
                     while(variantIndex>=0&&((!product.variants[variantIndex])||
                     (variantIndex!=0&&!(product.variantsIsEnchanted ? product.variantsIsEnchanted[variantIndex] : 1)))){
                         variantIndex--;
                     }
-                    calculateVariantProfit(settings,minion,product,variantIndex);
+                    calculateVariantProfitManual(settings,minion,product,variantIndex);
 
                 });
                 if(minion.hasDiamondSpreading){
                     diamondSpreadingItem.perTime = minion.itemsHarvested*0.1;
-                    calculateVariantProfit(settings,minion,diamondSpreadingItem,settings.productForm);
+                    calculateVariantProfitManual(settings,minion,diamondSpreadingItem,settings.productForm);
                 };
                 //console.log(minion.outputProducts);
                 
             }
         }else{
             //new calculation type
+            minion.products.forEach((product)=>{
+                
+                if(settings.superCompactor>=2){
+                    //itemsPerHour = 3600/time between actions/2 (offline)* res generated per time* (1+fuel/100) / amount of res needed to generate the enchanted form
+                    let totalItems = Math.floor(settings.offlineTime*3600/minion.tierDelay[minion.tier-1]/2*product.perTime*(1+settings.fuel/100));
+
+                    let variantIndex = product.variants.length-1;
+                    //variant index >=0 && the variant index is an enchanted form && still have items
+                    while(variantIndex>=0&&(product.variantsIsEnchanted==undefined||product.variantsIsEnchanted[variantIndex]==1)&&totalItems>0){
+                        let totalItemsVariant = (totalItems-(totalItems%product.variantsEquiv[variantIndex]))/product.variantsEquiv[variantIndex]; //(total-remainder)/divisor to get intergral ans
+                        totalItems = totalItems%product.variantsEquiv[variantIndex];
+                        calculateVariantProfit(settings,minion,product,variantIndex,totalItemsVariant)
+                        variantIndex--;
+                    }
+                }
+            });
+
         }
     
-        let totalProfit = 0; 
+        minion.totalProfit = 0; 
         minion.outputProducts.forEach((product)=>{
-            totalProfit +=product.profitPerItem;
-            //for old cal type, it means profit per hour
-            //for new cal type, it means total profit
+            minion.totalProfit +=product.profitPerItem;
+            //for old cal type, totalProfit means profit per hour
+            //for new cal type, totalProfit means total profit
         });
-
-        minion.totalProfit = moneyRepresentation(totalProfit);
+        
+        minion.totalProfitText = moneyRepresentation(minion.totalProfit);
     }
-    function calculateVariantProfit(settings,minion,product,variantIndex){
+    
+    function calculateVariantProfit(settings,minion,product,variantIndex,totalItemsVariant){
+        let result = new Object();
+        let itemsPerHour, unitPrice;
+    
+        result.name = product.variants[variantIndex];
+        result.numberOfItems = totalItemsVariant;
+        if(settings.sellingTo==1){ //bazaar and npc
+            let bazaarPrice = product.bazaarPrice[variantIndex][settings.sellingMethod]*(1-settings.tax/100);
+            let npcPrice;
+            if(product.variantsNpcPrices){
+                npcPrice = product.variantsNpcPrices[variantIndex];
+            }else{
+                npcPrice = product.npcPrice*product.variantsEquiv[variantIndex];
+            }
+            if(bazaarPrice>npcPrice){
+                unitPrice = bazaarPrice;
+                result.unitPrice = moneyRepresentation(bazaarPrice);
+            }else{
+                unitPrice = npcPrice;
+                result.unitPrice = moneyRepresentation(npcPrice)+" (NPC)";
+            } 
+        }else{//npc only
+            if(product.variantsNpcPrices){
+                unitPrice = product.variantsNpcPrices[variantIndex];
+            }else{
+                unitPrice = product.npcPrice*product.variantsEquiv[variantIndex];
+            }
+            result.unitPrice = moneyRepresentation(unitPrice)+" (NPC)";
+        }
+        result.profitPerItem = totalItemsVariant*unitPrice;
+        //for diamond spreading
+        //minion.itemsHarvested += product.bazaarPrice[variantIndex][0]!=0 ? product.perTime : 0; // to solve the problem of "No gravel with flint shovel" being counted
+        
+        //for output
+        minion.outputProducts.push(result);
+       
+    }
+
+    function calculateVariantProfitManual(settings,minion,product,variantIndex){
         let result = new Object();
         let itemsPerHour, unitPrice;
     

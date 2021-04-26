@@ -23,7 +23,7 @@ exports.diamondSpreadingItem = {
 exports.minions = [
     { //0
         name: "Revenant Minion",
-        tierDelay : [29,29,26,26,23,23,19,19,14.5,14.5,10],
+        tierDelay : [29,29,26,26,23,23,19,19,14.5,14.5,10,8],
         products : [
             {
                 item : "Rotten Flesh",

@@ -180,7 +180,7 @@ block content
                         td(id="minion"+i+"Name")
                             | #{minion.name}
                             br
-                            | (#{minion.totalProfit})
+                            | (#{minion.totalProfitText})
                         td(id="minion"+i+"Tier")=minion.tier
                         td(id="minion"+i+"Items")
                             each product in minion.outputProducts
@@ -194,7 +194,7 @@ block content
                             each product in minion.outputProducts
                                 | #{product.unitPrice}
                                 br
-                        td(id="minion"+i+"TotalProfit")=minion.totalProfit
+                        td(id="minion"+i+"TotalProfit")=minion.totalProfitText
                         if settings.calculationType==1
                             td(id="minion"+i+"ProfitPer")
                     - i++;
