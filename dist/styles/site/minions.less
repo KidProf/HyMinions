@@ -10,7 +10,7 @@
     }
 }
 
-#overall{
+#overall, #search{
     input, select{
         background-color: #111;
         color: #FFF;
@@ -18,7 +18,6 @@
     .form-control{
         width: fit-content;
         display: inline-block;
-        
     }
     .checkbox{
         height: 1.2rem;
@@ -34,16 +33,27 @@
     .close{
         color: #FFF;
     }
-    #overallSettings{
+    #overallSettings{ //button
         background-color: #4D4E50;
         color: #B8EDA5;
-        :hover{
-            background-color: #3D3E40;
-        }
-        :focus{
-            box-shadow: 0 0 0 0.3rem rgba(77,78,80,.25);
-        }
     }
+    #overallSettings:hover{
+        background-color: #3D3E40;
+    }
+    #overallSettings:focus{
+        box-shadow: 0 0 0 0.3rem rgba(77,78,80,.25);
+    }
+    #searchButton{ //button
+        background-color: #4D4E50;
+        color: #B8EDA5;
+    }
+    #searchButton:hover{
+        background-color: #3D3E40;
+    }
+    #searchButton:focus{
+        box-shadow: 0 0 0 0.3rem rgba(77,78,80,.25);
+    }
+
 
     #miscellaneousInline{
         display: inline-flex;
@@ -51,6 +61,14 @@
             align-self: center;
         }
     }
+    
+    .form-control:focus{
+        box-shadow: 0 0 0 0.2rem rgba(184,237,165,.25);
+    }
+    input, select{
+        border: 1px solid @sharp-color-green;
+    }
+    
     #general{
         .form-control:focus{
             box-shadow: 0 0 0 0.2rem rgba(184,237,165,.25);

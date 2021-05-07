@@ -320,6 +320,10 @@ function toggleMinionChest(){
     }
 }
 
+function search(){
+    window.location.hash="#content";
+    //window.location.hash="";
+}
 function generateLink(){
     let keys = [], values = [];
 
@@ -400,6 +404,6 @@ function generateLink(){
     for(let i=0;i<keys.length;i++){
         string += keys[i]+"="+values[i]+"&";
     }
-    string += "/#minionsTable";
+    string += "/#content";
     window.location.href=string;
 }

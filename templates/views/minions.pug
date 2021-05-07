@@ -162,8 +162,16 @@ block content
             p.lead=settings.errorMsg
 
         else
-            #doubleScroll
-                table#minionsTable.table.table-dark.w-100
+            #content
+                #search: .form-group
+                    label(for="searchInput") Search: &nbsp;
+                    input#searchInput(list="searchDatalist").form-control
+                    datalist#searchDatalist
+                        each minion in minions
+                            option(value=minion.name)
+                    span &nbsp; &nbsp; &nbsp;
+                    button#searchButton.btn(onclick="search()") Search
+                #doubleScroll: table#minionsTable.table.table-dark.w-100
                     thead
                         tr
                             th(scope="col")
