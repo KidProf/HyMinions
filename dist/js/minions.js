@@ -300,10 +300,12 @@ function toggleCalculationType(){
     let calculationType = $("#overallCalculationType").children("option:selected").val();
     if(calculationType==1){
         $("#autoCalculationType").removeClass("d-none");
+        $("#autoCalculationTypeAdvanced").removeClass("d-none");
         $("#manualCalculationType").addClass("d-none");
     }else{
         $("#manualCalculationType").removeClass("d-none");
         $("#autoCalculationType").addClass("d-none");
+        $("#autoCalculationTypeAdvanced").addClass("d-none");
     }
 }
 

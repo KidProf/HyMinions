@@ -36,7 +36,7 @@ block content
         h1 MINIONS
         #overall
             .row
-                #general.col-lg-5.col-12
+                #general.col-lg-6.col-12
                     br
                     h3 General
                     .form-group
@@ -66,20 +66,22 @@ block content
                         p Fuel/ other perks: &nbsp; 
                             input#overallFuel.form-control(type="number" value=settings.fuel min="0")
                             span &nbsp; %
-
-
-                    
-                .col-lg-7.col-12  
+                    .form-group
+                        label(for="overallCalculationType") Calculation mode: &nbsp;  
+                        select#overallCalculationType.form-control(onchange="toggleCalculationType()")
+                            option(value="0" selected=(settings.calculationType==0?'selected':undefined)) Old
+                            option(value="1" selected=(settings.calculationType==1?'selected':undefined)) New (based on offline duration)
+                        span &nbsp; 
+                            +infoBox("calculationTypeModal","Calculation Type","I don't know either")
+                    #autoCalculationType(class=(settings.calculationType==1 ? "":"d-none"))
+                        .form-group
+                            p Offline time: &nbsp; 
+                                input#overallOfflineTime.form-control(type="number" value=settings.offlineTime min="0")
+                                span &nbsp; hours
+                .col-lg-6.col-12  
                     #advanced
                         br
                         h3 Advanced 
-                        .form-group
-                            label(for="overallCalculationType") Calculation mode: &nbsp;  
-                            select#overallCalculationType.form-control(onchange="toggleCalculationType()")
-                                option(value="0" selected=(settings.calculationType==0?'selected':undefined)) Old
-                                option(value="1" selected=(settings.calculationType==1?'selected':undefined)) New (based on offline duration)
-                            span &nbsp; 
-                                +infoBox("calculationTypeModal","Calculation Type","I don't know either")
                         #manualCalculationType(class=(settings.calculationType==0 ? "":"d-none"))
                             .form-group
                                 label(for="overallProductForm") Products form: &nbsp;
@@ -97,11 +99,7 @@ block content
                                     option(value="2" selected=(settings.diamondSpreading==2?'selected':undefined)) Diamond spreading + Dwarven compactor
                                 span &nbsp; 
                                     +infoBox("diamondSpreadingDwarvenCompactorModal","Diamond Spreading","I don't know either")
-                        #autoCalculationType(class=(settings.calculationType==1 ? "":"d-none"))
-                            .form-group
-                                p Offline time: &nbsp; 
-                                    input#overallOfflineTime.form-control(type="number" value=settings.offlineTime min="0")
-                                    span &nbsp; hours
+                        #autoCalculationTypeAdvanced(class=(settings.calculationType==1 ? "":"d-none"))
                             .form-group
                                 input#overallDiamondSpreading.checkbox(type="checkbox" checked=(settings.diamondSpreading>=1 ? 'checked' : undefined))
                                 label(for="overallDiamondSpreading") &nbsp; Has Diamond Spreading &nbsp;
