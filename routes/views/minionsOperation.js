@@ -456,6 +456,15 @@ exports.calculateMinionsProfit = async function(minions, settings){
     }
     //copied from general.js
     function moneyRepresentation(number){
+        if(number<0){
+            return "-" + moneyRepresentationMagnitude(Math.abs(number));
+        }else{
+            return moneyRepresentationMagnitude(number);
+        }
+    }
+
+    function moneyRepresentationMagnitude(number){
+        
         if(number>=1&&number<100000){ //shortcut
             return Math.round(number*10)/10; //1 d.p. e.g. 10.0, 99999.9
         }else if(number<0.0001){

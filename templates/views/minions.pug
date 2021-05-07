@@ -63,7 +63,7 @@ block content
                                 -j++;
                             option(selected=(settings.tier==12 ? 'selected':undefined) value="12") 11/12
                     .form-group
-                        p Fuel: &nbsp; 
+                        p Fuel/ other perks: &nbsp; 
                             input#overallFuel.form-control(type="number" value=settings.fuel min="0")
                             span &nbsp; %
 
@@ -74,10 +74,10 @@ block content
                         br
                         h3 Advanced 
                         .form-group
-                            label(for="overallCalculationType") Selection of products form: &nbsp;  
+                            label(for="overallCalculationType") Calculation mode: &nbsp;  
                             select#overallCalculationType.form-control(onchange="toggleCalculationType()")
-                                option(value="0" selected=(settings.calculationType==0?'selected':undefined)) Manual
-                                option(value="1" selected=(settings.calculationType==1?'selected':undefined)) Automatic (based on offline duration)
+                                option(value="0" selected=(settings.calculationType==0?'selected':undefined)) Old
+                                option(value="1" selected=(settings.calculationType==1?'selected':undefined)) New (based on offline duration)
                             span &nbsp; 
                                 +infoBox("calculationTypeModal","Calculation Type","I don't know either")
                         #manualCalculationType(class=(settings.calculationType==0 ? "":"d-none"))
