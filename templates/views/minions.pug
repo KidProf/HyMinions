@@ -92,7 +92,7 @@ block content
                             .form-group
                                 label(for="overallDiamondSpreadingDwarvenCompactor") Diamond Spreading: &nbsp;
                                 select#overallDiamondSpreadingDwarvenCompactor.form-control
-                                    option(value="0" selected=(settings.diamondSpreading==0?'selected':undefined)) None/ Compactor
+                                    option(value="0" selected=(settings.diamondSpreading==0?'selected':undefined)) None
                                     option(value="1" selected=(settings.diamondSpreading==1||settings.diamondSpreading==3?'selected':undefined)) Diamond spreading only
                                     option(value="2" selected=(settings.diamondSpreading==2?'selected':undefined)) Diamond spreading + Dwarven compactor
                                 span &nbsp; 
@@ -109,7 +109,7 @@ block content
                             .form-group
                                 label(for="overallSuperCompactor") Compactor: &nbsp;
                                 select#overallSuperCompactor.form-control(onchange="toggleMinionChest()")
-                                    option(value="0" selected=(settings.superCompactor==0?'selected':undefined)) None
+                                    option(value="0" selected=(settings.superCompactor==0?'selected':undefined)) None/ Compactor
                                     //-option(value="1" selected=(settings.superCompactor==1?'selected':undefined)) Compactor
                                     option(value="2" selected=(settings.superCompactor==2?'selected':undefined)) Super Compactor
                                     option(value="3" selected=(settings.superCompactor==3?'selected':undefined)) Dwarven Super Compactor
@@ -264,5 +264,6 @@ block content
         //-                 button.btn.btn-secondary(type="button" data-dismiss="modal") Cancel
         //-                 button.btn.btn-warning(type="button" data-dismiss="modal" onclick="applyIndividualSettings()") Apply
 
+            
             
             
