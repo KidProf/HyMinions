@@ -320,10 +320,6 @@ function toggleMinionChest(){
     }
 }
 
-function search(){
-    window.location.hash="#content";
-    //window.location.hash="";
-}
 function generateLink(){
     let keys = [], values = [];
 
@@ -406,4 +402,14 @@ function generateLink(){
     }
     string += "/#content";
     window.location.href=string;
+}
+
+function search(){
+    window.location.hash="#content";
+    let searchingName = $("#searchInput").val();
+    for(i=0;i<$("#searchDatalist").children("option").length;i++){
+        if(searchingName==$("#searchDatalist").children("option").eq(i).val()){
+            window.location.hash="#minion"+i+"Name";
+        };
+    }
 }

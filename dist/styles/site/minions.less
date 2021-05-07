@@ -26,6 +26,9 @@
     #overallFuel, #overallTax, #overallOfflineTime{
         width: 100px;
     }
+    #searchInput{
+        width: 200px;
+    }
 
     .modal-content{
         background-color: #333;
@@ -43,15 +46,16 @@
     #overallSettings:focus{
         box-shadow: 0 0 0 0.3rem rgba(77,78,80,.25);
     }
+
     #searchButton{ //button
         background-color: #4D4E50;
-        color: #B8EDA5;
+        color: @sharp-color-silver;
     }
     #searchButton:hover{
         background-color: #3D3E40;
     }
     #searchButton:focus{
-        box-shadow: 0 0 0 0.3rem rgba(77,78,80,.25);
+        box-shadow: 0 0 0 0.2rem rgba(209,208,191,.25);
     }
 
 
@@ -63,10 +67,10 @@
     }
     
     .form-control:focus{
-        box-shadow: 0 0 0 0.2rem rgba(184,237,165,.25);
+        box-shadow: 0 0 0 0.2rem rgba(209,208,191,.25);
     }
     input, select{
-        border: 1px solid @sharp-color-green;
+        border: 1px solid @sharp-color-silver;
     }
     
     #general{

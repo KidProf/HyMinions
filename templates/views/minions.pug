@@ -156,6 +156,8 @@ block content
             button#overallSettings.btn(onclick="generateLink()") Apply
             br
             br
+            br
+            br
             
         if settings.hasError
             h1 Error
@@ -167,6 +169,7 @@ block content
                     label(for="searchInput") Search: &nbsp;
                     input#searchInput(list="searchDatalist").form-control
                     datalist#searchDatalist
+                        -let l = 1;
                         each minion in minions
                             option(value=minion.name)
                     span &nbsp; &nbsp; &nbsp;
@@ -214,9 +217,14 @@ block content
                         - i++;
             p
                 if(settings.lastUpdatedBazaar)
-                | Last updated time of bazaar price: #{settings.lastUpdatedBazaar}
+                    | Last updated time of bazaar price: #{settings.lastUpdatedBazaar}
                 if(settings.lastUpdatedProfile)
-                | Last updated time of profile: #{settings.lastUpdatedProfile}
+                    | <br /> Last updated time of profile: #{settings.lastUpdatedProfile}
+
+
+
+
+
         //- #individualModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="individualModalLabel" aria-hidden="true")
         //-     .modal-dialog(role="document")
         //-         .modal-content
