@@ -15,13 +15,9 @@ exports = module.exports = function (req, res) {
     //go to minions operation.js
     //asyncAwait
     minionsOperation.calculateMinionsProfit(minions, settings).then(()=>{
-        if(settings.hasError){
-            res.render("errors/minionsError",{errorMsg: settings.errorMsg});
-        }else{
-            let output = {settings: settings, minions: minions};
-            console.log(output.settings);
-            res.render("minions",output);
-        }
+        let output = {settings: settings, minions: minions};
+        console.log(output.settings);
+        res.render("minions",output);
 
     });
 

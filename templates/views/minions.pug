@@ -12,6 +12,10 @@ block append variables
 
 block meta
     meta(name="description" content="Know your most profitable minions! Tailor made for each profile, fully accurate.")
+    
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
 
 mixin infoBox(id,title, info)
     i.fas.fa-question-circle.fa-lg(data-toggle="modal" data-target="#"+id)
@@ -155,49 +159,57 @@ block content
             br
             br
             
-        
-        #doubleScroll
-            table#minionsTable.table.table-dark.w-100
-                thead
-                    tr
-                        th(scope="col")
-                        th(scope="col") 
-                            if settings.calculationType==0
-                                | Minion (Profit Per Hour)
-                            else
-                                | Minion (Total Profit)
-                        th(scope="col") Tier
-                        th(scope="col") Items
-                        th(scope="col") Number of Items
-                        th(scope="col") Unit Price (Bazaar)
-                        if settings.calculationType==1
-                            th(scope="col") Total Profit
-                        th(scope="col") Profit Per Hour
-                -let i=0;
-                each minion in minions
-                    tr
-                        td="#"+(i+1)
-                        td(id="minion"+i+"Name")
-                            | #{minion.name}
-                            br
-                            | (#{minion.totalProfitText})
-                        td(id="minion"+i+"Tier")=minion.tier
-                        td(id="minion"+i+"Items")
-                            each product in minion.outputProducts
-                                | #{product.name}
+        if settings.hasError
+            h1 Error
+            p.lead=settings.errorMsg
+
+        else
+            #doubleScroll
+                table#minionsTable.table.table-dark.w-100
+                    thead
+                        tr
+                            th(scope="col")
+                            th(scope="col") 
+                                if settings.calculationType==0
+                                    | Minion (Profit Per Hour)
+                                else
+                                    | Minion (Total Profit)
+                            th(scope="col") Tier
+                            th(scope="col") Items
+                            th(scope="col") Number of Items
+                            th(scope="col") Unit Price (Bazaar)
+                            if settings.calculationType==1
+                                th(scope="col") Total Profit
+                            th(scope="col") Profit Per Hour
+                    -let i=0;
+                    each minion in minions
+                        tr
+                            td="#"+(i+1)
+                            td(id="minion"+i+"Name")
+                                | #{minion.name}
                                 br
-                        td(id="minion"+i+"NumberOfItems")
-                            each product in minion.outputProducts
-                                | #{product.numberOfItems}
-                                br
-                        td(id="minion"+i+"BazaarPrices")
-                            each product in minion.outputProducts
-                                | #{product.unitPrice}
-                                br
-                        td(id="minion"+i+"TotalProfit")=minion.totalProfitText
-                        if settings.calculationType==1
-                            td(id="minion"+i+"ProfitPer")
-                    - i++;
+                                | (#{minion.totalProfitText})
+                            td(id="minion"+i+"Tier")=minion.tier
+                            td(id="minion"+i+"Items")
+                                each product in minion.outputProducts
+                                    | #{product.name}
+                                    br
+                            td(id="minion"+i+"NumberOfItems")
+                                each product in minion.outputProducts
+                                    | #{product.numberOfItems}
+                                    br
+                            td(id="minion"+i+"BazaarPrices")
+                                each product in minion.outputProducts
+                                    | #{product.unitPrice}
+                                    br
+                            td(id="minion"+i+"TotalProfit")=minion.totalProfitText
+                            if settings.calculationType==1
+                                td(id="minion"+i+"ProfitPer")
+                        - i++;
+            if(settings.lastUpdatedBazaar)
+                p Last updated time of bazaar price: #{settings.lastUpdatedBazaar}
+            if(settings.lastUpdatedProfile)
+                p Last updated time of profile: #{settings.lastUpdatedProfile}
         //- #individualModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="individualModalLabel" aria-hidden="true")
         //-     .modal-dialog(role="document")
         //-         .modal-content

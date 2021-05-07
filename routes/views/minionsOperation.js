@@ -1,25 +1,36 @@
 var minionsData = require("./minionsData.js");
 var fetch = require('cross-fetch');
 var itemNames = require("./itemNames.json");
-let minecraftName, profileNames;
+let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, hadError=false;
     
 exports.calculateMinionsProfit = async function(minions, settings){
     diamondSpreadingItem = minionsData.diamondSpreadingItem;
     console.log(settings.name,minecraftName);
-    if(settings.useProfile&&settings.name!=minecraftName){ //don't call api again if identical name
-        await Promise.all([findBazaar(), findProfile(settings.name)]);
+    console.log(Date.now()-lastUpdatedBazaar);
+    if((settings.useProfile&&settings.name!=minecraftName)||hadError||Date.now()-lastUpdatedProfile>5*60*1000){ //don't call api again if identical name, but call again if prev result has error, 5 min timeout
+        await findProfile(settings.name);
+        //await Promise.all([findBazaar(), findProfile(settings.name)]);
         minecraftName = settings.name;
-    }else{
-        await findBazaar();
+        lastUpdatedProfile = Date.now();
     }
+    if(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000){ //1 min time out
+        await findBazaar();
+        lastUpdatedBazaar = Date.now();
+    }
+    settings.lastUpdatedProfile = lastUpdatedProfile ? dateTimeToString(lastUpdatedProfile): null;
+    settings.lastUpdatedBazaar = lastUpdatedBazaar ? dateTimeToString(lastUpdatedBazaar) : null;
+
+    if(settings.hasError){
+        hadError = true;
+        return;
+    }
+
     if(settings.useProfile){
         settings.profileNames=profileNames;
         settings.profile=Math.min(settings.profile,settings.profileNames.length-1);
 
     }
-    if(settings.hasError){
-        return;
-    }
+
     console.log("finished findBazaar");
 
     minions.forEach((minion)=>{
@@ -29,7 +40,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
         return b.totalProfit-a.totalProfit;
     });
     minions.forEach((minion)=>{
-        console.log(minion.totalProfit);
+        //console.log(minion.totalProfit);
     })
 
     function calculateMinionProfit(settings,minion){
@@ -338,11 +349,13 @@ exports.calculateMinionsProfit = async function(minions, settings){
                             });
                         });
                     });
+                    bazaarFound = true;
                     resolve("success");
                 })
                 .catch(()=>{
                     settings.hasError=true;
                     settings.errorMsg = "Error occured when getting bazaar prices.";
+                    resolve("success");
                 });
             }, 0);
         });
@@ -416,8 +429,8 @@ exports.calculateMinionsProfit = async function(minions, settings){
                         resolve("success");
                     });
                 })
-                .catch(()=>{
-                    console.log("catch from mojang");
+                .catch((err)=>{
+                    console.log("catch from mojang",err);
                     settings.hasError=true;
                     settings.errorMsg = "Error occured when finding the profile. The player does not exist.";
                     resolve("success");
@@ -426,6 +439,21 @@ exports.calculateMinionsProfit = async function(minions, settings){
         });
     }
 
+    //copied from events.js
+    function dateTimeToString(dateTime){
+        let d = new Date(dateTime);
+        return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+" "+numberToString(d.getHours(),2)+":"+numberToString(d.getMinutes(),2)+":"+numberToString(d.getSeconds(),2)
+    }
+    //create leading zeros
+    function numberToString(number, digits){
+        var numberRemaining = number;
+        var returnString = "";
+        for(let i=(digits-1);i>=0;i--){
+            returnString+=Math.floor(numberRemaining/Math.pow(10,i));
+            numberRemaining=numberRemaining%Math.pow(10,i);
+        }
+        return returnString;
+    }
     //copied from general.js
     function moneyRepresentation(number){
         if(number>=1&&number<100000){ //shortcut
