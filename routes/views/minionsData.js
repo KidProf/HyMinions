@@ -797,7 +797,7 @@ exports.minions = [
                 npcPrice: 2,
                 canCompactor: true,
                 compactor: {
-                    variant: "Block of Quartz",
+                    variant: "Glowstone",
                     variantEquiv: 4, //4
                     minimumEnchanted: 1,
                 },

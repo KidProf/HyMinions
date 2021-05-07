@@ -1,3 +1,4 @@
+$("#minionsTable").doubleScroll();
 // initCalculateMinionsProfit(0, 12, 25, -3, 0, 1).then(()=>{
     
 //     //async await

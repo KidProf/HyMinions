@@ -80,9 +80,9 @@ exports.calculateMinionsProfit = async function(minions, settings){
                                 maxVariantIndex = variantIndex;
                             }
                         }
-                        variantIndex++;                
+                        variantIndex++;
                     }
-                    calculateVariantProfitManual(settings,minion,product,maxVariantIndex );
+                    calculateVariantProfitManual(settings,minion,product,maxVariantIndex);
                 });
                 if(minion.hasDiamondSpreading){
                     let maxVariantIndex = 1, variantIndex = 1, maxProfit = 0;
@@ -149,20 +149,84 @@ exports.calculateMinionsProfit = async function(minions, settings){
             //new calculation type
             minion.products.forEach((product)=>{
                 
+                //itemsPerHour = 3600/time between actions/2 (offline)* res generated per time* (1+fuel/100) / amount of res needed to generate the enchanted form
+                let totalItems = Math.floor(settings.offlineTime*3600/minion.tierDelay[minion.tier-1]/2*product.perTime*(1+settings.fuel/100));
+                
+                minion.itemsHarvested += totalItems;
+                let variantIndex;
                 if(settings.superCompactor>=2){
-                    //itemsPerHour = 3600/time between actions/2 (offline)* res generated per time* (1+fuel/100) / amount of res needed to generate the enchanted form
-                    let totalItems = Math.floor(settings.offlineTime*3600/minion.tierDelay[minion.tier-1]/2*product.perTime*(1+settings.fuel/100));
-
-                    let variantIndex = product.variants.length-1;
-                    //variant index >=0 && the variant index is an enchanted form && still have items
-                    while(variantIndex>=0&&(product.variantsIsEnchanted==undefined||product.variantsIsEnchanted[variantIndex]==1)&&totalItems>0){
-                        let totalItemsVariant = (totalItems-(totalItems%product.variantsEquiv[variantIndex]))/product.variantsEquiv[variantIndex]; //(total-remainder)/divisor to get intergral ans
-                        totalItems = totalItems%product.variantsEquiv[variantIndex];
-                        calculateVariantProfit(settings,minion,product,variantIndex,totalItemsVariant)
-                        variantIndex--;
+                    variantIndex = product.variants.length-1;
+                }else if(settings.superCompactor==1&&product.canCompactor){
+                    variantIndex = product.compactor.minimumEnchanted ? product.compactor.minimumEnchanted : 0, maxProfit = 0;
+                    for(index=variantIndex;index<product.variants.length;index++){
+                        let profit = compareVariantProfit(settings,minion,product,index); 
+                        if(profit>maxProfit){
+                            variantIndex = index;
+                            maxProfit = profit;
+                        }
+                    }
+                }else{ //superCompactor = 0 / cannot be compacted by compactor
+                    variantIndex = 0, maxProfit = 0;
+                    for(index=variantIndex;index<product.variants.length;index++){
+                        let profit = compareVariantProfit(settings,minion,product,index); 
+                        if(profit>maxProfit){
+                            variantIndex = index;
+                            maxProfit = profit;
+                        }
                     }
                 }
+                //variant index >=0 && the variant index is an enchanted form && still have items
+                while(variantIndex>=0&&totalItems>0){
+                    if(product.variantsIsEnchanted==undefined||product.variantsIsEnchanted[variantIndex]==1){
+                        let totalItemsVariant = (totalItems-(totalItems%product.variantsEquiv[variantIndex]))/product.variantsEquiv[variantIndex]; //(total-remainder)/divisor to get intergral ans
+                        totalItems = totalItems%product.variantsEquiv[variantIndex];
+                        if(totalItemsVariant!=0){
+                            calculateVariantProfit(settings,minion,product,variantIndex,totalItemsVariant);
+                        }
+                    }
+                    variantIndex--;
+                }
+            
             });
+
+            if(minion.hasDiamondSpreading){
+                let totalItems = Math.floor(minion.itemsHarvested*0.1);
+                let product = diamondSpreadingItem;
+                let variantIndex;
+                if(settings.superCompactor>=2){
+                    variantIndex = product.variants.length-1;
+                }else if(settings.superCompactor==1&&product.canCompactor){
+                    variantIndex = product.compactor.minimumEnchanted ? product.compactor.minimumEnchanted : 0, maxProfit = 0;
+                    for(index=variantIndex;index<product.variants.length;index++){
+                        let profit = compareVariantProfit(settings,minion,product,index); 
+                        if(profit>maxProfit){
+                            variantIndex = index;
+                            maxProfit = profit;
+                        }
+                    }
+                }else{ //superCompactor = 0 / cannot be compacted by compactor
+                    variantIndex = 0, maxProfit = 0;
+                    for(index=variantIndex;index<product.variants.length;index++){
+                        let profit = compareVariantProfit(settings,minion,product,index); 
+                        if(profit>maxProfit){
+                            variantIndex = index;
+                            maxProfit = profit;
+                        }
+                    }
+                }
+                //variant index >=0 && the variant index is an enchanted form && still have items
+                while(variantIndex>=0&&totalItems>0){
+                    if(product.variantsIsEnchanted==undefined||product.variantsIsEnchanted[variantIndex]==1){
+                        let totalItemsVariant = (totalItems-(totalItems%product.variantsEquiv[variantIndex]))/product.variantsEquiv[variantIndex]; //(total-remainder)/divisor to get intergral ans
+                        totalItems = totalItems%product.variantsEquiv[variantIndex];
+                        if(totalItemsVariant!=0){
+                            calculateVariantProfit(settings,minion,product,variantIndex,totalItemsVariant);
+                        }
+                    }
+                    variantIndex--;
+                }
+
+            };
 
         }
     
@@ -174,6 +238,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
         });
         
         minion.totalProfitText = moneyRepresentation(minion.totalProfit);
+        minion.profitPerHour = moneyRepresentation(minion.totalProfit/settings.offlineTime);
     }
     
     function calculateVariantProfit(settings,minion,product,variantIndex,totalItemsVariant){

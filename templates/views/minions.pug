@@ -204,12 +204,13 @@ block content
                                     br
                             td(id="minion"+i+"TotalProfit")=minion.totalProfitText
                             if settings.calculationType==1
-                                td(id="minion"+i+"ProfitPer")
+                                td(id="minion"+i+"ProfitPerHour")=minion.profitPerHour
                         - i++;
-            if(settings.lastUpdatedBazaar)
-                p Last updated time of bazaar price: #{settings.lastUpdatedBazaar}
-            if(settings.lastUpdatedProfile)
-                p Last updated time of profile: #{settings.lastUpdatedProfile}
+            p
+                if(settings.lastUpdatedBazaar)
+                | Last updated time of bazaar price: #{settings.lastUpdatedBazaar}
+                if(settings.lastUpdatedProfile)
+                | Last updated time of profile: #{settings.lastUpdatedProfile}
         //- #individualModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="individualModalLabel" aria-hidden="true")
         //-     .modal-dialog(role="document")
         //-         .modal-content
