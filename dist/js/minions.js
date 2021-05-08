@@ -408,7 +408,7 @@ function search(){
     let searchingName = $("#searchInput").val();
     for(i=0;i<$("#searchDatalist").children("option").length;i++){
         if(searchingName==$("#searchDatalist").children("option").eq(i).val()){
-            window.location.hash="#minion"+i+"Name";
+            window.location.hash="#minion"+i+"Row";
         };
     }
 }
