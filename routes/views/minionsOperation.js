@@ -64,7 +64,12 @@ exports.calculateMinionsProfit = async function(minions, settings){
         minion.outputProducts = new Array();
         minion.itemsHarvested = 0;
 
-        if(minion.tier==0) return;
+        if(minion.tier==0){
+            minion.totalProfit = 0;
+            minion.totalProfitText = 0;
+            minion.profitPerHour = 0;
+            return;
+        }
 
         if(settings.calculationType==0){
             //old calculation type
