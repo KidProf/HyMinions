@@ -26,17 +26,17 @@ exports = module.exports = function (req, res) {
         //general
         if(settings.name){
             settings.useProfile= true;
-            settings.tier = 12;//for settings page first show 11/12 option
+            settings.tier = 11;//for settings page first show 11 option
             if(!settings.profile){
                 settings.profile=0;
             }
-            if(settings.profile="undefined"){
+            if(settings.profile=="undefined"){
                 settings.profile=0;
             }
         }else{
             settings.useProfile= false;
             if(!settings.tier||!isWithinList(settings.tier,[1,2,3,4,5,6,7,8,9,10,11,12])){
-                settings.tier = 12;
+                settings.tier = 11;
             }
         }
         if(!settings.fuel||settings.fuel<0){

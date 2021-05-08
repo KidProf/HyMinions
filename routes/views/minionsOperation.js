@@ -1,6 +1,7 @@
 var minionsData = require("./minionsData.js");
 var fetch = require('cross-fetch');
 var itemNames = require("./itemNames.json");
+let currentTime = new Date();
 let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, hadError=false;
     
 exports.calculateMinionsProfit = async function(minions, settings){
@@ -11,11 +12,11 @@ exports.calculateMinionsProfit = async function(minions, settings){
         await findProfile(settings.name);
         //await Promise.all([findBazaar(), findProfile(settings.name)]);
         minecraftName = settings.name;
-        lastUpdatedProfile = Date.now();
+        lastUpdatedProfile = Date.now() - currentTime.getTimezoneOffset()*1000*60;
     }
     if(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000){ //1 min time out
         await findBazaar();
-        lastUpdatedBazaar = Date.now();
+        lastUpdatedBazaar = Date.now() - currentTime.getTimezoneOffset()*1000*60;;
     }
     settings.lastUpdatedProfile = lastUpdatedProfile ? dateTimeToString(lastUpdatedProfile): null;
     settings.lastUpdatedBazaar = lastUpdatedBazaar ? dateTimeToString(lastUpdatedBazaar) : null;
@@ -39,9 +40,9 @@ exports.calculateMinionsProfit = async function(minions, settings){
     minions.sort((a,b) =>{
         return b.totalProfit-a.totalProfit;
     });
-    minions.forEach((minion)=>{
-        //console.log(minion.totalProfit);
-    })
+    // minions.forEach((minion)=>{
+    //     console.log(minion.totalProfit);
+    // })
 
     function calculateMinionProfit(settings,minion){
         if(settings.useProfile){
@@ -161,6 +162,11 @@ exports.calculateMinionsProfit = async function(minions, settings){
                 let variantIndex;
                 if(settings.superCompactor>=2){
                     variantIndex = product.variants.length-1;
+                    if(product.variantsIsEnchanted){ //eliminate snow block option
+                        while(product.variantsIsEnchanted[variantIndex]==0&&variantIndex>=0){
+                            variantIndex--;
+                        }
+                    }
                 }else if(settings.superCompactor==1&&product.canCompactor){
                     variantIndex = product.compactor.minimumEnchanted ? product.compactor.minimumEnchanted : 0, maxProfit = 0;
                     for(index=variantIndex;index<product.variants.length;index++){
@@ -182,12 +188,11 @@ exports.calculateMinionsProfit = async function(minions, settings){
                 }
                 //variant index >=0 && the variant index is an enchanted form && still have items
                 while(variantIndex>=0&&totalItems>0){
-                    if(product.variantsIsEnchanted==undefined||product.variantsIsEnchanted[variantIndex]==1){
-                        let totalItemsVariant = (totalItems-(totalItems%product.variantsEquiv[variantIndex]))/product.variantsEquiv[variantIndex]; //(total-remainder)/divisor to get intergral ans
-                        totalItems = totalItems%product.variantsEquiv[variantIndex];
-                        if(totalItemsVariant!=0){
-                            calculateVariantProfit(settings,minion,product,variantIndex,totalItemsVariant);
-                        }
+                    
+                    let totalItemsVariant = (totalItems-(totalItems%product.variantsEquiv[variantIndex]))/product.variantsEquiv[variantIndex]; //(total-remainder)/divisor to get intergral ans
+                    totalItems = totalItems%product.variantsEquiv[variantIndex];
+                    if(totalItemsVariant!=0){
+                        calculateVariantProfit(settings,minion,product,variantIndex,totalItemsVariant);
                     }
                     variantIndex--;
                 }

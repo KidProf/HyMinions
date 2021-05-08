@@ -158,66 +158,66 @@ block content
             br
             
         #content
-        hr
-        if settings.hasError
-            h1 Error
-            p.lead=settings.errorMsg
+            hr
+            if settings.hasError
+                h1 Error
+                p.lead=settings.errorMsg
 
-        else
-            #search: .form-group
-                label(for="searchInput") Search: &nbsp;
-                input#searchInput(list="searchDatalist").form-control
-                datalist#searchDatalist
+            else
+                #search: .form-group
+                    label(for="searchInput") Search: &nbsp;
+                    input#searchInput(list="searchDatalist").form-control
+                    datalist#searchDatalist
+                        each minion in minions
+                            option(value=minion.name)
+                    span &nbsp; &nbsp; &nbsp;
+                    button#searchButton.btn(onclick="search()") Search
+                #doubleScroll: table#minionsTable.table.table-dark.w-100
+                    thead
+                        tr
+                            th(scope="col")
+                            th(scope="col") 
+                                if settings.calculationType==0
+                                    | Minion (Profit Per Hour)
+                                else
+                                    | Minion (Total Profit)
+                            th(scope="col") Tier
+                            th(scope="col") Items
+                            th(scope="col") Number of Items
+                            th(scope="col") Unit Price (Bazaar)
+                            if settings.calculationType==1
+                                th(scope="col") Total Profit
+                            th(scope="col") Profit Per Hour
+                    -let i=0;
                     each minion in minions
-                        option(value=minion.name)
-                span &nbsp; &nbsp; &nbsp;
-                button#searchButton.btn(onclick="search()") Search
-            #doubleScroll: table#minionsTable.table.table-dark.w-100
-                thead
-                    tr
-                        th(scope="col")
-                        th(scope="col") 
-                            if settings.calculationType==0
-                                | Minion (Profit Per Hour)
-                            else
-                                | Minion (Total Profit)
-                        th(scope="col") Tier
-                        th(scope="col") Items
-                        th(scope="col") Number of Items
-                        th(scope="col") Unit Price (Bazaar)
-                        if settings.calculationType==1
-                            th(scope="col") Total Profit
-                        th(scope="col") Profit Per Hour
-                -let i=0;
-                each minion in minions
-                    tr
-                        td="#"+(i+1)
-                        td(id="minion"+i+"Name")
-                            | #{minion.name}
-                            br
-                            | (#{minion.totalProfitText})
-                        td(id="minion"+i+"Tier")=minion.tier
-                        td(id="minion"+i+"Items")
-                            each product in minion.outputProducts
-                                | #{product.name}
+                        tr
+                            td="#"+(i+1)
+                            td(id="minion"+i+"Name")
+                                | #{minion.name}
                                 br
-                        td(id="minion"+i+"NumberOfItems")
-                            each product in minion.outputProducts
-                                | #{product.numberOfItems}
-                                br
-                        td(id="minion"+i+"BazaarPrices")
-                            each product in minion.outputProducts
-                                | #{product.unitPrice}
-                                br
-                        td(id="minion"+i+"TotalProfit")=minion.totalProfitText
-                        if settings.calculationType==1
-                            td(id="minion"+i+"ProfitPerHour")=minion.profitPerHour
-                    - i++;
-        p
-            if(settings.lastUpdatedBazaar)
-                | Last updated time of bazaar price: #{settings.lastUpdatedBazaar}
-            if(settings.lastUpdatedProfile)
-                | <br /> Last updated time of profile: #{settings.lastUpdatedProfile}
+                                | (#{minion.totalProfitText})
+                            td(id="minion"+i+"Tier")=minion.tier
+                            td(id="minion"+i+"Items")
+                                each product in minion.outputProducts
+                                    | #{product.name}
+                                    br
+                            td(id="minion"+i+"NumberOfItems")
+                                each product in minion.outputProducts
+                                    | #{product.numberOfItems}
+                                    br
+                            td(id="minion"+i+"BazaarPrices")
+                                each product in minion.outputProducts
+                                    | #{product.unitPrice}
+                                    br
+                            td(id="minion"+i+"TotalProfit")=minion.totalProfitText
+                            if settings.calculationType==1
+                                td(id="minion"+i+"ProfitPerHour")=minion.profitPerHour
+                        - i++;
+            p
+                if(settings.lastUpdatedBazaar)
+                    | Last updated time of bazaar price: #{settings.lastUpdatedBazaar}
+                if(settings.lastUpdatedProfile)
+                    | <br /> Last updated time of profile: #{settings.lastUpdatedProfile}
 
 
 
