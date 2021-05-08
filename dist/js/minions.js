@@ -343,9 +343,19 @@ function generateLink(){
 
     //advanced
     if($("#overallCalculationType").children("option:selected").val()==1){
-        if($("#overallOfflineTime").val()!=24){
-            keys.push("offlineTime");
-            values.push($("#overallOfflineTime").val());
+        if($("#overallOfflineTimeUnit").val()==1){ //use day as unit
+            if($("#overallOfflineTime").val()!=1){
+                keys.push("offlineTime");
+                values.push($("#overallOfflineTime").val()*24);
+            }
+        }else{ //use hour as unit
+            keys.push("offlineTimeUnit");
+            values.push($("#overallOfflineTimeUnit").val());
+            if($("#overallOfflineTime").val()!=24){
+                keys.push("offlineTime");
+                values.push($("#overallOfflineTime").val());
+            }
+    
         }
 
         if($("#overallSuperCompactor").children("option:selected").val()==3){

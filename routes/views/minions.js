@@ -56,6 +56,9 @@ exports = module.exports = function (req, res) {
         if(!settings.offlineTime||settings.offlineTime<=0){
             settings.offlineTime = 24;
         }
+        if(!settings.offlineTimeUnit||!isWithinList(settings.offlineTimeUnit,[0,1])){
+            settings.offlineTimeUnit = 1;
+        }
         if(!settings.superCompactor||!isWithinList(settings.superCompactor,[0,1,2,3])){
             settings.superCompactor = 3;
         }

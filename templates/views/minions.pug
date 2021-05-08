@@ -76,8 +76,11 @@ block content
                     #autoCalculationType(class=(settings.calculationType==1 ? "":"d-none"))
                         .form-group
                             p Offline time: &nbsp; 
-                                input#overallOfflineTime.form-control(type="number" value=settings.offlineTime min="0")
-                                span &nbsp; hours
+                                input#overallOfflineTime.form-control(type="number" value=settings.offlineTimeUnit==1?settings.offlineTime/24:settings.offlineTime min="0")
+                                span &nbsp;
+                                select#overallOfflineTimeUnit.form-control
+                                    option(value="0" selected=(settings.offlineTimeUnit==0?'selected':undefined)) hour(s)
+                                    option(value="1" selected=(settings.offlineTimeUnit==1?'selected':undefined)) day(s)
                 .col-lg-6.col-12  
                     #advanced
                         br
