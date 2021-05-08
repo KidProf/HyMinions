@@ -12,11 +12,11 @@ exports.calculateMinionsProfit = async function(minions, settings){
         await findProfile(settings.name);
         //await Promise.all([findBazaar(), findProfile(settings.name)]);
         minecraftName = settings.name;
-        lastUpdatedProfile = Date.now() - currentTime.getTimezoneOffset()*1000*60;
+        lastUpdatedProfile = Date.now();
     }
     if(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000){ //1 min time out
         await findBazaar();
-        lastUpdatedBazaar = Date.now() - currentTime.getTimezoneOffset()*1000*60;;
+        lastUpdatedBazaar = Date.now();
     }
     settings.lastUpdatedProfile = lastUpdatedProfile ? dateTimeToString(lastUpdatedProfile): null;
     settings.lastUpdatedBazaar = lastUpdatedBazaar ? dateTimeToString(lastUpdatedBazaar) : null;
