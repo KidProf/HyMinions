@@ -8,7 +8,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
     diamondSpreadingItem = minionsData.diamondSpreadingItem;
     console.log(settings.name,minecraftName);
     console.log(Date.now()-lastUpdatedBazaar);
-    if((settings.useProfile&&settings.name!=minecraftName)||hadError||Date.now()-lastUpdatedProfile>5*60*1000){ //don't call api again if identical name, but call again if prev result has error, 5 min timeout
+    if((settings.useProfile)&&(settings.name!=minecraftName||hadError||Date.now()-lastUpdatedProfile>5*60*1000)){ //don't call api again if identical name, but call again if prev result has error, 5 min timeout
         await findProfile(settings.name);
         //await Promise.all([findBazaar(), findProfile(settings.name)]);
         minecraftName = settings.name;

@@ -23,6 +23,8 @@ exports = module.exports = function (req, res) {
 
 
     function dataValidation(settings){
+        //assume no error first
+        settings.hasError = false;
         //general
         if(settings.name){
             settings.useProfile= true;
@@ -89,6 +91,7 @@ exports = module.exports = function (req, res) {
         if(!settings.tax||settings.tax<0){
             settings.tax = 1;
         }
+
     }
 
     function isWithinList(number,list){
