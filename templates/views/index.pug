@@ -64,42 +64,43 @@ block content
 					button#overallSettings.btn(onclick="generateLink()") Apply
 				
 				br
-				h4 Top profitable minions
-				.row
-					.offset-2.col-5: h5 Minion
-					.col-2: h5 Tier
-					.col-3: h5 Total Profit
-				- let i = 0
-				while i<5
+				h4 Top Profitable Minions
+				#minionsIndexTable
 					.row
-						.col-2
-							p.d-inline ##{i+1}
-							p.d-none.d-sm-inline &nbsp;
-							img(src="/images/minions/"+minions[i].name+".png" width="30").d-inline
-						.col-5: p(id="minion"+i+"Name")=minions[i].name
-						.col-2: p(id="minion"+i+"Tier")=minions[i].tier
-						.col-3: p(id="minion"+i+"Profit")=minions[i].totalProfitText
-					- i++;
-				
-				#collapseMinions.collapse
-					while i<minions.length
-						.row
-							.col-2
+						.offset-2.col-4.text-center: h5 Minion
+						.col-2.text-center: h5 Tier
+						.col-4: h5 Total Profit
+					- let i = 0
+					while i<5
+						.row.align-items-center
+							.col-2.text-center
 								p.d-inline ##{i+1}
 								p.d-none.d-sm-inline &nbsp;
-								img(src="/images/minions/"+minions[i].name+".png" width="30").d-inline
-							.col-5: p(id="minion"+i+"Name")=minions[i].name
-							.col-2: p(id="minion"+i+"Tier")=minions[i].tier
-							.col-3: p(id="minion"+i+"Profit")=minions[i].totalProfitText
+								img(src="/images/minions/"+minions[i].name+".png").d-inline
+							.col-4.text-center: p(id="minion"+i+"Name")=minions[i].name.substring(0, minions[i].name.lastIndexOf(" "))
+							.col-2.text-center: p(id="minion"+i+"Tier")=minions[i].tier
+							.col-4: p(id="minion"+i+"Profit")=minions[i].totalProfitText
 						- i++;
+					
+					#collapseMinions.collapse
+						while i<minions.length
+							.row.align-items-center
+								.col-2.text-center
+									p.d-inline ##{i+1}
+									p.d-none.d-sm-inline &nbsp;
+									img(src="/images/minions/"+minions[i].name+".png").d-inline
+								.col-4.text-center: p(id="minion"+i+"Name")=minions[i].name.substring(0, minions[i].name.lastIndexOf(" "))
+								.col-2.text-center: p(id="minion"+i+"Tier")=minions[i].tier
+								.col-4: p(id="minion"+i+"Profit")=minions[i].totalProfitText
+							- i++;
 
 				a.read-more(data-toggle="collapse" href="#collapseMinions" aria-expanded="false" aria-controls="collapseMinions") Expand/ Collapse
 				
 				br
 				br
-				p: small Based on tier 11/12 minions, with Enchanted Lava Bucket, Diamond Spreading and Super Compactor 3000 equipped. You are expected to sell your products using sell offers. 
+				p: small Based on tier 11 minions, 24 hours offline time, with Enchanted Lava Bucket, Diamond Spreading and Dwarven Super Compactor equipped. You are expected to sell your products using "sell instantly". 
 
-				a(href="/minions") Customise your own minion list
+				a(href="/minions") Click here for more settings and calculation details
 
 		
 		//- br
