@@ -2,8 +2,8 @@ extends ../layouts/default
 
 block append js
 	script(src="/js/eventsData.js")
-	script(src="/js/minionsOperation.js")
-	script(src="/js/minionsData.js")
+	//- script(src="/js/minionsOperation.js")
+	//- script(src="/js/minionsData.js")
 	script(src="/js/index.js")
 
 block append variables 
@@ -30,39 +30,68 @@ block content
 		br
 		.my-box
 			.container
-				h4#eventsHeader.header EVENTS
+				h4#eventsHeader.header: a(href="/events") EVENTS
 				h4#eventDescription Loading
 				a(href="/events") View other events
 
 		br
 		.my-box
 			.container
-				h4#minionsHeader.header MINIONS
-				a(href="/minions") Customise your own minion list
-				ul
-					li Tailor made for each profile
-					li Real time bazaar prices
+				h4#minionsHeader.header: a(href="/minions") MINIONS
+				p Type in your Minecraft name and offline duration, then click "Apply" to make your own tailor-made minion list.
+
+				a(href="/minions") Click here for more settings and calculation details
 				br
-				h4 Top 5 minions
+				br
+				#minionsInput
+					.form-group#useProfile
+						p Minecraft Name: &nbsp; 
+							input#overallProfileName.form-control(value=settings.name)
+						if(settings.profileNames)
+							label(for="overallProfileProfile") Profile: &nbsp;
+							select#overallProfileProfile.form-control
+								-let k=0
+								while k<settings.profileNames.length
+									option(value=k selected=(settings.profile==k?'selected':undefined))=settings.profileNames[k]
+									-k++;
+					.form-group
+						p Offline time: &nbsp; 
+							input#overallOfflineTime.form-control(type="number" value=settings.offlineTimeUnit==1?settings.offlineTime/24:settings.offlineTime min="0")
+							span &nbsp;
+							select#overallOfflineTimeUnit.form-control
+								option(value="0" selected=(settings.offlineTimeUnit==0?'selected':undefined)) hour(s)
+								option(value="1" selected=(settings.offlineTimeUnit==1?'selected':undefined)) day(s)
+					button#overallSettings.btn(onclick="generateLink()") Apply
+				
+				br
+				h4 Top profitable minions
 				.row
 					.offset-2.col-5: h5 Minion
-					.col-5: h5 Total Profit per hour
+					.col-2: h5 Tier
+					.col-3: h5 Total Profit
 				- let i = 0
 				while i<5
 					.row
-						.col-2: p="#"+(i+1)
-						.col-5: p(id="minion"+i+"Name")= i==0?"Loading...":""
-						.col-5: p(id="minion"+i+"Profit")
+						.col-2
+							p.d-inline ##{i+1}
+							p.d-none.d-sm-inline &nbsp;
+							img(src="/images/minions/"+minions[i].name+".png" width="30").d-inline
+						.col-5: p(id="minion"+i+"Name")=minions[i].name
+						.col-2: p(id="minion"+i+"Tier")=minions[i].tier
+						.col-3: p(id="minion"+i+"Profit")=minions[i].totalProfitText
 					- i++;
 				
-				
 				#collapseMinions.collapse
-					while i<numberOfMinions
+					while i<minions.length
 						.row
-							.col-2: p="#"+(i+1)
-							.col-5: p(id="minion"+i+"Name")
-							.col-5: p(id="minion"+i+"Profit")
-						- i++;	
+							.col-2
+								p.d-inline ##{i+1}
+								p.d-none.d-sm-inline &nbsp;
+								img(src="/images/minions/"+minions[i].name+".png" width="30").d-inline
+							.col-5: p(id="minion"+i+"Name")=minions[i].name
+							.col-2: p(id="minion"+i+"Tier")=minions[i].tier
+							.col-3: p(id="minion"+i+"Profit")=minions[i].totalProfitText
+						- i++;
 
 				a.read-more(data-toggle="collapse" href="#collapseMinions" aria-expanded="false" aria-controls="collapseMinions") Expand/ Collapse
 				

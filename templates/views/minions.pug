@@ -2,9 +2,9 @@ extends ../layouts/default
 
 block append js
     script(src="/js/jquery/jquery.doubleScroll.js")
-    script(src="/js/minionsData.js")
-    script(src="/js/minionsOperation.js")
-    script(src="/js/minions.js")
+    //- script(src="/js/minionsData.js")
+    //- script(src="/js/minionsOperation.js")
+    //- script(src="/js/minions.js")
     	
 block append variables
     - var currentPage = "minions";
@@ -219,7 +219,7 @@ block content
                             if settings.calculationType==1
                                 td(id="minion"+i+"ProfitPerHour")=minion.profitPerHour
                         - i++;
-            p
+            p: small
                 if(settings.lastUpdatedBazaar)
                     | Last updated time of bazaar price: #{settings.lastUpdatedBazaar} UTC
                 if(settings.lastUpdatedProfile)

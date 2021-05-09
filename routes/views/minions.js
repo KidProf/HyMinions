@@ -1,7 +1,5 @@
 var minionsData = require("./minionsData.js");
 var minionsOperation = require("./minionsOperation.js");
-var fetch = require('cross-fetch');
-
 
 exports = module.exports = function (req, res) {
     console.log(req.query);

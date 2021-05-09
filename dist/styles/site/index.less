@@ -13,6 +13,9 @@
         padding: 10px 10px 10px 10px;
         border-radius: 1rem;
         border: 2px solid #AAA;
+        a{
+            color: #000;
+        }
     }
     .container{
         margin: 0 1rem 1rem 1rem;
@@ -45,4 +48,34 @@
 
 #minionsHeader{
     background-color: @sharp-color-green;
+}
+
+#minionsInput{
+    input, select{
+        background-color: @bg-color-input;
+        color: #FFF;
+    }
+    .form-control{
+        width: fit-content;
+        display: inline-block;
+    }
+    .form-control:focus{
+        box-shadow: 0 0 0 0.2rem rgba(209,208,191,.25);
+    }
+    #overallOfflineTime{
+        width: 70px;
+    }
+    #overallProfileName{
+        width: 200px;
+    }
+    #overallSettings{
+        background-color: @sharp-color-green;
+        color: #000;
+    }
+    #overallSettings:hover{
+        background-color: #A8DD95;
+    }
+    #overallSettings:focus{
+        box-shadow: 0 0 0 0.3rem rgba(240,240,240,.25)
+    }
 }

@@ -10,7 +10,7 @@ const path = require('path');
 const getMinionsApi = require('./routes/api/getMinionsApi');
 const getProfileApi = require('./routes/api/getProfileApi');
 const minionsView = require("./routes/views/minions.js");
-
+const indexView = require("./routes/views/index.js");
 
 //constants
 const app = express();
@@ -19,7 +19,7 @@ const port = process.env.PORT || 3000;
 
 //ROUTING
 //views
-app.get('/',(req,res)=>{res.render("index");});
+app.get('/',indexView);
 app.get('/events',(req,res)=>{res.render("events");});
 //app.get('/minions',(req,res)=>{res.sendFile(path.join(__dirname, '/dist', 'minions.html'))});
 app.get('/minions',minionsView);
