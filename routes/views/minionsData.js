@@ -364,7 +364,7 @@ exports.minions = [
             },
         ]      
     },{ //10
-        name: "Wheat Minion (Bread)",
+        name: "Wheat (Bread) Minion",
         rawId: "WHEAT",
         tierDelay : [15,15,13,13,11,11,10,10,9,9,8],
         products : [
@@ -1433,3 +1433,5 @@ exports.minions = [
     //without flower minion
     //wheat minion: both bread and hay bale route
 ];
+
+
