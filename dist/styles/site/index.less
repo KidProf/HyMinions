@@ -81,11 +81,22 @@
 }
 
 #minionsIndexTable{
-    .row{
-        min-height: 50px;
+    @media (max-width: 768px) {
+        .row{
+            min-height: 60px;
+        }
+    }
+    @media (min-width: 768px) {
+        .row{
+            min-height: 45px;
+        }
     }
     img{
         width: 35px;
         max-width: 100%;
+    }
+    .p-height-fix{
+        bottom: -2px;
+        position: relative;
     }
 }

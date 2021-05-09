@@ -74,24 +74,24 @@ block content
 					while i<5
 						.row.align-items-center
 							.col-2.text-center
-								p.d-inline ##{i+1}
-								p.d-none.d-sm-inline &nbsp;
+								p.d-inline.p-height-fix ##{i+1}
+								p.d-none.d-md-inline &nbsp;
 								img(src="/images/minions/"+minions[i].name+".png").d-inline
-							.col-4.text-center: p(id="minion"+i+"Name")=minions[i].name.substring(0, minions[i].name.lastIndexOf(" "))
-							.col-2.text-center: p(id="minion"+i+"Tier")=minions[i].tier
-							.col-4: p(id="minion"+i+"Profit")=minions[i].totalProfitText
+							.col-4.text-center: p(id="minion"+i+"Name").mb-0=minions[i].name.substring(0, minions[i].name.lastIndexOf(" "))
+							.col-2.text-center: p(id="minion"+i+"Tier").mb-0=minions[i].tier
+							.col-4: p(id="minion"+i+"Profit").mb-0=minions[i].totalProfitText
 						- i++;
 					
 					#collapseMinions.collapse
 						while i<minions.length
 							.row.align-items-center
 								.col-2.text-center
-									p.d-inline ##{i+1}
-									p.d-none.d-sm-inline &nbsp;
+									p.d-inline.p-height-fix ##{i+1}
+									p.d-none.d-md-inline &nbsp;
 									img(src="/images/minions/"+minions[i].name+".png").d-inline
-								.col-4.text-center: p(id="minion"+i+"Name")=minions[i].name.substring(0, minions[i].name.lastIndexOf(" "))
-								.col-2.text-center: p(id="minion"+i+"Tier")=minions[i].tier
-								.col-4: p(id="minion"+i+"Profit")=minions[i].totalProfitText
+								.col-4.text-center: p(id="minion"+i+"Name").mb-0=minions[i].name.substring(0, minions[i].name.lastIndexOf(" "))
+								.col-2.text-center: p(id="minion"+i+"Tier").mb-0=minions[i].tier
+								.col-4: p(id="minion"+i+"Profit").mb-0=minions[i].totalProfitText
 							- i++;
 
 				a.read-more(data-toggle="collapse" href="#collapseMinions" aria-expanded="false" aria-controls="collapseMinions") Expand/ Collapse
