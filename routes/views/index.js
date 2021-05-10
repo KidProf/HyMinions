@@ -19,8 +19,25 @@ exports = module.exports = function (req, res) {
         //assume no error first
         settings.hasError = false;
 
-        settings.tier=11;
-        settings.offlineTime = 24;
+        if(settings.name){
+            settings.useProfile= true;
+            if(!settings.profile){
+                settings.profile=0;
+            }
+            if(settings.profile=="undefined"){
+                settings.profile=0;
+            }
+        }else{
+            settings.useProfile= false;
+            settings.tier = 11;
+        }
+
+        if(!settings.offlineTime||settings.offlineTime<=0){
+            settings.offlineTime = 24;
+        }
+        if(!settings.offlineTimeUnit||!isWithinList(settings.offlineTimeUnit,[0,1])){
+            settings.offlineTimeUnit = 1;
+        }
 
         settings.fuel=25;
         settings.superCompactor = 3;

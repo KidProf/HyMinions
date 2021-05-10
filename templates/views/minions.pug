@@ -162,7 +162,10 @@ block content
             
         #content
             hr
-            if settings.hasError
+            if !minions || !settings
+                h1 Error
+                p.lead An unexpected error has occured. You may make a bug report <a href="/contact">here</a>.
+            else if settings.hasError
                 h1 Error
                 p.lead=settings.errorMsg
 
