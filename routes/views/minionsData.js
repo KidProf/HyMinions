@@ -102,7 +102,7 @@ exports.minions = [
         ]      
     },{ //2
         name: "Potato Minion",
-        tierDelay : [20,20,18,18,16,16,14,14,12,12,10],
+        tierDelay : [20,20,18,18,16,16,14,14,12,12,10,8],
         products : [
             {
                 item : "Potato",
@@ -124,7 +124,7 @@ exports.minions = [
         ]
     },{ //3
         name: "Cow Minion",
-        tierDelay : [26,26,24,24,22,22,20,20,17,17,13],
+        tierDelay : [26,26,24,24,22,22,20,20,17,17,13,10],
         products : [
             {
                 item : "Raw Beef",
@@ -155,7 +155,7 @@ exports.minions = [
         ]      
     },{ //4 
         name: "Chicken Minion",
-        tierDelay : [26,26,24,24,22,22,20,20,18,18,15],
+        tierDelay : [26,26,24,24,22,22,20,20,18,18,15,12],
         diamondSpreadingCriteria : 3,
         warning: "Enchanted egg is needed",
         products : [
@@ -204,7 +204,7 @@ exports.minions = [
         ]      
     },{ //5
         name: "Sheep Minion",
-        tierDelay : [24,24,22,22,20,20,18,18,16,16,12],
+        tierDelay : [24,24,22,22,20,20,18,18,16,16,12,9],
         products : [
             {
                 item : "Mutton",
@@ -318,7 +318,7 @@ exports.minions = [
         ]      
     },{ //9
         name: "Wheat Minion",
-        tierDelay : [15,15,13,13,11,11,10,10,9,9,8],
+        tierDelay : [15,15,13,13,11,11,10,10,9,9,8,7],
         diamondSpreadingCriteria : 3,
         warning: "Both compactor and sc3000 are needed",
         products : [
@@ -366,7 +366,7 @@ exports.minions = [
     },{ //10
         name: "Wheat (Bread) Minion",
         rawId: "WHEAT",
-        tierDelay : [15,15,13,13,11,11,10,10,9,9,8],
+        tierDelay : [15,15,13,13,11,11,10,10,9,9,8,7],
         products : [
             {
                 item : "Wheat",
@@ -408,7 +408,7 @@ exports.minions = [
         ]      
     },{ //11
         name: "Pumpkin Minion",
-        tierDelay : [32,32,30,30,27,27,24,24,20,20,16],
+        tierDelay : [32,32,30,30,27,27,24,24,20,20,16,12],
         products : [
             {
                 item : "Pumpkin",
@@ -428,7 +428,7 @@ exports.minions = [
         ]      
     },{ //12
         name: "Melon Minion",
-        tierDelay : [24,24,22.5,22.5,21,21,18.5,18.5,16,16,13],
+        tierDelay : [24,24,22.5,22.5,21,21,18.5,18.5,16,16,13,10],
         products : [
             {
                 item : "Melon",
@@ -449,7 +449,7 @@ exports.minions = [
         ]      
     },{ //13
         name: "Mushroom Minion",
-        tierDelay : [30,30,28,28,26,26,23,23,20,20,16],
+        tierDelay : [30,30,28,28,26,26,23,23,20,20,16,12],
         products : [
             {
                 item : "Red Mushroom",
@@ -481,7 +481,7 @@ exports.minions = [
     },{ //14
         name: "Cocoa Beans Minion",
         rawId: "COCOA",
-        tierDelay : [27,27,25,25,23,23,21,21,18,18,15],
+        tierDelay : [27,27,25,25,23,23,21,21,18,18,15,12],
         products : [
             {
                 item : "Cocoa Beans",
@@ -499,7 +499,7 @@ exports.minions = [
         ]      
     },{ //15
         name: "Cactus Minion",
-        tierDelay : [27,27,25,25,23,23,21,21,18,18,15],
+        tierDelay : [27,27,25,25,23,23,21,21,18,18,15,12],
         diamondSpreadingCriteria : 2,
         warning: "Auto smelter/Dwarven super compactor is needed",
         products : [
@@ -522,7 +522,7 @@ exports.minions = [
     },{ //16
         name: "Sugar Cane Minion",
         rawId: "SUGAR_CANE",
-        tierDelay : [22,22,20,20,18,18,16,16,14.5,14.5,12],
+        tierDelay : [22,22,20,20,18,18,16,16,14.5,14.5,12,9],
         products : [
             {
                 item : "Sugar Cane",
@@ -542,7 +542,7 @@ exports.minions = [
         ]      
     },{ //17
         name: "Pig Minion",
-        tierDelay : [26,26,24,24,22,22,20,20,17,17,13],
+        tierDelay : [26,26,24,24,22,22,20,20,17,17,13,10],
         products : [
             {
                 item : "Raw Porkchop",
@@ -562,7 +562,7 @@ exports.minions = [
         ]      
     },{ //18
         name: "Rabbit Minion",
-        tierDelay : [26,26,24,24,22,22,20,20,17,17,13],
+        tierDelay : [26,26,24,24,22,22,20,20,17,17,13,10],
         products : [
             {
                 item : "Raw Rabbit",
@@ -605,7 +605,7 @@ exports.minions = [
     },{ //19
         name: "Nether Wart Minion",
         rawId: "NETHER_WARTS",
-        tierDelay : [50,50,47,47,44,44,41,41,38,38,32],
+        tierDelay : [50,50,47,47,44,44,41,41,38,38,32,27],
         products : [
             {
                 item : "Nether Wart",
@@ -1411,7 +1411,7 @@ exports.minions = [
         ]      
     },{ //52
         name: "Carrot Minion",
-        tierDelay : [20,20,18,18,16,16,14,14,12,12,10],
+        tierDelay : [20,20,18,18,16,16,14,14,12,12,10,8],
         products : [
             {
                 item : "Carrot",
