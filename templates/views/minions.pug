@@ -17,7 +17,7 @@ block meta
     <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>
 
-mixin infoBox(id,title, info)
+mixin infoBox(id,title)
     i.fas.fa-question-circle.fa-lg(data-toggle="modal" data-target="#"+id)
     .modal.fade(id=id tabindex="-1" role="dialog" aria-labelledby=ud+"Label" aria-hidden="true")
                 .modal-dialog(role="document")
@@ -27,13 +27,16 @@ mixin infoBox(id,title, info)
                             button.close(type="button" data-dismiss="modal" aria-label="Close")
                                 span(aria-hidden="true") &times;
                         .modal-body
-                            p=info
+                            if block 
+                                block 
+                            else
+                                p Nothing to see here
                         .modal-footer
                             button.btn.btn-secondary(type="button" data-dismiss="modal") Close
 
 block content
     .container
-        h1 MINIONS <img src="images/minions.png" width="40"/>
+        h1 MINIONS <img src="/images/minions.png" width="40"/>
         #overall
             .row
                 #general.col-lg-6.col-12
@@ -72,7 +75,12 @@ block content
                             option(value="0" selected=(settings.calculationType==0?'selected':undefined)) Old
                             option(value="1" selected=(settings.calculationType==1?'selected':undefined)) New (based on offline duration)
                         span &nbsp; 
-                            +infoBox("calculationTypeModal","Calculation Type","I don't know either")
+                            +infoBox("calculationTypeModal","Calculation Modes")
+                                h5 New calculation mode
+                                p It calculates the profit based on your frequency of collecting minions. For example, lapis minions could be a good minion for active players, who collect enchanted lapis before they are automatically converted into enchanted lapis blocks, but not for those who are less active.
+                                h5 Old calculation mode
+                                p The original calculation mode – It calculates the profit based on a particular enchanted form of every product. (e.g. first enchanted form/ most profitable enchanted form) It does not calculate based on your offline duration.
+
                     #autoCalculationType(class=(settings.calculationType==1 ? "":"d-none"))
                         .form-group
                             p Offline time: &nbsp; 
@@ -101,21 +109,43 @@ block content
                                     option(value="1" selected=(settings.diamondSpreading==1||settings.diamondSpreading==3?'selected':undefined)) Diamond spreading only
                                     option(value="2" selected=(settings.diamondSpreading==2?'selected':undefined)) Diamond spreading + Dwarven compactor
                                 span &nbsp; 
-                                    +infoBox("diamondSpreadingDwarvenCompactorModal","Diamond Spreading","I don't know either")
+                                    +infoBox("diamondSpreadingDwarvenCompactorModal","Diamond Spreading")
+                                        h5 Diamond Spreading
+                                        p A minion upgrade that makes the minion generates 1 diamond every 10 items produced as a bonus, hence increasing the profit significantly for some of the minions, such as snow minions. 
+                                        p You could refer to the <a href='https://hypixel-skyblock.fandom.com/wiki/Diamond_Spreading'>Skyblock wiki</a> for more information.
+                                        h5 Dwarven Super Compactor
+                                        p It is a super compactor 3000 and a super smelter all-in-one. It allows more minions, such as iron minion, to equip diamond spreading and increase their profits as a result.
+                                        p You could refer to the <a href='https://hypixel-skyblock.fandom.com/wiki/Dwarven_Super_Compactor'>Skyblock wiki</a> for more information.
+
                         #autoCalculationTypeAdvanced(class=(settings.calculationType==1 ? "":"d-none"))
                             .form-group
                                 input#overallDiamondSpreading.checkbox(type="checkbox" checked=(settings.diamondSpreading>=1 ? 'checked' : undefined))
                                 label(for="overallDiamondSpreading") &nbsp; Has Diamond Spreading &nbsp;
-                                +infoBox("diamondSpreadingModal","Diamond Spreading","I don't know either")
+                                +infoBox("diamondSpreadingModal","Diamond Spreading")
+                                    p.
+                                        A minion upgrade that makes the minion generates 1 diamond every 10 items produced as a bonus, hence increasing the profit significantly for some of the minions, such as snow minions. 
+                                        You could refer to the <a href='https://hypixel-skyblock.fandom.com/wiki/Diamond_Spreading'>Skyblock wiki</a> for more information.
                             .form-group
                                 label(for="overallSuperCompactor") Compactor: &nbsp;
                                 select#overallSuperCompactor.form-control(onchange="toggleMinionChest()")
                                     option(value="0" selected=(settings.superCompactor==0?'selected':undefined)) None/ Compactor
                                     //-option(value="1" selected=(settings.superCompactor==1?'selected':undefined)) Compactor
-                                    option(value="2" selected=(settings.superCompactor==2?'selected':undefined)) Super Compactor
+                                    option(value="2" selected=(settings.superCompactor==2?'selected':undefined)) Super Compactor 3000
                                     option(value="3" selected=(settings.superCompactor==3?'selected':undefined)) Dwarven Super Compactor
                                 span &nbsp; 
-                                    +infoBox("superCompactorModal","Dwarven Super Compactor","I don't know either")
+                                    +infoBox("superCompactorModal","Dwarven Super Compactor")
+                                        h5 Compactor
+                                        p A minion upgrade for early game players which compacts items into their block form. This only works for certain minions like diamond minions and emerald minions. It increases the minion storage.
+                                        p It is normal that the calculator recommends selling the items in the enchanted form rather than the base form, as the enchanted forms may sell more than the base form. You could always convert the product blocks into their respective enchanted form. Alternatively, you could also change the product blocks back into their base form and sell them to the bazaar for most of the product blocks.
+                                        p You could refer to the <a href='https://hypixel-skyblock.fandom.com/wiki/Compactor'>Skyblock wiki</a> for more information.
+                                        
+                                        h5 Super Compactor 3000
+                                        p A minion upgrade for mid to late game players which compacts items into their enchanted form. You cannot covert the enchanted items back to original items, therefore, it may affect the total profit. The calculator would take this factor into account and calculate the profit accurately.
+                                        p You could refer to the Skyblock wiki for more information.
+
+                                        h5 Dwarven Super Compactor
+                                        p It is a super compactor 3000 and a super smelter all-in-one. It allows more minions, such as iron minion, to equip diamond spreading and increase their profits as a result.
+                                        p You could refer to the <a href='https://hypixel-skyblock.fandom.com/wiki/Dwarven_Super_Compactor'>Skyblock wiki</a> for more information.
                             //- #minionChest(class=(settings.superCompactor<=1 ? "":"d-none"))
                             //-     .form-group
                             //-         label(for="overallMinionChest") Minion Chest: &nbsp;

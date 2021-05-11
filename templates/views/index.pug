@@ -13,31 +13,47 @@ block append variables
 block content
 	.container
 		h1 Welcome to HyMinions! <img src="images/aotd.png" width="40"/>
-		//- br
-		//- .my-box
-		//- 	.container
-		//- 		h4#announcementsHeaderYellow.header UPDATE
-		//- 		//- p.
-		//- 		//- 	Hello visitors! Hope you have enjoyed my minion calculator. I have made some updates to the website.
-		//- 		ul
-		//- 			li Added <a href="/forge">forge options comparison</a>.
-		//- 			li Added Enchanted Mithril and Enchanted Titanium.
-		//- 			li Added Mithril and Tier 12 minions.
-		//- 			li Added manual calibration in events page for Daylight Saving Time adjustments.
-		//- 		p.
-		//- 			If you spot a bug, feel free to <a href="/contact">contact me</a>.
+		br
+		.my-box
+			.container
+				h4#announcementsHeaderYellow.header <img src="/images/news.png" width="30"/> UPDATE 
+				h3 Minion Calculator Update
+				ul
+					li Brand new minion calculator which more suits your actual needs
+					li Able to share your minions profit list to others with a link
+					li Aesthetic improvements and more
+				
+				#collapseAnnouncements.collapse
+					h4 New minion calculator
+					p The new minion calculator would calculate the profit based on your frequency of collecting minions.
+					p For example, lapis minions could be a good minion for active players, who collect enchanted lapis before they are automatically converted into enchanted lapis blocks, but not for those who are less active.
+					p To use the new minion calculator, you could either type in your name and offline duration right here on the homepage or go to the <a href="/minions">minions</a> page if you would like to change some settings. (e.g. fuel/ diamond spreading)
+					p If you wish to use the old settings, you could click <a href="minions/?calculationType=0&diamondSpreading=1&sellingMethod=0">here</a> to have the previous settings prefilled for you. 
+					h4 Link sharing
+					p You could share the URL of the website after you have entered your settings and clicked apply. For example, <a href="/minions/?name=technoblade&offlineTime=240&/#content"> this link </a> gives the minion profit list of Technoblade for 10 days of offline time.
+					p This saves time typing your desired settings every time you visit the site, and it makes sharing specific minion profit lists easier.
+					h4 Miscellaneous
+					ul
+						li Added tier 12 farming minions
+						li Changed default settings from "sell offer" to "sell instantly" at the bazaar, to stabilize the bazaar prices
+						li Aesthetic improvements
+					p You could submit bug reports or comments <a href="/contact"> here </a>. I hope you all like the update. Thank you!
+				
+				a.read-more(data-toggle="collapse" href="#collapseAnnouncements" aria-expanded="false" aria-controls="collapseAnnouncements") Expand/ Collapse
+				//- p.
+				//- 	If you spot a bug, feel free to <a href="/contact">contact me</a>.
 
 		br
 		.my-box
 			.container
-				h4#eventsHeader.header: a(href="/events") EVENTS <img src="images/events.png" width="30"/>
+				h4#eventsHeader.header: a(href="/events") <img src="/images/events.png" width="30"/> EVENTS 
 				h4#eventDescription Loading
 				a(href="/events") View other events
 
 		br
 		.my-box
 			.container
-				h4#minionsHeader.header: a(href="/minions") MINIONS <img src="images/minions.png" width="30"/>
+				h4#minionsHeader.header: a(href="/minions") <img src="/images/minions.png" width="30"/> MINIONS 
 				p Type in your Minecraft name and offline duration, then click "Apply" to make your own tailor-made minion list.
 
 				a(href="/minions") Click here for more settings and calculation details
@@ -117,7 +133,7 @@ block content
 				
 						br
 						br
-						p: small Based on tier 11 minions, 24 hours offline time, with Enchanted Lava Bucket, Diamond Spreading and Dwarven Super Compactor equipped. You are expected to sell your products using "sell instantly". 
+						p: small Based on tier 11 minions, 24 hours offline time, with Enchanted Lava Bucket, Diamond Spreading and Dwarven Super Compactor 3000 equipped. You are expected to sell your products using "sell instantly". 
 
 				a(href="/minions") Click here for more settings and calculation details
 
