@@ -32,7 +32,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
 
     }
 
-    console.log("finished findBazaar");
+    console.log("finished findBazaar and findProfile");
 
     minions.forEach((minion)=>{
         calculateMinionProfit(settings,minion);
@@ -50,18 +50,22 @@ exports.calculateMinionsProfit = async function(minions, settings){
         }else{
             minion.tier = Math.min(settings.tier,minion.tierDelay.length);//some has tier 12 some don't
         }
-        
-        if(!minion.diamondSpreadingCriteria){
-            //if diamond spreading criteria does not exist
-            minion.hasDiamondSpreading = 1;
-        }else if(minion.canCompactor==false&&settings.calculationType==1&&settings.superCompactor==1&&settings.diamondSpreading>=1){
-            //if compactors are selected but the minion does not have compactor, can use diamond spreading
-            minion.hasDiamondSpreading = 1;
-        }else if(minion.diamondSpreadingCriteria<=settings.diamondSpreading){
-            minion.hasDiamondSpreading = 1;
+        if(settings.diamondSpreading==0){
+            minion.hasDiamondSpreading=0;
         }else{
-            minion.hasDiamondSpreading = 0;
-        };
+            if(!minion.diamondSpreadingCriteria){
+                //if diamond spreading criteria does not exist
+                minion.hasDiamondSpreading = 1;
+            }else if(minion.canCompactor==false&&settings.calculationType==1&&settings.superCompactor==1&&settings.diamondSpreading>=1){
+                //if compactors are selected but the minion does not have compactor, can use diamond spreading
+                minion.hasDiamondSpreading = 1;
+            }else if(minion.diamondSpreadingCriteria<=settings.diamondSpreading){
+                minion.hasDiamondSpreading = 1;
+            }else{
+                minion.hasDiamondSpreading = 0;
+            };
+        }
+
         minion.outputProducts = new Array();
         minion.itemsHarvested = 0;
 
@@ -249,6 +253,28 @@ exports.calculateMinionsProfit = async function(minions, settings){
         
         minion.totalProfitText = moneyRepresentation(minion.totalProfit);
         minion.profitPerHour = moneyRepresentation(minion.totalProfit/settings.offlineTime);
+
+        //TOOLS
+        minion.tools = new Array();
+        if(settings.superCompactor==1&&minion.canCompactor){
+            minion.tools.push("Compactor");
+        }else if(settings.superCompactor==2){
+            minion.tools.push("Super Compactor 3000");
+        }else if(settings.superCompactor==3){
+            minion.tools.push("Dwarven Super Compactor");
+        }
+        if(minion.hasDiamondSpreading){
+            minion.tools.push("Diamond Spreading");
+        }
+        if(minion.toolsRequired){
+            minion.toolsRequired.forEach((tool)=>{
+                if(!(tool=="Auto Smelter"&&settings.superCompactor==3)&&!(tool=="Compactor"&&settings.superCompactor==1)){ //exceptions
+                    minion.tools.push(tool);
+                    minion.toolsWarning = true;
+                }
+                
+            });
+        }
     }
     
     function calculateVariantProfit(settings,minion,product,variantIndex,totalItemsVariant){

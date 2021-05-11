@@ -158,6 +158,7 @@ exports.minions = [
         tierDelay : [26,26,24,24,22,22,20,20,18,18,15,12],
         diamondSpreadingCriteria : 3,
         warning: "Enchanted egg is needed",
+        toolsRequired: ["Enchanted Egg"],
         products : [
             {
                 item : "Raw Chicken",
@@ -265,6 +266,7 @@ exports.minions = [
         tierDelay : [26,26,24,24,22,22,19,19,16,16,13],
         diamondSpreadingCriteria : 3,
         warning: "Flint shovel is needed",
+        toolsRequired: ["Flint shovel"],
         products : [
             {
                 item : "Gravel",
@@ -321,6 +323,7 @@ exports.minions = [
         tierDelay : [15,15,13,13,11,11,10,10,9,9,8,7],
         diamondSpreadingCriteria : 3,
         warning: "Both compactor and sc3000 are needed",
+        toolsRequired: ["Compactor"],
         products : [
             {
                 item : "Wheat",
@@ -501,7 +504,8 @@ exports.minions = [
         name: "Cactus Minion",
         tierDelay : [27,27,25,25,23,23,21,21,18,18,15,12],
         diamondSpreadingCriteria : 2,
-        warning: "Auto smelter/Dwarven super compactor is needed",
+        //warning: "Auto smelter/Dwarven super compactor is needed",
+        toolsRequired: ["Auto Smelter"],
         products : [
             {
                 item : "Cactus",
@@ -646,6 +650,7 @@ exports.minions = [
         tierDelay : [22,22,20,20,18,18,16,16,14,14,11,9],
         diamondSpreadingCriteria : 2,
         warning: "Auto smelter/Dwarven super compactor is needed",
+        toolsRequired: ["Auto Smelter"],
         products : [
             {
                 item : "Gold Ingot",
@@ -1365,6 +1370,7 @@ exports.minions = [
         tierDelay : [17,17,15,15,14,14,12,12,10,10,8,7],
         diamondSpreadingCriteria : 2,
         warning: "Auto smelter/Dwarven super compactor is needed",
+        toolsRequired: ["Auto Smelter"],
         products : [
             {
                 item : "Iron Ingot",
