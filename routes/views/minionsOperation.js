@@ -261,14 +261,28 @@ exports.calculateMinionsProfit = async function(minions, settings){
         }else if(settings.superCompactor==2){
             minion.tools.push("Super Compactor 3000");
         }else if(settings.superCompactor==3){
-            minion.tools.push("Dwarven Super Compactor");
+            if(minion.toolsRequired){
+                let found = false;
+                minion.toolsRequired.forEach((tool)=>{
+                    if(tool=="Auto Smelter") found = true;
+                });
+                if(found){
+                    minion.tools.push("Dwarven Super Compactor");
+                    minion.toolsWarning = true;
+                }else{
+                    minion.tools.push("Super Compactor 3000");
+                }
+            }else{
+                minion.tools.push("Super Compactor 3000");
+            }
+            
         }
         if(minion.hasDiamondSpreading){
             minion.tools.push("Diamond Spreading");
         }
         if(minion.toolsRequired){
             minion.toolsRequired.forEach((tool)=>{
-                if(!(tool=="Auto Smelter"&&settings.superCompactor==3)&&!(tool=="Compactor"&&settings.superCompactor==1)){ //exceptions
+                if(!(tool=="Auto Smelter"&&settings.superCompactor==3)&&!(tool=="Compactor"&&settings.superCompactor<=1)){ //exceptions
                     minion.tools.push(tool);
                     minion.toolsWarning = true;
                 }
