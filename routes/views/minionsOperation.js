@@ -35,6 +35,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
     console.log("finished findBazaar and findProfile");
 
     minions.forEach((minion)=>{
+        minion.hasIndividualSettings = settings.individualSettings[minion.id].tier ? 1 : 0;
         calculateMinionProfit(settings,minion);
     });
     minions.sort((a,b) =>{
@@ -45,8 +46,10 @@ exports.calculateMinionsProfit = async function(minions, settings){
     // })
 
     function calculateMinionProfit(settings,minion){
-        if(settings.useProfile){
-            minion.tier=minion.profilesTier[settings.profile];
+        if(minion.hasIndividualSettings){
+            minion.tier = settings.individualSettings[minion.id].tier; //individual settings override
+        }else if(settings.useProfile){
+            minion.tier=minion.profilesTier[settings.profile]; //use profile minion tier
         }else{
             minion.tier = Math.min(settings.tier,minion.tierDelay.length);//some has tier 12 some don't
         }

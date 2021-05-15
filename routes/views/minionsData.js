@@ -23,6 +23,7 @@ exports.diamondSpreadingItem = {
 exports.minions = [
     { //0
         name: "Revenant Minion",
+        id: 0,
         tierDelay : [29,29,26,26,23,23,19,19,14.5,14.5,10,8],
         products : [
             {
@@ -56,6 +57,7 @@ exports.minions = [
         ]      
     },{ //1
         name: "Tarantula Minion",
+        id: 1,
         tierDelay : [29,29,26,26,23,23,19,19,14.5,14.5,10],
         products : [
             {
@@ -102,6 +104,7 @@ exports.minions = [
         ]      
     },{ //2
         name: "Potato Minion",
+        id: 2,
         tierDelay : [20,20,18,18,16,16,14,14,12,12,10,8],
         products : [
             {
@@ -124,6 +127,7 @@ exports.minions = [
         ]
     },{ //3
         name: "Cow Minion",
+        id: 3,
         tierDelay : [26,26,24,24,22,22,20,20,17,17,13,10],
         products : [
             {
@@ -155,6 +159,7 @@ exports.minions = [
         ]      
     },{ //4 
         name: "Chicken Minion",
+        id: 4,
         tierDelay : [26,26,24,24,22,22,20,20,18,18,15,12],
         diamondSpreadingCriteria : 3,
         warning: "Enchanted egg is needed",
@@ -205,6 +210,7 @@ exports.minions = [
         ]      
     },{ //5
         name: "Sheep Minion",
+        id: 5,
         tierDelay : [24,24,22,22,20,20,18,18,16,16,12,9],
         products : [
             {
@@ -238,6 +244,7 @@ exports.minions = [
         ]      
     },{ //6
         name: "Lapis Minion",
+        id: 6,
         tierDelay : [29,29,27,27,25,25,23,23,21,21,18,16],
         products : [
             {
@@ -263,6 +270,7 @@ exports.minions = [
         ]      
     },{ //7
         name: "Gravel Minion",
+        id: 7,
         tierDelay : [26,26,24,24,22,22,19,19,16,16,13],
         diamondSpreadingCriteria : 3,
         warning: "Flint shovel is needed",
@@ -300,6 +308,7 @@ exports.minions = [
         ]      
     },{ //8
         name: "Blaze Minion",
+        id: 8,
         tierDelay : [33,33,31,31,28.5,28.5,25,25,21,21,16.5],
         products : [
             {
@@ -320,6 +329,7 @@ exports.minions = [
         ]      
     },{ //9
         name: "Wheat Minion",
+        id: 9,
         tierDelay : [15,15,13,13,11,11,10,10,9,9,8,7],
         diamondSpreadingCriteria : 3,
         warning: "Both compactor and sc3000 are needed",
@@ -368,6 +378,7 @@ exports.minions = [
         ]      
     },{ //10
         name: "Wheat (Bread) Minion",
+        id: 10,
         rawId: "WHEAT",
         tierDelay : [15,15,13,13,11,11,10,10,9,9,8,7],
         products : [
@@ -411,6 +422,7 @@ exports.minions = [
         ]      
     },{ //11
         name: "Pumpkin Minion",
+        id: 11,
         tierDelay : [32,32,30,30,27,27,24,24,20,20,16,12],
         products : [
             {
@@ -431,6 +443,7 @@ exports.minions = [
         ]      
     },{ //12
         name: "Melon Minion",
+        id: 12,
         tierDelay : [24,24,22.5,22.5,21,21,18.5,18.5,16,16,13,10],
         products : [
             {
@@ -452,6 +465,7 @@ exports.minions = [
         ]      
     },{ //13
         name: "Mushroom Minion",
+        id: 13,
         tierDelay : [30,30,28,28,26,26,23,23,20,20,16,12],
         products : [
             {
@@ -483,6 +497,7 @@ exports.minions = [
         ]      
     },{ //14
         name: "Cocoa Beans Minion",
+        id: 14,
         rawId: "COCOA",
         tierDelay : [27,27,25,25,23,23,21,21,18,18,15,12],
         products : [
@@ -502,6 +517,7 @@ exports.minions = [
         ]      
     },{ //15
         name: "Cactus Minion",
+        id: 15,
         tierDelay : [27,27,25,25,23,23,21,21,18,18,15,12],
         diamondSpreadingCriteria : 2,
         //warning: "Auto smelter/Dwarven super compactor is needed",
@@ -525,6 +541,7 @@ exports.minions = [
         ]      
     },{ //16
         name: "Sugar Cane Minion",
+        id: 16,
         rawId: "SUGAR_CANE",
         tierDelay : [22,22,20,20,18,18,16,16,14.5,14.5,12,9],
         products : [
@@ -546,6 +563,7 @@ exports.minions = [
         ]      
     },{ //17
         name: "Pig Minion",
+        id: 17,
         tierDelay : [26,26,24,24,22,22,20,20,17,17,13,10],
         products : [
             {
@@ -566,6 +584,7 @@ exports.minions = [
         ]      
     },{ //18
         name: "Rabbit Minion",
+        id: 18,
         tierDelay : [26,26,24,24,22,22,20,20,17,17,13,10],
         products : [
             {
@@ -608,6 +627,7 @@ exports.minions = [
         ]      
     },{ //19
         name: "Nether Wart Minion",
+        id: 19,
         rawId: "NETHER_WARTS",
         tierDelay : [50,50,47,47,44,44,41,41,38,38,32,27],
         products : [
@@ -629,6 +649,7 @@ exports.minions = [
         ]      
     },{ //20
         name: "Cobblestone Minion",
+        id: 20,
         tierDelay : [14,14,12,12,10,10,9,9,8,8,7,6],
         products : [
             {
@@ -647,6 +668,7 @@ exports.minions = [
         ]      
     },{ //21
         name: "Gold Minion",
+        id: 21,
         tierDelay : [22,22,20,20,18,18,16,16,14,14,11,9],
         diamondSpreadingCriteria : 2,
         warning: "Auto smelter/Dwarven super compactor is needed",
@@ -675,6 +697,7 @@ exports.minions = [
         ]      
     },{ //22
         name: "Diamond Minion",
+        id: 22,
         tierDelay : [29,29,27,27,25,25,22,22,19,19,15,12],
         products : [
             {
@@ -700,6 +723,7 @@ exports.minions = [
         ]      
     },{ //23
         name: "Emerald Minion",
+        id: 23,
         tierDelay : [28,28,26,26,24,24,21,21,18,18,14,12],
         products : [
             {
@@ -725,6 +749,7 @@ exports.minions = [
         ]      
     },{ //24
         name: "Redstone Minion",
+        id: 24,
         tierDelay : [29,29,27,27,25,25,23,23,21,21,18,16],
         products : [
             {
@@ -750,6 +775,7 @@ exports.minions = [
         ]      
     },{ //25
         name: "Quartz Minion",
+        id: 25,
         tierDelay : [22.5,22.5,21,21,19,19,17,17,14.5,14.5,11.5],
         products : [
             {
@@ -776,6 +802,7 @@ exports.minions = [
         ]      
     },{ //26
         name: "Obsidian Minion",
+        id: 26,
         tierDelay : [45,45,42,42,39,39,35,35,30,30,24,21],
         products : [
             {
@@ -794,6 +821,7 @@ exports.minions = [
         ]      
     },{ //27
         name: "Glowstone Minion",
+        id: 27,
         tierDelay : [25,25,23,23,21,21,19,19,16,16,13],
         products : [
             {
@@ -820,6 +848,7 @@ exports.minions = [
         ]      
     },{ //28
         name: "Ice Minion",
+        id: 28,
         tierDelay : [14,14,12,12,10,10,9,9,8,8,7],
         products : [
             {
@@ -846,6 +875,7 @@ exports.minions = [
         ]      
     },{ //29
         name: "Sand Minion",
+        id: 29,
         tierDelay : [26,26,24,24,22,22,19,19,16,16,13],
         products : [
             {
@@ -864,6 +894,7 @@ exports.minions = [
         ]      
     },{ //30
         name: "End Stone Minion",
+        id: 30,
         rawId: "ENDER_STONE",
         tierDelay : [26,26,24,24,22,22,19,19,16,16,13],
         products : [
@@ -883,6 +914,7 @@ exports.minions = [
         ]      
     },{ //31
         name: "Clay Minion",
+        id: 31,
         tierDelay : [32,32,30,30,27.5,27.5,24,24,20,20,16],
         products : [
             {
@@ -907,6 +939,7 @@ exports.minions = [
         ]      
     },{ //32
         name: "Zombie Minion",
+        id: 32,
         tierDelay : [26,26,24,24,22,22,20,20,17,17,13],
         products : [
             {
@@ -925,6 +958,7 @@ exports.minions = [
         ]      
     },{ //33
         name: "Skeleton Minion",
+        id: 33,
         tierDelay : [26,26,24,24,22,22,20,20,17,17,13],
         products : [
             {
@@ -943,6 +977,7 @@ exports.minions = [
         ]      
     },{ //34
         name: "Spider Minion",
+        id: 34,
         tierDelay : [26,26,24,24,22,22,20,20,17,17,13],
         products : [
             {
@@ -973,6 +1008,7 @@ exports.minions = [
         ]      
     },{ //35
         name: "Cave Spider Minion",
+        id: 35,
         rawId: "CAVESPIDER",
         tierDelay : [26,26,24,24,22,22,20,20,17,17,13],
         products : [
@@ -1004,6 +1040,7 @@ exports.minions = [
         ]      
     },{ //36
         name: "Creeper Minion",
+        id: 36,
         tierDelay : [27,27,25,25,23,23,21,21,18,18,14],
         products : [
             {
@@ -1022,6 +1059,7 @@ exports.minions = [
         ]      
     },{ //37
         name: "Enderman Minion",
+        id: 37,
         tierDelay : [32,32,30,30,28,28,25,25,22,22,18],
         products : [
             {
@@ -1040,6 +1078,7 @@ exports.minions = [
         ]      
     },{ //38
         name: "Ghast Minion",
+        id: 38,
         tierDelay : [50,50,47,47,44,44,41,41,38,38,32],
         products : [
             {
@@ -1058,6 +1097,7 @@ exports.minions = [
         ]      
     },{ //39
         name: "Slime Minion",
+        id: 39,
         tierDelay : [26,26,24,24,22,22,19,19,16,16,12],
         products : [
             {
@@ -1083,6 +1123,7 @@ exports.minions = [
         ]      
     },{ //40
         name: "Magma Cube Minion",
+        id: 40,
         rawId: "MAGMA_CUBE",
         tierDelay : [32,32,30,30,28,28,25,25,22,22,18],
         products : [
@@ -1102,6 +1143,7 @@ exports.minions = [
         ]      
     },{ //41
         name: "Oak Minion",
+        id: 41,
         tierDelay : [48,48,45,45,42,42,38,38,33,33,27],
         products : [
             {
@@ -1120,6 +1162,7 @@ exports.minions = [
         ]      
     },{ //42
         name: "Spruce Minion",
+        id: 42,
         tierDelay : [48,48,45,45,42,42,38,38,33,33,27],
         products : [
             {
@@ -1138,6 +1181,7 @@ exports.minions = [
         ]      
     },{ //43
         name: "Birch Minion",
+        id: 43,
         tierDelay : [48,48,45,45,42,42,38,38,33,33,27],
         products : [
             {
@@ -1156,6 +1200,7 @@ exports.minions = [
         ]      
     },{ //44
         name: "Dark Oak Minion",
+        id: 44,
         rawId: "DARK_OAK",
         tierDelay : [48,48,45,45,42,42,38,38,33,33,27],
         products : [
@@ -1175,6 +1220,7 @@ exports.minions = [
         ]      
     },{ //45
         name: "Acacia Minion",
+        id: 45,
         tierDelay : [48,48,45,45,42,42,38,38,33,33,27],
         products : [
             {
@@ -1193,6 +1239,7 @@ exports.minions = [
         ]      
     },{ //46
         name: "Jungle Minion",
+        id: 46,
         tierDelay : [48,48,45,45,42,42,38,38,33,33,27],
         products : [
             {
@@ -1211,6 +1258,7 @@ exports.minions = [
         ]      
     },{ //47
         name: "Fishing Minion",
+        id: 47,
         tierDelay : [78,75,72,72,68,68,62.5,62.5,53,53,35],
         products : [
             {
@@ -1307,6 +1355,7 @@ exports.minions = [
         ]      
     },{ //48
         name: "Snow Minion",
+        id: 48,
         tierDelay : [13,13,12,12,11,11,9.5,9.5,8,8,6.5],
         products : [
             {
@@ -1342,6 +1391,7 @@ exports.minions = [
         ]      
     },{ //49
         name: "Coal Minion",
+        id: 49,
         tierDelay : [15,15,13,13,12,12,10,10,9,9,7,6],
         products : [
             {
@@ -1367,6 +1417,7 @@ exports.minions = [
         ]      
     },{ //50
         name: "Iron Minion",
+        id: 50,
         tierDelay : [17,17,15,15,14,14,12,12,10,10,8,7],
         diamondSpreadingCriteria : 2,
         warning: "Auto smelter/Dwarven super compactor is needed",
@@ -1395,6 +1446,7 @@ exports.minions = [
         ]      
     },{ //51
         name: "Mithril Minion",
+        id: 51,
         tierDelay : [80,80,75,75,70,70,65,65,60,60,55,50],
         //noDiamondSpreading : 1,
         //warning: "",
@@ -1417,6 +1469,7 @@ exports.minions = [
         ]      
     },{ //52
         name: "Carrot Minion",
+        id: 52,
         tierDelay : [20,20,18,18,16,16,14,14,12,12,10,8],
         products : [
             {

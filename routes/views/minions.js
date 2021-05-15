@@ -2,8 +2,9 @@ var minionsData = require("./minionsData.js");
 var minionsOperation = require("./minionsOperation.js");
 
 exports = module.exports = function (req, res) {
+    console.log(req.method);
     console.log(req.query);
-    
+
     let settings = req.query;
     let minions = minionsData.minions;
 
@@ -18,6 +19,7 @@ exports = module.exports = function (req, res) {
         res.render("minions",output);
 
     });
+    
 
 
     function dataValidation(settings){
@@ -89,6 +91,20 @@ exports = module.exports = function (req, res) {
         if(!settings.tax||settings.tax<0){
             settings.tax = 1;
         }
+
+        //individual
+        let individualSettings = new Array();
+        for(i=0;i<minions.length;i++){
+            individualSettings[i] = {};
+        }
+
+        Object.keys(settings).forEach((key)=>{
+            if(key.includes("individual")){
+                id = key.substring(0,key.indexOf("i"));
+                individualSettings[id][key.substring(id.length+10).toLowerCase()] = settings[key];
+            }
+        });
+        settings.individualSettings = individualSettings;
 
     }
 

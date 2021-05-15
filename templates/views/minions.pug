@@ -225,9 +225,10 @@ block content
                             if settings.calculationType==1
                                 th(scope="col") Total Profit
                             th(scope="col") Profit Per Hour
+                            th(scope="col")
                     -let i=0;
                     each minion in minions
-                        tr(id="minion"+i+"Row")
+                        tr(id="minion"+i+"Row" class=minion.hasIndividualSettings==1?"individualTableRow":null)
                             td.text-center
                                 | ##{i+1}
                                 br
@@ -256,70 +257,70 @@ block content
                             td(id="minion"+i+"TotalProfit")=minion.totalProfitText
                             if settings.calculationType==1
                                 td(id="minion"+i+"ProfitPerHour")=minion.profitPerHour
+                            td(id="minion"+i+"Settings"): button.btn.btn-blue(id="individualSettings"+i data-toggle="modal" data-target="#individualModal"+i) Settings
+
                         - i++;
+                
+                - i=0;
+                each minion in minions
+                    .individualModal.modal.fade(id="individualModal"+i tabindex="-1" role="dialog" aria-labelledby="individualModalLabel"+i aria-hidden="true")
+                        .modal-dialog(role="document")
+                            .modal-content(id="individualSettingsForm"+minion.id)
+                                    .modal-header
+                                        h5.modal-title(id="#individualModalLabel"+i)=minion.name
+                                        button.close(type="button" data-dismiss="modal" aria-label="Close")
+                                            span(aria-hidden="true") &times;
+                                    .modal-body
+                                            .form-group
+                                                label(for="individualTier"+minion.id) Tier: &nbsp;
+                                                select(id="individualTier"+minion.id name="individualTier"+minion.id).form-control
+                                                    -let j=1
+                                                    while j<=12
+                                                        option(selected=(minion.tier==j ? 'selected':undefined))=j
+                                                        -j++;
+                                            p This function is in beta, there may be bugs.
+                                            p More settings, such as allowing you to change product forms or only allow certain products to produce, coming soon.
+
+                                    .modal-footer
+                                        button.btn.btn-secondary(type="button" data-dismiss="modal") Cancel
+                                        button.btn.btn-warning(type="button" onclick="appendLink("+minion.id+")") Apply
+                    - i++;
             p: small
                 if(settings.lastUpdatedBazaar)
                     | Last updated time of bazaar price: #{settings.lastUpdatedBazaar} UTC
                 if(settings.lastUpdatedProfile)
                     | <br /> Last updated time of profile: #{settings.lastUpdatedProfile} UTC
-
-
-
-
-
-        //- #individualModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="individualModalLabel" aria-hidden="true")
-        //-     .modal-dialog(role="document")
-        //-         .modal-content
-        //-             .modal-header
-        //-                 h5#individualModalLabel.modal-title Title
-        //-                 button.close(type="button" data-dismiss="modal" aria-label="Close")
-        //-                     span(aria-hidden="true") &times;
-        //-             .modal-body
-        //-                 .form-group
-        //-                     label(for="individualTier") Tier: &nbsp;
-        //-                     select#individualTier.form-control
-        //-                         -let l=1
-        //-                         while l<=12
-        //-                             option(id = "individualTierOption"+l selected = (l==12 ? "selected" : ""))=l
-        //-                             -l++;
-                            
-        //-                 .form-group
-        //-                     p Fuel: &nbsp; <input id="individualFuel" type="number" value="25" class="form-control" min="0"/> %
-        //-                 .form-group
-        //-                     input#individualDiamondSpreading.checkbox(type="checkbox" checked onchange="toggleIndividualDiamondSpreading()")
-        //-                     label(for="individualDiamondSpreading") &nbsp; Has Diamond Spreading
-        //-                 .form-group#products
-        //-                     label Form of products:
-        //-                     br
-        //-                     -let m = 0;
-        //-                     -let n = 0;
-        //-                     while m<10
-        //-                         select(id="individualProduct"+m).form-control
-        //-                             -n=0;
-        //-                             while n<5
-        //-                                 option(id="individualProduct"+m+"Option"+n value=n)
-        //-                                 -n++;
-        //-                         -m++;
-        //-                     select(id="individualProductDiamondSpreading").form-control
-        //-                         -n=0;
-        //-                         while n<3
-        //-                             option(id="individualProductDiamondSpreadingOption"+n value=n)
-        //-                             -n++;
-        //-                 .form-group
-        //-                     label(for="individualSellingTo") Selling to: &nbsp;
-        //-                     select#individualSellingTo.form-control
-        //-                         option(value="0") Max profit (NPC or bazaar)
-        //-                         option(value="1") Bazaar only
-        //-                         option(value="-1") NPC only
-        //-                 .form-group
-        //-                     label(for="individualSellingMethod") Selling method in bazaar: &nbsp;
-        //-                     select#individualSellingMethod.form-control
-        //-                         option(value="0") Sell offer
-        //-                         option(value="1") Sell instantly
-        //-             .modal-footer
-        //-                 button.btn.btn-secondary(type="button" data-dismiss="modal") Cancel
-        //-                 button.btn.btn-warning(type="button" data-dismiss="modal" onclick="applyIndividualSettings()") Apply
-
-            
-            
-            
+  
+//- .form-group
+//-     p Fuel: &nbsp; <input id="individualFuel" type="number" value="25" class="form-control" min="0"/> %
+//- .form-group
+//-     input#individualDiamondSpreading.checkbox(type="checkbox" checked onchange="toggleIndividualDiamondSpreading()")
+//-     label(for="individualDiamondSpreading") &nbsp; Has Diamond Spreading
+//- .form-group#products
+//-     label Form of products:
+//-     br
+//-     -let m = 0;
+//-     -let n = 0;
+//-     while m<10
+//-         select(id="individualProduct"+m).form-control
+//-             -n=0;
+//-             while n<5
+//-                 option(id="individualProduct"+m+"Option"+n value=n)
+//-                 -n++;
+//-         -m++;
+//-     select(id="individualProductDiamondSpreading").form-control
+//-         -n=0;
+//-         while n<3
+//-             option(id="individualProductDiamondSpreadingOption"+n value=n)
+//-             -n++;
+//- .form-group
+//-     label(for="individualSellingTo") Selling to: &nbsp;
+//-     select#individualSellingTo.form-control
+//-         option(value="0") Max profit (NPC or bazaar)
+//-         option(value="1") Bazaar only
+//-         option(value="-1") NPC only
+//- .form-group
+//-     label(for="individualSellingMethod") Selling method in bazaar: &nbsp;
+//-     select#individualSellingMethod.form-control
+//-         option(value="0") Sell offer
+//-         option(value="1") Sell instantly
