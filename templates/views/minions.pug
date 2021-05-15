@@ -275,11 +275,11 @@ block content
                                                 label(for="individualTier"+minion.id) Tier: &nbsp;
                                                 select(id="individualTier"+minion.id name="individualTier"+minion.id).form-control
                                                     -let j=1
-                                                    while j<=12
+                                                    while j<=minion.tierDelay.length
                                                         option(selected=(minion.tier==j ? 'selected':undefined))=j
                                                         -j++;
                                             p This function is in beta, there may be bugs.
-                                            p More settings, such as allowing you to change product forms or only allow certain products to produce, coming soon.
+                                            p More features coming soon, such as allowing you to change product forms or only allowing certain products to produce.
 
                                     .modal-footer
                                         button.btn.btn-secondary(type="button" data-dismiss="modal") Cancel
