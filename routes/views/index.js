@@ -13,6 +13,8 @@ exports = module.exports = function (req, res) {
         console.log(output.settings);
         res.render("index",output);
 
+    }).catch(()=>{
+        res.render("index");
     });
 
     function dataValidation(settings){

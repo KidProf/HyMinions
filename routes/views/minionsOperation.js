@@ -34,8 +34,12 @@ exports.calculateMinionsProfit = async function(minions, settings){
 
     console.log("finished findBazaar and findProfile");
 
+    if(settings.individualSettings){
+        minions.forEach((minion)=>{
+            minion.hasIndividualSettings = settings.individualSettings[minion.id].tier ? 1 : 0;
+        });
+    }
     minions.forEach((minion)=>{
-        minion.hasIndividualSettings = settings.individualSettings[minion.id].tier ? 1 : 0;
         calculateMinionProfit(settings,minion);
     });
     minions.sort((a,b) =>{
