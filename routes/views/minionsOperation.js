@@ -57,7 +57,11 @@ exports.calculateMinionsProfit = async function(minions, settings){
         calculateMinionProfit(settings,minion);
     });
     minions.sort((a,b) =>{
-        return b.totalProfit-a.totalProfit;
+        if(b.totalProfit>a.totalProfit) return 1; //total profit desc
+        else if(b.totalProfit<a.totalProfit) return -1;
+        else if(b.name<a.name) return 1; //name asc
+        else if(b.name>a.name) return -1;
+        else return 0;
     });
     // minions.forEach((minion)=>{
     //     console.log(minion.totalProfit);

@@ -239,21 +239,25 @@ block content
                                 | (#{minion.totalProfitText})
                             td(id="minion"+i+"Tier")=minion.tier
                             td(id="minion"+i+"Tools" class=minion.toolsWarning? "warning" : null)
-                                each tool in minion.tools
-                                    | #{tool}
-                                    br
+                                if minion.tools
+                                    each tool in minion.tools
+                                        | #{tool}
+                                        br
                             td(id="minion"+i+"Items")
-                                each product in minion.outputProducts
-                                    | #{product.name}
-                                    br
+                                if minion.outputProducts
+                                    each product in minion.outputProducts
+                                        | #{product.name}
+                                        br
                             td(id="minion"+i+"NumberOfItems")
-                                each product in minion.outputProducts
-                                    | #{product.numberOfItems}
-                                    br
+                                if minion.outputProducts
+                                    each product in minion.outputProducts
+                                        | #{product.numberOfItems}
+                                        br
                             td(id="minion"+i+"BazaarPrices")
-                                each product in minion.outputProducts
-                                    | #{product.unitPrice}
-                                    br
+                                if minion.outputProducts
+                                    each product in minion.outputProducts
+                                        | #{product.unitPrice}
+                                        br
                             td(id="minion"+i+"TotalProfit")=minion.totalProfitText
                             if settings.calculationType==1
                                 td(id="minion"+i+"ProfitPerHour")=minion.profitPerHour
