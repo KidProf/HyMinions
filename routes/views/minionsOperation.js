@@ -45,7 +45,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
     }
 
     //check to see if diamond spreading is added to the minions array
-    if(!diamondSpreadingAdded){
+    if(diamondSpreadingAdded==false){
         minions.forEach((minion)=>{
             minion.products.push(diamondSpreadingItem);
         });
@@ -226,12 +226,17 @@ exports.calculateMinionsProfit = async function(minions, settings){
         }else{
             //new calculation type
             minion.products.forEach((product)=>{
-                
-                //itemsPerHour = 3600/time between actions/2 (offline)* res generated per time* (1+fuel/100) / amount of res needed to generate the enchanted form
-                let totalItems = Math.floor(settings.offlineTime*3600/minion.tierDelay[minion.tier-1]/2*product.perTime*(1+settings.fuel/100));
-                
-                minion.itemsHarvested += totalItems;
                 let variantIndex;
+                let totalItems;
+                if(product.item=="Diamond (Spreading)"){
+                    totalItems = Math.floor(minion.itemsHarvested*0.1);
+                }else{
+                    //itemsPerHour = 3600/time between actions/2 (offline)* res generated per time* (1+fuel/100) / amount of res needed to generate the enchanted form
+                    totalItems = Math.floor(settings.offlineTime*3600/minion.tierDelay[minion.tier-1]/2*product.perTime*(1+settings.fuel/100));
+                    minion.itemsHarvested += totalItems;
+                }
+                
+                
                 if(product.defaultVariant){ //override
                     variantIndex = product.defaultVariant;
                 }else if(!minion.hasDiamondSpreading&&product.item=="Diamond (Spreading)"){

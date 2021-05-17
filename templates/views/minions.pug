@@ -271,15 +271,29 @@ block content
                                         button.close(type="button" data-dismiss="modal" aria-label="Close")
                                             span(aria-hidden="true") &times;
                                     .modal-body
+                                        p This function is in beta, bugs may occur.
+                                        .form-group
+                                            label(for=minion.id+"individualTier") Tier: &nbsp;
+                                            select(id=minion.id+"individualTier").form-control
+                                                -let j=1;
+                                                while j<=minion.tierDelay.length
+                                                    option(selected=(minion.tier==j ? 'selected':undefined))=j
+                                                    -j++;
+                                        - let k=0;
+                                        p Products:
+                                        each product in minion.products
                                             .form-group
-                                                label(for="individualTier"+minion.id) Tier: &nbsp;
-                                                select(id="individualTier"+minion.id name="individualTier"+minion.id).form-control
-                                                    -let j=1
-                                                    while j<=minion.tierDelay.length
-                                                        option(selected=(minion.tier==j ? 'selected':undefined))=j
-                                                        -j++;
-                                            p This function is in beta, there may be bugs.
-                                            p More features coming soon, such as allowing you to change product forms or only allowing certain products to produce.
+                                                label(for=minion.id+"individualProduct"+k) #{product.item}: &nbsp;
+                                                select(id=minion.id+"individualProduct"+k).form-control
+                                                    -let l=0;
+                                                    each variant in product.variants
+                                                        option(value=l selected=(product.selectedVariant==l? 'selectd': undefined))=variant
+                                                        - l++;
+                                                    option(value=-1 selected=(product.selectedVariant==-1? 'selectd': undefined)) No #{product.item}
+                                                -k++;
+
+                                            
+                                            //-p More features coming soon, such as allowing you to change product forms or only allowing certain products to produce.
 
                                     .modal-footer
                                         button.btn.btn-secondary(type="button" data-dismiss="modal") Cancel

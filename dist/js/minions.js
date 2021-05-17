@@ -182,7 +182,14 @@ function appendLink(id){
     // keys.push(id+"individual");
     // values.push(1);
     keys.push(id+"individualTier");
-    values.push($("#individualTier"+id).val());
+    values.push($("#"+id+"individualTier").val());
+    i=0;
+    while($("#"+id+"individualProduct"+i).length){
+        keys.push(id+"individualProduct"+i);
+        values.push($("#"+id+"individualProduct"+i).val());
+        i++;
+    }
+
 
     // console.log(keys);
     // console.log(values);

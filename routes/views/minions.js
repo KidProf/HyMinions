@@ -102,9 +102,14 @@ exports = module.exports = function (req, res) {
         }
 
         Object.keys(settings).forEach((key)=>{
-            if(key.includes("individual")){
+            if(key.includes("individualProduct")){
+                id = key.substring(0,key.indexOf("i"));
+                if(individualSettings[id]["products"]==undefined) individualSettings[id]["products"]= new Array();
+                individualSettings[id]["products"][key.substring(id.length+17)] = settings[key];
+            }else if(key.includes("individual")){
                 id = key.substring(0,key.indexOf("i"));
                 individualSettings[id][key.substring(id.length+10).toLowerCase()] = settings[key];
+                
             }
         });
         settings.individualSettings = individualSettings;
