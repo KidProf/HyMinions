@@ -19,7 +19,7 @@ exports = module.exports = function (req, res) {
         res.render("minions",output);
 
     }).catch(()=>{
-        res.render("index");
+        res.render("minions");
     });
     
 

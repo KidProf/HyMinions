@@ -282,16 +282,14 @@ exports.minions = [
                 npcPrice: 3,
                 variants: [
                     "Gravel",
-                    "No gravel with flint shovel",
                 ],
                 variantsEquiv: [
-                    1,
                     1,
                 ],
                 variantsNpcPrices: [
                     3,
-                    0
-                ]
+                ],
+                defaultVariant: -1,
             },{
                 item : "Flint",
                 perTime : 1,
@@ -348,18 +346,21 @@ exports.minions = [
                     "Wheat",
                     "Enchanted Hay Bale",
                     "Tightly-Tied Hay Bale",
-                    "Hay Bale"
+                    "Hay Bale",
+                    "Enchanted Bread",
                 ],
                 variantsEquiv: [
                     1,
                     1296,
                     186624,
-                    9
+                    9,
+                    96
                 ],
                 variantsIsEnchanted:[
                     0,
                     1,
                     1,
+                    0,
                     0
                 ]
             },{
@@ -377,42 +378,17 @@ exports.minions = [
             },
         ]      
     },{ //10
-        name: "Wheat (Bread) Minion",
+        name: "Carrot Minion",
         id: 10,
-        rawId: "WHEAT",
-        tierDelay : [15,15,13,13,11,11,10,10,9,9,8,7],
+        tierDelay : [20,20,18,18,16,16,14,14,12,12,10,8],
         products : [
             {
-                item : "Wheat",
-                perTime : 1,
+                item : "Carrot",
+                perTime : 3, //3
                 npcPrice: 1,
-                canCompactor: true,
-                compactor: {
-                    variant: "Hay Bale",
-                    variantEquiv: 9,
-                },
                 variants: [
-                    "Wheat",
-                    "Enchanted Bread",
-                    "Hay Bale"
-                ],
-                variantsEquiv: [
-                    1,
-                    96,
-                    9
-                ],
-                variantsIsEnchanted:[
-                    0,
-                    1,
-                    0
-                ]
-            },{
-                item : "Seeds",
-                perTime : 1,
-                npcPrice: 0.5,
-                variants: [
-                    "Seeds",
-                    "Enchanted Seeds",
+                    "Carrot",
+                    "Enchanted Carrot",
                 ],
                 variantsEquiv: [
                     1,
@@ -1467,30 +1443,56 @@ exports.minions = [
                 ]
             }
         ]      
-    },{ //52
-        name: "Carrot Minion",
-        id: 52,
-        tierDelay : [20,20,18,18,16,16,14,14,12,12,10,8],
-        products : [
-            {
-                item : "Carrot",
-                perTime : 3, //3
-                npcPrice: 1,
-                variants: [
-                    "Carrot",
-                    "Enchanted Carrot",
-                ],
-                variantsEquiv: [
-                    1,
-                    160,
-                ]
-            },
-        ]      
     },
 
-    //TOTAL: 53
+    //TOTAL: 52
     //without flower minion
-    //wheat minion: both bread and hay bale route
 ];
 
+
+// { //10
+//     name: "Wheat (Bread) Minion",
+//     id: 10,
+//     rawId: "WHEAT",
+//     tierDelay : [15,15,13,13,11,11,10,10,9,9,8,7],
+//     products : [
+//         {
+//             item : "Wheat",
+//             perTime : 1,
+//             npcPrice: 1,
+//             canCompactor: true,
+//             compactor: {
+//                 variant: "Hay Bale",
+//                 variantEquiv: 9,
+//             },
+//             variants: [
+//                 "Wheat",
+//                 "Enchanted Bread",
+//                 "Hay Bale"
+//             ],
+//             variantsEquiv: [
+//                 1,
+//                 96,
+//                 9
+//             ],
+//             variantsIsEnchanted:[
+//                 0,
+//                 1,
+//                 0
+//             ]
+//         },{
+//             item : "Seeds",
+//             perTime : 1,
+//             npcPrice: 0.5,
+//             variants: [
+//                 "Seeds",
+//                 "Enchanted Seeds",
+//             ],
+//             variantsEquiv: [
+//                 1,
+//                 160,
+//             ]
+//         },
+//     ]      
+// }
 

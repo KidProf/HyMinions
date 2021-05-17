@@ -2,12 +2,12 @@ var minionsData = require("./minionsData.js");
 var fetch = require('cross-fetch');
 var itemNames = require("./itemNames.json");
 let currentTime = new Date();
-let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, hadError=false;
+let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, hadError=false, diamondSpreadingAdded=false;
     
 exports.calculateMinionsProfit = async function(minions, settings){
     diamondSpreadingItem = minionsData.diamondSpreadingItem;
     console.log(settings.name,minecraftName);
-    console.log(Date.now()-lastUpdatedBazaar);
+    //console.log(Date.now()-lastUpdatedBazaar);
     if((settings.useProfile)&&(settings.name!=minecraftName||hadError||Date.now()-lastUpdatedProfile>5*60*1000)){ //don't call api again if identical name, but call again if prev result has error, 5 min timeout
         await findProfile(settings.name);
         //await Promise.all([findBazaar(), findProfile(settings.name)]);
@@ -34,11 +34,26 @@ exports.calculateMinionsProfit = async function(minions, settings){
 
     console.log("finished findBazaar and findProfile");
 
+    //check to see if there are individual settings
     if(settings.individualSettings){
         minions.forEach((minion)=>{
             minion.hasIndividualSettings = settings.individualSettings[minion.id].tier ? 1 : 0;
         });
+    }else{
+        minions.forEach((minion)=>{
+            minion.hasIndividualSettings = 0;
+        });
     }
+
+    //check to see if diamond spreading is added to the minions array
+    if(!diamondSpreadingAdded){
+        minions.forEach((minion)=>{
+            minion.products.push(diamondSpreadingItem);
+        });
+        diamondSpreadingAdded = true;
+    }
+
+    //calculate profit
     minions.forEach((minion)=>{
         calculateMinionProfit(settings,minion);
     });
@@ -50,7 +65,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
     // })
 
     function calculateMinionProfit(settings,minion){
-        if(minion.hasIndividualSettings){
+        if(minion.hasIndividualSettings==1){
             minion.tier = settings.individualSettings[minion.id].tier; //individual settings override
         }else if(settings.useProfile){
             minion.tier=minion.profilesTier[settings.profile]; //use profile minion tier
@@ -70,7 +85,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
                 minion.hasDiamondSpreading = 1;
             }else{
                 minion.hasDiamondSpreading = 0;
-            };
+            }
         }
 
         minion.outputProducts = new Array();
@@ -85,80 +100,127 @@ exports.calculateMinionsProfit = async function(minions, settings){
 
         if(settings.calculationType==0){
             //old calculation type
-            if(settings.productForm==-2){ //max profit(enchnanted forms)
-                minion.products.forEach((product)=>{
-                    let maxVariantIndex = 1, variantIndex = 1, maxProfit = 0;
-                    while(variantIndex<product.variants.length){
 
-                        if(product.variantsIsEnchanted==undefined||product.variantsIsEnchanted[variantIndex]==1){
+            if(settings.productForm==-2){ //max profit(enchanted forms)
+                minion.products.forEach((product)=>{
+                    //override
+                    if(product.defaultVariant){
+                        product.selectedVariant = product.defaultVariant;
+                        if(product.defaultVariant!=-1){
+                            calculateVariantProfitManual(settings,minion,product,product.defaultVariant);
+                        }
+                    }else if(!minion.hasDiamondSpreading&&product.item=="Diamond (Spreading)"){
+                        product.selectedVariant = -1;
+                    }else{
+                        let maxVariantIndex = 1, variantIndex = 1, maxProfit = 0;
+                        while(variantIndex<product.variants.length){
+    
+                            if(product.variantsIsEnchanted==undefined||product.variantsIsEnchanted[variantIndex]==1){
+                                let profit = compareVariantProfit(settings,minion,product,variantIndex);
+                                if(profit>maxProfit){
+                                    maxProfit = profit;
+                                    maxVariantIndex = variantIndex;
+                                }
+                            }
+                            variantIndex++;
+                        }
+                        if(product.item=="Diamond (Spreading)"){
+                            product.perTime = minion.itemsHarvested*0.1;
+                        }
+                        product.selectedVariant = maxVariantIndex;
+                        calculateVariantProfitManual(settings,minion,product,maxVariantIndex);
+                    }
+
+
+
+                });
+                // if(minion.hasDiamondSpreading){
+                //     let maxVariantIndex = 1, variantIndex = 1, maxProfit = 0;
+                //     while(variantIndex<diamondSpreadingItem.variants.length){
+                //         let profit = compareVariantProfit(settings,minion,diamondSpreadingItem,variantIndex);
+                //         if(profit>maxProfit){
+                //             maxProfit = profit;
+                //             maxVariantIndex = variantIndex;
+                //         }
+                //         variantIndex++;                
+                //     }
+                //     diamondSpreadingItem.perTime = minion.itemsHarvested*0.1;
+                //     calculateVariantProfitManual(settings,minion,diamondSpreadingItem,maxVariantIndex);
+                // }
+            }else if(settings.productForm==-1){ //max profit
+                minion.products.forEach((product)=>{
+                    //override
+                    if(product.defaultVariant){
+                        product.selectedVariant = product.defaultVariant;
+                        if(product.defaultVariant!=-1){
+                            calculateVariantProfitManual(settings,minion,product,product.defaultVariant);
+                        }
+                    }
+                    else if(!minion.hasDiamondSpreading&&product.item=="Diamond (Spreading)"){
+                        product.selectedVariant = -1;
+                    }else{
+                        let maxVariantIndex = 0, variantIndex = 0, maxProfit = 0;
+                        while(variantIndex<product.variants.length){
                             let profit = compareVariantProfit(settings,minion,product,variantIndex);
                             if(profit>maxProfit){
                                 maxProfit = profit;
                                 maxVariantIndex = variantIndex;
                             }
+                            variantIndex++;                
                         }
-                        variantIndex++;
+                        if(product.item=="Diamond (Spreading)"){
+                            product.perTime = minion.itemsHarvested*0.1;
+                        }
+                        product.selectedVariant = maxVariantIndex;
+                        calculateVariantProfitManual(settings,minion,product,maxVariantIndex);
                     }
-                    calculateVariantProfitManual(settings,minion,product,maxVariantIndex);
                 });
-                if(minion.hasDiamondSpreading){
-                    let maxVariantIndex = 1, variantIndex = 1, maxProfit = 0;
-                    while(variantIndex<diamondSpreadingItem.variants.length){
-                        let profit = compareVariantProfit(settings,minion,diamondSpreadingItem,variantIndex);
-                        if(profit>maxProfit){
-                            maxProfit = profit;
-                            maxVariantIndex = variantIndex;
-                        }
-                        variantIndex++;                
-                    }
-                    diamondSpreadingItem.perTime = minion.itemsHarvested*0.1;
-                    calculateVariantProfitManual(settings,minion,diamondSpreadingItem,maxVariantIndex);
-                };
-            }else if(settings.productForm==-1){ //max profit
-                minion.products.forEach((product)=>{
-                    let maxVariantIndex = 0, variantIndex = 0, maxProfit = 0;
-                    while(variantIndex<product.variants.length){
-                        let profit = compareVariantProfit(settings,minion,product,variantIndex);
-                        if(profit>maxProfit){
-                            maxProfit = profit;
-                            maxVariantIndex = variantIndex;
-                        }
-                        variantIndex++;                
-                    }
-                    calculateVariantProfitManual(settings,minion,product,maxVariantIndex );
-                });
-                if(minion.hasDiamondSpreading){
-                    let maxVariantIndex = 0, variantIndex = 0, maxProfit = 0;
-                    while(variantIndex<diamondSpreadingItem.variants.length){
-                        let profit = compareVariantProfit(settings,minion,diamondSpreadingItem,variantIndex);
-                        if(profit>maxProfit){
-                            maxProfit = profit;
-                            maxVariantIndex = variantIndex;
-                        }
-                        variantIndex++;                
-                    }
-                    diamondSpreadingItem.perTime = minion.itemsHarvested*0.1;
-                    calculateVariantProfitManual(settings,minion,diamondSpreadingItem,maxVariantIndex);
-                };
+
+                // if(minion.hasDiamondSpreading){
+                //     let maxVariantIndex = 0, variantIndex = 0, maxProfit = 0;
+                //     while(variantIndex<diamondSpreadingItem.variants.length){
+                //         let profit = compareVariantProfit(settings,minion,diamondSpreadingItem,variantIndex);
+                //         if(profit>maxProfit){
+                //             maxProfit = profit;
+                //             maxVariantIndex = variantIndex;
+                //         }
+                //         variantIndex++;                
+                //     }
+                //     diamondSpreadingItem.perTime = minion.itemsHarvested*0.1;
+                //     calculateVariantProfitManual(settings,minion,diamondSpreadingItem,maxVariantIndex);
+                // }
                 //console.log(minion.outputProducts);
             }else{
                 //just find that form
                 minion.products.forEach((product)=>{
-                    
-                    let variantIndex = settings.productForm;
-
-                    //while the index refers to enchanted form && (it does not exists || (it is not the only enchanted form && it is not an enchanted form)) e.g. snow block falls in this category
-                    while(variantIndex>=0&&((!product.variants[variantIndex])||
-                    (variantIndex!=0&&!(product.variantsIsEnchanted ? product.variantsIsEnchanted[variantIndex] : 1)))){
-                        variantIndex--;
+                    //override
+                    if(product.defaultVariant){
+                        product.selectedVariant = product.defaultVariant;
+                        if(product.defaultVariant!=-1){
+                            calculateVariantProfitManual(settings,minion,product,product.defaultVariant);
+                        }
                     }
-                    calculateVariantProfitManual(settings,minion,product,variantIndex);
+                    else if(!minion.hasDiamondSpreading&&product.item=="Diamond (Spreading)"){
+                        product.selectedVariant = -1;
+                    }else{
+                        let variantIndex = settings.productForm;
 
+                        //while the index refers to enchanted form && (it does not exists || (it is not the only enchanted form && it is not an enchanted form)) e.g. snow block falls in this category
+                        while(variantIndex>=0&&((!product.variants[variantIndex])||
+                        (variantIndex!=0&&!(product.variantsIsEnchanted ? product.variantsIsEnchanted[variantIndex] : 1)))){
+                            variantIndex--;
+                        }
+                        if(product.item=="Diamond (Spreading)"){
+                            product.perTime = minion.itemsHarvested*0.1;
+                        }
+                        product.selectedVariant = maxVariantIndex;
+                        calculateVariantProfitManual(settings,minion,product,maxVariantIndex);
+                    }
                 });
-                if(minion.hasDiamondSpreading){
-                    diamondSpreadingItem.perTime = minion.itemsHarvested*0.1;
-                    calculateVariantProfitManual(settings,minion,diamondSpreadingItem,settings.productForm);
-                };
+                // if(minion.hasDiamondSpreading){
+                //     diamondSpreadingItem.perTime = minion.itemsHarvested*0.1;
+                //     calculateVariantProfitManual(settings,minion,diamondSpreadingItem,settings.productForm);
+                // }
                 //console.log(minion.outputProducts);
                 
             }
@@ -171,32 +233,41 @@ exports.calculateMinionsProfit = async function(minions, settings){
                 
                 minion.itemsHarvested += totalItems;
                 let variantIndex;
-                if(settings.superCompactor>=2){
-                    variantIndex = product.variants.length-1;
-                    if(product.variantsIsEnchanted){ //eliminate snow block option
-                        while(product.variantsIsEnchanted[variantIndex]==0&&variantIndex>=0){
-                            variantIndex--;
+                if(product.defaultVariant){ //override
+                    variantIndex = product.defaultVariant;
+                }else if(!minion.hasDiamondSpreading&&product.item=="Diamond (Spreading)"){
+                    variantIndex = -1;
+                }else{
+                    if(settings.superCompactor>=2){ //super compactor/ dwarven compactor
+                        variantIndex = product.variants.length-1;
+                        if(product.variantsIsEnchanted){ //eliminate snow block option
+                            while(product.variantsIsEnchanted[variantIndex]==0&&variantIndex>=0){
+                                variantIndex--;
+                            }
                         }
-                    }
-                }else if(settings.superCompactor==1&&product.canCompactor){
-                    variantIndex = product.compactor.minimumEnchanted ? product.compactor.minimumEnchanted : 0, maxProfit = 0;
-                    for(index=variantIndex;index<product.variants.length;index++){
-                        let profit = compareVariantProfit(settings,minion,product,index); 
-                        if(profit>maxProfit){
-                            variantIndex = index;
-                            maxProfit = profit;
+                    }else if(settings.superCompactor==1&&product.canCompactor){ //compactor
+                        variantIndex = product.compactor.minimumEnchanted ? product.compactor.minimumEnchanted : 0, maxProfit = 0;
+                        for(index=variantIndex;index<product.variants.length;index++){
+                            let profit = compareVariantProfit(settings,minion,product,index); 
+                            if(profit>maxProfit){
+                                variantIndex = index;
+                                maxProfit = profit;
+                            }
                         }
-                    }
-                }else{ //superCompactor = 0 / cannot be compacted by compactor
-                    variantIndex = 0, maxProfit = 0;
-                    for(index=variantIndex;index<product.variants.length;index++){
-                        let profit = compareVariantProfit(settings,minion,product,index); 
-                        if(profit>maxProfit){
-                            variantIndex = index;
-                            maxProfit = profit;
+                    }else{ //superCompactor = 0 / cannot be compacted by compactor
+                        variantIndex = 0, maxProfit = 0;
+                        for(index=variantIndex;index<product.variants.length;index++){
+                            let profit = compareVariantProfit(settings,minion,product,index); 
+                            if(profit>maxProfit){
+                                variantIndex = index;
+                                maxProfit = profit;
+                            }
                         }
                     }
                 }
+                
+                //record down variant used
+                product.selectedVariant = variantIndex;
                 //variant index >=0 && the variant index is an enchanted form && still have items
                 while(variantIndex>=0&&totalItems>0){
                     
@@ -210,44 +281,44 @@ exports.calculateMinionsProfit = async function(minions, settings){
             
             });
 
-            if(minion.hasDiamondSpreading){
-                let totalItems = Math.floor(minion.itemsHarvested*0.1);
-                let product = diamondSpreadingItem;
-                let variantIndex;
-                if(settings.superCompactor>=2){
-                    variantIndex = product.variants.length-1;
-                }else if(settings.superCompactor==1&&product.canCompactor){
-                    variantIndex = product.compactor.minimumEnchanted ? product.compactor.minimumEnchanted : 0, maxProfit = 0;
-                    for(index=variantIndex;index<product.variants.length;index++){
-                        let profit = compareVariantProfit(settings,minion,product,index); 
-                        if(profit>maxProfit){
-                            variantIndex = index;
-                            maxProfit = profit;
-                        }
-                    }
-                }else{ //superCompactor = 0 / cannot be compacted by compactor
-                    variantIndex = 0, maxProfit = 0;
-                    for(index=variantIndex;index<product.variants.length;index++){
-                        let profit = compareVariantProfit(settings,minion,product,index); 
-                        if(profit>maxProfit){
-                            variantIndex = index;
-                            maxProfit = profit;
-                        }
-                    }
-                }
-                //variant index >=0 && the variant index is an enchanted form && still have items
-                while(variantIndex>=0&&totalItems>0){
-                    if(product.variantsIsEnchanted==undefined||product.variantsIsEnchanted[variantIndex]==1){
-                        let totalItemsVariant = (totalItems-(totalItems%product.variantsEquiv[variantIndex]))/product.variantsEquiv[variantIndex]; //(total-remainder)/divisor to get intergral ans
-                        totalItems = totalItems%product.variantsEquiv[variantIndex];
-                        if(totalItemsVariant!=0){
-                            calculateVariantProfit(settings,minion,product,variantIndex,totalItemsVariant);
-                        }
-                    }
-                    variantIndex--;
-                }
+            // if(minion.hasDiamondSpreading){
+            //     let totalItems = Math.floor(minion.itemsHarvested*0.1);
+            //     let product = diamondSpreadingItem;
+            //     let variantIndex;
+            //     if(settings.superCompactor>=2){
+            //         variantIndex = product.variants.length-1;
+            //     }else if(settings.superCompactor==1&&product.canCompactor){
+            //         variantIndex = product.compactor.minimumEnchanted ? product.compactor.minimumEnchanted : 0, maxProfit = 0;
+            //         for(index=variantIndex;index<product.variants.length;index++){
+            //             let profit = compareVariantProfit(settings,minion,product,index); 
+            //             if(profit>maxProfit){
+            //                 variantIndex = index;
+            //                 maxProfit = profit;
+            //             }
+            //         }
+            //     }else{ //superCompactor = 0 / cannot be compacted by compactor
+            //         variantIndex = 0, maxProfit = 0;
+            //         for(index=variantIndex;index<product.variants.length;index++){
+            //             let profit = compareVariantProfit(settings,minion,product,index); 
+            //             if(profit>maxProfit){
+            //                 variantIndex = index;
+            //                 maxProfit = profit;
+            //             }
+            //         }
+            //     }
+            //     //variant index >=0 && the variant index is an enchanted form && still have items
+            //     while(variantIndex>=0&&totalItems>0){
+            //         if(product.variantsIsEnchanted==undefined||product.variantsIsEnchanted[variantIndex]==1){
+            //             let totalItemsVariant = (totalItems-(totalItems%product.variantsEquiv[variantIndex]))/product.variantsEquiv[variantIndex]; //(total-remainder)/divisor to get intergral ans
+            //             totalItems = totalItems%product.variantsEquiv[variantIndex];
+            //             if(totalItemsVariant!=0){
+            //                 calculateVariantProfit(settings,minion,product,variantIndex,totalItemsVariant);
+            //             }
+            //         }
+            //         variantIndex--;
+            //     }
 
-            };
+            // }
 
         }
     
@@ -374,7 +445,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
         }
         result.profitPerItem = itemsPerHour*unitPrice;
         //for diamond spreading
-        minion.itemsHarvested += product.bazaarPrice[variantIndex][0]!=0 ? product.perTime : 0; // to solve the problem of "No gravel with flint shovel" being counted
+        minion.itemsHarvested += product.perTime;
         
         //for output
         minion.outputProducts.push(result);
