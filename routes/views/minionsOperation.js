@@ -1,7 +1,6 @@
 var minionsData = require("./minionsData.js");
 var fetch = require('cross-fetch');
 var itemNames = require("./itemNames.json");
-let currentTime = new Date();
 let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, hadError=false, diamondSpreadingAdded=false;
     
 exports.calculateMinionsProfit = async function(minions, settings){

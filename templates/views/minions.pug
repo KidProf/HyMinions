@@ -44,9 +44,9 @@ block content
                     h3 General
                     .form-group
                         //-pretick use profile to be true for first time visit
-                        input#overallUseProfile.checkbox(type="checkbox" onchange="toggleUseProfile()" checked=(settings.useProfile==false&&settings.tier!=11 ? undefined:"checked")) 
+                        input#overallUseProfile.checkbox(type="checkbox" onchange="toggleUseProfile()" checked=(settings.useProfile==false&&(settings.tier!=11||timesLoaded!=0) ? undefined:"checked")) 
                         label(for="overallUseProfile") &nbsp; Use Profile
-                    .form-group#useProfile(class=(settings.useProfile==false&&settings.tier!=11 ? "d-none":""))
+                    .form-group#useProfile(class=(settings.useProfile==false&&(settings.tier!=11||timesLoaded!=0) ? "d-none":""))
                         p Minecraft Name: &nbsp; 
                             input#overallProfileName.form-control(value=settings.name)
                         if(settings.profileNames)
@@ -57,7 +57,7 @@ block content
                                     option(value=k selected=(settings.profile==k?'selected':undefined))=settings.profileNames[k]
                                     -k++;
                     
-                    .form-group#useTier(class=(settings.useProfile==false&&settings.tier!=11 ? "":"d-none"))
+                    .form-group#useTier(class=(settings.useProfile==false&&(settings.tier!=11||timesLoaded!=0) ? "":"d-none"))
                         label(for="overallTier") Tier: &nbsp;
                         select#overallTier.form-control
                             -let j=1

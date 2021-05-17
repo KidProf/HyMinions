@@ -1,6 +1,6 @@
 var minionsData = require("./minionsData.js");
 var minionsOperation = require("./minionsOperation.js");
-
+let timesLoaded = 0;
 exports = module.exports = function (req, res) {
     console.log(req.method);
     console.log(req.query);
@@ -14,7 +14,8 @@ exports = module.exports = function (req, res) {
     //go to minions operation.js
     //asyncAwait
     minionsOperation.calculateMinionsProfit(minions, settings).then(()=>{
-        let output = {settings: settings, minions: minions};
+        let output = {settings: settings, minions: minions, timesLoaded};
+        timesLoaded++;
         console.log(output.settings);
         res.render("minions",output);
 
