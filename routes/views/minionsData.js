@@ -1,24 +1,24 @@
 exports.storage = [1,3,3,6,6,9,9,12,12,15,15,15];
 
-exports.diamondSpreadingItem = {
-    item: "Diamond (Spreading)",
-    npcPrice: 8,
-    canCompactor: true,
-    compactor: {
-        variant: "Block of Diamond (Spreading)",
-        variantEquiv: 9,
-    },
-    variants: [
-        "Diamond (Spreading)",
-        "Enchanted Diamond (Spreading)",
-        "Enchanted Diamond Block (Spreading)",
-    ],
-    variantsEquiv: [
-        1,
-        160,
-        25600
-    ],
-}
+// exports.diamondSpreadingItem = {
+//     item: "Diamond (Spreading)",
+//     npcPrice: 8,
+//     canCompactor: true,
+//     compactor: {
+//         variant: "Block of Diamond (Spreading)",
+//         variantEquiv: 9,
+//     },
+//     variants: [
+//         "Diamond (Spreading)",
+//         "Enchanted Diamond (Spreading)",
+//         "Enchanted Diamond Block (Spreading)",
+//     ],
+//     variantsEquiv: [
+//         1,
+//         160,
+//         25600
+//     ],
+// }
 
 exports.minions = [
     { //0
@@ -53,7 +53,26 @@ exports.minions = [
                     160,
                     25600
                 ],
-            }
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //1
         name: "Tarantula Minion",
@@ -100,7 +119,26 @@ exports.minions = [
                     160,
                     25600
                 ]
-            }
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //2
         name: "Potato Minion",
@@ -123,6 +161,25 @@ exports.minions = [
                     25600,
                     25600,
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]
     },{ //3
@@ -155,7 +212,26 @@ exports.minions = [
                     1,
                     576 //576
                 ]
-            }
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //4 
         name: "Chicken Minion",
@@ -206,7 +282,26 @@ exports.minions = [
                     20736 
                 ]
 
-            }
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //5
         name: "Sheep Minion",
@@ -240,7 +335,26 @@ exports.minions = [
                     1,
                     160,
                 ]
-            }
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //6
         name: "Lapis Minion",
@@ -266,6 +380,25 @@ exports.minions = [
                     160,
                     25600
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //7
@@ -303,6 +436,25 @@ exports.minions = [
                     160,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //8
         name: "Blaze Minion",
@@ -323,6 +475,25 @@ exports.minions = [
                     160,
                     25600
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //9
@@ -376,6 +547,25 @@ exports.minions = [
                     160,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //10
         name: "Carrot Minion",
@@ -394,6 +584,25 @@ exports.minions = [
                     1,
                     160,
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //11
@@ -416,6 +625,25 @@ exports.minions = [
                     25600,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //12
         name: "Melon Minion",
@@ -437,6 +665,25 @@ exports.minions = [
                     25600,
 
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //13
@@ -470,6 +717,25 @@ exports.minions = [
                     160,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //14
         name: "Cocoa Beans Minion",
@@ -489,6 +755,25 @@ exports.minions = [
                     1,
                     160,
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //15
@@ -514,6 +799,25 @@ exports.minions = [
                     25600,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //16
         name: "Sugar Cane Minion",
@@ -536,6 +840,25 @@ exports.minions = [
                     25600,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //17
         name: "Pig Minion",
@@ -556,6 +879,25 @@ exports.minions = [
                     160,
                     25600,
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //18
@@ -600,6 +942,25 @@ exports.minions = [
                     576, //576
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //19
         name: "Nether Wart Minion",
@@ -622,6 +983,25 @@ exports.minions = [
                     25600,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //20
         name: "Cobblestone Minion",
@@ -640,6 +1020,25 @@ exports.minions = [
                     1,
                     160,
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //21
@@ -670,6 +1069,25 @@ exports.minions = [
                     25600,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //22
         name: "Diamond Minion",
@@ -695,6 +1113,25 @@ exports.minions = [
                     160,
                     25600,
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //23
@@ -722,6 +1159,44 @@ exports.minions = [
                     25600,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //24
         name: "Redstone Minion",
@@ -747,6 +1222,25 @@ exports.minions = [
                     160,
                     25600,
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //25
@@ -775,6 +1269,25 @@ exports.minions = [
                     25600,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //26
         name: "Obsidian Minion",
@@ -793,6 +1306,25 @@ exports.minions = [
                     1,
                     160,
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //27
@@ -821,6 +1353,25 @@ exports.minions = [
                     30720, //30720
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //28
         name: "Ice Minion",
@@ -848,6 +1399,25 @@ exports.minions = [
                     25600,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //29
         name: "Sand Minion",
@@ -866,6 +1436,25 @@ exports.minions = [
                     1,
                     160,
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //30
@@ -886,6 +1475,25 @@ exports.minions = [
                     1,
                     160,
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //31
@@ -912,6 +1520,25 @@ exports.minions = [
                     160,
                 ],
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //32
         name: "Zombie Minion",
@@ -931,6 +1558,25 @@ exports.minions = [
                     160,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //33
         name: "Skeleton Minion",
@@ -949,6 +1595,25 @@ exports.minions = [
                     1,
                     160,
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //34
@@ -980,6 +1645,25 @@ exports.minions = [
                     1,
                     160,
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //35
@@ -1013,6 +1697,25 @@ exports.minions = [
                     160,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //36
         name: "Creeper Minion",
@@ -1031,6 +1734,25 @@ exports.minions = [
                     1,
                     160,
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //37
@@ -1051,6 +1773,25 @@ exports.minions = [
                     20, //20
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //38
         name: "Ghast Minion",
@@ -1069,6 +1810,25 @@ exports.minions = [
                     1,
                     5, //5
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //39
@@ -1096,6 +1856,25 @@ exports.minions = [
                     25600,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //40
         name: "Magma Cube Minion",
@@ -1116,6 +1895,25 @@ exports.minions = [
                     160,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //41
         name: "Oak Minion",
@@ -1134,6 +1932,25 @@ exports.minions = [
                     1,
                     160,
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //42
@@ -1154,6 +1971,25 @@ exports.minions = [
                     160,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //43
         name: "Birch Minion",
@@ -1172,6 +2008,25 @@ exports.minions = [
                     1,
                     160,
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //44
@@ -1193,6 +2048,25 @@ exports.minions = [
                     160,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //45
         name: "Acacia Minion",
@@ -1212,6 +2086,25 @@ exports.minions = [
                     160,
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //46
         name: "Jungle Minion",
@@ -1230,6 +2123,25 @@ exports.minions = [
                     1,
                     160,
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //47
@@ -1328,6 +2240,25 @@ exports.minions = [
                     1600, //1600
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //48
         name: "Snow Minion",
@@ -1364,6 +2295,25 @@ exports.minions = [
                     0
                 ]
             },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //49
         name: "Coal Minion",
@@ -1389,6 +2339,25 @@ exports.minions = [
                     160,
                     25600,
                 ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
             },
         ]      
     },{ //50
@@ -1418,7 +2387,26 @@ exports.minions = [
                     160,
                     25600
                 ]
-            }
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },{ //51
         name: "Mithril Minion",
@@ -1441,7 +2429,26 @@ exports.minions = [
                     160,
                     //25600,
                 ]
-            }
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
         ]      
     },
 

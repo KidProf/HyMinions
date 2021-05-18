@@ -1,10 +1,10 @@
 var minionsData = require("./minionsData.js");
 var fetch = require('cross-fetch');
 var itemNames = require("./itemNames.json");
-let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, hadError=false, diamondSpreadingAdded=false;
+let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, hadError=false;
     
 exports.calculateMinionsProfit = async function(minions, settings){
-    diamondSpreadingItem = minionsData.diamondSpreadingItem;
+    //diamondSpreadingItem = minionsData.diamondSpreadingItem;
     console.log(settings.name,minecraftName);
     //console.log(Date.now()-lastUpdatedBazaar);
     if((settings.useProfile)&&(settings.name!=minecraftName||hadError||Date.now()-lastUpdatedProfile>5*60*1000)){ //don't call api again if identical name, but call again if prev result has error, 5 min timeout
@@ -37,6 +37,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
     if(settings.individualSettings){
         minions.forEach((minion)=>{
             minion.hasIndividualSettings = settings.individualSettings[minion.id].tier ? 1 : 0;
+            if(minion.hasIndividualSettings) console.log(settings.individualSettings[minion.id].products);
         });
     }else{
         minions.forEach((minion)=>{
@@ -45,12 +46,12 @@ exports.calculateMinionsProfit = async function(minions, settings){
     }
 
     //check to see if diamond spreading is added to the minions array
-    if(diamondSpreadingAdded==false){
-        minions.forEach((minion)=>{
-            minion.products.push(diamondSpreadingItem);
-        });
-        diamondSpreadingAdded = true;
-    }
+    // if(diamondSpreadingAdded==false){
+    //     minions.forEach((minion)=>{
+    //         minion.products.push(diamondSpreadingItem);
+    //     });
+    //     diamondSpreadingAdded = true;
+    // }
 
     //calculate profit
     minions.forEach((minion)=>{
@@ -105,9 +106,11 @@ exports.calculateMinionsProfit = async function(minions, settings){
             //old calculation type
 
             if(settings.productForm==-2){ //max profit(enchanted forms)
-                minion.products.forEach((product)=>{
+                minion.products.forEach((product,productIndex)=>{
                     //override
-                    if(product.defaultVariant){
+                    if(minion.hasIndividualSettings==1){
+                        product.selectedVariant = settings.individualSettings[minion.id].products[productIndex]; //individual settings override
+                    }else if(product.defaultVariant){
                         product.selectedVariant = product.defaultVariant;
                         if(product.defaultVariant!=-1){
                             calculateVariantProfitManual(settings,minion,product,product.defaultVariant);
@@ -151,9 +154,11 @@ exports.calculateMinionsProfit = async function(minions, settings){
                 //     calculateVariantProfitManual(settings,minion,diamondSpreadingItem,maxVariantIndex);
                 // }
             }else if(settings.productForm==-1){ //max profit
-                minion.products.forEach((product)=>{
+                minion.products.forEach((product,productIndex)=>{
                     //override
-                    if(product.defaultVariant){
+                    if(minion.hasIndividualSettings==1){
+                        product.selectedVariant = settings.individualSettings[minion.id].products[productIndex]; //individual settings override
+                    }else if(product.defaultVariant){
                         product.selectedVariant = product.defaultVariant;
                         if(product.defaultVariant!=-1){
                             calculateVariantProfitManual(settings,minion,product,product.defaultVariant);
@@ -195,9 +200,11 @@ exports.calculateMinionsProfit = async function(minions, settings){
                 //console.log(minion.outputProducts);
             }else{
                 //just find that form
-                minion.products.forEach((product)=>{
+                minion.products.forEach((product,productIndex)=>{
                     //override
-                    if(product.defaultVariant){
+                    if(minion.hasIndividualSettings==1){
+                        product.selectedVariant = settings.individualSettings[minion.id].products[productIndex]; //individual settings override
+                    }else if(product.defaultVariant){
                         product.selectedVariant = product.defaultVariant;
                         if(product.defaultVariant!=-1){
                             calculateVariantProfitManual(settings,minion,product,product.defaultVariant);
@@ -229,7 +236,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
             }
         }else{
             //new calculation type
-            minion.products.forEach((product)=>{
+            minion.products.forEach((product,productIndex)=>{
                 let variantIndex;
                 let totalItems;
                 if(product.item=="Diamond (Spreading)"){
@@ -241,7 +248,9 @@ exports.calculateMinionsProfit = async function(minions, settings){
                 }
                 
                 
-                if(product.defaultVariant){ //override
+                if(minion.hasIndividualSettings==1){
+                    variantIndex = settings.individualSettings[minion.id].products[productIndex]; //individual settings override
+                }else if(product.defaultVariant){ //override
                     variantIndex = product.defaultVariant;
                 }else if(!minion.hasDiamondSpreading&&product.item=="Diamond (Spreading)"){
                     variantIndex = -1;
@@ -283,10 +292,12 @@ exports.calculateMinionsProfit = async function(minions, settings){
                     totalItems = totalItems%product.variantsEquiv[variantIndex];
                     if(totalItemsVariant!=0){
                         calculateVariantProfit(settings,minion,product,variantIndex,totalItemsVariant);
+                    }else{
+                        product.selectedVariant--;
                     }
                     variantIndex--;
                 }
-            
+                console.log(minion.name,product.selectedVariant);
             });
 
             // if(minion.hasDiamondSpreading){
@@ -513,22 +524,22 @@ exports.calculateMinionsProfit = async function(minions, settings){
                     pricesAjax[0]["Enchanted Diamond Block (Spreading)"] = pricesAjax[0]["Enchanted Diamond Block"];
                     pricesAjax[1]["Enchanted Diamond Block (Spreading)"] = pricesAjax[1]["Enchanted Diamond Block"];
 
-                    diamondSpreadingItem.bazaarPrice=new Array(diamondSpreadingItem.variants.length);
-                    diamondSpreadingItem.variants.forEach((variant,index)=>{
-                        diamondSpreadingItem.bazaarPrice[index] = new Array(2);
-                        if(pricesAjax[0][variant]){
-                            diamondSpreadingItem.bazaarPrice[index][0] = pricesAjax[0][variant];
-                            diamondSpreadingItem.bazaarPrice[index][1] = pricesAjax[1][variant];
-                        }else{
-                            //use NPC price as substitute
-                            if(diamondSpreadingItem.variantsNpcPrices){
-                                diamondSpreadingItem.bazaarPrice[index][0] = diamondSpreadingItem.variantsNpcPrices[index];
-                            }else{
-                                diamondSpreadingItem.bazaarPrice[index][0] = diamondSpreadingItem.npcPrice*diamondSpreadingItem.variantsEquiv[index];
-                            }
-                            diamondSpreadingItem.bazaarPrice[index][1] = diamondSpreadingItem.bazaarPrice[index][0];
-                        }
-                    });
+                    // diamondSpreadingItem.bazaarPrice=new Array(diamondSpreadingItem.variants.length);
+                    // diamondSpreadingItem.variants.forEach((variant,index)=>{
+                    //     diamondSpreadingItem.bazaarPrice[index] = new Array(2);
+                    //     if(pricesAjax[0][variant]){
+                    //         diamondSpreadingItem.bazaarPrice[index][0] = pricesAjax[0][variant];
+                    //         diamondSpreadingItem.bazaarPrice[index][1] = pricesAjax[1][variant];
+                    //     }else{
+                    //         //use NPC price as substitute
+                    //         if(diamondSpreadingItem.variantsNpcPrices){
+                    //             diamondSpreadingItem.bazaarPrice[index][0] = diamondSpreadingItem.variantsNpcPrices[index];
+                    //         }else{
+                    //             diamondSpreadingItem.bazaarPrice[index][0] = diamondSpreadingItem.npcPrice*diamondSpreadingItem.variantsEquiv[index];
+                    //         }
+                    //         diamondSpreadingItem.bazaarPrice[index][1] = diamondSpreadingItem.bazaarPrice[index][0];
+                    //     }
+                    // });
 
                     minions.forEach((minion)=>{
                         minion.products.forEach((product)=>{

@@ -291,9 +291,9 @@ block content
                                                 select(id=minion.id+"individualProduct"+k).form-control
                                                     -let l=0;
                                                     each variant in product.variants
-                                                        option(value=l selected=(product.selectedVariant==l? 'selectd': undefined))=variant
+                                                        option(value=l selected=(product.selectedVariant==l? 'selected': undefined))=variant
                                                         - l++;
-                                                    option(value=-1 selected=(product.selectedVariant==-1? 'selectd': undefined)) No #{product.item}
+                                                    option(value=-1 selected=(product.selectedVariant==-1? 'selected': undefined)) No #{product.item}
                                                 -k++;
 
                                             
