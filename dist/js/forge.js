@@ -1,5 +1,3 @@
-alert("Warning! As more and more players have access to the forge, forging is an ineffective method of earning money. This page would be removed at a later date. Thank you for your kind attention.");
-
 initCalculateForgeProfit().then(()=>{
     //async await
     
