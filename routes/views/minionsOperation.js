@@ -297,7 +297,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
                     }
                     variantIndex--;
                 }
-                console.log(minion.name,product.selectedVariant);
+                //console.log(minion.name,product.selectedVariant);
             });
 
             // if(minion.hasDiamondSpreading){

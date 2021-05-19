@@ -1,4 +1,4 @@
-exports.storage = [1,3,3,6,6,9,9,12,12,15,15,15];
+//exports.storage = [2,4,4,6,6,9,9,12,12,15,15,15];
 
 // exports.diamondSpreadingItem = {
 //     item: "Diamond (Spreading)",
