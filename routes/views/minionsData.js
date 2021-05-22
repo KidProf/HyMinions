@@ -1,30 +1,9 @@
-//exports.storage = [2,4,4,6,6,9,9,12,12,15,15,15];
-
-// exports.diamondSpreadingItem = {
-//     item: "Diamond (Spreading)",
-//     npcPrice: 8,
-//     canCompactor: true,
-//     compactor: {
-//         variant: "Block of Diamond (Spreading)",
-//         variantEquiv: 9,
-//     },
-//     variants: [
-//         "Diamond (Spreading)",
-//         "Enchanted Diamond (Spreading)",
-//         "Enchanted Diamond Block (Spreading)",
-//     ],
-//     variantsEquiv: [
-//         1,
-//         160,
-//         25600
-//     ],
-// }
-
 exports.minions = [
     { //0
         name: "Revenant Minion",
         id: 0,
         tierDelay : [29,29,26,26,23,23,19,19,14.5,14.5,10,8],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Rotten Flesh",
@@ -78,6 +57,7 @@ exports.minions = [
         name: "Tarantula Minion",
         id: 1,
         tierDelay : [29,29,26,26,23,23,19,19,14.5,14.5,10],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "String",
@@ -144,6 +124,7 @@ exports.minions = [
         name: "Potato Minion",
         id: 2,
         tierDelay : [20,20,18,18,16,16,14,14,12,12,10,8],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Potato",
@@ -186,6 +167,7 @@ exports.minions = [
         name: "Cow Minion",
         id: 3,
         tierDelay : [26,26,24,24,22,22,20,20,17,17,13,10],
+        storage: [128,256,256,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Raw Beef",
@@ -237,6 +219,7 @@ exports.minions = [
         name: "Chicken Minion",
         id: 4,
         tierDelay : [26,26,24,24,22,22,20,20,18,18,15,12],
+        storage: [192,320,320,384,384,576,576,768,768,960,960,960],
         diamondSpreadingCriteria : 3,
         warning: "Enchanted egg is needed",
         toolsRequired: ["Enchanted Egg"],
@@ -307,6 +290,7 @@ exports.minions = [
         name: "Sheep Minion",
         id: 5,
         tierDelay : [24,24,22,22,20,20,18,18,16,16,12,9],
+        storage: [128,256,256,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Mutton",
@@ -360,6 +344,7 @@ exports.minions = [
         name: "Lapis Minion",
         id: 6,
         tierDelay : [29,29,27,27,25,25,23,23,21,21,18,16],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Lapis Lazuli",
@@ -405,6 +390,7 @@ exports.minions = [
         name: "Gravel Minion",
         id: 7,
         tierDelay : [26,26,24,24,22,22,19,19,16,16,13],
+        storage: [128,256,256,384,384,576,576,768,768,960,960],
         diamondSpreadingCriteria : 3,
         warning: "Flint shovel is needed",
         toolsRequired: ["Flint shovel"],
@@ -460,6 +446,7 @@ exports.minions = [
         name: "Blaze Minion",
         id: 8,
         tierDelay : [33,33,31,31,28.5,28.5,25,25,21,21,16.5],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Blaze Rod",
@@ -500,6 +487,7 @@ exports.minions = [
         name: "Wheat Minion",
         id: 9,
         tierDelay : [15,15,13,13,11,11,10,10,9,9,8,7],
+        storage: [128,256,256,384,384,576,576,768,768,960,960,960],
         diamondSpreadingCriteria : 3,
         warning: "Both compactor and sc3000 are needed",
         toolsRequired: ["Compactor"],
@@ -571,6 +559,7 @@ exports.minions = [
         name: "Carrot Minion",
         id: 10,
         tierDelay : [20,20,18,18,16,16,14,14,12,12,10,8],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Carrot",
@@ -609,6 +598,7 @@ exports.minions = [
         name: "Pumpkin Minion",
         id: 11,
         tierDelay : [32,32,30,30,27,27,24,24,20,20,16,12],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Pumpkin",
@@ -649,6 +639,7 @@ exports.minions = [
         name: "Melon Minion",
         id: 12,
         tierDelay : [24,24,22.5,22.5,21,21,18.5,18.5,16,16,13,10],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Melon",
@@ -690,6 +681,7 @@ exports.minions = [
         name: "Mushroom Minion",
         id: 13,
         tierDelay : [30,30,28,28,26,26,23,23,20,20,16,12],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Red Mushroom",
@@ -742,6 +734,7 @@ exports.minions = [
         id: 14,
         rawId: "COCOA",
         tierDelay : [27,27,25,25,23,23,21,21,18,18,15,12],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Cocoa Beans",
@@ -780,6 +773,7 @@ exports.minions = [
         name: "Cactus Minion",
         id: 15,
         tierDelay : [27,27,25,25,23,23,21,21,18,18,15,12],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         diamondSpreadingCriteria : 2,
         //warning: "Auto smelter/Dwarven super compactor is needed",
         toolsRequired: ["Auto Smelter"],
@@ -824,6 +818,7 @@ exports.minions = [
         id: 16,
         rawId: "SUGAR_CANE",
         tierDelay : [22,22,20,20,18,18,16,16,14.5,14.5,12,9],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Sugar Cane",
@@ -864,6 +859,7 @@ exports.minions = [
         name: "Pig Minion",
         id: 17,
         tierDelay : [26,26,24,24,22,22,20,20,17,17,13,10],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Raw Porkchop",
@@ -904,6 +900,7 @@ exports.minions = [
         name: "Rabbit Minion",
         id: 18,
         tierDelay : [26,26,24,24,22,22,20,20,17,17,13,10],
+        storage: [192,320,320,448,448,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Raw Rabbit",
@@ -967,6 +964,7 @@ exports.minions = [
         id: 19,
         rawId: "NETHER_WARTS",
         tierDelay : [50,50,47,47,44,44,41,41,38,38,32,27],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Nether Wart",
@@ -1007,6 +1005,7 @@ exports.minions = [
         name: "Cobblestone Minion",
         id: 20,
         tierDelay : [14,14,12,12,10,10,9,9,8,8,7,6],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Cobblestone",
@@ -1045,6 +1044,7 @@ exports.minions = [
         name: "Gold Minion",
         id: 21,
         tierDelay : [22,22,20,20,18,18,16,16,14,14,11,9],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         diamondSpreadingCriteria : 2,
         warning: "Auto smelter/Dwarven super compactor is needed",
         toolsRequired: ["Auto Smelter"],
@@ -1093,6 +1093,7 @@ exports.minions = [
         name: "Diamond Minion",
         id: 22,
         tierDelay : [29,29,27,27,25,25,22,22,19,19,15,12],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Diamond",
@@ -1138,6 +1139,7 @@ exports.minions = [
         name: "Emerald Minion",
         id: 23,
         tierDelay : [28,28,26,26,24,24,21,21,18,18,14,12],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Emerald",
@@ -1202,6 +1204,7 @@ exports.minions = [
         name: "Redstone Minion",
         id: 24,
         tierDelay : [29,29,27,27,25,25,23,23,21,21,18,16],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Redstone",
@@ -1247,6 +1250,7 @@ exports.minions = [
         name: "Quartz Minion",
         id: 25,
         tierDelay : [22.5,22.5,21,21,19,19,17,17,14.5,14.5,11.5],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Quartz",
@@ -1293,6 +1297,7 @@ exports.minions = [
         name: "Obsidian Minion",
         id: 26,
         tierDelay : [45,45,42,42,39,39,35,35,30,30,24,21],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Obsidian",
@@ -1331,6 +1336,7 @@ exports.minions = [
         name: "Glowstone Minion",
         id: 27,
         tierDelay : [25,25,23,23,21,21,19,19,16,16,13],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Glowstone Dust",
@@ -1377,6 +1383,7 @@ exports.minions = [
         name: "Ice Minion",
         id: 28,
         tierDelay : [14,14,12,12,10,10,9,9,8,8,7],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Ice",
@@ -1423,6 +1430,7 @@ exports.minions = [
         name: "Sand Minion",
         id: 29,
         tierDelay : [26,26,24,24,22,22,19,19,16,16,13],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Sand",
@@ -1462,6 +1470,7 @@ exports.minions = [
         id: 30,
         rawId: "ENDER_STONE",
         tierDelay : [26,26,24,24,22,22,19,19,16,16,13],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "End Stone",
@@ -1500,6 +1509,7 @@ exports.minions = [
         name: "Clay Minion",
         id: 31,
         tierDelay : [32,32,30,30,27.5,27.5,24,24,20,20,16],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Clay",
@@ -1544,6 +1554,7 @@ exports.minions = [
         name: "Zombie Minion",
         id: 32,
         tierDelay : [26,26,24,24,22,22,20,20,17,17,13],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Rotten Flesh",
@@ -1582,6 +1593,7 @@ exports.minions = [
         name: "Skeleton Minion",
         id: 33,
         tierDelay : [26,26,24,24,22,22,20,20,17,17,13],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Bone",
@@ -1620,6 +1632,7 @@ exports.minions = [
         name: "Spider Minion",
         id: 34,
         tierDelay : [26,26,24,24,22,22,20,20,17,17,13],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "String",
@@ -1671,6 +1684,7 @@ exports.minions = [
         id: 35,
         rawId: "CAVESPIDER",
         tierDelay : [26,26,24,24,22,22,20,20,17,17,13],
+        storage: [128,256,256,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "String",
@@ -1721,6 +1735,7 @@ exports.minions = [
         name: "Creeper Minion",
         id: 36,
         tierDelay : [27,27,25,25,23,23,21,21,18,18,14],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Gunpowder",
@@ -1759,6 +1774,7 @@ exports.minions = [
         name: "Enderman Minion",
         id: 37,
         tierDelay : [32,32,30,30,28,28,25,25,22,22,18],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Ender Pearl",
@@ -1797,6 +1813,7 @@ exports.minions = [
         name: "Ghast Minion",
         id: 38,
         tierDelay : [50,50,47,47,44,44,41,41,38,38,32],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Ghast Tear",
@@ -1835,6 +1852,7 @@ exports.minions = [
         name: "Slime Minion",
         id: 39,
         tierDelay : [26,26,24,24,22,22,19,19,16,16,12],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Slimeball",
@@ -1881,6 +1899,7 @@ exports.minions = [
         id: 40,
         rawId: "MAGMA_CUBE",
         tierDelay : [32,32,30,30,28,28,25,25,22,22,18],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Magma Cream",
@@ -1919,6 +1938,7 @@ exports.minions = [
         name: "Oak Minion",
         id: 41,
         tierDelay : [48,48,45,45,42,42,38,38,33,33,27],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Oak Wood",
@@ -1957,6 +1977,7 @@ exports.minions = [
         name: "Spruce Minion",
         id: 42,
         tierDelay : [48,48,45,45,42,42,38,38,33,33,27],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Spruce Wood",
@@ -1995,6 +2016,7 @@ exports.minions = [
         name: "Birch Minion",
         id: 43,
         tierDelay : [48,48,45,45,42,42,38,38,33,33,27],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Birch Wood",
@@ -2034,6 +2056,7 @@ exports.minions = [
         id: 44,
         rawId: "DARK_OAK",
         tierDelay : [48,48,45,45,42,42,38,38,33,33,27],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Dark Oak Wood",
@@ -2072,6 +2095,7 @@ exports.minions = [
         name: "Acacia Minion",
         id: 45,
         tierDelay : [48,48,45,45,42,42,38,38,33,33,27],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Acacia Wood",
@@ -2110,6 +2134,7 @@ exports.minions = [
         name: "Jungle Minion",
         id: 46,
         tierDelay : [48,48,45,45,42,42,38,38,33,33,27],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Jungle Wood",
@@ -2148,6 +2173,7 @@ exports.minions = [
         name: "Fishing Minion",
         id: 47,
         tierDelay : [78,75,72,72,68,68,62.5,62.5,53,53,35],
+        storage: [640,640,640,704,704,768,768,832,832,896,960],
         products : [
             {
                 item : "Raw Fish",
@@ -2264,6 +2290,7 @@ exports.minions = [
         name: "Snow Minion",
         id: 48,
         tierDelay : [13,13,12,12,11,11,9.5,9.5,8,8,6.5],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
         products : [
             {
                 item : "Snowball",
@@ -2319,6 +2346,7 @@ exports.minions = [
         name: "Coal Minion",
         id: 49,
         tierDelay : [15,15,13,13,12,12,10,10,9,9,7,6],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         products : [
             {
                 item : "Coal",
@@ -2364,6 +2392,7 @@ exports.minions = [
         name: "Iron Minion",
         id: 50,
         tierDelay : [17,17,15,15,14,14,12,12,10,10,8,7],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         diamondSpreadingCriteria : 2,
         warning: "Auto smelter/Dwarven super compactor is needed",
         toolsRequired: ["Auto Smelter"],
@@ -2412,6 +2441,7 @@ exports.minions = [
         name: "Mithril Minion",
         id: 51,
         tierDelay : [80,80,75,75,70,70,65,65,60,60,55,50],
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         //noDiamondSpreading : 1,
         //warning: "",
         products : [
@@ -2503,3 +2533,24 @@ exports.minions = [
 //     ]      
 // }
 
+//exports.storage = [2,4,4,6,6,9,9,12,12,15,15,15];
+
+// exports.diamondSpreadingItem = {
+//     item: "Diamond (Spreading)",
+//     npcPrice: 8,
+//     canCompactor: true,
+//     compactor: {
+//         variant: "Block of Diamond (Spreading)",
+//         variantEquiv: 9,
+//     },
+//     variants: [
+//         "Diamond (Spreading)",
+//         "Enchanted Diamond (Spreading)",
+//         "Enchanted Diamond Block (Spreading)",
+//     ],
+//     variantsEquiv: [
+//         1,
+//         160,
+//         25600
+//     ],
+// }
