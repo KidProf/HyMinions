@@ -1,3 +1,16 @@
+exports.soulflowItem = {
+    item: "Raw Soulflow",
+    npcPrice: 0,
+    variants: [
+        "Raw Soulflow",
+        "Soulflow",
+    ],
+    variantsEquiv: [
+        1,
+        160,
+    ],
+}
+
 exports.minions = [
     { //0
         name: "Revenant Minion",

@@ -18,7 +18,8 @@ exports = module.exports = function (req, res) {
         console.log(output.settings);
         res.render("minions",output);
 
-    }).catch(()=>{
+    }).catch((err)=>{
+        console.log(err);
         res.render("minions");
     });
     
@@ -59,6 +60,10 @@ exports = module.exports = function (req, res) {
         }
         if(!settings.offlineTime||settings.offlineTime<=0){
             settings.offlineTime = 24;
+        }
+        //SOULFLOW
+        if(!settings.soulflow||!isWithinList(settings.soulflow,[0,1])){
+            settings.soulflow = 0;
         }
         if(!settings.offlineTimeUnit||!isWithinList(settings.offlineTimeUnit,[0,1])){
             settings.offlineTimeUnit = 1;
@@ -112,7 +117,7 @@ exports = module.exports = function (req, res) {
             }
         });
         settings.individualSettings = individualSettings;
-
+        console.log(settings);
     }
 
     function isWithinList(number,list){

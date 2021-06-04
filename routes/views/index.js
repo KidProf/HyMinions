@@ -13,7 +13,8 @@ exports = module.exports = function (req, res) {
         console.log(output.settings);
         res.render("index",output);
 
-    }).catch(()=>{
+    }).catch((err)=>{
+        console.log(err);
         res.render("index");
     });
 
@@ -48,6 +49,7 @@ exports = module.exports = function (req, res) {
         settings.sellingTo = 1;
         settings.sellingMethod = 1;
         settings.tax = 1;
+        settings.soulflow = 0;
 
     }
 };

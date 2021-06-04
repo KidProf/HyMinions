@@ -83,6 +83,11 @@ function generateLink(){
             }
     
         }
+        //SOULFLOW
+        if($("#overallSoulflow").prop("checked")){
+            keys.push("soulflow");
+            values.push(1);
+        }
 
         if($("#overallSuperCompactor").children("option:selected").val()==3){
             if(!$("#overallDiamondSpreading").prop("checked")){

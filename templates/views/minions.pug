@@ -102,6 +102,24 @@ block content
                                 select#overallOfflineTimeUnit.form-control
                                     option(value="0" selected=(settings.offlineTimeUnit==0?'selected':undefined)) hour(s)
                                     option(value="1" selected=(settings.offlineTimeUnit==1?'selected':undefined)) day(s)
+                        br
+                        h3 Experimental Features
+                        .form-group
+                            //-pretick use profile to be true for first time visit
+                            input#overallSoulflow.checkbox(type="checkbox" checked=settings.soulflow? "checked":undefined) 
+                            label(for="overallSoulflow") &nbsp; Use Lesser Soulflow Engine &nbsp; 
+                            +infoBox("soulflowModal","question","Lesser Soulflow Engine")
+                                h4 Info
+                                p Copied from <a href='https://hypixel-skyblock.fandom.com/wiki/Lesser_Soulflow_Engine'>Skyblock Wiki</a>: 
+                                p The Lesser Soulflow Engine can be used as a minion upgrade. When it is added to a minion, its output will be reduced by 50%. Every 3.6 minutes (220 seconds), it will produce 1x Raw Soulflow. This production rate is unaffected by minion speed, minion Crystals nor Minion Fuel. Minions containing a Lesser Soulflow Engine will have purple particles above them.
+                                p The Lesser Soulflow Engine requires Enderman Slayer level 2 to use.
+                                h4 Technical Details
+                                p For easy implementation for the time being, when the Lesser Soulflow Engine checkbox is checked: 
+                                ul
+                                    li Lesser Soulflow Engine would be added regardless of the existing minion upgrades, so the profits may be inaccurate.
+                                    li This feature only works for the new calculation type
+                                    li Cannot modify Soulflow through individual minion settings
+                                p This function is in beta, bugs may occur.
                 .col-lg-6.col-12  
                     #advanced
                         br
