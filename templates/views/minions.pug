@@ -238,7 +238,7 @@ block content
                                 else
                                     | Minion (Total Profit)
                             th(scope="col") Tier
-                            th(scope="col") Minion Upgrades
+                            th(scope="col" class="tools") Minion Upgrades
                             th(scope="col") Items
                             th(scope="col") Number of Items
                             th(scope="col") Unit Price (Bazaar)
@@ -258,7 +258,7 @@ block content
                                 br
                                 | (#{minion.totalProfitText})
                             td(id="minion"+i+"Tier")=minion.tier
-                            td(id="minion"+i+"Tools" class=minion.toolsWarning? "warning" : null)
+                            td(id="minion"+i+"Tools" class=minion.toolsWarning? "warning" : null class="tools")
                                 if minion.tools
                                     each tool in minion.tools
                                         | #{tool}

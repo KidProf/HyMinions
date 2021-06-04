@@ -1779,14 +1779,16 @@ exports.minions = [
             {
                 item : "Ender Pearl",
                 perTime : 1,
-                npcPrice: 10,
+                npcPrice: 7,
                 variants: [
                     "Ender Pearl",
                     "Enchanted Ender Pearl",
+                    "Absolute Ender Pearl"
                 ],
                 variantsEquiv: [
                     1,
                     20, //20
+                    1600, //1600
                 ]
             },
             {
@@ -2452,12 +2454,72 @@ exports.minions = [
                 variants: [
                     "Mithril",
                     "Enchanted Mithril",
-                    //"Refined Mithril",
                 ],
                 variantsEquiv: [
                     1,
                     160,
-                    //25600,
+                ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
+        ]      
+    },{ //52
+        name: "Voidling Minion",
+        id: 52,
+        tierDelay : [45,45,42,42,39,39,35,35,30,30,10],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
+        //noDiamondSpreading : 1,
+        toolsRequired:["","**Experimental feature","Amount of items generated may be inaccurate"],
+        products : [
+            {
+                item : "Quartz",
+                perTime : 0.2,
+                npcPrice: 4,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Quartz",
+                    variantEquiv: 4, //4
+                    minimumEnchanted: 1,
+                },
+                variants: [
+                    "Quartz",
+                    "Enchanted Quartz",
+                    "Enchanted Quartz Block"
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600,
+                ]
+            },
+            {
+                item : "Obsidian",
+                perTime : 1.2,
+                npcPrice: 12,
+                variants: [
+                    "Obsidian",
+                    "Enchanted Obsidian",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
                 ]
             },
             {
