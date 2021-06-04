@@ -4,7 +4,7 @@ Hypixel Skyblock - Minions Calculator and Events Timer. Know your most profitabl
 
 ## Installation
 
-Requires NodeJs and NPM
+Requires Node.js and npm
 
 ```bash
 npm install
