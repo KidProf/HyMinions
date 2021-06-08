@@ -2499,11 +2499,10 @@ exports.minions = [
         tierDelay : [45,45,42,42,39,39,35,35,30,30,10],
         storage: [64,192,192,384,384,576,576,768,768,960,960],
         //noDiamondSpreading : 1,
-        toolsRequired:["","**Experimental feature","Amount of items generated may be inaccurate"],
         products : [
             {
                 item : "Quartz",
-                perTime : 0.2,
+                perTime : 0.4,
                 npcPrice: 4,
                 canCompactor: true,
                 compactor: {
@@ -2524,7 +2523,7 @@ exports.minions = [
             },
             {
                 item : "Obsidian",
-                perTime : 1.2,
+                perTime : 2.42,
                 npcPrice: 12,
                 variants: [
                     "Obsidian",
