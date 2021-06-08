@@ -72,10 +72,13 @@ exports.calculateMinionsProfit = async function(minions, settings){
     function calculateMinionProfit(settings,minion){
         if(minion.hasIndividualSettings==1){
             minion.tier = settings.individualSettings[minion.id].tier; //individual settings override
+            minion.fuel = settings.individualSettings[minion.id].fuel;
         }else if(settings.useProfile){
             minion.tier=minion.profilesTier[settings.profile]; //use profile minion tier
+            minion.fuel = settings.fuel;
         }else{
             minion.tier = Math.min(settings.tier,minion.tierDelay.length);//some has tier 12 some don't
+            minion.fuel = settings.fuel;
         }
         if(settings.diamondSpreading==0){
             minion.hasDiamondSpreading=0;
@@ -244,7 +247,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
                     totalItems = Math.floor(minion.itemsHarvested*0.1);
                 }else{
                     //itemsPerHour = 3600/time between actions/2 (offline)* res generated per time* (1+fuel/100) / amount of res needed to generate the enchanted form
-                    totalItems = Math.floor(settings.offlineTime*3600/minion.tierDelay[minion.tier-1]/2*product.perTime*(1+settings.fuel/100));
+                    totalItems = Math.floor(settings.offlineTime*3600/minion.tierDelay[minion.tier-1]/2*product.perTime*(1+minion.fuel/100));
                     minion.itemsHarvested += totalItems;
                 }
                 //SOULFLOW
@@ -482,7 +485,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
         let itemsPerHour, unitPrice;
     
         result.name = product.variants[variantIndex];
-        itemsPerHour = 3600/minion.tierDelay[minion.tier-1]/2*product.perTime*(1+settings.fuel/100)/product.variantsEquiv[variantIndex] //get item per hour
+        itemsPerHour = 3600/minion.tierDelay[minion.tier-1]/2*product.perTime*(1+minion.fuel/100)/product.variantsEquiv[variantIndex] //get item per hour
         //itemsPerHour = 3600/time between actions/2 (offline)* res generated per time* (1+fuel/100) / amount of res needed to generate the enchanted form
         //visibility problems
         if(variantIndex>=2){

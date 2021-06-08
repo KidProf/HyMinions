@@ -92,7 +92,7 @@ block content
                                 h4 New calculation mode
                                 p It calculates the profit based on your frequency of collecting minions. For example, lapis minions could be a good minion for active players, who collect enchanted lapis before they are automatically converted into enchanted lapis blocks, but not for those who are less active.
                                 h4 Old calculation mode
-                                p The original calculation mode – It calculates the profit based on a particular enchanted form of every product. (e.g. first enchanted form/ most profitable enchanted form) It does not calculate based on your offline duration.
+                                p The original calculation mode - It calculates the profit based on a particular enchanted form of every product. (e.g. first enchanted form/ most profitable enchanted form) It does not calculate based on your offline duration.
 
                     #autoCalculationType(class=(settings.calculationType==1 ? "":"d-none"))
                         .form-group
@@ -102,6 +102,8 @@ block content
                                 select#overallOfflineTimeUnit.form-control
                                     option(value="0" selected=(settings.offlineTimeUnit==0?'selected':undefined)) hour(s)
                                     option(value="1" selected=(settings.offlineTimeUnit==1?'selected':undefined)) day(s)
+                        small.pl-3 ^If you are not sure about your offline time, you could leave it as 1 day.
+                        br
                         br
                         h3 Experimental Features
                         .form-group
@@ -321,6 +323,10 @@ block content
                                                 while j<=minion.tierDelay.length
                                                     option(selected=(minion.tier==j ? 'selected':undefined))=j
                                                     -j++;
+                                        .form-group
+                                            label(for=minion.id+"individualFuel") Fuel/ other perks: &nbsp;
+                                            input(id=minion.id+"individualFuel" type="number" value=minion.fuel min="0").form-control.individualFuel
+                                            span &nbsp; %
                                         - let k=0;
                                         p Products:
                                         each product in minion.products

@@ -116,6 +116,14 @@ exports = module.exports = function (req, res) {
                 
             }
         });
+        for(i=0;i<minions.length;i++){
+            if(Object.keys(individualSettings[i]).length!=0){
+                if(!individualSettings[i]["fuel"]||individualSettings[i]["fuel"]<0){
+                    individualSettings[i]["fuel"] = settings.fuel; //validate individual fuel
+                }      
+            }
+        }
+
         settings.individualSettings = individualSettings;
         console.log(settings);
     }

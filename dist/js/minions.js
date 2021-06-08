@@ -188,6 +188,8 @@ function appendLink(id){
     // values.push(1);
     keys.push(id+"individualTier");
     values.push($("#"+id+"individualTier").val());
+    keys.push(id+"individualFuel");
+    values.push($("#"+id+"individualFuel").val());
     i=0;
     while($("#"+id+"individualProduct"+i).length){
         keys.push(id+"individualProduct"+i);
