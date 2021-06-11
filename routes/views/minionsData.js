@@ -17,11 +17,14 @@ exports.minions = [
         id: 0,
         tierDelay : [29,29,26,26,23,23,19,19,14.5,14.5,10,8],
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
+		type: "Combat",
         products : [
             {
                 item : "Rotten Flesh",
                 perTime : 3,
 				npcPrice: 2,
+				xp: 0.3,
+                xpType: "Combat",
                 variants: [
                     "Rotten Flesh",
                     "Enchanted Rotten Flesh",
@@ -35,6 +38,8 @@ exports.minions = [
                 item : "Diamond",
                 perTime : 0.2,
                 npcPrice: 8,
+				xp: 0.4,
+                xpType: "Mining",
                 variants: [
                     "Diamond",
                     "Enchanted Diamond",
@@ -49,6 +54,8 @@ exports.minions = [
             {
                 item: "Diamond (Spreading)",
                 npcPrice: 8,
+				xp: 0.4,
+                xpType: "Mining",
                 canCompactor: true,
                 compactor: {
                     variant: "Block of Diamond (Spreading)",
