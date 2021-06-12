@@ -259,7 +259,10 @@ block content
                                 if settings.calculationType==0
                                     | Minion (Profit Per Hour)
                                 else
-                                    | Minion (Total Profit)
+                                    if settings.offlineTimeUnit==1
+                                        | Minion (Total Profit for<br /> 1 minion for #{settings.offlineTime/24} day(s))
+                                    else
+                                        | Minion (Total Profit for<br /> 1 minion for #{settings.offlineTime} hour(s))
                             th(scope="col") Tier
                             th(scope="col" class="tools") Minion Upgrades
                             th(scope="col") Items
@@ -356,9 +359,14 @@ block content
                 #infoModals
                     each minion in minions
                         +infoBox("infoModal"+i,"rightInfo",minion.name)
+                            span Selected tier: #{minion.tier} <br />
+                            span Selected fuel: #{minion.fuel}% <br />
+                            span Total profit without rounding off: #{minion.totalProfit} <br />
+                            span Calculation formula: sum of all products(offline duration(in hours)*3600/time between actions(in seconds)/2 (due to offline)*generated per time*(1+fuel(in %)/100))<br />
+                            br
                             h4 Products
                             each product in minion.products
-                                h5 Product Name: #{product.item}
+                                h5=product.item
                                 if(product.item=="Diamond (Spreading)")
                                     span Generated Per Time: Calculated by sum of items harvested * 0.1 <br />
                                 else
@@ -403,10 +411,7 @@ block content
                                         td=tier
                                         td=minion.storage[k]
                                     -k++;
-                            h4 Others
-                            span Selected tier: #{minion.tier} <br />
-                            span Selected fuel: #{minion.fuel}% <br />
-                            span Calculation formula: sum of all products(offline duration(in hours)*3600/time between actions(in seconds)/2 (due to offline)*generated per time*(1+fuel(in %)/100))
+
                         - i++;
             p: small
                 if(settings.lastUpdatedBazaar)

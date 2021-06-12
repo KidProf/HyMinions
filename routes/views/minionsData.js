@@ -2503,7 +2503,7 @@ exports.minions = [
     },{ //52
         name: "Voidling Minion",
         id: 52,
-        tierDelay : [45,45,42,42,39,39,35,35,30,30,10],
+        tierDelay : [45,45,42,42,39,39,35,35,30,30,24],
         storage: [64,192,192,384,384,576,576,768,768,960,960],
         //noDiamondSpreading : 1,
         products : [
