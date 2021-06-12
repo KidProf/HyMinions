@@ -14,9 +14,12 @@ block meta
     meta(name="description" content="Know your most profitable minions! Tailor made for each profile, fully accurate.")
 
 mixin infoBox(id,type,title)
-    i.fas.fa-lg(data-toggle="modal" data-target="#"+id class=(type=="info"?"fa-info-circle":"fa-question-circle"))
-    .modal.fade.infoBox(id=id tabindex="-1" role="dialog" aria-labelledby=ud+"Label" aria-hidden="true")
-                .modal-dialog(role="document")
+    if(type=="info")
+        i.fas.fa-lg(data-toggle="modal" data-target="#"+id class="fa-info-circle")
+    else if(type=="question")
+        i.fas.fa-lg(data-toggle="modal" data-target="#"+id class="fa-question-circle")
+    .modal.fade.infoBox(id=id tabindex="-1" role="dialog" aria-labelledby=id+"Label" aria-hidden="true")
+                .modal-dialog(role="document" class=(type=="rightInfo"?"modal-xl":undefined))
                     .modal-content
                         .modal-header
                             h5.modal-title(id=id+"Label")=title
@@ -301,15 +304,18 @@ block content
                             td(id="minion"+i+"TotalProfit")=minion.totalProfitText
                             if settings.calculationType==1
                                 td(id="minion"+i+"ProfitPerHour")=minion.profitPerHour
-                            td(id="minion"+i+"Settings"): button.btn.btn-blue(id="individualSettings"+i data-toggle="modal" data-target="#individualModal"+i) Settings
-
+                            td(id="minion"+i+"Settings")
+                                button.btn.btn-blue(id="individualSettings"+i data-toggle="modal" data-target="#individualModal"+i) Settings
+                                br
+                                button.mt-2.btn.btn-blue(id="individualInfo"+i data-toggle="modal" data-target="#infoModal"+i) Info
                         - i++;
                 
                 - i=0;
-                each minion in minions
-                    .individualModal.modal.fade(id="individualModal"+i tabindex="-1" role="dialog" aria-labelledby="individualModalLabel"+i aria-hidden="true")
-                        .modal-dialog(role="document")
-                            .modal-content(id="individualSettingsForm"+minion.id)
+                #individualModals
+                    each minion in minions
+                        .modal.fade(id="individualModal"+i tabindex="-1" role="dialog" aria-labelledby="individualModalLabel"+i aria-hidden="true")
+                            .modal-dialog(role="document")
+                                .modal-content(id="individualSettingsForm"+minion.id)
                                     .modal-header
                                         h5.modal-title(id="#individualModalLabel"+i)=minion.name
                                         button.close(type="button" data-dismiss="modal" aria-label="Close")
@@ -342,11 +348,66 @@ block content
 
                                             
                                             //-p More features coming soon, such as allowing you to change product forms or only allowing certain products to produce.
-
                                     .modal-footer
                                         button.btn.btn-secondary(type="button" data-dismiss="modal") Cancel
                                         button.btn.btn-warning(type="button" onclick="appendLink("+minion.id+")") Apply
-                    - i++;
+                        - i++;
+                - i=0;
+                #infoModals
+                    each minion in minions
+                        +infoBox("infoModal"+i,"rightInfo",minion.name)
+                            h4 Products
+                            each product in minion.products
+                                h5 Product Name: #{product.item}
+                                if(product.item=="Diamond (Spreading)")
+                                    span Generated Per Time: Calculated by sum of items harvested * 0.1 <br />
+                                else
+                                    span Generated Per Time: #{product.perTime} <br />
+                                //- XP
+                                if(product.canCompactor)
+                                    span.
+                                        Can be compacted <br />
+                                        Product Name: #{product.compactor.variant} <br /> 
+                                        Equivalent: #{product.compactor.variantEquiv} <br />
+                                br
+                                h5 Variants
+                                - let j=0
+                                table.table.table-dark
+                                    thead
+                                        tr
+                                            th(scope="col") Name
+                                            th(scope="col") Equivalent
+                                            th(scope="col") Bazaar Price (Sell offer)
+                                            th(scope="col") Bazaar Price (Sell instantly)
+                                    each variant in product.variants
+                                        tr
+                                            td=variant
+                                            td=product.variantsEquiv[j]
+                                            td=product.bazaarPrice[j][0]
+                                            td=product.bazaarPrice[j][1]
+                                        -j++;
+                                br
+                            h4 Tiers
+                            - let k=0
+                            table.table.table-dark
+                                thead
+                                    tr
+                                        th(scope="col") Tier
+                                        th(scope="col") Time between actions (in seconds)
+                                        th(scope="col") Storage
+                                        //- th(scope="col") Crafting materials
+                                        //- th(scope="col") Crafting cost
+                                each tier in minion.tierDelay
+                                    tr
+                                        td=(k+1)
+                                        td=tier
+                                        td=minion.storage[k]
+                                    -k++;
+                            h4 Others
+                            span Selected tier: #{minion.tier} <br />
+                            span Selected fuel: #{minion.fuel}% <br />
+                            span Calculation formula: sum of all products(offline duration(in hours)*3600/time between actions(in seconds)/2 (due to offline)*generated per time*(1+fuel(in %)/100))
+                        - i++;
             p: small
                 if(settings.lastUpdatedBazaar)
                     | Last updated time of bazaar price: #{settings.lastUpdatedBazaar} UTC
