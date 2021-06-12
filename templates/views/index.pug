@@ -118,7 +118,7 @@ block content
 									.col-2.text-center
 										p.d-inline.p-height-fix ##{i+1}
 										p.d-none.d-md-inline &nbsp;
-										img(src="/images/minions/"+minions[i].name+".png").d-inline
+										//-img(src="/images/minions/"+minions[i].name+".png").d-inline
 									.col-4.text-center: p(id="minion"+i+"Name").mb-0=minions[i].name.substring(0, minions[i].name.lastIndexOf(" "))
 									.col-2.text-center: p(id="minion"+i+"Tier").mb-0=minions[i].tier
 									.col-4: p(id="minion"+i+"Profit").mb-0=minions[i].totalProfitText
