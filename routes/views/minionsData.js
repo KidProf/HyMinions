@@ -1200,25 +1200,6 @@ exports.minions = [
                     25600
                 ],
             },
-            {
-                item: "Diamond (Spreading)",
-                npcPrice: 8,
-                canCompactor: true,
-                compactor: {
-                    variant: "Block of Diamond (Spreading)",
-                    variantEquiv: 9,
-                },
-                variants: [
-                    "Diamond (Spreading)",
-                    "Enchanted Diamond (Spreading)",
-                    "Enchanted Diamond Block (Spreading)",
-                ],
-                variantsEquiv: [
-                    1,
-                    160,
-                    25600
-                ],
-            },
         ]      
     },{ //24
         name: "Redstone Minion",
