@@ -217,8 +217,8 @@ block content
                             .form-group
                                 label(for="overallSellingTo") Selling to: &nbsp;
                                 select#overallSellingTo.form-control
-                                    option(value="1" selected=(settings.sellingTo==0?'selected':undefined)) Max profit (NPC or bazaar)
-                                    option(value="0" selected=(settings.sellingTo==-1?'selected':undefined)) NPC only
+                                    option(value="1" selected=(settings.sellingTo==1?'selected':undefined)) Max profit (NPC or bazaar)
+                                    option(value="0" selected=(settings.sellingTo==0?'selected':undefined)) NPC only
                             .form-group
                                 label(for="overallSellingMethod") Selling method in bazaar: &nbsp;
                                 select#overallSellingMethod.form-control
@@ -242,14 +242,14 @@ block content
             <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
             br
             if !minions || !settings
-                h2 Error
+                h1 Error
                 p.lead An unexpected error has occured.
                 h3 Is Hypixel API down?
                 p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
                 p If so, we could not calculate minions profit based on the latest bazaar price. However, you may try <a href="minions/?sellingTo=0">this set of settings</a> to obtain the minions profit in NPC price instead, until the Hypixel API is fixed.
                 p You may make a bug report <a href="/contact">here</a> if the above set of settings also does not work. Sorry for the inconvenience caused.
             else if settings.hasError
-                h2 Error
+                h1 Error
                 p.lead=settings.errorMsg
                 h3 Is Hypixel API down?
                 p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
@@ -405,7 +405,7 @@ block content
                                         tr
                                             td=variant
                                             td=product.variantsEquiv[j]
-                                            //-TODO: NPC Price
+                                            td=product.variantsNpcPrices ? product.variantsNpcPrices[j]: product.npcPrice*product.variantsEquiv[j]
                                             if(product.bazaarPrice)
                                                 td=product.bazaarPrice[j][0]
                                                 td=product.bazaarPrice[j][1]

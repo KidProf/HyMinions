@@ -66,8 +66,12 @@ function updateEvents(){
 
 
 //MINIONS
-function generateLink(){
+function generateLinkIndex(){
     let keys = [], values = [];
+
+    //SPECIAL FOR INDEX PAGE
+    keys.push("run");
+    values.push("1");
 
     keys.push("name");
     values.push($("#overallProfileName").val());

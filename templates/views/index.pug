@@ -80,7 +80,7 @@ block content
 				br
 				#minionsInput
 					.form-group#useProfile
-						p Minecraft Name: &nbsp; 
+						p Minecraft Name (optional): &nbsp; 
 							input#overallProfileName.form-control(value=settings.name)
 						if(settings.profileNames)
 							label(for="overallProfileProfile") Profile: &nbsp;
@@ -96,32 +96,52 @@ block content
 							select#overallOfflineTimeUnit.form-control
 								option(value="0" selected=(settings.offlineTimeUnit==0?'selected':undefined)) hour(s)
 								option(value="1" selected=(settings.offlineTimeUnit==1?'selected':undefined)) day(s)
-					button#overallSettings.btn(onclick="generateLink()") Apply
+					button#overallSettings.btn(onclick="generateLinkIndex()") Calculate
 				
 				br
 				#content
-
-					
 					//- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 					//- //-test-index1
 					//- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6880962885436734" data-ad-slot="3142042549" data-ad-format="auto" data-full-width-responsive="true"></ins>
 					//- <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
 					
-					if !minions || !settings
-						h2 Error
+					if settings && settings.run == 0
+						h4 Top Profitable Minions
+						p Click "Calculate" to show minions profit list.
+						#minionsIndexTable
+							.row
+								.offset-2.col-4.text-center: h5 Minion
+								.col-2.text-center: h5 Tier
+								.col-4: h5 Total Profit
+							- let i = 0
+							- let sampleMinionsArray=["Voidling Minion","Tarantula Minion","Lapis Minion","Snow Minion","Melon Minion"]
+							while i<5
+								.row.align-items-center
+									.col-2.text-center
+										p.d-inline.p-height-fix #?
+										p.d-none.d-md-inline &nbsp;
+										img(src="/images/minions/"+sampleMinionsArray[i]+".png").d-inline
+									.col-4.text-center: p(id="minion"+i+"Name").mb-0=sampleMinionsArray[i].substring(0, sampleMinionsArray[i].lastIndexOf(" "))
+									.col-2.text-center: p(id="minion"+i+"Tier").mb-0=11
+									.col-4: p(id="minion"+i+"Profit").mb-0 ???
+								- i++;
+						br
+						br
+						p: small If you leave Minecraft Name blank, we would calculate based on tier 11 minions. It is also based on minions With Enchanted Lava Bucket, Diamond Spreading and Dwarven Super Compactor 3000 equipped. You are expected to sell your products using "sell instantly". 
+					else if !minions || !settings
+						h1 Error
 						p.lead An unexpected error has occured.
 						h3 Is Hypixel API down?
 						p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
 						p If so, we could not calculate minions profit based on the latest bazaar price. However, you may try <a href="minions/?sellingTo=0">this set of settings</a> to obtain the minions profit in NPC price instead, until the Hypixel API is fixed.
 						p You may make a bug report <a href="/contact">here</a> if the above set of settings also does not work. Sorry for the inconvenience caused.
 					else if settings.hasError
-						h2 Error
+						h1 Error
 						p.lead=settings.errorMsg
 						h3 Is Hypixel API down?
 						p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
 						p If so, we could not calculate minions profit based on the latest bazaar price. However, you may try <a href="minions/?sellingTo=0">this set of settings</a> to obtain the minions profit in NPC price instead, until the Hypixel API is fixed.
 						p You may make a bug report <a href="/contact">here</a> if the above set of settings also does not work. Sorry for the inconvenience caused.
-
 					else
 						h4 Top Profitable Minions
 						#minionsIndexTable
@@ -159,7 +179,7 @@ block content
 				
 						br
 						br
-						p: small Based on tier 11 minions, 24 hours offline time, with Enchanted Lava Bucket, Diamond Spreading and Dwarven Super Compactor 3000 equipped. You are expected to sell your products using "sell instantly". 
+						p: small If you leave Minecraft Name blank, we would calculate based on tier 11 minions. It is also based on minions With Enchanted Lava Bucket, Diamond Spreading and Dwarven Super Compactor 3000 equipped. You are expected to sell your products using "sell instantly". 
 
 				a(href="/minions") Click here for more settings and calculation details
 
@@ -168,13 +188,7 @@ block content
 		.my-box
 			.container
 				h4#announcementsHeader.header: a(href="/minions") HELP WANTED
-				p.
-					The data for Voidling Minion tier 11 has been incorrect in the past week (from 4 Jun 2021 to 12 Jun 2021), resulting in an overestimation of the profit of the minion at tier 11. 
-				p.
-					Although it is fixed now, I am aware that accurate and up-to-date data are very important. Therefore, I have added an info button on the rightmost side of the minion table in the minions page, containing all the raw data about the minions. 
-
-				p If you spot any incorrect data in the info section, please contact me <a href="/contact">here</a>. You could verify the data with Hypixel Wiki or your own experience in Skyblock.
-				p Sorry for the inconvenience this may cause.
+				p I have added an info button on the rightmost side of the minion table in the minions page, containing all the raw data about the minions. If you spot any incorrect data in the info section, please contact me <a href="/contact">here</a>. You could verify the data with Hypixel Wiki or your own experience in Skyblock.
 		br
 		.my-box
 			.container

@@ -40,6 +40,11 @@ exports.minions = [
                 npcPrice: 8,
 				xp: 0.4,
                 xpType: "Mining",
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
                 variants: [
                     "Diamond",
                     "Enchanted Diamond",

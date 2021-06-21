@@ -4,23 +4,35 @@ var minionsOperation = require("./minionsOperation.js");
 exports = module.exports = function (req, res) {
     console.log(req.query);
     let settings = req.query;
-    let minions = minionsData.minions;
 
-    dataValidation(settings);
+    if(settings.run==1){
+        let minions = minionsData.minions;
 
-    minionsOperation.calculateMinionsProfit(minions, settings).then(()=>{
-        let output = {settings: settings, minions: minions};
-        console.log(output.settings);
-        res.render("index",output);
+        dataValidation(settings);
+    
+        minionsOperation.calculateMinionsProfit(minions, settings).then(()=>{
+            let output = {settings: settings, minions: minions};
+            console.log(output.settings);
+            res.render("index",output);
+    
+        }).catch((err)=>{
+            console.log(err);
+            res.render("index");
+        });
+    }else{
+        settings.run = 0;
+        settings.offlineTime = 24;
+        settings.offlineTimeUnit = 1;
+        console.log(settings);
+        res.render("index",{settings: settings});
+    }
 
-    }).catch((err)=>{
-        console.log(err);
-        res.render("index");
-    });
 
     function dataValidation(settings){
         //assume no error first
         settings.hasError = false;
+
+        settings.run = 1;
 
         if(settings.name){
             settings.useProfile= true;
@@ -51,6 +63,17 @@ exports = module.exports = function (req, res) {
         settings.tax = 1;
         settings.soulflow = 0;
 
+    }
+
+    function isWithinList(number,list){
+        let found=false;
+        list.forEach((item)=>{
+            //console.log(number,item,number==item);
+            if(item==number){
+                found=true;
+            }
+        });
+        return found;
     }
 };
 
