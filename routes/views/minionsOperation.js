@@ -14,7 +14,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
         minecraftName = settings.name;
         lastUpdatedProfile = Date.now();
     }
-    if(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000){ //1 min time out
+    if(settings.sellingTo==1&&(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000)){ //1 min time out
         await findBazaar();
         lastUpdatedBazaar = Date.now();
     }

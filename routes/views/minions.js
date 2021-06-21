@@ -16,16 +16,6 @@ exports = module.exports = function (req, res) {
     minionsOperation.calculateMinionsProfit(minions, settings).then(()=>{
         let output = {settings: settings, minions: minions};
         console.log(output.settings);
-        //console.log(output.minions);
-        // output.minions.forEach((minion)=>{
-        //     minion.products.forEach((product)=>{
-        //         console.log(product);
-        //     })
-        //     minion.outputProducts.forEach((outputProduct)=>{
-        //         console.log("OUTPUT PRODUCT");
-        //         console.log(outputProduct);
-        //     })
-        //})
         res.render("minions",output);
 
     }).catch((err)=>{

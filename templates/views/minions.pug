@@ -19,19 +19,19 @@ mixin infoBox(id,type,title)
     else if(type=="question")
         i.fas.fa-lg(data-toggle="modal" data-target="#"+id class="fa-question-circle")
     .modal.fade.infoBox(id=id tabindex="-1" role="dialog" aria-labelledby=id+"Label" aria-hidden="true")
-                .modal-dialog(role="document" class=(type=="rightInfo"?"modal-xl":undefined))
-                    .modal-content
-                        .modal-header
-                            h5.modal-title(id=id+"Label")=title
-                            button.close(type="button" data-dismiss="modal" aria-label="Close")
-                                span(aria-hidden="true") &times;
-                        .modal-body
-                            if block 
-                                block 
-                            else
-                                p Nothing to see here
-                        .modal-footer
-                            button.btn.btn-secondary(type="button" data-dismiss="modal") Close
+        .modal-dialog(role="document" class=(type=="rightInfo"?"modal-xl":undefined))
+            .modal-content
+                .modal-header
+                    h5.modal-title(id=id+"Label")=title
+                    button.close(type="button" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                .modal-body
+                    if block 
+                        block 
+                    else
+                        p Nothing to see here
+                .modal-footer
+                    button.btn.btn-secondary(type="button" data-dismiss="modal") Close
 
 block content
     .container
@@ -50,6 +50,12 @@ block content
             p As more people are using my website, I would like to explain more about how the minion profit calculator works and its limitations.
             p Please note that the minion profit calculator calculates based on the instantaneous price of the items sold at bazaar, so the prices may fluctuate a lot from time to time, and so do the minions profit (as we all know the economy of Skyblock is quite unstable). The "best minion" for money may not be the same some time later. I hope you all understand this uncertainty.
             p Overall speaking, snow minions and clay minions are the most stable for profit as their profits do not depend on the economy. If you would like to explore other relatively stable alternatives you may watch <a href="https://youtu.be/_LmqqJtsdrk"> ModernSoldier's video</a> for more advice.
+        //-TEMP
+        h3 Announcement
+        p Hypixel will be back on very soon. However, the Hypixel API, that HyMinions depends on, probably will not be available that soon. Therefore, the minion profit calculator and forge profit calculator would not be available for a short while even after Hypixel is on. 
+        p However, I have made slight changes to the code so that it can calculate minions profit with NPC price. Even though the minions profit calculator will not be in full function, at least you can see the items that different minions generate.
+        p Sorry for the inconvenience caused and I hope you would use my minion calculator again when both Hypixel and Hypixel API functions normally.
+        p: a(href="minions/?sellingTo=0") Click here to check the calculator with NPC price
         #overall
             .row
                 #general.col-lg-6.col-12
@@ -236,12 +242,19 @@ block content
             <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
             br
             if !minions || !settings
-                h1 Error
-                p.lead An unexpected error has occured. You may make a bug report <a href="/contact">here</a>.
+                h2 Error
+                p.lead An unexpected error has occured.
+                h3 Is Hypixel API down?
+                p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
+                p If so, we could not calculate minions profit based on the latest bazaar price. However, you may try <a href="minions/?sellingTo=0">this set of settings</a> to obtain the minions profit in NPC price instead, until the Hypixel API is fixed.
+                p You may make a bug report <a href="/contact">here</a> if the above set of settings also does not work. Sorry for the inconvenience caused.
             else if settings.hasError
-                h1 Error
+                h2 Error
                 p.lead=settings.errorMsg
-
+                h3 Is Hypixel API down?
+                p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
+                p If so, we could not calculate minions profit based on the latest bazaar price. However, you may try <a href="minions/?sellingTo=0">this set of settings</a> to obtain the minions profit in NPC price instead, until the Hypixel API is fixed.
+                p You may make a bug report <a href="/contact">here</a> if the above set of settings also does not work. Sorry for the inconvenience caused.
             else
                 #search: .form-group
                     label(for="searchInput") Search: &nbsp;
@@ -385,14 +398,17 @@ block content
                                         tr
                                             th(scope="col") Name
                                             th(scope="col") Equivalent
+                                            th(scope="col") NPC Price
                                             th(scope="col") Bazaar Price (Sell offer)
                                             th(scope="col") Bazaar Price (Sell instantly)
                                     each variant in product.variants
                                         tr
                                             td=variant
                                             td=product.variantsEquiv[j]
-                                            td=product.bazaarPrice[j][0]
-                                            td=product.bazaarPrice[j][1]
+                                            //-TODO: NPC Price
+                                            if(product.bazaarPrice)
+                                                td=product.bazaarPrice[j][0]
+                                                td=product.bazaarPrice[j][1]
                                         -j++;
                                 br
                             h4 Tiers

@@ -13,6 +13,15 @@ block append variables
 block content
 	.container
 		h1 Welcome to HyMinions! <img src="images/aotd.png" width="40" height="40"/>
+
+		br
+		.my-box
+			.container
+				h4#announcementsHeader2.header ANNOUNCEMENT
+				p Hypixel will be back on very soon. However, the Hypixel API, that HyMinions depends on, probably will not be available that soon. Therefore, the minion profit calculator and forge profit calculator would not be available for a short while even after Hypixel is on. 
+				p However, I have made slight changes to the code so that it can calculate minions profit with NPC price. Even though the minions profit calculator will not be in full function, at least you can see the items that different minions generate.
+				p Sorry for the inconvenience caused and I hope you would use my minion calculator again when both Hypixel and Hypixel API functions normally.
+				p: a(href="minions/?sellingTo=0") Click here to check the calculator with NPC price
 		br
 		.my-box
 			.container
@@ -46,12 +55,6 @@ block content
 				//- p.
 				//- 	If you spot a bug, feel free to <a href="/contact">contact me</a>.
 
-		br
-		.my-box
-			.container
-				h4#discordHeader.header <img src="/images/discord.png" width="30" height="30"/> DISCORD
-				p I have recently created a Discord server, join and chat about HyMinions, Hypixel Skyblock or even other games! 
-				a(href="https://discord.gg/NBnZ3pU9") Invite link
 		br
 		.my-box
 			.container
@@ -105,11 +108,19 @@ block content
 					//- <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
 					
 					if !minions || !settings
-						h1 Error
-						p.lead An unexpected error has occured. You may make a bug report <a href="/contact">here</a>.
+						h2 Error
+						p.lead An unexpected error has occured.
+						h3 Is Hypixel API down?
+						p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
+						p If so, we could not calculate minions profit based on the latest bazaar price. However, you may try <a href="minions/?sellingTo=0">this set of settings</a> to obtain the minions profit in NPC price instead, until the Hypixel API is fixed.
+						p You may make a bug report <a href="/contact">here</a> if the above set of settings also does not work. Sorry for the inconvenience caused.
 					else if settings.hasError
-						h1 Error
+						h2 Error
 						p.lead=settings.errorMsg
+						h3 Is Hypixel API down?
+						p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
+						p If so, we could not calculate minions profit based on the latest bazaar price. However, you may try <a href="minions/?sellingTo=0">this set of settings</a> to obtain the minions profit in NPC price instead, until the Hypixel API is fixed.
+						p You may make a bug report <a href="/contact">here</a> if the above set of settings also does not work. Sorry for the inconvenience caused.
 
 					else
 						h4 Top Profitable Minions
@@ -164,5 +175,10 @@ block content
 
 				p If you spot any incorrect data in the info section, please contact me <a href="/contact">here</a>. You could verify the data with Hypixel Wiki or your own experience in Skyblock.
 				p Sorry for the inconvenience this may cause.
-
+		br
+		.my-box
+			.container
+				h4#discordHeader.header <img src="/images/discord.png" width="30" height="30"/> DISCORD
+				p I have recently created a Discord server, join and chat about HyMinions, Hypixel Skyblock or even other games! 
+				a(href="https://discord.gg/NBnZ3pU9") Invite link
 				
