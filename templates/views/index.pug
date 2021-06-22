@@ -118,12 +118,12 @@ block content
 							while i<5
 								.row.align-items-center
 									.col-2.text-center
-										p.d-inline.p-height-fix #?
+										p.d-inline.p-height-fix: a(href="" onclick="generateLinkIndex()") #?
 										p.d-none.d-md-inline &nbsp;
 										img(src="/images/minions/"+sampleMinionsArray[i]+".png").d-inline
 									.col-4.text-center: p(id="minion"+i+"Name").mb-0=sampleMinionsArray[i].substring(0, sampleMinionsArray[i].lastIndexOf(" "))
 									.col-2.text-center: p(id="minion"+i+"Tier").mb-0=11
-									.col-4: p(id="minion"+i+"Profit").mb-0 ???
+									.col-4: p(id="minion"+i+"Profit").mb-0: a(href="" onclick="generateLinkIndex()") ???
 								- i++;
 						br
 						br
