@@ -17,7 +17,7 @@ exports = module.exports = function (req, res) {
     
         }).catch((err)=>{
             console.log(err);
-            res.render("index");
+            res.render("index",{settings: settings});
         });
     }else{
         settings.run = 0;

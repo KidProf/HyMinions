@@ -20,7 +20,7 @@ exports = module.exports = function (req, res) {
 
     }).catch((err)=>{
         console.log(err);
-        res.render("minions");
+        res.render("minions",{settings: settings});
     });
     
 
