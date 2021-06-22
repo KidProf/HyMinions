@@ -73,13 +73,15 @@ function generateLinkIndex(){
     keys.push("run");
     values.push("1");
 
-    keys.push("name");
-    values.push($("#overallProfileName").val());
-    if($("#overallProfileProfile")&&$("#overallProfileProfile").children("option:selected").val()!=0&&$("#overallProfileProfile").children("option:selected").val()!=undefined){{
-        
-        keys.push("profile");
-        values.push($("#overallProfileProfile").children("option:selected").val());
-    }}
+    if($("#overallProfileName").val()!=""){
+        keys.push("name");
+        values.push($("#overallProfileName").val());
+        if($("#overallProfileProfile")&&$("#overallProfileProfile").children("option:selected").val()!=0&&$("#overallProfileProfile").children("option:selected").val()!=undefined){{
+            
+            keys.push("profile");
+            values.push($("#overallProfileProfile").children("option:selected").val());
+        }}
+    }
 
     if($("#overallOfflineTimeUnit").val()==1){ //use day as unit
         if($("#overallOfflineTime").val()!=1){
