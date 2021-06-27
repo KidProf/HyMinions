@@ -62,6 +62,8 @@ exports = module.exports = function (req, res) {
         settings.sellingMethod = 1;
         settings.tax = 1;
         settings.soulflow = 0;
+        settings.noCrafting = 0;
+        settings.showDetails = 0;
 
     }
 

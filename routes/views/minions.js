@@ -87,11 +87,17 @@ exports = module.exports = function (req, res) {
         if(!settings.automaticShipping||!isWithinList(settings.automaticShipping,[0,0.5,0.9])){
             settings.automaticShipping = 0.5;
         }
-    
-        //Minor
+        if(!settings.noCrafting||!isWithinList(settings.noCrafting,[0,1])){
+            settings.noCrafting = 0;
+        }
+        if(!settings.showDetails||!isWithinList(settings.showDetails,[0,1])){
+            settings.showDetails = 0;
+        }
         if(!settings.sellingTo||!isWithinList(settings.sellingTo,[0,1])){
             settings.sellingTo = 1;
         }
+    
+        //Minor
         if(!settings.sellingMethod||!isWithinList(settings.sellingMethod,[0,1])){
             settings.sellingMethod = 1;
         }

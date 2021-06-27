@@ -100,6 +100,10 @@ function generateLink(){
             keys.push("diamondSpreading");
             values.push($("#overallDiamondSpreading").prop("checked")? 1 : 0);
         }
+        if($("#overallNoCrafting").prop("checked")){
+            keys.push("noCrafting");
+            values.push(1);
+        }
         // if($("#overallSuperCompactor").children("option:selected").val()<=1){
         //     if($("#overallMinionChest").children("option:selected").val()!=9){
         //         keys.push("minionChest");
@@ -122,12 +126,16 @@ function generateLink(){
             values.push($("#overallDiamondSpreadingDwarvenCompactor").children("option:selected").val());
         }
     }
-    
-    //minor
+    if($("#overallShowDetails").prop("checked")){
+        keys.push("showDetails");
+        values.push(1);
+    }
     if($("#overallSellingTo").children("option:selected").val()!=1){
         keys.push("sellingTo");
         values.push($("#overallSellingTo").children("option:selected").val());
     }
+    
+    //minor
     if($("#overallSellingMethod").children("option:selected").val()!=1){
         keys.push("sellingMethod");
         values.push($("#overallSellingMethod").children("option:selected").val());

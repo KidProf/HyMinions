@@ -271,7 +271,8 @@ exports.calculateMinionsProfit = async function(minions, settings){
                         }
                     }else if(settings.superCompactor==1&&product.canCompactor){ //compactor
                         variantIndex = product.compactor.minimumEnchanted ? product.compactor.minimumEnchanted : 0, maxProfit = 0;
-                        for(index=variantIndex;index<product.variants.length;index++){
+                        let endOfLoop = settings.noCrafting ? Math.min(product.variants.length-1,variantIndex) : product.variants.length-1
+                        for(index=variantIndex;index<=endOfLoop;index++){
                             let profit = compareVariantProfit(settings,minion,product,index); 
                             if(profit>maxProfit){
                                 variantIndex = index;
@@ -280,7 +281,8 @@ exports.calculateMinionsProfit = async function(minions, settings){
                         }
                     }else{ //superCompactor = 0 / cannot be compacted by compactor
                         variantIndex = 0, maxProfit = 0;
-                        for(index=variantIndex;index<product.variants.length;index++){
+                        let endOfLoop = settings.noCrafting ? Math.min(product.variants.length-1,variantIndex) : product.variants.length-1
+                        for(index=variantIndex;index<=endOfLoop;index++){
                             let profit = compareVariantProfit(settings,minion,product,index); 
                             if(profit>maxProfit){
                                 variantIndex = index;
@@ -322,7 +324,8 @@ exports.calculateMinionsProfit = async function(minions, settings){
                     }
                 }else if(settings.superCompactor==1&&product.canCompactor){ //compactor
                     variantIndex = product.compactor.minimumEnchanted ? product.compactor.minimumEnchanted : 0, maxProfit = 0;
-                    for(index=variantIndex;index<product.variants.length;index++){
+                    let endOfLoop = settings.noCrafting ? Math.min(product.variants.length-1,variantIndex) : product.variants.length-1
+                    for(index=variantIndex;index<=endOfLoop;index++){
                         let profit = compareVariantProfit(settings,minion,product,index); 
                         if(profit>maxProfit){
                             variantIndex = index;
@@ -331,7 +334,8 @@ exports.calculateMinionsProfit = async function(minions, settings){
                     }
                 }else{ //superCompactor = 0 / cannot be compacted by compactor
                     variantIndex = 0, maxProfit = 0;
-                    for(index=variantIndex;index<product.variants.length;index++){
+                    let endOfLoop = settings.noCrafting ? Math.min(product.variants.length-1,variantIndex) : product.variants.length-1
+                    for(index=variantIndex;index<=endOfLoop;index++){
                         let profit = compareVariantProfit(settings,minion,product,index); 
                         if(profit>maxProfit){
                             variantIndex = index;
