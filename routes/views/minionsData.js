@@ -18,6 +18,7 @@ exports.minions = [
         tierDelay : [29,29,26,26,23,23,19,19,14.5,14.5,10,8],
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
 		type: "Combat",
+        //TODO upgrade
         products : [
             {
                 item : "Rotten Flesh",
@@ -150,6 +151,34 @@ exports.minions = [
         id: 2,
         tierDelay : [20,20,18,18,16,16,14,14,12,12,10,8],
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
+        upgradeMaterial: [
+            ["Potato"],
+            ["Potato"],
+            ["Potato"],
+            ["Enchanted Potato"],
+            ["Enchanted Potato"],
+            ["Enchanted Potato"],
+            ["Enchanted Potato"],
+            ["Enchanted Potato"],
+            ["Enchanted Potato"],
+            ["Enchanted Baked Potato"],
+            ["Enchanted Baked Potato"],
+            ["Enchanted Baked Potato","Pelts"],
+        ],
+        upgradeQuantity: [
+            [128],
+            [256],
+            [512],
+            [8],
+            [24],
+            [64],
+            [128],
+            [256],
+            [512],
+            [8],
+            [16],
+            [32,75],
+        ],
         products : [
             {
                 item : "Potato",
@@ -370,6 +399,34 @@ exports.minions = [
         id: 6,
         tierDelay : [29,29,27,27,25,25,23,23,21,21,18,16],
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
+        upgradeMaterial: [
+            ["Lapis Lazuli"],
+            ["Lapis Lazuli"],
+            ["Enchanted Lapis Lazuli"],
+            ["Enchanted Lapis Lazuli"],
+            ["Enchanted Lapis Lazuli"],
+            ["Enchanted Lapis Lazuli"],
+            ["Enchanted Lapis Lazuli"],
+            ["Enchanted Lapis Lazuli"],
+            ["Enchanted Lapis Block"],
+            ["Enchanted Lapis Block"],
+            ["Enchanted Lapis Block"],
+            ["Enchanted Lapis Block","Coins"],
+        ],
+        upgradeQuantity: [
+            [256],
+            [512],
+            [8],
+            [24],
+            [64],
+            [128],
+            [256],
+            [512],
+            [8],
+            [16],
+            [32],
+            [64,2000000]
+        ],
         products : [
             {
                 item : "Lapis Lazuli",
