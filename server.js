@@ -7,8 +7,8 @@ const express = require('express');
 const env = require('dotenv');
 const lessMiddleware = require('less-middleware');
 const path = require('path');
-const getMinionsApi = require('./routes/api/getMinionsApi');
-const getProfileApi = require('./routes/api/getProfileApi');
+const getMinionsApi = require('./routes/api/getBazaarApiForge');
+const getProfileApi = require('./routes/api/getProfileApiForge');
 const minionsView = require("./routes/views/minions.js");
 const indexView = require("./routes/views/index.js");
 

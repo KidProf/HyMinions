@@ -1,16 +1,14 @@
-var minionsData = require("./minionsData.js");
-var minionsOperation = require("./minionsOperation.js");
+var {minions} = require("../api/minionsData.js");
+var {calculateMinionsProfit} = require("../api/minionsOperation.js");
 
 exports = module.exports = function (req, res) {
     console.log(req.query);
     let settings = req.query;
 
     if(settings.run==1){
-        let minions = minionsData.minions;
-
         dataValidation(settings);
     
-        minionsOperation.calculateMinionsProfit(minions, settings).then(()=>{
+        calculateMinionsProfit(minions, settings).then(()=>{
             let output = {settings: settings, minions: minions};
             console.log(output.settings);
             res.render("index",output);
