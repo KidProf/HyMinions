@@ -1,7 +1,5 @@
-var fetch = require('cross-fetch');
-var {moneyRepresentation, dateTimeToString} = require("./general.js");
+var {moneyRepresentation, dateTimeToString, findBazaar, findProfile} = require("./general.js");
 var {soulflowItem} = require("./minionsData.js");
-var itemNames = require("./itemNames.json");
 
 let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, hadError=false;
     
@@ -9,14 +7,13 @@ exports.calculateMinionsProfit = async function(minions, settings){
     console.log(settings.name,minecraftName);
     //console.log(Date.now()-lastUpdatedBazaar);
     if((settings.useProfile)&&(settings.name!=minecraftName||hadError||Date.now()-lastUpdatedProfile>5*60*1000)){ //don't call api again if identical name, but call again if prev result has error, 5 min timeout
-        await findProfile(settings.name);
+        await findProfile(settings.name,settings);
         //await Promise.all([findBazaar(), findProfile(settings.name)]);
         minecraftName = settings.name;
         lastUpdatedProfile = Date.now();
     }
-    if(settings.sellingTo==1&&(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000)){ //1 min time out
-        await findBazaar();
-        lastUpdatedBazaar = Date.now();
+    if(settings.sellingTo==1/*&&(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000)*/){ //1 min time out
+        await findBazaar(settings);
     }
     settings.lastUpdatedProfile = lastUpdatedProfile ? dateTimeToString(lastUpdatedProfile): null;
     settings.lastUpdatedBazaar = lastUpdatedBazaar ? dateTimeToString(lastUpdatedBazaar) : null;
@@ -557,156 +554,4 @@ exports.calculateMinionsProfit = async function(minions, settings){
         }
         return itemsPerTime*unitPrice;
     }
-    async function findBazaar(){
-        return new Promise((resolve)=>{
-            setTimeout(() => {
-                fetch("https://api.hypixel.net/skyblock/bazaar?key="+process.env.HYPIXEL_KEY)
-                .then(result => result.json())
-                .then(({ products }) => {
-                    var pricesAjax = new Array(2);
-                    pricesAjax[0] = new Object();
-                    pricesAjax[1] = new Object();
-                    Object.keys(itemNames).forEach((id) =>{
-                        //0 -> sell price (sell offer) (buy instantly)
-                        //if it has sell offer, use sell offer, else use default price
-                        pricesAjax[0][itemNames[id]]= (products[id]["buy_summary"][0] ? products[id]["buy_summary"][0]["pricePerUnit"] : products[id]["quick_status"]["buyPrice"]);
-                        //1 -> buy price (sell instantly) (buy order)
-                        //if it has buy order, use buy order, else use default price
-                        pricesAjax[1][itemNames[id]]= (products[id]["sell_summary"][0] ? products[id]["sell_summary"][0]["pricePerUnit"] : products[id]["quick_status"]["sellPrice"]);
-                    })
-                    
-                    pricesAjax[0]["Diamond (Spreading)"] = pricesAjax[0]["Diamond"];
-                    pricesAjax[1]["Diamond (Spreading)"] = pricesAjax[1]["Diamond"];
-                    pricesAjax[0]["Enchanted Diamond (Spreading)"] = pricesAjax[0]["Enchanted Diamond"];
-                    pricesAjax[1]["Enchanted Diamond (Spreading)"] = pricesAjax[1]["Enchanted Diamond"];
-                    pricesAjax[0]["Enchanted Diamond Block (Spreading)"] = pricesAjax[0]["Enchanted Diamond Block"];
-                    pricesAjax[1]["Enchanted Diamond Block (Spreading)"] = pricesAjax[1]["Enchanted Diamond Block"];
-
-                    soulflowItem.bazaarPrice=new Array(soulflowItem.variants.length);
-                    soulflowItem.variants.forEach((variant,index)=>{
-                        soulflowItem.bazaarPrice[index] = new Array(2);
-                        if(pricesAjax[0][variant]){
-                            soulflowItem.bazaarPrice[index][0] = pricesAjax[0][variant];
-                            soulflowItem.bazaarPrice[index][1] = pricesAjax[1][variant];
-                        }else{
-                            //use NPC price as substitute
-                            if(soulflowItem.variantsNpcPrices){
-                                soulflowItem.bazaarPrice[index][0] = soulflowItem.variantsNpcPrices[index];
-                            }else{
-                                soulflowItem.bazaarPrice[index][0] = soulflowItem.npcPrice*soulflowItem.variantsEquiv[index];
-                            }
-                            soulflowItem.bazaarPrice[index][1] = soulflowItem.bazaarPrice[index][0];
-                        }
-                    });
-
-                    minions.forEach((minion)=>{
-                        minion.products.forEach((product)=>{
-                            product.bazaarPrice=new Array(product.variants.length);
-                            product.variants.forEach((variant,index)=>{
-                                product.bazaarPrice[index] = new Array(2);
-                                if(pricesAjax[0][variant]){
-                                    product.bazaarPrice[index][0] = pricesAjax[0][variant];
-                                    product.bazaarPrice[index][1] = pricesAjax[1][variant];
-                                }else{
-                                    //use NPC price as substitute
-                                    if(product.variantsNpcPrices){
-                                        product.bazaarPrice[index][0] = product.variantsNpcPrices[index];
-                                    }else{
-                                        product.bazaarPrice[index][0] = product.npcPrice*product.variantsEquiv[index];
-                                    }
-                                    product.bazaarPrice[index][1] = product.bazaarPrice[index][0];
-                                }
-                            });
-                        });
-                    });
-                    bazaarFound = true;
-                    resolve("success");
-                })
-                .catch(()=>{
-                    settings.hasError=true;
-                    settings.errorMsg = "Error occured when getting bazaar prices.";
-                    resolve("success");
-                });
-            }, 0);
-        });
-    }
-
-    async function findProfile(name){
-        return new Promise((resolve)=>{
-            setTimeout(() => {
-                fetch("https://api.mojang.com/users/profiles/minecraft/"+name)
-                .then(result => result.json())
-                .then(({id}) => {
-                    //console.log(id);
-                    fetch("https://api.hypixel.net/skyblock/profiles?key="+process.env.HYPIXEL_KEY+"&uuid="+id)
-                    .then(result => result.json())
-                    .then(({profiles}) => {
-                        let profilesAjax = new Array();
-                        profiles.forEach((profile, index)=>{
-                            profilesAjax[index] = new Object();
-                            profilesAjax[index]["rawMinions"] = new Array();
-                            Object.keys(profile["members"]).forEach((member, index2)=>{
-                                if(profile["members"][member]["crafted_generators"]){
-                                    profilesAjax[index]["rawMinions"].push(...profile["members"][member]["crafted_generators"]);
-                                }
-                            })
-                            profilesAjax[index]["cuteName"] = profile["cute_name"];
-                        });
-                        profilesAjax.sort((a,b)=>{
-                            return b["rawMinions"].length-a["rawMinions"].length;
-                        });
-                        minions.forEach((minion,index6)=>{
-                            minion.profilesTier = new Array(profilesAjax.length);
-                        });
-                        profileNames = new Array(profilesAjax.length);
-                        profilesAjax.forEach((profile,index)=>{ 
-                            //store cute name for data input
-                            //console.log(profile);
-                            profileNames[index]=profile.cuteName;
-                            minions.forEach((minion,index3)=>{
-                                minion.profilesTier[index] = 0;
-                            });
-                            //for each crafted minion entry
-                            profile.rawMinions.forEach((rawMinion,index2)=>{
-                                //e.g. to get "TARANTULA" from "TARANTULA_4"
-                                let underscoreLocation = rawMinion.lastIndexOf("_");
-                                let searchString = rawMinion.substring(0,underscoreLocation);
-                
-                                //search it with each minion name
-                                minions.forEach((minion,index4)=>{
-                                    let minionString;
-                                    if(minion.rawId){
-                                        minionString = minion.rawId;
-                                    }else{
-                                        let minionLocation = minion.name.lastIndexOf(" ");
-                                        minionString = minion.name.substring(0,minionLocation).toUpperCase();
-                                    }
-                                    if(minionString==searchString){
-                                        minion.profilesTier[index] = Math.max(minion.profilesTier[index], rawMinion.substring(underscoreLocation+1));
-                                    }
-                                });
-                            });
-                        });
-                        //console.log(minions);
-                        //console.log(profilesAjax);
-                        console.log("finished findProfile");
-                        resolve("success");
-                    })
-                    .catch((err)=>{
-                        console.log("catch from skyblock",err);
-                        settings.hasError=true;
-                        settings.errorMsg = "Error occured when finding the profile. The player has not played Skyblock before.";
-                        resolve("success");
-                    });
-                })
-                .catch((err)=>{
-                    console.log("catch from mojang",err);
-                    settings.hasError=true;
-                    settings.errorMsg = "Error occured when finding the profile. The player does not exist.";
-                    resolve("success");
-                });
-            }, 0);
-        });
-    }
 }
-

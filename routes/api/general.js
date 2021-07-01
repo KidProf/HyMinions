@@ -1,52 +1,208 @@
-    //copied from events.js
-    exports.dateTimeToString = function dateTimeToString(dateTime){
-        let d = new Date(dateTime);
-        return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+" "+numberToString(d.getHours(),2)+":"+numberToString(d.getMinutes(),2)+":"+numberToString(d.getSeconds(),2)
-    }
-    //create leading zeros
-    function numberToString(number, digits){
-        var numberRemaining = number;
-        var returnString = "";
-        for(let i=(digits-1);i>=0;i--){
-            returnString+=Math.floor(numberRemaining/Math.pow(10,i));
-            numberRemaining=numberRemaining%Math.pow(10,i);
-        }
-        return returnString;
-    }
-    //copied from general.js
-    exports.moneyRepresentation = function moneyRepresentation(number){
-        if(number<0){
-            return "-" + moneyRepresentationMagnitude(Math.abs(number));
-        }else{
-            return moneyRepresentationMagnitude(number);
-        }
-    }
+var fetch = require('cross-fetch');
+var itemNames = require("./itemNames.json");
+var {minions, soulflowItem} = require("./minionsData.js");
 
-    function moneyRepresentationMagnitude(number){
-        
-        if(number>=1&&number<100000){ //shortcut
-            return Math.round(number*10)/10; //1 d.p. e.g. 10.0, 99999.9
-        }else if(number<0.0001){
-            return number; //surrender
-        }else if(number<0.01){
-            return Math.round(number*10000)/10000; //0.0005
-        }else if(number<1){
-            return Math.round(number*100)/100; //0.05
-        }else if(number<999500){
-            return Math.round(number/1000)+"k"; //100k
-        }else if(number<9995000){
-            return Math.round(number/10000)/100+"M"; //1.00M
-        }else if(number<99950000){
-            return Math.round(number/100000)/10+"M"; //10.0M
-        }else if(number<999500000){
-            return Math.round(number/1000000)+"M"; //100M
-        }else if(number<9995000000){
-            return Math.round(number/10000000)/100+"B"; //1.00B
-        }else if(number<99950000000){
-            return Math.round(number/100000000)/10+"B"; //10.0B
-        }else if(number<999500000000){
-            return Math.round(number/1000000000)+"B"; //100B
-        }else{
-            return number; //surrender
-        }
+//copied from events.js
+exports.dateTimeToString = function dateTimeToString(dateTime){
+    let d = new Date(dateTime);
+    return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+" "+numberToString(d.getHours(),2)+":"+numberToString(d.getMinutes(),2)+":"+numberToString(d.getSeconds(),2)
+}
+//create leading zeros
+function numberToString(number, digits){
+    var numberRemaining = number;
+    var returnString = "";
+    for(let i=(digits-1);i>=0;i--){
+        returnString+=Math.floor(numberRemaining/Math.pow(10,i));
+        numberRemaining=numberRemaining%Math.pow(10,i);
     }
+    return returnString;
+}
+//copied from general.js
+exports.moneyRepresentation = function moneyRepresentation(number){
+    if(number<0){
+        return "-" + moneyRepresentationMagnitude(Math.abs(number));
+    }else{
+        return moneyRepresentationMagnitude(number);
+    }
+}
+
+function moneyRepresentationMagnitude(number){
+    
+    if(number>=1&&number<100000){ //shortcut
+        return Math.round(number*10)/10; //1 d.p. e.g. 10.0, 99999.9
+    }else if(number<0.0001){
+        return number; //surrender
+    }else if(number<0.01){
+        return Math.round(number*10000)/10000; //0.0005
+    }else if(number<1){
+        return Math.round(number*100)/100; //0.05
+    }else if(number<999500){
+        return Math.round(number/1000)+"k"; //100k
+    }else if(number<9995000){
+        return Math.round(number/10000)/100+"M"; //1.00M
+    }else if(number<99950000){
+        return Math.round(number/100000)/10+"M"; //10.0M
+    }else if(number<999500000){
+        return Math.round(number/1000000)+"M"; //100M
+    }else if(number<9995000000){
+        return Math.round(number/10000000)/100+"B"; //1.00B
+    }else if(number<99950000000){
+        return Math.round(number/100000000)/10+"B"; //10.0B
+    }else if(number<999500000000){
+        return Math.round(number/1000000000)+"B"; //100B
+    }else{
+        return number; //surrender
+    }
+}
+
+exports.findBazaar = async function findBazaar(settings){
+    return new Promise((resolve)=>{
+        setTimeout(() => {
+            fetch("https://api.hypixel.net/skyblock/bazaar?key="+process.env.HYPIXEL_KEY)
+            .then(result => result.json())
+            .then(({ products }) => {
+                var pricesAjax = new Array(2);
+                pricesAjax[0] = new Object();
+                pricesAjax[1] = new Object();
+                Object.keys(itemNames).forEach((id) =>{
+                    //0 -> sell price (sell offer) (buy instantly)
+                    //if it has sell offer, use sell offer, else use default price
+                    pricesAjax[0][itemNames[id]]= (products[id]["buy_summary"][0] ? products[id]["buy_summary"][0]["pricePerUnit"] : products[id]["quick_status"]["buyPrice"]);
+                    //1 -> buy price (sell instantly) (buy order)
+                    //if it has buy order, use buy order, else use default price
+                    pricesAjax[1][itemNames[id]]= (products[id]["sell_summary"][0] ? products[id]["sell_summary"][0]["pricePerUnit"] : products[id]["quick_status"]["sellPrice"]);
+                })
+                
+                pricesAjax[0]["Diamond (Spreading)"] = pricesAjax[0]["Diamond"];
+                pricesAjax[1]["Diamond (Spreading)"] = pricesAjax[1]["Diamond"];
+                pricesAjax[0]["Enchanted Diamond (Spreading)"] = pricesAjax[0]["Enchanted Diamond"];
+                pricesAjax[1]["Enchanted Diamond (Spreading)"] = pricesAjax[1]["Enchanted Diamond"];
+                pricesAjax[0]["Enchanted Diamond Block (Spreading)"] = pricesAjax[0]["Enchanted Diamond Block"];
+                pricesAjax[1]["Enchanted Diamond Block (Spreading)"] = pricesAjax[1]["Enchanted Diamond Block"];
+
+                soulflowItem.bazaarPrice=new Array(soulflowItem.variants.length);
+                soulflowItem.variants.forEach((variant,index)=>{
+                    soulflowItem.bazaarPrice[index] = new Array(2);
+                    if(pricesAjax[0][variant]){
+                        soulflowItem.bazaarPrice[index][0] = pricesAjax[0][variant];
+                        soulflowItem.bazaarPrice[index][1] = pricesAjax[1][variant];
+                    }else{
+                        //use NPC price as substitute
+                        if(soulflowItem.variantsNpcPrices){
+                            soulflowItem.bazaarPrice[index][0] = soulflowItem.variantsNpcPrices[index];
+                        }else{
+                            soulflowItem.bazaarPrice[index][0] = soulflowItem.npcPrice*soulflowItem.variantsEquiv[index];
+                        }
+                        soulflowItem.bazaarPrice[index][1] = soulflowItem.bazaarPrice[index][0];
+                    }
+                });
+
+                minions.forEach((minion)=>{
+                    minion.products.forEach((product)=>{
+                        product.bazaarPrice=new Array(product.variants.length);
+                        product.variants.forEach((variant,index)=>{
+                            product.bazaarPrice[index] = new Array(2);
+                            if(pricesAjax[0][variant]){
+                                product.bazaarPrice[index][0] = pricesAjax[0][variant];
+                                product.bazaarPrice[index][1] = pricesAjax[1][variant];
+                            }else{
+                                //use NPC price as substitute
+                                if(product.variantsNpcPrices){
+                                    product.bazaarPrice[index][0] = product.variantsNpcPrices[index];
+                                }else{
+                                    product.bazaarPrice[index][0] = product.npcPrice*product.variantsEquiv[index];
+                                }
+                                product.bazaarPrice[index][1] = product.bazaarPrice[index][0];
+                            }
+                        });
+                    });
+                });
+                resolve("success");
+            })
+            .catch((err)=>{
+                console.log("catch from bazaar",err);
+                settings.hasError=true;
+                settings.errorMsg = "Error occured when getting bazaar prices.";
+                resolve("success");
+            });
+        }, 1000);
+    });
+}
+
+exports.findProfile = async function findProfile(name,settings){
+    return new Promise((resolve)=>{
+        setTimeout(() => {
+            fetch("https://api.mojang.com/users/profiles/minecraft/"+name)
+            .then(result => result.json())
+            .then(({id}) => {
+                //console.log(id);
+                fetch("https://api.hypixel.net/skyblock/profiles?key="+process.env.HYPIXEL_KEY+"&uuid="+id)
+                .then(result => result.json())
+                .then(({profiles}) => {
+                    let profilesAjax = new Array();
+                    profiles.forEach((profile, index)=>{
+                        profilesAjax[index] = new Object();
+                        profilesAjax[index]["rawMinions"] = new Array();
+                        Object.keys(profile["members"]).forEach((member, index2)=>{
+                            if(profile["members"][member]["crafted_generators"]){
+                                profilesAjax[index]["rawMinions"].push(...profile["members"][member]["crafted_generators"]);
+                            }
+                        })
+                        profilesAjax[index]["cuteName"] = profile["cute_name"];
+                    });
+                    profilesAjax.sort((a,b)=>{
+                        return b["rawMinions"].length-a["rawMinions"].length;
+                    });
+                    minions.forEach((minion,index6)=>{
+                        minion.profilesTier = new Array(profilesAjax.length);
+                    });
+                    profileNames = new Array(profilesAjax.length);
+                    profilesAjax.forEach((profile,index)=>{ 
+                        //store cute name for data input
+                        //console.log(profile);
+                        profileNames[index]=profile.cuteName;
+                        minions.forEach((minion,index3)=>{
+                            minion.profilesTier[index] = 0;
+                        });
+                        //for each crafted minion entry
+                        profile.rawMinions.forEach((rawMinion,index2)=>{
+                            //e.g. to get "TARANTULA" from "TARANTULA_4"
+                            let underscoreLocation = rawMinion.lastIndexOf("_");
+                            let searchString = rawMinion.substring(0,underscoreLocation);
+            
+                            //search it with each minion name
+                            minions.forEach((minion,index4)=>{
+                                let minionString;
+                                if(minion.rawId){
+                                    minionString = minion.rawId;
+                                }else{
+                                    let minionLocation = minion.name.lastIndexOf(" ");
+                                    minionString = minion.name.substring(0,minionLocation).toUpperCase();
+                                }
+                                if(minionString==searchString){
+                                    minion.profilesTier[index] = Math.max(minion.profilesTier[index], rawMinion.substring(underscoreLocation+1));
+                                }
+                            });
+                        });
+                    });
+                    //console.log(minions);
+                    //console.log(profilesAjax);
+                    console.log("finished findProfile");
+                    resolve("success");
+                })
+                .catch((err)=>{
+                    console.log("catch from skyblock",err);
+                    settings.hasError=true;
+                    settings.errorMsg = "Error occured when finding the profile. The player has not played Skyblock before.";
+                    resolve("success");
+                });
+            })
+            .catch((err)=>{
+                console.log("catch from mojang",err);
+                settings.hasError=true;
+                settings.errorMsg = "Error occured when finding the profile. The player does not exist.";
+                resolve("success");
+            });
+        }, 1000);
+    });
+}
