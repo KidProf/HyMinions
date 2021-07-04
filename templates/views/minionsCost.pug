@@ -32,7 +32,7 @@ mixin infoBox(id,type,title)
 
 block content
     .container
-        h1.d-inline-block MINIONS (COST) &nbsp;
+        h1.d-inline-block Minion Slots Cost Calculator &nbsp;
         img.d-inline-block.align-top(src="/images/minions.png" width="40" height="40")
         p.d-inline-block &nbsp; &nbsp; &nbsp;
         +infoBox("minionsTitleModal","info","Minions Profit Calculator")
@@ -44,6 +44,7 @@ block content
             //- p As more people are using my website, I would like to explain more about how the minion profit calculator works and its limitations.
             //- p Please note that the minion profit calculator calculates based on the instantaneous price of the items sold at bazaar, so the prices may fluctuate a lot from time to time, and so do the minions profit (as we all know the economy of Skyblock is quite unstable). The "best minion" for money may not be the same some time later. I hope you all understand this uncertainty.
             //- p Overall speaking, snow minions and clay minions are the most stable for profit as their profits do not depend on the economy. If you would like to explore other relatively stable alternatives you may watch <a href="https://youtu.be/_LmqqJtsdrk"> ModernSoldier's video</a> for more advice.
+        p What are the cheapest minions to level up to gain more minion slots?
         //-TEMP
         h3 Warning
         p This feature is in beta, bugs may occur.
@@ -59,6 +60,7 @@ block content
                     .form-group
                         p Minecraft Name (optional): &nbsp; 
                             input#overallProfileName.form-control(value=settings.name)
+                            span &nbsp; &nbsp; 
                             +infoBox("profileModal","question","Why is my Minecraft name required?")
                             //- p If you enter your Minecraft name, it will calculate the profit based on the highest tier of the minion you have crafted. It could make the profit list more personalized and useful when finding the most profitable minions among those you have.
                             //- p Alternatively, you could uncheck this "Use Profile" box, and select the tier of the minions manually.
@@ -69,22 +71,19 @@ block content
                                 while k<settings.profileNames.length
                                     option(value=k selected=(settings.profile==k?'selected':undefined))=settings.profileNames[k]
                                     -k++;
-                        
+                    p.
+                        Auction (AH): Lowest BIN<br />
+                        Bazaar: Select buying method and tax in "Advanced" section <br />
+
                 .col-lg-6.col-12  
                     #advanced
                         br
-                        h3 Advanced 
-                        .form-group
-                            label(for="overallBuyingFrom") Buying from: &nbsp;
-                            select#overallBuyingFrom.form-control
-                                option(value="1" selected=(settings.buyingFrom==1?'selected':undefined)) All sources (NPC or bazaar)
-                                option(value="0" selected=(settings.buyingFrom==0?'selected':undefined)) NPC only
-                        
+                        h3 Advanced
                         .form-group
                             label(for="overallBuyingMethod") Buying method in bazaar: &nbsp;
                             select#overallBuyingMethod.form-control
-                                option(value="1" selected=(settings.buyingMethod==1?'selected':undefined)) Buy instantly
-                                option(value="0" selected=(settings.buyingMethod==0?'selected':undefined)) Buy order
+                                option(value="1" selected=(settings.buyingMethod==1?'selected':undefined)) Buy order
+                                option(value="0" selected=(settings.buyingMethod==0?'selected':undefined)) Buy instantly
                                 
                         .form-group
                             label(for="overallTax") Tax in bazaar: &nbsp; 
@@ -97,10 +96,10 @@ block content
 
         #content
             hr
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            //- <!-- minions1 -->
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3541192882647315" data-ad-slot="6074503232" data-ad-format="auto" data-full-width-responsive="true"></ins>
-            <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+            //- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            //- //- <!-- minions1 -->
+            //- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3541192882647315" data-ad-slot="6074503232" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            //- <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
             br
             if !minions || !settings
                 h1 Error
@@ -133,38 +132,35 @@ block content
                             th(scope="col") Tier
                             th(scope="col") Total Upgrade Cost
                             th(scope="col") Upgrade materials
-                            th(scope="col") Number of Items
+                            th(scope="col") Quantities
                             th(scope="col") Unit Price (Bazaar/AH)
                             th(scope="col") Total Upgrade Cost
                     -let i=0;
-                    each minion in minions
-                        tr(id="minion"+i+"Row" class=minion.hasIndividualSettings==1?"individualTableRow":null)
+                    each minionCost in minionsCost
+                        tr(id="minion"+i+"Row")
                             td.text-center
                                 | ##{i+1}
                                 br
-                                img(src="/images/minions/"+minion.name+".png" width="30" height="30")
-                            td(id="minion"+i+"Name")
-                                | #{minion.name}
-                                br
-                                | (#{minion.totalProfitText})
-                            td(id="minion"+i+"Tier")=minion.tier
-                            td(id="minion"+i+"TotalCost")=minion.tier
+                                img(src="/images/minions/"+minionCost.name+".png" width="30" height="30")
+                            td(id="minion"+i+"Name")=minionCost.name
+                            td(id="minion"+i+"Tier")=minionCost.tier
+                            td(id="minion"+i+"TotalCostFront")=minionCost.totalCostText
                             td(id="minion"+i+"Items")
-                                if minion.outputProducts
-                                    each product in minion.outputProducts
-                                        | #{product.name}
+                                if minionCost.upgradeMaterials
+                                    each material in minionCost.upgradeMaterials
+                                        | #{material}
                                         br
                             td(id="minion"+i+"NumberOfItems")
-                                if minion.outputProducts
-                                    each product in minion.outputProducts
-                                        | #{product.numberOfItems}
+                                if minionCost.upgradeQuantities
+                                    each quantity in minionCost.upgradeQuantities
+                                        | #{quantity}
                                         br
                             td(id="minion"+i+"BazaarPrices")
-                                if minion.outputProducts
-                                    each product in minion.outputProducts
-                                        | #{product.unitPrice}
+                                if minionCost.unitPrices
+                                    each unitPrice in minionCost.unitPrices
+                                        | #{unitPrice}
                                         br
-                            td(id="minion"+i+"TotalCost")=minion.totalProfitText
+                            td(id="minion"+i+"TotalCost")=minionCost.totalCostText
                         - i++;
                 
                 - i=0;

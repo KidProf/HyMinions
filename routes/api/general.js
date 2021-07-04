@@ -80,50 +80,13 @@ exports.findBazaar = async function findBazaar(settings){
                 pricesAjax[0]["Enchanted Diamond Block (Spreading)"] = pricesAjax[0]["Enchanted Diamond Block"];
                 pricesAjax[1]["Enchanted Diamond Block (Spreading)"] = pricesAjax[1]["Enchanted Diamond Block"];
 
-                soulflowItem.bazaarPrice=new Array(soulflowItem.variants.length);
-                soulflowItem.variants.forEach((variant,index)=>{
-                    soulflowItem.bazaarPrice[index] = new Array(2);
-                    if(pricesAjax[0][variant]){
-                        soulflowItem.bazaarPrice[index][0] = pricesAjax[0][variant];
-                        soulflowItem.bazaarPrice[index][1] = pricesAjax[1][variant];
-                    }else{
-                        //use NPC price as substitute
-                        if(soulflowItem.variantsNpcPrices){
-                            soulflowItem.bazaarPrice[index][0] = soulflowItem.variantsNpcPrices[index];
-                        }else{
-                            soulflowItem.bazaarPrice[index][0] = soulflowItem.npcPrice*soulflowItem.variantsEquiv[index];
-                        }
-                        soulflowItem.bazaarPrice[index][1] = soulflowItem.bazaarPrice[index][0];
-                    }
-                });
-
-                minions.forEach((minion)=>{
-                    minion.products.forEach((product)=>{
-                        product.bazaarPrice=new Array(product.variants.length);
-                        product.variants.forEach((variant,index)=>{
-                            product.bazaarPrice[index] = new Array(2);
-                            if(pricesAjax[0][variant]){
-                                product.bazaarPrice[index][0] = pricesAjax[0][variant];
-                                product.bazaarPrice[index][1] = pricesAjax[1][variant];
-                            }else{
-                                //use NPC price as substitute
-                                if(product.variantsNpcPrices){
-                                    product.bazaarPrice[index][0] = product.variantsNpcPrices[index];
-                                }else{
-                                    product.bazaarPrice[index][0] = product.npcPrice*product.variantsEquiv[index];
-                                }
-                                product.bazaarPrice[index][1] = product.bazaarPrice[index][0];
-                            }
-                        });
-                    });
-                });
-                resolve("success");
+                resolve(pricesAjax);
             })
             .catch((err)=>{
                 console.log("catch from bazaar",err);
                 settings.hasError=true;
                 settings.errorMsg = "Error occured when getting bazaar prices.";
-                resolve("success");
+                resolve("error");
             });
         }, 1000);
     });

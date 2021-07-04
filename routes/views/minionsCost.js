@@ -42,9 +42,6 @@ exports = module.exports = function (req, res) {
         }
     
         //Advanced
-        if(!settings.buyingFrom||!isWithinList(settings.buyingFrom,[0,1])){
-            settings.buyingFrom = 1;
-        }
         if(!settings.buyingMethod||!isWithinList(settings.buyingMethod,[0,1])){
             settings.buyingMethod = 1;
         }

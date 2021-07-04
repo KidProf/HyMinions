@@ -10,12 +10,10 @@ function generateLink(){
     }
 
     //advanced
-    if($("#overallBuyingFrom").children("option:selected").val()!=1){
-        keys.push("buyingFrom");
-        values.push($("#overallBuyingFrom").children("option:selected").val());
-    }
-    
-    //minor
+    // if($("#overallBuyingFrom").children("option:selected").val()!=1){
+    //     keys.push("buyingFrom");
+    //     values.push($("#overallBuyingFrom").children("option:selected").val());
+    // }
     if($("#overallBuyingMethod").children("option:selected").val()!=1){
         keys.push("buyingMethod");
         values.push($("#overallBuyingMethod").children("option:selected").val());

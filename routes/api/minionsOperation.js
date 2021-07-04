@@ -12,8 +12,50 @@ exports.calculateMinionsProfit = async function(minions, settings){
         minecraftName = settings.name;
         lastUpdatedProfile = Date.now();
     }
-    if(settings.sellingTo==1/*&&(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000)*/){ //1 min time out
-        await findBazaar(settings);
+    if(settings.sellingTo==1&&(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000)){ //1 min time out
+        lastUpdatedBazaar = Date.now();
+        await findBazaar(settings).then((bazaarPrices)=>{
+            if(bazaarPrices=="error"){
+                return;
+            }
+            soulflowItem.bazaarPrice=new Array(soulflowItem.variants.length);
+            soulflowItem.variants.forEach((variant,index)=>{
+                soulflowItem.bazaarPrice[index] = new Array(2);
+                if(bazaarPrices[0][variant]){
+                    soulflowItem.bazaarPrice[index][0] = bazaarPrices[0][variant];
+                    soulflowItem.bazaarPrice[index][1] = bazaarPrices[1][variant];
+                }else{
+                    //use NPC price as substitute
+                    if(soulflowItem.variantsNpcPrices){
+                        soulflowItem.bazaarPrice[index][0] = soulflowItem.variantsNpcPrices[index];
+                    }else{
+                        soulflowItem.bazaarPrice[index][0] = soulflowItem.npcPrice*soulflowItem.variantsEquiv[index];
+                    }
+                    soulflowItem.bazaarPrice[index][1] = soulflowItem.bazaarPrice[index][0];
+                }
+            });
+
+            minions.forEach((minion)=>{
+                minion.products.forEach((product)=>{
+                    product.bazaarPrice=new Array(product.variants.length);
+                    product.variants.forEach((variant,index)=>{
+                        product.bazaarPrice[index] = new Array(2);
+                        if(bazaarPrices[0][variant]){
+                            product.bazaarPrice[index][0] = bazaarPrices[0][variant];
+                            product.bazaarPrice[index][1] = bazaarPrices[1][variant];
+                        }else{
+                            //use NPC price as substitute
+                            if(product.variantsNpcPrices){
+                                product.bazaarPrice[index][0] = product.variantsNpcPrices[index];
+                            }else{
+                                product.bazaarPrice[index][0] = product.npcPrice*product.variantsEquiv[index];
+                            }
+                            product.bazaarPrice[index][1] = product.bazaarPrice[index][0];
+                        }
+                    });
+                });
+            });
+        });
     }
     settings.lastUpdatedProfile = lastUpdatedProfile ? dateTimeToString(lastUpdatedProfile): null;
     settings.lastUpdatedBazaar = lastUpdatedBazaar ? dateTimeToString(lastUpdatedBazaar) : null;

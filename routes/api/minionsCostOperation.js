@@ -1,74 +1,112 @@
 var fetch = require('cross-fetch');
 var {moneyRepresentation, dateTimeToString, findBazaar, findProfile} = require("./general.js");
-var {soulflowItem} = require("./minionsData.js");
+var {soulflowItem, specialPrices} = require("./minionsData.js");
 var itemNames = require("./itemNames.json");
 
 let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, hadError=false;
     
 exports.calculateMinionsCost = async function(minions, settings){
     console.log("calculateMinionsCost");
-    return [1,2,3,4,5];
-    // console.log(settings.name,minecraftName);
-    // //console.log(Date.now()-lastUpdatedBazaar);
-    // if((settings.useProfile)&&(settings.name!=minecraftName||hadError||Date.now()-lastUpdatedProfile>5*60*1000)){ //don't call api again if identical name, but call again if prev result has error, 5 min timeout
-    //     await findProfile(settings.name,settings,minions);
-    //     //await Promise.all([findBazaar(), findProfile(settings.name)]);
-    //     minecraftName = settings.name;
-    //     lastUpdatedProfile = Date.now();
-    // }
-    // if(settings.sellingTo==1&&(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000)){ //1 min time out
-    //     await findBazaar(settings,minions);
-    //     lastUpdatedBazaar = Date.now();
-    // }
-    // settings.lastUpdatedProfile = lastUpdatedProfile ? dateTimeToString(lastUpdatedProfile): null;
-    // settings.lastUpdatedBazaar = lastUpdatedBazaar ? dateTimeToString(lastUpdatedBazaar) : null;
+    console.log(settings.name,minecraftName);
+    //console.log(Date.now()-lastUpdatedBazaar);
+    if((settings.useProfile)&&(settings.name!=minecraftName||hadError||Date.now()-lastUpdatedProfile>5*60*1000)){ //don't call api again if identical name, but call again if prev result has error, 5 min timeout
+        await findProfile(settings.name,settings);
+        //await Promise.all([findBazaar(), findProfile(settings.name)]);
+        minecraftName = settings.name;
+        lastUpdatedProfile = Date.now();
+    }
+    if(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000){ //1 min time out
+        lastUpdatedBazaar = Date.now();
+        await findBazaar(settings).then((bazaarPrices)=>{
+            if(bazaarPrices=="error"){
+                return;
+            }
 
-    // if(settings.hasError){
-    //     hadError = true;
-    //     return;
-    // }
+            minions.forEach((minion)=>{
+                upgrade = minion.upgrade;
+                if(upgrade){
+                    upgrade.bazaarPrice=new Array(upgrade.materials.length);
+                    upgrade.materials.forEach((materialsTier,tier)=>{
+                        upgrade.bazaarPrice[tier] = new Array(materialsTier.length);
+                        materialsTier.forEach((material,index)=>{
+                            if(bazaarPrices[0][material]){
+                                upgrade.bazaarPrice[tier][index] = new Array(2);
+                                upgrade.bazaarPrice[tier][index][0] = bazaarPrices[0][material];
+                                upgrade.bazaarPrice[tier][index][1] = bazaarPrices[1][material];
+                            }else{
+                                upgrade.bazaarPrice[tier][index] = undefined;
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    }
+    settings.lastUpdatedProfile = lastUpdatedProfile ? dateTimeToString(lastUpdatedProfile): null;
+    settings.lastUpdatedBazaar = lastUpdatedBazaar ? dateTimeToString(lastUpdatedBazaar) : null;
 
-    // if(settings.useProfile){
-    //     settings.profileNames=profileNames;
-    //     settings.profile=Math.min(settings.profile,settings.profileNames.length-1);
+    if(settings.hasError){
+        hadError = true;
+        return;
+    }
 
-    // }
+    if(settings.useProfile){
+        settings.profileNames=profileNames;
+        settings.profile=Math.min(settings.profile,settings.profileNames.length-1);
+    }
 
-    // console.log("finished findBazaar and findProfile");
+    console.log("finished findBazaar and findProfile");
 
-    // //check to see if there are individual settings
-    // if(settings.individualSettings){
-    //     minions.forEach((minion)=>{
-    //         minion.hasIndividualSettings = settings.individualSettings[minion.id].tier ? 1 : 0;
-    //         if(minion.hasIndividualSettings) console.log(settings.individualSettings[minion.id].products);
-    //     });
-    // }else{
-    //     minions.forEach((minion)=>{
-    //         minion.hasIndividualSettings = 0;
-    //     });
-    // }
+    let minionsCost = new Array();
+    minions.forEach((minion)=>{
+        calculateMinionCost(settings,minion);
+    });
+    minionsCost.sort((a,b)=>{
+        if(b.totalCost<a.totalCost) return 1; //total profit desc
+        else if(b.totalCost>a.totalCost) return -1;
+        else return 0;
+    });
 
-    // //check to see if diamond spreading is added to the minions array
-    // // if(diamondSpreadingAdded==false){
-    // //     minions.forEach((minion)=>{
-    // //         minion.products.push(diamondSpreadingItem);
-    // //     });
-    // //     diamondSpreadingAdded = true;
-    // // }
+    return minionsCost;
 
-    // //calculate profit
-    // minions.forEach((minion)=>{
-    //     calculateMinionProfit(settings,minion);
-    // });
-    // minions.sort((a,b) =>{
-    //     if(b.totalProfit>a.totalProfit) return 1; //total profit desc
-    //     else if(b.totalProfit<a.totalProfit) return -1;
-    //     else if(b.name<a.name) return 1; //name asc
-    //     else if(b.name>a.name) return -1;
-    //     else return 0;
-    // });
-    // // minions.forEach((minion)=>{
-    // //     console.log(minion.totalProfit);
-    // // })
+    function calculateMinionCost(settings,minion){
+        for(tier=0;tier<11/*minion.tierDelay.length*/;tier++){
+            let tierCost = {
+                name : minion.name,
+                tier : tier+1,
+            };
+            if(!minion.upgrade){
+                //todo: undefined variables
+                tierCost.totalCost = -1;
+                tierCost.totalCostText = -1;
+                minionsCost.push(tierCost);
+                continue;
+            }
+            upgrade = minion.upgrade;
+            tierCost.upgradeMaterials = new Array();
+            tierCost.upgradeQuantities = new Array();
+            tierCost.unitPrices = new Array();
+            let totalCost = 0;
+
+            minion.upgrade.materials[tier].forEach((material,materialIndex)=>{
+                tierCost.upgradeMaterials[materialIndex] = material;
+                tierCost.upgradeQuantities[materialIndex] = upgrade.quantities[tier][materialIndex];
+                let unitPrice;
+                if(upgrade.bazaarPrice[tier][materialIndex]!=undefined){
+                    unitPrice = upgrade.bazaarPrice[tier][materialIndex][settings.buyingMethod]*(1+settings.tax/100);
+                }else if(specialPrices.material!=undefined){
+                    unitPrice = specialPrices.material;
+                }else{
+                    //todo
+                    unitPrice = 0;
+                }
+                tierCost.unitPrices[materialIndex] = moneyRepresentation(unitPrice);
+                totalCost += unitPrice*tierCost.upgradeQuantities[materialIndex];
+            });
+            tierCost.totalCost = totalCost;
+            tierCost.totalCostText = moneyRepresentation(totalCost);
+            minionsCost.push(tierCost);
+        }
+    }
 
 }
