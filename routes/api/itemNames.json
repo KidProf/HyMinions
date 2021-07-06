@@ -1,4 +1,6 @@
 {
+	"NULL_SPHERE": "Null Sphere",
+	"NULL_OVOID": "Null Ovoid",
 	"ABSOLUTE_ENDER_PEARL": "Absolute Ender Pearl",
 	"SOULFLOW": "Soulflow",
 	"RAW_SOULFLOW": "Raw Soulflow",
@@ -178,7 +180,7 @@
 	"QUARTZ": "Quartz",
 	"FOUL_FLESH": "Foul Flesh",
 	"RAW_BEEF": "Raw Beef",
-	"ENCHANTED_EYE_OF_ENDER": "Enchanted Eye Of Ender",
+	"ENCHANTED_EYE_OF_ENDER": "Enchanted Eye of Ender",
 	"ENCHANTED_CARROT_STICK": "Used to be: Enchanted Carrot on a Stick",
 	"SUGAR_CANE": "Sugar Cane",
 	"MAGMA_CREAM": "Magma Cream",

@@ -15,7 +15,7 @@ exports = module.exports = function (req, res) {
     calculateMinionsCost(minions, settings).then((minionsCost)=>{
         let output = {settings: settings, minions: minions, minionsCost: minionsCost};
         console.log(output.settings);
-        console.log(output.minionsCost);
+        //console.log(output.minionsCost);
         res.render("minionsCost",output);
 
     }).catch((err)=>{
@@ -54,27 +54,6 @@ exports = module.exports = function (req, res) {
         for(i=0;i<minions.length;i++){
             individualSettings[i] = {};
         }
-
-        Object.keys(settings).forEach((key)=>{
-            if(key.includes("individualProduct")){
-                id = key.substring(0,key.indexOf("i"));
-                if(individualSettings[id]["products"]==undefined) individualSettings[id]["products"]= new Array();
-                individualSettings[id]["products"][key.substring(id.length+17)] = settings[key];
-            }else if(key.includes("individual")){
-                id = key.substring(0,key.indexOf("i"));
-                individualSettings[id][key.substring(id.length+10).toLowerCase()] = settings[key];
-                
-            }
-        });
-        for(i=0;i<minions.length;i++){
-            if(Object.keys(individualSettings[i]).length!=0){
-                if(!individualSettings[i]["fuel"]||individualSettings[i]["fuel"]<0){
-                    individualSettings[i]["fuel"] = settings.fuel; //validate individual fuel
-                }      
-            }
-        }
-
-        settings.individualSettings = individualSettings;
         console.log(settings);
     }
 

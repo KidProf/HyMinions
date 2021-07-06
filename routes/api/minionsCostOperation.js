@@ -1,6 +1,6 @@
 var fetch = require('cross-fetch');
 var {moneyRepresentation, dateTimeToString, findBazaar, findProfile} = require("./general.js");
-var {soulflowItem, specialPrices} = require("./minionsData.js");
+var {specialPrices} = require("./minionsData.js");
 var itemNames = require("./itemNames.json");
 
 let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, hadError=false;
@@ -62,8 +62,12 @@ exports.calculateMinionsCost = async function(minions, settings){
         calculateMinionCost(settings,minion);
     });
     minionsCost.sort((a,b)=>{
-        if(b.totalCost<a.totalCost) return 1; //total profit desc
+        if(b.totalCost<a.totalCost) return 1; //total cost asc
         else if(b.totalCost>a.totalCost) return -1;
+        else if(b.name<a.name) return 1; //name asc
+        else if(b.name>a.name) return -1;
+        else if(b.tier<a.tier) return 1;  //tier asc
+        else if(b.tier>a.tier) return -1;
         else return 0;
     });
 
@@ -75,13 +79,13 @@ exports.calculateMinionsCost = async function(minions, settings){
                 name : minion.name,
                 tier : tier+1,
             };
-            if(!minion.upgrade){
-                //todo: undefined variables
-                tierCost.totalCost = -1;
-                tierCost.totalCostText = -1;
-                minionsCost.push(tierCost);
-                continue;
-            }
+            // if(!minion.upgrade){
+            //     //todo: undefined variables
+            //     tierCost.totalCost = -1;
+            //     tierCost.totalCostText = -1;
+            //     minionsCost.push(tierCost);
+            //     continue;
+            // }
             upgrade = minion.upgrade;
             tierCost.upgradeMaterials = new Array();
             tierCost.upgradeQuantities = new Array();
@@ -94,8 +98,8 @@ exports.calculateMinionsCost = async function(minions, settings){
                 let unitPrice;
                 if(upgrade.bazaarPrice[tier][materialIndex]!=undefined){
                     unitPrice = upgrade.bazaarPrice[tier][materialIndex][settings.buyingMethod]*(1+settings.tax/100);
-                }else if(specialPrices.material!=undefined){
-                    unitPrice = specialPrices.material;
+                }else if(specialPrices[material]!=undefined){
+                    unitPrice = specialPrices[material];
                 }else{
                     //todo
                     unitPrice = 0;
