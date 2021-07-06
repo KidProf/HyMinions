@@ -7,6 +7,11 @@ function generateLink(){
     if($("#overallProfileName").val()!=""){
         keys.push("name");
         values.push($("#overallProfileName").val());
+        if($("#overallProfileProfile")&&$("#overallProfileProfile").children("option:selected").val()!=0&&$("#overallProfileProfile").children("option:selected").val()!=undefined){{
+            
+            keys.push("profile");
+            values.push($("#overallProfileProfile").children("option:selected").val());
+        }}
     }
 
     //advanced
