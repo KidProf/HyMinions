@@ -110,7 +110,16 @@ exports.findProfile = async function findProfile(name,settings){
                             if(profile["members"][member]["crafted_generators"]){
                                 profilesAjax[index]["rawMinions"].push(...profile["members"][member]["crafted_generators"]);
                             }
-                        })
+                        });
+                        let communitySlots = 0;
+                        if(profile["community_upgrades"]&&profile["community_upgrades"]["upgrade_states"]){
+                            profile["community_upgrades"]["upgrade_states"].forEach((upgrade)=>{
+                                if(upgrade.upgrade=="minion_slots"&&upgrade.tier>communitySlots){
+                                    communitySlots = upgrade.tier;
+                                }
+                            });
+                        }
+                        profilesAjax[index]["communitySlots"] = communitySlots;
                         profilesAjax[index]["cuteName"] = profile["cute_name"];
                     });
                     profilesAjax.sort((a,b)=>{

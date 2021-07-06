@@ -3,7 +3,7 @@ var {moneyRepresentation, dateTimeToString, findBazaar, findProfile} = require("
 var {specialPrices} = require("./minionsData.js");
 var itemNames = require("./itemNames.json");
 
-let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, hadError=false;
+let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, communitySlots, hadError=false;
     
 exports.calculateMinionsCost = async function(minions, settings){
     console.log("calculateMinionsCost");
@@ -20,10 +20,12 @@ exports.calculateMinionsCost = async function(minions, settings){
                 minion.profilesTier = new Array(profilesAjax.length);
             });
             profileNames = new Array(profilesAjax.length);
+            communitySlots = new Array(profilesAjax.length);
             profilesAjax.forEach((profile,index)=>{ 
                 //store cute name for data input
                 //console.log(profile);
                 profileNames[index]=profile.cuteName;
+                communitySlots[index]=profile.communitySlots;
                 minions.forEach((minion,index3)=>{
                     minion.profilesTier[index] = new Array(minion.tierDelay.length);
                     minion.profilesTier[index].forEach((crafted)=>{
@@ -92,6 +94,7 @@ exports.calculateMinionsCost = async function(minions, settings){
 
     if(settings.useProfile){
         settings.profileNames=profileNames;
+        settings.communitySlots=communitySlots;
         settings.profile=Math.min(settings.profile,settings.profileNames.length-1);
     }
 
