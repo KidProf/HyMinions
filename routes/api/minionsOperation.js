@@ -7,10 +7,46 @@ exports.calculateMinionsProfit = async function(minions, settings){
     console.log(settings.name,minecraftName);
     //console.log(Date.now()-lastUpdatedBazaar);
     if((settings.useProfile)&&(settings.name!=minecraftName||hadError||Date.now()-lastUpdatedProfile>5*60*1000)){ //don't call api again if identical name, but call again if prev result has error, 5 min timeout
-        await findProfile(settings.name,settings);
-        //await Promise.all([findBazaar(), findProfile(settings.name)]);
         minecraftName = settings.name;
         lastUpdatedProfile = Date.now();
+        await findProfile(settings.name,settings).then((profilesAjax)=>{
+            if(profilesAjax=="error"){
+                return;
+            }
+            minions.forEach((minion,index6)=>{
+                minion.profilesTier = new Array(profilesAjax.length);
+            });
+            profileNames = new Array(profilesAjax.length);
+            profilesAjax.forEach((profile,index)=>{ 
+                //store cute name for data input
+                //console.log(profile);
+                profileNames[index]=profile.cuteName;
+                minions.forEach((minion,index3)=>{
+                    minion.profilesTier[index] = 0;
+                });
+                //for each crafted minion entry
+                profile.rawMinions.forEach((rawMinion,index2)=>{
+                    //e.g. to get "TARANTULA" from "TARANTULA_4"
+                    let underscoreLocation = rawMinion.lastIndexOf("_");
+                    let searchString = rawMinion.substring(0,underscoreLocation);
+    
+                    //search it with each minion name
+                    minions.forEach((minion,index4)=>{
+                        let minionString;
+                        if(minion.rawId){
+                            minionString = minion.rawId;
+                        }else{
+                            let minionLocation = minion.name.lastIndexOf(" ");
+                            minionString = minion.name.substring(0,minionLocation).toUpperCase();
+                        }
+                        if(minionString==searchString){
+                            minion.profilesTier[index] = Math.max(minion.profilesTier[index], rawMinion.substring(underscoreLocation+1));
+                        }
+                    });
+                });
+            });
+        });
+        //await Promise.all([findBazaar(), findProfile(settings.name)]);
     }
     if(settings.sellingTo==1&&(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000)){ //1 min time out
         lastUpdatedBazaar = Date.now();

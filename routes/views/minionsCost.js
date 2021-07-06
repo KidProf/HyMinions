@@ -49,11 +49,6 @@ exports = module.exports = function (req, res) {
             settings.tax = 1;
         }
 
-        //individual
-        let individualSettings = new Array();
-        for(i=0;i<minions.length;i++){
-            individualSettings[i] = {};
-        }
         console.log(settings);
     }
 

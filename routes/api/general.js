@@ -116,55 +116,21 @@ exports.findProfile = async function findProfile(name,settings){
                     profilesAjax.sort((a,b)=>{
                         return b["rawMinions"].length-a["rawMinions"].length;
                     });
-                    minions.forEach((minion,index6)=>{
-                        minion.profilesTier = new Array(profilesAjax.length);
-                    });
-                    profileNames = new Array(profilesAjax.length);
-                    profilesAjax.forEach((profile,index)=>{ 
-                        //store cute name for data input
-                        //console.log(profile);
-                        profileNames[index]=profile.cuteName;
-                        minions.forEach((minion,index3)=>{
-                            minion.profilesTier[index] = 0;
-                        });
-                        //for each crafted minion entry
-                        profile.rawMinions.forEach((rawMinion,index2)=>{
-                            //e.g. to get "TARANTULA" from "TARANTULA_4"
-                            let underscoreLocation = rawMinion.lastIndexOf("_");
-                            let searchString = rawMinion.substring(0,underscoreLocation);
-            
-                            //search it with each minion name
-                            minions.forEach((minion,index4)=>{
-                                let minionString;
-                                if(minion.rawId){
-                                    minionString = minion.rawId;
-                                }else{
-                                    let minionLocation = minion.name.lastIndexOf(" ");
-                                    minionString = minion.name.substring(0,minionLocation).toUpperCase();
-                                }
-                                if(minionString==searchString){
-                                    minion.profilesTier[index] = Math.max(minion.profilesTier[index], rawMinion.substring(underscoreLocation+1));
-                                }
-                            });
-                        });
-                    });
-                    //console.log(minions);
-                    //console.log(profilesAjax);
                     console.log("finished findProfile");
-                    resolve("success");
+                    resolve(profilesAjax);
                 })
                 .catch((err)=>{
                     console.log("catch from skyblock",err);
                     settings.hasError=true;
                     settings.errorMsg = "Error occured when finding the profile. The player has not played Skyblock before.";
-                    resolve("success");
+                    resolve("error");
                 });
             })
             .catch((err)=>{
                 console.log("catch from mojang",err);
                 settings.hasError=true;
                 settings.errorMsg = "Error occured when finding the profile. The player does not exist.";
-                resolve("success");
+                resolve("error");
             });
         }, 1000);
     });

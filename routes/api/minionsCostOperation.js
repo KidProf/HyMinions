@@ -10,10 +10,50 @@ exports.calculateMinionsCost = async function(minions, settings){
     console.log(settings.name,minecraftName);
     //console.log(Date.now()-lastUpdatedBazaar);
     if((settings.useProfile)&&(settings.name!=minecraftName||hadError||Date.now()-lastUpdatedProfile>5*60*1000)){ //don't call api again if identical name, but call again if prev result has error, 5 min timeout
-        await findProfile(settings.name,settings);
-        //await Promise.all([findBazaar(), findProfile(settings.name)]);
         minecraftName = settings.name;
         lastUpdatedProfile = Date.now();
+        await findProfile(settings.name,settings).then((profilesAjax)=>{
+            if(profilesAjax=="error"){
+                return;
+            }
+            minions.forEach((minion,index6)=>{
+                minion.profilesTier = new Array(profilesAjax.length);
+            });
+            profileNames = new Array(profilesAjax.length);
+            profilesAjax.forEach((profile,index)=>{ 
+                //store cute name for data input
+                //console.log(profile);
+                profileNames[index]=profile.cuteName;
+                minions.forEach((minion,index3)=>{
+                    minion.profilesTier[index] = new Array(minion.tierDelay.length);
+                    minion.profilesTier[index].forEach((crafted)=>{
+                        crafted = false;
+                    });
+                });
+                //for each crafted minion entry
+                profile.rawMinions.forEach((rawMinion,index2)=>{
+                    //e.g. to get "TARANTULA" from "TARANTULA_4"
+                    let underscoreLocation = rawMinion.lastIndexOf("_");
+                    let searchString = rawMinion.substring(0,underscoreLocation);
+    
+                    //search it with each minion name
+                    minions.forEach((minion,index4)=>{
+                        let minionString;
+                        if(minion.rawId){
+                            minionString = minion.rawId;
+                        }else{
+                            let minionLocation = minion.name.lastIndexOf(" ");
+                            minionString = minion.name.substring(0,minionLocation).toUpperCase();
+                        }
+                        if(minionString==searchString){
+                            let tier = rawMinion.substring(underscoreLocation+1);
+                            console.log(minion.name, tier);
+                            minion.profilesTier[index][tier-1] = true;
+                        }
+                    });
+                });
+            });
+        });
     }
     if(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000){ //1 min time out
         lastUpdatedBazaar = Date.now();
@@ -75,17 +115,13 @@ exports.calculateMinionsCost = async function(minions, settings){
 
     function calculateMinionCost(settings,minion){
         for(tier=0;tier<11/*minion.tierDelay.length*/;tier++){
+            if(settings.useProfile&&minion.profilesTier[settings.profile][tier]){ //useProfile and has crafted already, skip
+                continue;
+            }
             let tierCost = {
                 name : minion.name,
                 tier : tier+1,
             };
-            // if(!minion.upgrade){
-            //     //todo: undefined variables
-            //     tierCost.totalCost = -1;
-            //     tierCost.totalCostText = -1;
-            //     minionsCost.push(tierCost);
-            //     continue;
-            // }
             upgrade = minion.upgrade;
             tierCost.upgradeMaterials = new Array();
             tierCost.upgradeQuantities = new Array();
