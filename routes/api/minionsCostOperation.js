@@ -141,6 +141,8 @@ exports.calculateMinionsCost = async function(minions, settings){
                 tier : tier+1,
             };
             upgrade = minion.upgrade;
+
+            tierCost.warning = false;
             tierCost.upgradeMaterials = new Array();
             tierCost.upgradeQuantities = new Array();
             tierCost.unitPrices = new Array();
@@ -148,18 +150,24 @@ exports.calculateMinionsCost = async function(minions, settings){
 
             minion.upgrade.materials[tier].forEach((material,materialIndex)=>{
                 tierCost.upgradeMaterials[materialIndex] = material;
-                tierCost.upgradeQuantities[materialIndex] = upgrade.quantities[tier][materialIndex];
-                let unitPrice;
-                if(upgrade.bazaarPrice[tier][materialIndex]!=undefined){
-                    unitPrice = upgrade.bazaarPrice[tier][materialIndex][settings.buyingMethod]*(1+settings.tax/100);
-                }else if(specialPrices[material]!=undefined){
-                    unitPrice = specialPrices[material];
-                }else{
-                    //todo
-                    unitPrice = 0;
+                if(upgrade.quantities[tier][materialIndex]){
+                    tierCost.upgradeQuantities[materialIndex] = upgrade.quantities[tier][materialIndex];
+                    let unitPrice;
+                    if(upgrade.bazaarPrice[tier][materialIndex]!=undefined){
+                        unitPrice = upgrade.bazaarPrice[tier][materialIndex][settings.buyingMethod]*(1+settings.tax/100);
+                    }else if(specialPrices[material]!=undefined){
+                        unitPrice = specialPrices[material];
+                    }else{
+                        unitPrice = 0;
+                    }
+                    tierCost.unitPrices[materialIndex] = moneyRepresentation(unitPrice);
+                    totalCost += unitPrice*tierCost.upgradeQuantities[materialIndex];
+                }else{ //upgrade quantity = undefined, meaning it is a warning message instead
+                    tierCost.warning = true;
+                    tierCost.upgradeQuantities[materialIndex] = "";
+                    tierCost.unitPrices[materialIndex] = "";
                 }
-                tierCost.unitPrices[materialIndex] = moneyRepresentation(unitPrice);
-                totalCost += unitPrice*tierCost.upgradeQuantities[materialIndex];
+
             });
             tierCost.totalCost = totalCost;
             tierCost.totalCostText = moneyRepresentation(totalCost);
