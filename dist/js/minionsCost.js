@@ -19,7 +19,7 @@ function generateLink(){
     //     keys.push("buyingFrom");
     //     values.push($("#overallBuyingFrom").children("option:selected").val());
     // }
-    if($("#overallBuyingMethod").children("option:selected").val()!=1){
+    if($("#overallBuyingMethod").children("option:selected").val()!=0){
         keys.push("buyingMethod");
         values.push($("#overallBuyingMethod").children("option:selected").val());
     }

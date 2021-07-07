@@ -1,9 +1,9 @@
 var fetch = require('cross-fetch');
 var {moneyRepresentation, dateTimeToString, findBazaar, findProfile} = require("./general.js");
-var {specialPrices} = require("./minionsData.js");
+var {specialPrices, minionSlotsCriteria} = require("./minionsData.js");
 var itemNames = require("./itemNames.json");
 
-let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, communitySlots, hadError=false;
+let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, communitySlots, minionCrafts, hadError=false;
     
 exports.calculateMinionsCost = async function(minions, settings){
     console.log("calculateMinionsCost");
@@ -21,11 +21,13 @@ exports.calculateMinionsCost = async function(minions, settings){
             });
             profileNames = new Array(profilesAjax.length);
             communitySlots = new Array(profilesAjax.length);
+            minionCrafts = new Array(profilesAjax.length);
             profilesAjax.forEach((profile,index)=>{ 
                 //store cute name for data input
                 //console.log(profile);
                 profileNames[index]=profile.cuteName;
                 communitySlots[index]=profile.communitySlots;
+                minionCrafts[index]=profile.rawMinions.length;
                 minions.forEach((minion,index3)=>{
                     minion.profilesTier[index] = new Array(minion.tierDelay.length);
                     minion.profilesTier[index].forEach((crafted)=>{
@@ -94,8 +96,21 @@ exports.calculateMinionsCost = async function(minions, settings){
 
     if(settings.useProfile){
         settings.profileNames=profileNames;
-        settings.communitySlots=communitySlots;
         settings.profile=Math.min(settings.profile,settings.profileNames.length-1);
+
+        settings.communitySlots=communitySlots[settings.profile];
+        settings.minionCrafts=minionCrafts[settings.profile];
+        minionSlotsCriteria.forEach((criteria,index5)=>{
+            if(criteria<settings.minionCrafts){
+                settings.minionSlots=index5+6;
+                if(index5+1<minionSlotsCriteria.length){
+                    settings.minionSlotsNext = minionSlotsCriteria[index5+1]-settings.minionCrafts;
+                }else{
+                    settings.minionSlotsNext = 0;
+                }
+                return;
+            }
+        });
     }
 
     console.log("finished findBazaar and findProfile");

@@ -120,7 +120,11 @@ block content
                     span &nbsp; &nbsp; &nbsp;
                     button#searchButton.btn(onclick="search()") Search
                 if settings.useProfile
-                    p + #{settings.communitySlots[settings.profile]} (Minion Slots from Community Center)
+                    h3 Profile Information
+                    p Minion Crafts: #{settings.minionCrafts}
+                    p Minion Slots: #{settings.minionSlots} + #{settings.communitySlots} (Community Center)
+                    p Crafts to next: #{settings.minionSlotsNext}
+                    p Coins to next: Coming soon
                 #doubleScroll: table#minionsTable.table.table-dark.w-100
                     thead
                         tr
@@ -162,6 +166,7 @@ block content
                 
                 - i=0;
             p: small
+                | Excluding Flower Minion 
                 if(settings.lastUpdatedBazaar)
                     | Last updated time of bazaar price: #{settings.lastUpdatedBazaar} UTC
                 if(settings.lastUpdatedProfile)

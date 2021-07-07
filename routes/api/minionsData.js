@@ -1,3 +1,7 @@
+exports.minionSlotsCriteria = [5,15,30,50,75,100,125,150,175,200,225,250,275,300,350,400,450,500,550,600,650];
+//                      Slots: 6,7 ,8, 9, ...
+//translate to minion slots = position+6
+
 exports.specialPrices = {
     "Coins": 1,
     "Free at Revenant Tier 5": 20000*50,
