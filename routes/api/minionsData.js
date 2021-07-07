@@ -63,6 +63,7 @@ exports.minions = [
                 [448,256+128+64+32+16+8,512+320+160+80,undefined,undefined],
                 [64,2000000,undefined,undefined],
             ],
+            detachTier1: true,
         },
         products : [
             {
@@ -156,6 +157,7 @@ exports.minions = [
                 [224,128+64+32+16+8,512+320+160+80,undefined,undefined],
                 [448,256+128+64+32+16+8,512+320+160+80,undefined,undefined],
             ],
+            detachTier1: true,
         },
         products : [
             {

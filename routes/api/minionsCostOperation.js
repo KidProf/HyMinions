@@ -3,7 +3,7 @@ var {moneyRepresentation, dateTimeToString, findBazaar, findProfile} = require("
 var {specialPrices, minionSlotsCriteria} = require("./minionsData.js");
 var itemNames = require("./itemNames.json");
 
-let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, communitySlots, minionCrafts, hadError=false;
+let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, communitySlots, minionCrafts, totalTiers, hadError=false;
     
 exports.calculateMinionsCost = async function(minions, settings){
     console.log("calculateMinionsCost");
@@ -115,23 +115,43 @@ exports.calculateMinionsCost = async function(minions, settings){
 
     console.log("finished findBazaar and findProfile");
 
-    let minionsCost = new Array();
+    let unsortedMinionsCost = new Array(); //2D array
+    totalTiers = 0;
     minions.forEach((minion)=>{
         calculateMinionCost(settings,minion);
     });
-    minionsCost.sort((a,b)=>{
-        if(b.totalCost<a.totalCost) return 1; //total cost asc
-        else if(b.totalCost>a.totalCost) return -1;
-        else if(b.name<a.name) return 1; //name asc
-        else if(b.name>a.name) return -1;
-        else if(b.tier<a.tier) return 1;  //tier asc
-        else if(b.tier>a.tier) return -1;
-        else return 0;
-    });
+
+    let minionsCost = new Array(); //1D array
+    for(i=0;i<totalTiers;i++){ //iterate until all elements are sorted, ~~ merge list
+        let minVal, minValIndex;
+        for(j=0;j<unsortedMinionsCost.length;j++){
+            if(!minVal || unsortedMinionsCost[j][0].totalCost < minVal){
+                minVal = unsortedMinionsCost[j][0].totalCost;
+                minValIndex = j;
+            }
+        }
+        console.log(minValIndex);
+        minionsCost.push(unsortedMinionsCost[minValIndex][0]); //add to sorted list
+        unsortedMinionsCost[minValIndex].shift(); //remove element from unsorted list
+        if(unsortedMinionsCost[minValIndex].length==0){ //remove whole 1D array if it is empty
+            unsortedMinionsCost.splice(minValIndex,1);
+        }
+    }
+
+    // minionsCost.sort((a,b)=>{
+    //     if(b.totalCost<a.totalCost) return 1; //total cost asc
+    //     else if(b.totalCost>a.totalCost) return -1;
+    //     else if(b.name<a.name) return 1; //name asc
+    //     else if(b.name>a.name) return -1;
+    //     else if(b.tier<a.tier) return 1;  //tier asc
+    //     else if(b.tier>a.tier) return -1;
+    //     else return 0;
+    // });
 
     return minionsCost;
 
     function calculateMinionCost(settings,minion){
+        let minionCost = new Array();
         for(tier=0;tier<11/*minion.tierDelay.length*/;tier++){
             if(settings.useProfile&&minion.profilesTier[settings.profile][tier]){ //useProfile and has crafted already, skip
                 continue;
@@ -171,8 +191,15 @@ exports.calculateMinionsCost = async function(minions, settings){
             });
             tierCost.totalCost = totalCost;
             tierCost.totalCostText = moneyRepresentation(totalCost);
-            minionsCost.push(tierCost);
+            if(tier==0&&upgrade.detachTier1==true){
+                unsortedMinionsCost.push([tierCost]); //seperate tier 1 from the rest of the list
+                totalTiers++;
+            }else{
+                minionCost.push(tierCost);
+                totalTiers++;
+            }
         }
+        if(minionCost.length!=0) unsortedMinionsCost.push(minionCost);
     }
 
 }
