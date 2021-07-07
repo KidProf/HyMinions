@@ -264,7 +264,7 @@ block content
                     input#searchInput(list="searchDatalist").form-control
                     datalist#searchDatalist
                         each minion in minions
-                            option(value=minion.name)
+                            option(value=minion.name.substring(0,minion.name.lastIndexOf(" ")))
                     span &nbsp; &nbsp; &nbsp;
                     button#searchButton.btn(onclick="search()") Search
                 #doubleScroll: table#minionsTable.table.table-dark.w-100

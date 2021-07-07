@@ -116,7 +116,7 @@ block content
                     input#searchInput(list="searchDatalist").form-control
                     datalist#searchDatalist
                         each minionCost in minionsCost
-                            option(value=minionCost.name+" "+minionCost.tier)
+                            option(value=minionCost.name.substring(0,minionCost.name.lastIndexOf(" "))+" "+minionCost.tier)
                     span &nbsp; &nbsp; &nbsp;
                     button#searchButton.btn(onclick="search()") Search
                 if settings.useProfile
