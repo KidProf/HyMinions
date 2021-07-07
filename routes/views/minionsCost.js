@@ -43,7 +43,7 @@ exports = module.exports = function (req, res) {
     
         //Advanced
         if(!settings.buyingMethod||!isWithinList(settings.buyingMethod,[0,1])){
-            settings.buyingMethod = 1;
+            settings.buyingMethod = 0;
         }
         if(!settings.tax||settings.tax<0){
             settings.tax = 1;
