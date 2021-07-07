@@ -106,15 +106,13 @@ block content
                 p.lead An unexpected error has occured.
                 h3 Is Hypixel API down?
                 p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
-                p If so, we could not calculate minions profit based on the latest bazaar price. However, you may try <a href="minions/?sellingTo=0">this set of settings</a> to obtain the minions profit in NPC price instead, until the Hypixel API is fixed.
-                p You may make a bug report <a href="/contact">here</a> if the above set of settings also does not work. Sorry for the inconvenience caused.
+                p If you think it is not an API problem, you may make a bug report <a href="/contact">here</a>. Sorry for the inconvenience caused.
             else if settings.hasError
                 h1 Error
                 p.lead=settings.errorMsg
                 h3 Is Hypixel API down?
                 p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
-                p If so, we could not calculate minions profit based on the latest bazaar price. However, you may try <a href="minions/?sellingTo=0">this set of settings</a> to obtain the minions profit in NPC price instead, until the Hypixel API is fixed.
-                p You may make a bug report <a href="/contact">here</a> if the above set of settings also does not work. Sorry for the inconvenience caused.
+                p If you think it is not an API problem, you may make a bug report <a href="/contact">here</a>. Sorry for the inconvenience caused.
             else
                 #search: .form-group
                     label(for="searchInput") Search: &nbsp;
