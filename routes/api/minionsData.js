@@ -31,7 +31,7 @@ exports.minions = [
     { //0
         name: "Revenant Minion",
         id: 0,
-        tierDelay : [29,29,26,26,23,23,19,19,14.5,14.5,10,8],
+        tierDelay : [29,29,26,26,23,23,19,19,14.5,14.5,10,8], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
 		type: "Combat",
         upgrade:{
@@ -224,7 +224,7 @@ exports.minions = [
     },{ //2
         name: "Potato Minion",
         id: 2,
-        tierDelay : [20,20,18,18,16,16,14,14,12,12,10,8],
+        tierDelay : [20,20,18,18,16,16,14,14,12,12,10,8], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -297,7 +297,7 @@ exports.minions = [
     },{ //3
         name: "Cow Minion",
         id: 3,
-        tierDelay : [26,26,24,24,22,22,20,20,17,17,13,10],
+        tierDelay : [26,26,24,24,22,22,20,20,17,17,13,10], //12
         storage: [128,256,256,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -379,7 +379,7 @@ exports.minions = [
     },{ //4 
         name: "Chicken Minion",
         id: 4,
-        tierDelay : [26,26,24,24,22,22,20,20,18,18,15,12],
+        tierDelay : [26,26,24,24,22,22,20,20,18,18,15,12], //12
         storage: [192,320,320,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -394,6 +394,7 @@ exports.minions = [
                 ["Enchanted Raw Chicken"],
                 ["Enchanted Raw Chicken"],
                 ["Enchanted Raw Chicken"],
+                ["Enchanted Baked Potato","Pelts"],
             ],
             quantities: [
                 [1,64],
@@ -407,6 +408,7 @@ exports.minions = [
                 [128],
                 [256],
                 [512],
+                [1024,75],
             ],
         },
         diamondSpreadingCriteria : 3,
@@ -478,7 +480,7 @@ exports.minions = [
     },{ //5
         name: "Sheep Minion",
         id: 5,
-        tierDelay : [24,24,22,22,20,20,18,18,16,16,12,9],
+        tierDelay : [24,24,22,22,20,20,18,18,16,16,12,9], //12
         storage: [128,256,256,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -493,6 +495,7 @@ exports.minions = [
                 ["Enchanted Mutton"],
                 ["Enchanted Mutton"],
                 ["Enchanted Cooked Mutton"],
+                ["Enchanted Cooked Mutton","Pelts"],
             ],
             quantities: [
                 [1,64],
@@ -506,6 +509,7 @@ exports.minions = [
                 [256],
                 [512],
                 [8],
+                [16,75],
             ],
         },
         products : [
@@ -560,7 +564,7 @@ exports.minions = [
     },{ //6
         name: "Lapis Minion",
         id: 6,
-        tierDelay : [29,29,27,27,25,25,23,23,21,21,18,16],
+        tierDelay : [29,29,27,27,25,25,23,23,21,21,18,16], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -789,7 +793,7 @@ exports.minions = [
     },{ //9
         name: "Wheat Minion",
         id: 9,
-        tierDelay : [15,15,13,13,11,11,10,10,9,9,8,7],
+        tierDelay : [15,15,13,13,11,11,10,10,9,9,8,7], //12
         storage: [128,256,256,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -804,6 +808,7 @@ exports.minions = [
                 ["Enchanted Hay Bale"],
                 ["Enchanted Hay Bale"],
                 ["Enchanted Hay Bale"],
+                ["Enchanted Hay Bale","Pelts"],
             ],
             quantities: [
                 [1,80],
@@ -817,6 +822,7 @@ exports.minions = [
                 [8],
                 [16],
                 [32],
+                [64,75],
             ],
         },
         diamondSpreadingCriteria : 3,
@@ -889,7 +895,7 @@ exports.minions = [
     },{ //10
         name: "Carrot Minion",
         id: 10,
-        tierDelay : [20,20,18,18,16,16,14,14,12,12,10,8],
+        tierDelay : [20,20,18,18,16,16,14,14,12,12,10,8], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -904,6 +910,7 @@ exports.minions = [
                 ["Enchanted Carrot"],
                 ["Enchanted Golden Carrot"],
                 ["Enchanted Golden Carrot"],
+                ["Enchanted Golden Carrot","Pelts"],
             ],
             quantities: [
                 [1,128],
@@ -917,6 +924,7 @@ exports.minions = [
                 [512],
                 [8],
                 [16],
+                [32,75],
             ],
         },
         products : [
@@ -956,7 +964,7 @@ exports.minions = [
     },{ //11
         name: "Pumpkin Minion",
         id: 11,
-        tierDelay : [32,32,30,30,27,27,24,24,20,20,16,12],
+        tierDelay : [32,32,30,30,27,27,24,24,20,20,16,12], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -971,6 +979,7 @@ exports.minions = [
                 ["Enchanted Pumpkin"],
                 ["Enchanted Pumpkin"],
                 ["Enchanted Pumpkin"],
+                ["Enchanted Pumpkin","Pelts"],
             ],
             quantities: [
                 [1,80],
@@ -984,6 +993,7 @@ exports.minions = [
                 [128],
                 [256],
                 [512],
+                [1024,75],
             ],
         },
         products : [
@@ -1025,7 +1035,7 @@ exports.minions = [
     },{ //12
         name: "Melon Minion",
         id: 12,
-        tierDelay : [24,24,22.5,22.5,21,21,18.5,18.5,16,16,13,10],
+        tierDelay : [24,24,22.5,22.5,21,21,18.5,18.5,16,16,13,10], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -1040,6 +1050,7 @@ exports.minions = [
                 ["Enchanted Melon"],
                 ["Enchanted Melon Block"],
                 ["Enchanted Melon Block"],
+                ["Enchanted Melon Block","Pelts"],
             ],
             quantities: [
                 [1,256],
@@ -1053,6 +1064,7 @@ exports.minions = [
                 [512],
                 [8],
                 [16],
+                [32,75],
             ],
         },
         products : [
@@ -1095,7 +1107,7 @@ exports.minions = [
     },{ //13
         name: "Mushroom Minion",
         id: 13,
-        tierDelay : [30,30,28,28,26,26,23,23,20,20,16,12],
+        tierDelay : [30,30,28,28,26,26,23,23,20,20,16,12], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -1110,6 +1122,7 @@ exports.minions = [
                 ["Enchanted Brown Mushroom"],
                 ["Enchanted Brown Mushroom"],
                 ["Enchanted Brown Mushroom"],
+                ["Enchanted Brown Mushroom","Enchanted Red Mushroom","Pelts"],
             ],
             quantities: [
                 [1,80],
@@ -1123,6 +1136,7 @@ exports.minions = [
                 [128],
                 [256],
                 [512],
+                [512,512,75],
             ],
             materialsAlt: [
                 ["Wooden Hoe","Red Mushroom"],
@@ -1136,6 +1150,7 @@ exports.minions = [
                 ["Enchanted Red Mushroom"],
                 ["Enchanted Red Mushroom"],
                 ["Enchanted Red Mushroom"],
+                undefined,
             ],
             quantitiesAlt: [
                 [1,80],
@@ -1149,6 +1164,7 @@ exports.minions = [
                 [128],
                 [256],
                 [512],
+                undefined,
             ],
         },
         products : [
@@ -1202,7 +1218,7 @@ exports.minions = [
         name: "Cocoa Beans Minion",
         id: 14,
         rawId: "COCOA",
-        tierDelay : [27,27,25,25,23,23,21,21,18,18,15,12],
+        tierDelay : [27,27,25,25,23,23,21,21,18,18,15,12], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -1217,6 +1233,7 @@ exports.minions = [
                 ["Enchanted Cocoa Bean"],
                 ["Enchanted Cocoa Bean"],
                 ["Enchanted Cookie"],
+                ["Enchanted Cookie","Pelts"],
             ],
             quantities: [
                 [1,80],
@@ -1230,6 +1247,7 @@ exports.minions = [
                 [256],
                 [512],
                 [8],
+                [16,75],
             ],
         },
         products : [
@@ -1269,7 +1287,7 @@ exports.minions = [
     },{ //15
         name: "Cactus Minion",
         id: 15,
-        tierDelay : [27,27,25,25,23,23,21,21,18,18,15,12],
+        tierDelay : [27,27,25,25,23,23,21,21,18,18,15,12], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -1284,6 +1302,7 @@ exports.minions = [
                 ["Enchanted Cactus Green"],
                 ["Enchanted Cactus"],
                 ["Enchanted Cactus"],
+                ["Enchanted Cactus","Pelts"],
             ],
             quantities: [
                 [1,128],
@@ -1297,6 +1316,7 @@ exports.minions = [
                 [512],
                 [8],
                 [16],
+                [32,75],
             ],
         },
         diamondSpreadingCriteria : 2,
@@ -1342,7 +1362,7 @@ exports.minions = [
         name: "Sugar Cane Minion",
         id: 16,
         rawId: "SUGAR_CANE",
-        tierDelay : [22,22,20,20,18,18,16,16,14.5,14.5,12,9],
+        tierDelay : [22,22,20,20,18,18,16,16,14.5,14.5,12,9], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -1357,6 +1377,7 @@ exports.minions = [
                 ["Enchanted Sugar"],
                 ["Enchanted Sugar Cane"],
                 ["Enchanted Sugar Cane"],
+                ["Enchanted Sugar Cane","Pelts"],
             ],
             quantities: [
                 [1,128],
@@ -1370,6 +1391,7 @@ exports.minions = [
                 [512],
                 [8],
                 [16],
+                [32,75],
             ],
         },
         products : [
@@ -1411,7 +1433,7 @@ exports.minions = [
     },{ //17
         name: "Pig Minion",
         id: 17,
-        tierDelay : [26,26,24,24,22,22,20,20,17,17,13,10],
+        tierDelay : [26,26,24,24,22,22,20,20,17,17,13,10], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -1426,6 +1448,7 @@ exports.minions = [
                 ["Enchanted Pork"],
                 ["Enchanted Pork"],
                 ["Enchanted Grilled Pork"],
+                ["Enchanted Grilled Pork","Pelts"],
             ],
             quantities: [
                 [1,64],
@@ -1439,6 +1462,7 @@ exports.minions = [
                 [256],
                 [512],
                 [8],
+                [16,75],
             ],
         },
         products : [
@@ -1480,7 +1504,7 @@ exports.minions = [
     },{ //18
         name: "Rabbit Minion",
         id: 18,
-        tierDelay : [26,26,24,24,22,22,20,20,17,17,13,10],
+        tierDelay : [26,26,24,24,22,22,20,20,17,17,13,10], //12
         storage: [192,320,320,448,448,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -1495,6 +1519,7 @@ exports.minions = [
                 ["Enchanted Rabbit Foot"],
                 ["Enchanted Rabbit Hide"],
                 ["Enchanted Rabbit Hide"],
+                ["Enchanted Rabbit Hide","Pelts"],
             ],
             quantities: [
                 [1,64],
@@ -1508,6 +1533,7 @@ exports.minions = [
                 [512],
                 [256],
                 [512],
+                [1024,75],
             ],
         },
         products : [
@@ -1572,7 +1598,7 @@ exports.minions = [
         name: "Nether Wart Minion",
         id: 19,
         rawId: "NETHER_WARTS",
-        tierDelay : [50,50,47,47,44,44,41,41,38,38,32,27],
+        tierDelay : [50,50,47,47,44,44,41,41,38,38,32,27], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -1587,6 +1613,7 @@ exports.minions = [
                 ["Enchanted Nether Wart"],
                 ["Enchanted Nether Wart"],
                 ["Enchanted Nether Wart"],
+                ["Enchanted Nether Wart","Pelts"],
             ],
             quantities: [
                 [1,80],
@@ -1600,6 +1627,7 @@ exports.minions = [
                 [128],
                 [256],
                 [512],
+                [1024,75],
             ],
         },
         products : [
@@ -1641,7 +1669,7 @@ exports.minions = [
     },{ //20
         name: "Cobblestone Minion",
         id: 20,
-        tierDelay : [14,14,12,12,10,10,9,9,8,8,7,6],
+        tierDelay : [14,14,12,12,10,10,9,9,8,8,7,6], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -1656,6 +1684,7 @@ exports.minions = [
                 ["Enchanted Cobblestone"],
                 ["Enchanted Cobblestone"],
                 ["Enchanted Cobblestone"],
+                ["Enchanted Cobblestone","Coins"],
             ],
             quantities: [
                 [1,80],
@@ -1669,6 +1698,7 @@ exports.minions = [
                 [128],
                 [256],
                 [512],
+                [1024,2000000],
             ],
         },
         products : [
@@ -1708,7 +1738,7 @@ exports.minions = [
     },{ //21
         name: "Gold Minion",
         id: 21,
-        tierDelay : [22,22,20,20,18,18,16,16,14,14,11,9],
+        tierDelay : [22,22,20,20,18,18,16,16,14,14,11,9], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -1723,6 +1753,7 @@ exports.minions = [
                 ["Enchanted Gold"],
                 ["Enchanted Gold"],
                 ["Enchanted Gold Block"],
+                ["Enchanted Gold Block","Coins"],
             ],
             quantities: [
                 [1,80],
@@ -1736,6 +1767,7 @@ exports.minions = [
                 [256],
                 [512],
                 [8],
+                [16,2000000],
             ],
         },
         diamondSpreadingCriteria : 2,
@@ -1785,7 +1817,7 @@ exports.minions = [
     },{ //22
         name: "Diamond Minion",
         id: 22,
-        tierDelay : [29,29,27,27,25,25,22,22,19,19,15,12],
+        tierDelay : [29,29,27,27,25,25,22,22,19,19,15,12], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -1800,6 +1832,7 @@ exports.minions = [
                 ["Enchanted Diamond"],
                 ["Enchanted Diamond"],
                 ["Enchanted Diamond Block"],
+                ["Enchanted Diamond Block","Coins"],
             ],
             quantities: [
                 [1,80],
@@ -1813,6 +1846,7 @@ exports.minions = [
                 [256],
                 [512],
                 [8],
+                [16,2000000],
             ],
         },
         products : [
@@ -1859,7 +1893,7 @@ exports.minions = [
     },{ //23
         name: "Emerald Minion",
         id: 23,
-        tierDelay : [28,28,26,26,24,24,21,21,18,18,14,12],
+        tierDelay : [28,28,26,26,24,24,21,21,18,18,14,12], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -1874,6 +1908,7 @@ exports.minions = [
                 ["Enchanted Emerald"],
                 ["Enchanted Emerald"],
                 ["Enchanted Emerald Block"],
+                ["Enchanted Emerald Block","Coins"],
             ],
             quantities: [
                 [1,80],
@@ -1887,6 +1922,7 @@ exports.minions = [
                 [256],
                 [512],
                 [8],
+                [16,2000000],
             ],
         },
         products : [
@@ -1933,7 +1969,7 @@ exports.minions = [
     },{ //24
         name: "Redstone Minion",
         id: 24,
-        tierDelay : [29,29,27,27,25,25,23,23,21,21,18,16],
+        tierDelay : [29,29,27,27,25,25,23,23,21,21,18,16], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -1948,6 +1984,7 @@ exports.minions = [
                 ["Enchanted Redstone"],
                 ["Enchanted Redstone Block"],
                 ["Enchanted Redstone Block"],
+                ["Enchanted Redstone Block","Coins"],
             ],
             quantities: [
                 [1,128],
@@ -1961,6 +1998,7 @@ exports.minions = [
                 [512],
                 [8],
                 [16],
+                [32,2000000],
             ],
         },
         products : [
@@ -2082,7 +2120,7 @@ exports.minions = [
     },{ //26
         name: "Obsidian Minion",
         id: 26,
-        tierDelay : [45,45,42,42,39,39,35,35,30,30,24,21],
+        tierDelay : [45,45,42,42,39,39,35,35,30,30,24,21], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -2097,6 +2135,7 @@ exports.minions = [
                 ["Enchanted Obsidian"],
                 ["Enchanted Obsidian"],
                 ["Enchanted Obsidian"],
+                ["Enchanted Obsidian","Coins"],
             ],
             quantities: [
                 [1,80],
@@ -2110,6 +2149,7 @@ exports.minions = [
                 [128],
                 [256],
                 [512],
+                [1024,2000000],
             ],
         },
         products : [
@@ -3803,7 +3843,7 @@ exports.minions = [
     },{ //49
         name: "Coal Minion",
         id: 49,
-        tierDelay : [15,15,13,13,12,12,10,10,9,9,7,6],
+        tierDelay : [15,15,13,13,12,12,10,10,9,9,7,6], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -3818,6 +3858,7 @@ exports.minions = [
                 ["Enchanted Coal"],
                 ["Enchanted Coal"],
                 ["Enchanted Block of Coal"],
+                ["Enchanted Block of Coal","Coins"],
             ],
             quantities: [
                 [1,80],
@@ -3831,6 +3872,7 @@ exports.minions = [
                 [256],
                 [512],
                 [8],
+                [16,2000000],
             ],
         },
         products : [
@@ -3877,7 +3919,7 @@ exports.minions = [
     },{ //50
         name: "Iron Minion",
         id: 50,
-        tierDelay : [17,17,15,15,14,14,12,12,10,10,8,7],
+        tierDelay : [17,17,15,15,14,14,12,12,10,10,8,7], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
@@ -3892,6 +3934,8 @@ exports.minions = [
                 ["Enchanted Iron"],
                 ["Enchanted Iron"],
                 ["Enchanted Iron Block"],
+                ["Enchanted Iron Block","Coins"],
+
             ],
             quantities: [
                 [1,80],
@@ -3905,6 +3949,7 @@ exports.minions = [
                 [256],
                 [512],
                 [8],
+                [16,2000000],
             ],
         },
         diamondSpreadingCriteria : 2,
@@ -3954,7 +3999,7 @@ exports.minions = [
     },{ //51
         name: "Mithril Minion",
         id: 51,
-        tierDelay : [80,80,75,75,70,70,65,65,60,60,55,50],
+        tierDelay : [80,80,75,75,70,70,65,65,60,60,55,50], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [

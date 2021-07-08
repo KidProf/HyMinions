@@ -130,7 +130,7 @@ exports.calculateMinionsCost = async function(minions, settings){
                 minValIndex = j;
             }
         }
-        console.log(minValIndex);
+        //console.log(minValIndex);
         minionsCost.push(unsortedMinionsCost[minValIndex][0]); //add to sorted list
         unsortedMinionsCost[minValIndex].shift(); //remove element from unsorted list
         if(unsortedMinionsCost[minValIndex].length==0){ //remove whole 1D array if it is empty
@@ -152,7 +152,7 @@ exports.calculateMinionsCost = async function(minions, settings){
 
     function calculateMinionCost(settings,minion){
         let minionCost = new Array();
-        for(tier=0;tier<11/*minion.tierDelay.length*/;tier++){
+        for(tier=0;tier<minion.tierDelay.length;tier++){
             if(settings.useProfile&&minion.profilesTier[settings.profile][tier]){ //useProfile and has crafted already, skip
                 continue;
             }
