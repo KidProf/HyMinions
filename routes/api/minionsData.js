@@ -4042,7 +4042,7 @@ exports.minions = [
                 ["Null Ovoid","Enchanted Eye of Ender","Enchanted Ender Pearl","Ender Pearl","^ For Enderman Minion Tier 10","* Requires Voidling Tier 4"],
             ],
             quantities: [
-                [1,64,undefined,undefined],
+                [80,64,undefined,undefined],
                 [140,80,undefined,undefined],
                 [280,128+64,undefined,undefined],
                 [448,320+160+80,undefined,undefined],
