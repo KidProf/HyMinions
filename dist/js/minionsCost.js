@@ -27,6 +27,10 @@ function generateLink(){
         keys.push("tax");
         values.push($("#overallTax").val());
     }
+    if($("#overallShowDetails").prop("checked")){
+        keys.push("showDetails");
+        values.push(1);
+    }
 
     //output
     let string = "/minionscost/?"
@@ -45,4 +49,60 @@ function search(){
             window.location.hash="#minion"+i+"Row";
         };
     }
+}
+
+function appendShowDetails(callID){
+    let keys = [], values = [];
+    
+    let currentURL = window.location.href;
+    let queryStartLocation = currentURL.indexOf("?");
+
+    if(queryStartLocation!=-1){
+        let leftString=currentURL.substring(queryStartLocation+1);
+        let queryEndLocation = leftString.indexOf("/");
+        if(queryEndLocation!=-1){
+            leftString=leftString.substring(0,queryEndLocation);
+        }
+        let keysEndLocation,valuesEndLocation;
+        do{
+            //console.log(leftString);
+            keysEndLocation = leftString.indexOf("=");
+            if(leftString.substring(0,keysEndLocation)!="") keys.push(leftString.substring(0,keysEndLocation));
+            leftString = leftString.substring(keysEndLocation+1);
+            valuesEndLocation = leftString.indexOf("&");
+            if(valuesEndLocation==-1){
+                if(leftString!="") values.push(leftString);
+            }else{
+                if(leftString.substring(0,valuesEndLocation)!="") values.push(leftString.substring(0,valuesEndLocation));
+                leftString = leftString.substring(valuesEndLocation+1);
+            }
+        }while(valuesEndLocation!=-1);
+    }
+
+    let i=0;
+    while(i<keys.length){
+        if(keys[i]=="showDetails"){
+            keys.splice(i,1);
+            values.splice(i,1);
+            i--;
+        }
+        i++;
+    }
+
+    keys.push("showDetails");
+    values.push(1);
+
+    //output
+    let string = "/minionsCost/?"
+    for(let i=0;i<keys.length;i++){
+        string += keys[i]+"="+values[i]+"&";
+    }
+    if(callID==-1){
+        string += "/#content";
+    }else{
+        string += "/#minion"+callID+"Row";
+    }
+
+    console.log(string);
+    window.location.href=string;
 }

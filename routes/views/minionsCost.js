@@ -48,6 +48,9 @@ exports = module.exports = function (req, res) {
         if(!settings.tax||settings.tax<0){
             settings.tax = 1;
         }
+        if(!settings.showDetails||!isWithinList(settings.showDetails,[0,1])){
+            settings.showDetails = 0;
+        }
 
         console.log(settings);
     }

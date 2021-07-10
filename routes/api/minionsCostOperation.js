@@ -94,6 +94,10 @@ exports.calculateMinionsCost = async function(minions, settings){
         return;
     }
 
+    console.log("finished findBazaar and findProfile");
+
+    //prepare for the profiles info section
+    settings.minionSlotsNext = new Array();
     if(settings.useProfile){
         settings.profileNames=profileNames;
         settings.profile=Math.min(settings.profile,settings.profileNames.length-1);
@@ -101,19 +105,21 @@ exports.calculateMinionsCost = async function(minions, settings){
         settings.communitySlots=communitySlots[settings.profile];
         settings.minionCrafts=minionCrafts[settings.profile];
         minionSlotsCriteria.forEach((criteria,index5)=>{
-            if(criteria<settings.minionCrafts){
-                settings.minionSlots=index5+6;
-                if(index5+1<minionSlotsCriteria.length){
-                    settings.minionSlotsNext = minionSlotsCriteria[index5+1]-settings.minionCrafts;
-                }else{
-                    settings.minionSlotsNext = 0;
+            if(criteria>settings.minionCrafts){
+                if(settings.minionSlotsNext.length==0){
+                    settings.minionSlots=index5+6-1;
                 }
-                return;
+                if(index5<minionSlotsCriteria.length){
+                    settings.minionSlotsNext.push(criteria-settings.minionCrafts);
+                }else if(settings.minionSlotsNext.length==0){
+                    settings.minionSlotsNext.push(0);
+                }
             }
         });
+    }else{
+        settings.minionSlots = 6;
+        settings.minionSlotsNext = minionSlotsCriteria;
     }
-
-    console.log("finished findBazaar and findProfile");
 
     let unsortedMinionsCost = new Array(); //2D array
     totalTiers = 0;
@@ -137,16 +143,22 @@ exports.calculateMinionsCost = async function(minions, settings){
             unsortedMinionsCost.splice(minValIndex,1);
         }
     }
-
-    // minionsCost.sort((a,b)=>{
-    //     if(b.totalCost<a.totalCost) return 1; //total cost asc
-    //     else if(b.totalCost>a.totalCost) return -1;
-    //     else if(b.name<a.name) return 1; //name asc
-    //     else if(b.name>a.name) return -1;
-    //     else if(b.tier<a.tier) return 1;  //tier asc
-    //     else if(b.tier>a.tier) return -1;
-    //     else return 0;
-    // });
+    
+    settings.minionSlotsCost = new Array(settings.minionSlotsNext.length);
+    for(i=0;i<settings.minionSlotsCost.length;i++){ //init
+        settings.minionSlotsCost[i] = 0;
+    }
+    minionsCost.forEach((minionCost,index)=>{ //calculate
+        settings.minionSlotsNext.forEach((next,index2)=>{
+            if(next>index){
+                settings.minionSlotsCost[index2]+=minionCost.totalCost;
+            }
+        });
+    });
+    settings.minionSlotsCostText = new Array(settings.minionSlotsCost.length);
+    settings.minionSlotsCost.forEach((cost,index2)=>{ //turn to proper string
+        settings.minionSlotsCostText[index2] = moneyRepresentation(cost);
+    });
 
     return minionsCost;
 

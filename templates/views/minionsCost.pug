@@ -30,6 +30,32 @@ mixin infoBox(id,type,title)
                 .modal-footer
                     button.btn.btn-secondary(type="button" data-dismiss="modal") Close
 
+mixin minionCostRow(minionCost,i)
+    tr(id="minion"+i+"Row")
+        td.text-center
+            | ##{i+1}
+            br
+            img(src="/images/minions/"+minionCost.name+".png" width="30" height="30")
+        td(id="minion"+i+"Name")=minionCost.name
+        td(id="minion"+i+"Tier")=minionCost.tier
+        td(id="minion"+i+"TotalCostFront")=minionCost.totalCostText
+        td(id="minion"+i+"Items")
+            if minionCost.upgradeMaterials
+                each material in minionCost.upgradeMaterials
+                    | #{material}
+                    br
+        td(id="minion"+i+"NumberOfItems")
+            if minionCost.upgradeQuantities
+                each quantity in minionCost.upgradeQuantities
+                    | #{quantity}
+                    br
+        td(id="minion"+i+"BazaarPrices")
+            if minionCost.unitPrices
+                each unitPrice in minionCost.unitPrices
+                    | #{unitPrice}
+                    br
+        td(id="minion"+i+"TotalCost")=minionCost.totalCostText
+
 block content
     .container
         h1.d-inline-block Minions (Crafts)
@@ -86,6 +112,11 @@ block content
                             label(for="overallTax") Tax in bazaar: &nbsp; 
                                 input#overallTax.form-control(type="number" value=settings.tax min="0")
                                 span &nbsp; %
+
+                        .form-group
+                            input#overallShowDetails.checkbox(type="checkbox" checked=(settings.showDetails>=1 ? 'checked' : undefined))
+                            label(for="overallShowDetails") &nbsp; Show All &nbsp;
+            
             br
             button#overallSettings.btn(onclick="generateLink()") Apply
             br
@@ -123,8 +154,8 @@ block content
                     h3 Profile Information
                     p Minion Crafts: #{settings.minionCrafts}
                     p Minion Slots: #{settings.minionSlots} + #{settings.communitySlots} (Community Center)
-                    p Crafts to next: #{settings.minionSlotsNext}
-                    p Coins to next: Coming soon
+                    p Crafts to next: #{settings.minionSlotsNext[0]}
+                    p Coins to next: #{settings.minionSlotsCostText[0]}
                 #doubleScroll: table#minionsTable.table.table-dark.w-100
                     thead
                         tr
@@ -136,33 +167,52 @@ block content
                             th(scope="col") Quantity
                             th(scope="col") Unit Price (Bazaar)
                             th(scope="col") Total Upgrade Cost
-                    -let i=0;
-                    each minionCost in minionsCost
-                        tr(id="minion"+i+"Row")
-                            td.text-center
-                                | ##{i+1}
-                                br
-                                img(src="/images/minions/"+minionCost.name+".png" width="30" height="30")
-                            td(id="minion"+i+"Name")=minionCost.name
-                            td(id="minion"+i+"Tier")=minionCost.tier
-                            td(id="minion"+i+"TotalCostFront")=minionCost.totalCostText
-                            td(id="minion"+i+"Items")
-                                if minionCost.upgradeMaterials
-                                    each material in minionCost.upgradeMaterials
-                                        | #{material}
-                                        br
-                            td(id="minion"+i+"NumberOfItems")
-                                if minionCost.upgradeQuantities
-                                    each quantity in minionCost.upgradeQuantities
-                                        | #{quantity}
-                                        br
-                            td(id="minion"+i+"BazaarPrices")
-                                if minionCost.unitPrices
-                                    each unitPrice in minionCost.unitPrices
-                                        | #{unitPrice}
-                                        br
-                            td(id="minion"+i+"TotalCost")=minionCost.totalCostText
-                        - i++;
+                    - let nextIndex = 0
+                    if (settings.showDetails==1)
+                        //-show all
+                        -let i=0;
+                        each minionCost in minionsCost
+                            +minionCostRow(minionCost,i)
+                            if settings.minionSlotsNext[nextIndex] == i+1
+                                tr
+                                    td &nbsp;
+                                    td(colspan="100%") #{settings.minionSlots+nextIndex}th slot: #{settings.minionSlotsCostText[nextIndex]} coins
+                                - nextIndex++;
+                            - i++;
+                    else if (settings.useProfile)
+                        //-show top 50
+                        -let i=0;
+                        while i<Math.min(50,minionsCost.length)
+                            +minionCostRow(minionsCost[i],i)
+                            if settings.minionSlotsNext[nextIndex] == i+1
+                                tr
+                                    td &nbsp;
+                                    td(colspan="100%") #{settings.minionSlots+nextIndex}th slot: #{settings.minionSlotsCostText[nextIndex]} coins
+                                - nextIndex++;
+                            - i++;
+                        if minionsCost.length>50
+                            tr
+                                td &nbsp;
+                                td(colspan="100%") <a onclick="appendShowDetails(50)">Expand all</a>
+                    else
+                        //-show top 25, bottom 25
+                        -let i=0;
+                        while i<25
+                            +minionCostRow(minionsCost[i],i)
+                            if settings.minionSlotsNext[nextIndex] == i+1
+                                tr
+                                    td &nbsp;
+                                    td(colspan="100%") #{settings.minionSlots+nextIndex}th slot: #{settings.minionSlotsCostText[nextIndex]} coins
+                                - nextIndex++;
+                            - i++;
+                        tr
+                            td &nbsp;
+                            td(colspan="100%") Skip to last 25 (<a onclick="appendShowDetails(25)">Expand all</a>)
+                        - i=minionsCost.length-25;
+                        while i<minionsCost.length
+                            +minionCostRow(minionsCost[i],i)
+                            - i++;
+
                 
                 - i=0;
             p: small
