@@ -394,7 +394,7 @@ exports.minions = [
                 ["Enchanted Raw Chicken"],
                 ["Enchanted Raw Chicken"],
                 ["Enchanted Raw Chicken"],
-                ["Enchanted Baked Potato","Pelts"],
+                ["Enchanted Raw Chicken","Pelts"],
             ],
             quantities: [
                 [1,64],
@@ -4158,7 +4158,7 @@ exports.minions = [
         ]      
     },
 
-    //TOTAL: 52
+    //TOTAL: 53
     //without flower minion
 ];
 

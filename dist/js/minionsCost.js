@@ -1,5 +1,20 @@
 $("#minionsTable").doubleScroll();
 
+//functions to provide interaction
+function showCollapseNext(nextIndex){
+    console.log("showCollapseNext("+nextIndex);
+    $(".collapseNext"+nextIndex).removeClass("d-none");
+    $("#showNextButton"+nextIndex).addClass("d-none");
+    $("#hideNextButton"+nextIndex).removeClass("d-none");
+}
+
+function hideCollapseNext(nextIndex){
+    console.log("hideCollapseNext("+nextIndex);
+    $(".collapseNext"+nextIndex).addClass("d-none");
+    $("#showNextButton"+nextIndex).removeClass("d-none");
+    $("#hideNextButton"+nextIndex).addClass("d-none");
+}
+
 function generateLink(){
     let keys = [], values = [];
 

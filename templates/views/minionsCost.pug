@@ -10,28 +10,32 @@ block append variables
 block meta
     meta(name="description" content="Know your most profitable minions! Tailor made for each profile, fully accurate.")
 
-mixin infoBox(id,type,title)
-    if(type=="info")
-        i.fas.fa-lg(data-toggle="modal" data-target="#"+id class="fa-info-circle")
-    else if(type=="question")
-        i.fas.fa-lg(data-toggle="modal" data-target="#"+id class="fa-question-circle")
-    .modal.fade.infoBox(id=id tabindex="-1" role="dialog" aria-labelledby=id+"Label" aria-hidden="true")
-        .modal-dialog(role="document" class=(type=="rightInfo"?"modal-xl":undefined))
-            .modal-content
-                .modal-header
-                    h3.modal-title(id=id+"Label")=title
-                    button.close(type="button" data-dismiss="modal" aria-label="Close")
-                        span(aria-hidden="true") &times;
-                .modal-body
-                    if block 
-                        block 
-                    else
-                        p Nothing to see here
-                .modal-footer
-                    button.btn.btn-secondary(type="button" data-dismiss="modal") Close
+mixin slotRow(nextIndex,isShown,isLoaded)
+    tr
+    td &nbsp;
+    td(colspan="100%")
+        if nextIndex+1 == settings.minionSlotsNext.length
+            span Remaining minions: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
+        else if settings.minionSlots+nextIndex == 1 || settings.minionSlots+nextIndex == 21
+            span #{settings.minionSlots+nextIndex}st slot: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
+        else if settings.minionSlots+nextIndex == 2 || settings.minionSlots+nextIndex == 22
+            span #{settings.minionSlots+nextIndex}nd slot: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
+        else if settings.minionSlots+nextIndex == 3 || settings.minionSlots+nextIndex == 23
+            span #{settings.minionSlots+nextIndex}rd slot: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
+        else
+            span #{settings.minionSlots+nextIndex}th slot: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
+        if isLoaded == true 
+            if isShown == true
+                button.btn.btn-blue(id="showNextButton"+nextIndex onclick="showCollapseNext("+nextIndex+")").d-none Show
+                button.btn.btn-blue(id="hideNextButton"+nextIndex onclick="hideCollapseNext("+nextIndex+")") Hide
+            else
+                button.btn.btn-blue(id="showNextButton"+nextIndex onclick="showCollapseNext("+nextIndex+")") Show
+                button.btn.btn-blue(id="hideNextButton"+nextIndex onclick="hideCollapseNext("+nextIndex+")").d-none Hide
+        else
+            button.btn.btn-blue(id="showNextButton"+nextIndex onclick="appendShowDetails("+settings.minionSlotsNext[nextIndex-1]+")") Show
 
-mixin minionCostRow(minionCost,i)
-    tr(id="minion"+i+"Row")
+mixin minionCostRow(minionCost,i,nextIndex)
+    tr(id="minion"+i+"Row" class="collapseNext"+nextIndex)
         td.text-center
             | ##{i+1}
             br
@@ -56,6 +60,26 @@ mixin minionCostRow(minionCost,i)
                     br
         td(id="minion"+i+"TotalCost")=minionCost.totalCostText
 
+mixin infoBox(id,type,title)
+    if(type=="info")
+        i.fas.fa-lg(data-toggle="modal" data-target="#"+id class="fa-info-circle")
+    else if(type=="question")
+        i.fas.fa-lg(data-toggle="modal" data-target="#"+id class="fa-question-circle")
+    .modal.fade.infoBox(id=id tabindex="-1" role="dialog" aria-labelledby=id+"Label" aria-hidden="true")
+        .modal-dialog(role="document" class=(type=="rightInfo"?"modal-xl":undefined))
+            .modal-content
+                .modal-header
+                    h3.modal-title(id=id+"Label")=title
+                    button.close(type="button" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                .modal-body
+                    if block 
+                        block 
+                    else
+                        p Nothing to see here
+                .modal-footer
+                    button.btn.btn-secondary(type="button" data-dismiss="modal") Close
+
 block content
     .container
         h1.d-inline-block Minions (Crafts)
@@ -75,10 +99,6 @@ block content
         //-TEMP
         h3 Warning
         p This feature is in beta, bugs may occur.
-        //- p Hypixel will be back on very soon. However, the Hypixel API, that HyMinions depends on, probably will not be available that soon. Therefore, the minion profit calculator and forge profit calculator would not be available for a short while even after Hypixel is on. 
-        //- p However, I have made slight changes to the code so that it can calculate minions profit with NPC price. Even though the minions profit calculator will not be in full function, at least you can see the items that different minions generate.
-        //- p Sorry for the inconvenience caused and I hope you would use my minion calculator again when both Hypixel and Hypixel API functions normally.
-        //- p: a(href="minions/?sellingTo=0") Click here to check the calculator with NPC price
         #overall
             .row
                 #general.col-lg-6.col-12
@@ -166,55 +186,32 @@ block content
                             th(scope="col") Upgrade materials
                             th(scope="col") Quantity
                             th(scope="col") Unit Price (Bazaar)
-                            th(scope="col") Total Upgrade Cost
-                    - let nextIndex = 0
+                            th(scope="col") Total Upgrade Cost 
+
                     if (settings.showDetails==1)
                         //-show all
+                        -let nextIndex = 0;
                         -let i=0;
-                        each minionCost in minionsCost
-                            +minionCostRow(minionCost,i)
-                            if settings.minionSlotsNext[nextIndex] == i+1
-                                tr
-                                    td &nbsp;
-                                    td(colspan="100%") #{settings.minionSlots+nextIndex}th slot: #{settings.minionSlotsCostText[nextIndex]} coins
-                                - nextIndex++;
-                            - i++;
-                    else if (settings.useProfile)
-                        //-show top 50
+                        while i<minionsCost.length
+                            +slotRow(nextIndex,true,true)
+                            while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
+                                +minionCostRow(minionsCost[i],i,nextIndex)
+                                -i++;
+                            -nextIndex++;
+                    else
+                        //-show top 50, until next minion slot
+                        -let nextIndex = 0;
                         -let i=0;
                         while i<Math.min(50,minionsCost.length)
-                            +minionCostRow(minionsCost[i],i)
-                            if settings.minionSlotsNext[nextIndex] == i+1
-                                tr
-                                    td &nbsp;
-                                    td(colspan="100%") #{settings.minionSlots+nextIndex}th slot: #{settings.minionSlotsCostText[nextIndex]} coins
-                                - nextIndex++;
-                            - i++;
-                        if minionsCost.length>50
-                            tr
-                                td &nbsp;
-                                td(colspan="100%") <a onclick="appendShowDetails(50)">Expand all</a>
-                    else
-                        //-show top 25, bottom 25
-                        -let i=0;
-                        while i<25
-                            +minionCostRow(minionsCost[i],i)
-                            if settings.minionSlotsNext[nextIndex] == i+1
-                                tr
-                                    td &nbsp;
-                                    td(colspan="100%") #{settings.minionSlots+nextIndex}th slot: #{settings.minionSlotsCostText[nextIndex]} coins
-                                - nextIndex++;
-                            - i++;
-                        tr
-                            td &nbsp;
-                            td(colspan="100%") Skip to last 25 (<a onclick="appendShowDetails(25)">Expand all</a>)
-                        - i=minionsCost.length-25;
-                        while i<minionsCost.length
-                            +minionCostRow(minionsCost[i],i)
-                            - i++;
+                            +slotRow(nextIndex,true,true)
+                            while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
+                                +minionCostRow(minionsCost[i],i,nextIndex)
+                                -i++;
+                            -nextIndex++;
+                        while nextIndex<settings.minionSlotsNext.length
+                            +slotRow(nextIndex,false,false)
+                            -nextIndex++;
 
-                
-                - i=0;
             p: small
                 | Excluding Flower Minion 
                 if(settings.lastUpdatedBazaar)
