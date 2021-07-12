@@ -1,5 +1,21 @@
 $("#minionsTable").doubleScroll();
 
+//run on load
+let hash = window.location.hash;
+console.log(hash);
+if(hash=="#all"){
+    //expand all
+    $(".collapseNext").removeClass("d-none");
+    $(".showNextButton").addClass("d-none");
+    $(".hideNextButton").removeClass("d-none");
+    window.location.hash = "#content";
+}else if(hash.substring(0,5)=="#slot"){
+    //expand the related slot
+    let slotID = hash.substring(5,hash.length-3);
+    console.log(slotID);
+    showCollapseNext(slotID);
+}
+
 //functions to provide interaction
 function showCollapseNext(nextIndex){
     console.log("showCollapseNext("+nextIndex);
@@ -66,7 +82,7 @@ function search(){
     }
 }
 
-function appendShowDetails(callID){
+function appendShowDetails(nextIndex){
     let keys = [], values = [];
     
     let currentURL = window.location.href;
@@ -112,10 +128,10 @@ function appendShowDetails(callID){
     for(let i=0;i<keys.length;i++){
         string += keys[i]+"="+values[i]+"&";
     }
-    if(callID==-1){
+    if(nextIndex==-1){
         string += "/#content";
     }else{
-        string += "/#minion"+callID+"Row";
+        string += "/#slot"+nextIndex+"Row";
     }
 
     console.log(string);

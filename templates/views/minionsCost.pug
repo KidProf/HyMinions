@@ -11,31 +11,31 @@ block meta
     meta(name="description" content="Know your most profitable minions! Tailor made for each profile, fully accurate.")
 
 mixin slotRow(nextIndex,isShown,isLoaded)
-    tr
-    td &nbsp;
-    td(colspan="100%")
-        if nextIndex+1 == settings.minionSlotsNext.length
-            span Remaining minions: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
-        else if settings.minionSlots+nextIndex == 1 || settings.minionSlots+nextIndex == 21
-            span #{settings.minionSlots+nextIndex}st slot: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
-        else if settings.minionSlots+nextIndex == 2 || settings.minionSlots+nextIndex == 22
-            span #{settings.minionSlots+nextIndex}nd slot: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
-        else if settings.minionSlots+nextIndex == 3 || settings.minionSlots+nextIndex == 23
-            span #{settings.minionSlots+nextIndex}rd slot: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
-        else
-            span #{settings.minionSlots+nextIndex}th slot: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
-        if isLoaded == true 
-            if isShown == true
-                button.btn.btn-blue(id="showNextButton"+nextIndex onclick="showCollapseNext("+nextIndex+")").d-none Show
-                button.btn.btn-blue(id="hideNextButton"+nextIndex onclick="hideCollapseNext("+nextIndex+")") Hide
+    tr(id="slot"+nextIndex+"Row")
+        td &nbsp;
+        td(colspan="100%")
+            if nextIndex+1 == settings.minionSlotsNext.length
+                span Remaining minions: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
+            else if settings.minionSlots+nextIndex == 1 || settings.minionSlots+nextIndex == 21
+                span #{settings.minionSlots+nextIndex}st slot: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
+            else if settings.minionSlots+nextIndex == 2 || settings.minionSlots+nextIndex == 22
+                span #{settings.minionSlots+nextIndex}nd slot: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
+            else if settings.minionSlots+nextIndex == 3 || settings.minionSlots+nextIndex == 23
+                span #{settings.minionSlots+nextIndex}rd slot: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
             else
-                button.btn.btn-blue(id="showNextButton"+nextIndex onclick="showCollapseNext("+nextIndex+")") Show
-                button.btn.btn-blue(id="hideNextButton"+nextIndex onclick="hideCollapseNext("+nextIndex+")").d-none Hide
-        else
-            button.btn.btn-blue(id="showNextButton"+nextIndex onclick="appendShowDetails("+settings.minionSlotsNext[nextIndex-1]+")") Show
+                span #{settings.minionSlots+nextIndex}th slot: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
+            if isLoaded == true 
+                if isShown == true
+                    button.btn.btn-blue(id="showNextButton"+nextIndex onclick="showCollapseNext("+nextIndex+")").showNextButton.d-none Show
+                    button.btn.btn-blue(id="hideNextButton"+nextIndex onclick="hideCollapseNext("+nextIndex+")").hideNextButton Hide
+                else
+                    button.btn.btn-blue(id="showNextButton"+nextIndex onclick="showCollapseNext("+nextIndex+")").showNextButton Show
+                    button.btn.btn-blue(id="hideNextButton"+nextIndex onclick="hideCollapseNext("+nextIndex+")").hideNextButton.d-none Hide
+            else
+                button.btn.btn-blue(id="showNextButton"+nextIndex onclick="appendShowDetails("+nextIndex+")") Show
 
-mixin minionCostRow(minionCost,i,nextIndex)
-    tr(id="minion"+i+"Row" class="collapseNext"+nextIndex)
+mixin minionCostRow(minionCost,i,nextIndex,isShown)
+    tr(id="minion"+i+"Row" class="collapseNext"+nextIndex class=isShown?undefined:"d-none").collapseNext
         td.text-center
             | ##{i+1}
             br
@@ -135,7 +135,7 @@ block content
 
                         .form-group
                             input#overallShowDetails.checkbox(type="checkbox" checked=(settings.showDetails>=1 ? 'checked' : undefined))
-                            label(for="overallShowDetails") &nbsp; Show All &nbsp;
+                            label(for="overallShowDetails") &nbsp; Load All &nbsp;
             
             br
             button#overallSettings.btn(onclick="generateLink()") Apply
@@ -188,24 +188,40 @@ block content
                             th(scope="col") Unit Price (Bazaar)
                             th(scope="col") Total Upgrade Cost 
 
+                    //- if (settings.showDetails==2)
+                    //-     //-show all
+                    //-     -let nextIndex = 0;
+                    //-     -let i=0;
+                    //-     while i<minionsCost.length
+                    //-         +slotRow(nextIndex,true,true)
+                    //-         while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
+                    //-             +minionCostRow(minionsCost[i],i,nextIndex,true)
+                    //-             -i++;
+                    //-         -nextIndex++;
                     if (settings.showDetails==1)
-                        //-show all
-                        -let nextIndex = 0;
-                        -let i=0;
-                        while i<minionsCost.length
-                            +slotRow(nextIndex,true,true)
-                            while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
-                                +minionCostRow(minionsCost[i],i,nextIndex)
-                                -i++;
-                            -nextIndex++;
-                    else
-                        //-show top 50, until next minion slot
+                        //-show top 50, until next minion slot, hide others
                         -let nextIndex = 0;
                         -let i=0;
                         while i<Math.min(50,minionsCost.length)
                             +slotRow(nextIndex,true,true)
                             while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
-                                +minionCostRow(minionsCost[i],i,nextIndex)
+                                +minionCostRow(minionsCost[i],i,nextIndex,true)
+                                -i++;
+                            -nextIndex++;
+                        while nextIndex<settings.minionSlotsNext.length
+                            +slotRow(nextIndex,false,true)
+                            while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
+                                +minionCostRow(minionsCost[i],i,nextIndex,false)
+                                -i++;
+                            -nextIndex++;
+                    else
+                        //-show top 50, until next minion slot, dont load others
+                        -let nextIndex = 0;
+                        -let i=0;
+                        while i<Math.min(50,minionsCost.length)
+                            +slotRow(nextIndex,true,true)
+                            while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
+                                +minionCostRow(minionsCost[i],i,nextIndex,true)
                                 -i++;
                             -nextIndex++;
                         while nextIndex<settings.minionSlotsNext.length
