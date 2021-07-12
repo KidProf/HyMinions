@@ -162,20 +162,27 @@ block content
                 p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
                 p If you think it is not an API problem, you may make a bug report <a href="/contact">here</a>. Sorry for the inconvenience caused.
             else
-                #search: .form-group
-                    label(for="searchInput") Search: &nbsp;
-                    input#searchInput(list="searchDatalist").form-control
-                    datalist#searchDatalist
-                        each minionCost in minionsCost
-                            option(value=minionCost.name.substring(0,minionCost.name.lastIndexOf(" "))+" "+minionCost.tier)
-                    span &nbsp; &nbsp; &nbsp;
-                    button#searchButton.btn(onclick="search()") Search
                 if settings.useProfile
                     h3 Profile Information
                     p Minion Crafts: #{settings.minionCrafts}
                     p Minion Slots: #{settings.minionSlots} + #{settings.communitySlots} (Community Center)
                     p Crafts to next: #{settings.minionSlotsNext[0]}
                     p Coins to next: #{settings.minionSlotsCostText[0]}
+                #search: .form-group.row
+                    .col-12.col-md-8.col-lg-6
+                        label(for="searchInput") Search: &nbsp;
+                        input#searchInput(list="searchDatalist").form-control
+                        datalist#searchDatalist
+                            each minionCost in minionsCost
+                                option(value=minionCost.name.substring(0,minionCost.name.lastIndexOf(" "))+" "+minionCost.tier)
+                        span &nbsp; &nbsp; &nbsp;
+                        button#searchButton.btn(onclick="search()") Search
+                    .col-12.col-md-3.col-lg-6
+                        if settings.showDetails == 1
+                            button#showAll.btn.btn-link.read-more(onclick="showAll()") Expand All
+                            button#hideAll.btn.btn-link.read-more.d-none(onclick="hideAll()") Hide All
+                        else
+                            button.btn.btn-link#showAll.read-more(onclick="appendShowDetails(-1)") Expand All
                 #doubleScroll: table#minionsTable.table.table-dark.w-100
                     thead
                         tr

@@ -30,7 +30,20 @@ function hideCollapseNext(nextIndex){
     $("#showNextButton"+nextIndex).removeClass("d-none");
     $("#hideNextButton"+nextIndex).addClass("d-none");
 }
-
+function showAll(){
+    $(".collapseNext").removeClass("d-none");
+    $(".showNextButton").addClass("d-none");
+    $(".hideNextButton").removeClass("d-none");
+    $("#showAll").addClass("d-none");
+    $("#hideAll").removeClass("d-none");
+}
+function hideAll(){
+    $(".collapseNext").addClass("d-none");
+    $(".showNextButton").removeClass("d-none");
+    $(".hideNextButton").addClass("d-none");
+    $("#showAll").removeClass("d-none");
+    $("#hideAll").addClass("d-none");
+}
 function generateLink(){
     let keys = [], values = [];
 
@@ -129,7 +142,7 @@ function appendShowDetails(nextIndex){
         string += keys[i]+"="+values[i]+"&";
     }
     if(nextIndex==-1){
-        string += "/#content";
+        string += "/#all";
     }else{
         string += "/#slot"+nextIndex+"Row";
     }

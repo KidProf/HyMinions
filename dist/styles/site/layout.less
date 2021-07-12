@@ -50,20 +50,25 @@ body{
     color: yellow;
 }
 
-a.read-more{
+.read-more{
     color: #AAA;
 }
 
-a.read-more[aria-expanded="false"] .expanded, a.read-more[aria-expanded="true"] .collapsed{
+.read-more[aria-expanded="false"] .expanded, .read-more[aria-expanded="true"] .collapsed{
     display: none;
 }
 
-a:not([href]) {
-    color: #007bff;
-    text-decoration: none;
+.read-more:hover{
+	color: #AAA;
+	text-decoration: none;
 }
 
-a:not([href]):hover {
-    color: #007bff;
-    text-decoration: none;
-}
+// a:not([href]) {
+//     color: #007bff;
+//     text-decoration: none;
+// }
+
+// a:not([href]):hover {
+//     color: #007bff;
+//     text-decoration: none;
+// }
