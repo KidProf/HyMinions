@@ -379,12 +379,11 @@ block content
                             +infoBox("infoModal"+i,"rightInfo",minion.name)
                                 span Selected tier: #{minion.tier} <br />
                                 span Selected fuel: #{minion.fuel}% <br />
-                                span Total profit without rounding off: #{minion.totalProfit} <br />
                                 span Calculation formula: sum of all products(offline duration(in hours)*3600/time between actions(in seconds)/2 (due to offline)*generated per time*(1+fuel(in %)/100))<br />
                                 br
-                                h4 Products
+                                h3 Products
                                 each product in minion.products
-                                    h5=product.item
+                                    h4=product.item
                                     if(product.item=="Diamond (Spreading)")
                                         span Generated Per Time: Calculated by sum of items harvested * 0.1 <br />
                                     else
@@ -404,19 +403,14 @@ block content
                                                 th(scope="col") Name
                                                 th(scope="col") Equivalent
                                                 th(scope="col") NPC Price
-                                                th(scope="col") Bazaar Price (Sell offer, without tax)
-                                                th(scope="col") Bazaar Price (Sell instantly, without tax)
                                         each variant in product.variants
                                             tr
                                                 td=variant
                                                 td=product.variantsEquiv[j]
                                                 td=product.variantsNpcPrices ? product.variantsNpcPrices[j]: product.npcPrice*product.variantsEquiv[j]
-                                                if(product.bazaarPrice)
-                                                    td=product.bazaarPrice[j][0]
-                                                    td=product.bazaarPrice[j][1]
                                             -j++;
                                     br
-                                h4 Tiers
+                                h3 Tiers
                                 - let k=0
                                 table.table.table-dark
                                     thead
@@ -424,13 +418,21 @@ block content
                                             th(scope="col") Tier
                                             th(scope="col") Time between actions (in seconds)
                                             th(scope="col") Storage
-                                            //- th(scope="col") Crafting materials
-                                            //- th(scope="col") Crafting cost
+                                            th(scope="col") Crafting materials
+                                            th(scope="col") Quantities
                                     each tier in minion.tierDelay
                                         tr
                                             td=(k+1)
                                             td=tier
                                             td=minion.storage[k]
+                                            td
+                                                each upgradeMaterial in minion.upgrade.materials[k]
+                                                    | #{upgradeMaterial}
+                                                    br
+                                            td                                     
+                                                each upgradeQuantity in minion.upgrade.quantities[k]
+                                                    | #{upgradeQuantity}
+                                                    br
                                         -k++;
 
                             - i++;
