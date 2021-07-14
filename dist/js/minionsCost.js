@@ -8,6 +8,8 @@ if(hash=="#all"){
     $(".collapseNext").removeClass("d-none");
     $(".showNextButton").addClass("d-none");
     $(".hideNextButton").removeClass("d-none");
+    $("#showAll").addClass("d-none");
+    $("#hideAll").removeClass("d-none");
     window.location.hash = "#content";
 }else if(hash.substring(0,5)=="#slot"){
     //expand the related slot

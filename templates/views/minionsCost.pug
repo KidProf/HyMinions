@@ -125,7 +125,7 @@ block content
                             button#showAll.btn.btn-link.read-more(onclick="showAll()") Expand All
                             button#hideAll.btn.btn-link.read-more.d-none(onclick="hideAll()") Hide All
                         else
-                            button.btn.btn-link#showAll.read-more(onclick="appendShowDetails(-1)") Expand All
+                            button.btn.btn-link#showAll.read-more(onclick="appendShowDetails(-1)") Load and Expand All
                 #doubleScroll: table#minionsTable.table.table-dark.w-100
                     thead
                         tr
@@ -187,27 +187,27 @@ block content
 
 mixin slotRow(nextIndex,isShown,isLoaded)
     tr(id="slot"+nextIndex+"Row")
-        td &nbsp;
-        td(colspan="100%")
-            if nextIndex+1 == settings.minionSlotsNext.length
-                span Remaining minions: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
-            else if settings.minionSlots+nextIndex == 1 || settings.minionSlots+nextIndex == 21
-                span #{settings.minionSlots+nextIndex}st slot: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
-            else if settings.minionSlots+nextIndex == 2 || settings.minionSlots+nextIndex == 22
-                span #{settings.minionSlots+nextIndex}nd slot: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
-            else if settings.minionSlots+nextIndex == 3 || settings.minionSlots+nextIndex == 23
-                span #{settings.minionSlots+nextIndex}rd slot: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
-            else
-                span #{settings.minionSlots+nextIndex}th slot: #{settings.minionSlotsCostText[nextIndex]} coins &nbsp; &nbsp;
+        td.text-center.py-3
             if isLoaded == true 
                 if isShown == true
-                    button.btn.btn-blue(id="showNextButton"+nextIndex onclick="showCollapseNext("+nextIndex+")").showNextButton.d-none Show
-                    button.btn.btn-blue(id="hideNextButton"+nextIndex onclick="hideCollapseNext("+nextIndex+")").hideNextButton Hide
+                    i.fas.fa-lg.fa-plus-circle.showNextButton(id="showNextButton"+nextIndex onclick="showCollapseNext("+nextIndex+")").d-none
+                    i.fas.fa-lg.fa-minus-circle.hideNextButton(id="hideNextButton"+nextIndex onclick="hideCollapseNext("+nextIndex+")")
                 else
-                    button.btn.btn-blue(id="showNextButton"+nextIndex onclick="showCollapseNext("+nextIndex+")").showNextButton Show
-                    button.btn.btn-blue(id="hideNextButton"+nextIndex onclick="hideCollapseNext("+nextIndex+")").hideNextButton.d-none Hide
+                    i.fas.fa-lg.fa-plus-circle.showNextButton(id="showNextButton"+nextIndex onclick="showCollapseNext("+nextIndex+")")
+                    i.fas.fa-lg.fa-minus-circle.hideNextButton(id="hideNextButton"+nextIndex onclick="hideCollapseNext("+nextIndex+")").d-none
             else
-                button.btn.btn-blue(id="showNextButton"+nextIndex onclick="appendShowDetails("+nextIndex+")") Show
+                i.fas.fa-lg.fa-cloud-download-alt(id="showNextButton"+nextIndex onclick="appendShowDetails("+nextIndex+")")
+        td(colspan="100%").py-3
+            if nextIndex+1 == settings.minionSlotsNext.length
+                span Remaining minions: #{settings.minionSlotsCostText[nextIndex]} coins
+            else if settings.minionSlots+nextIndex == 1 || settings.minionSlots+nextIndex == 21
+                span #{settings.minionSlots+nextIndex}st slot: #{settings.minionSlotsCostText[nextIndex]} coins
+            else if settings.minionSlots+nextIndex == 2 || settings.minionSlots+nextIndex == 22
+                span #{settings.minionSlots+nextIndex}nd slot: #{settings.minionSlotsCostText[nextIndex]} coins
+            else if settings.minionSlots+nextIndex == 3 || settings.minionSlots+nextIndex == 23
+                span #{settings.minionSlots+nextIndex}rd slot: #{settings.minionSlotsCostText[nextIndex]} coins
+            else
+                span #{settings.minionSlots+nextIndex}th slot: #{settings.minionSlotsCostText[nextIndex]} coins
 
 mixin minionCostRow(minionCost,i,nextIndex,isShown)
     tr(id="minion"+i+"Row" class="collapseNext"+nextIndex class=isShown?undefined:"d-none").collapseNext
