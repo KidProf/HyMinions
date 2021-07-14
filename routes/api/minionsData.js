@@ -3737,7 +3737,7 @@ exports.minions = [
         storage: [64,192,192,384,384,576,576,768,768,960,960],
         upgrade:{
             materials: [
-                ["White Gift","* based on 0.4% drop rate"],
+                ["Red Gift","* based on 0.12% drop rate"],
                 ["Snow Block"],
                 ["Snow Block"],
                 ["Snow Block"],
@@ -3750,7 +3750,7 @@ exports.minions = [
                 ["Enchanted Snow Block"],
             ],
             quantities: [
-                [250,1],
+                [83.33333,1],
                 [32],
                 [64],
                 [128],
@@ -3763,7 +3763,7 @@ exports.minions = [
                 [128],
             ],
             materialsAlt: [
-                ["Red Gift","* based on 0.12% drop rate"],
+                ["White Gift","* based on 0.4% drop rate"],
                 undefined,
                 undefined,
                 undefined,
@@ -3776,7 +3776,7 @@ exports.minions = [
                 undefined,
             ],
             quantitiesAlt: [
-                [83.33333,1],
+                [250,1],
                 undefined,
                 undefined,
                 undefined,

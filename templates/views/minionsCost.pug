@@ -92,15 +92,15 @@ block content
             //- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3541192882647315" data-ad-slot="6074503232" data-ad-format="auto" data-full-width-responsive="true"></ins>
             //- <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
             br
-            if !minionsCost || !settings
+            if settings&&settings.hasError
                 h1 Error
-                p.lead An unexpected error has occured.
+                p.lead=settings.errorMsg
                 h3 Is Hypixel API down?
                 p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
                 p If you think it is not an API problem, you may make a bug report <a href="/contact">here</a>. Sorry for the inconvenience caused.
-            else if settings.hasError
+            else if !minionsCost || !settings
                 h1 Error
-                p.lead=settings.errorMsg
+                p.lead An unexpected error has occured.
                 h3 Is Hypixel API down?
                 p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
                 p If you think it is not an API problem, you may make a bug report <a href="/contact">here</a>. Sorry for the inconvenience caused.
@@ -112,7 +112,7 @@ block content
                     p Crafts to next: #{settings.minionSlotsNext[0]}
                     p Coins to next: #{settings.minionSlotsCostText[0]}
                 #search: .form-group.row
-                    .col-12.col-md-8.col-lg-6
+                    //-.col-12.col-md-8.col-lg-6
                         label(for="searchInput") Search: &nbsp;
                         input#searchInput(list="searchDatalist").form-control
                         datalist#searchDatalist
@@ -120,7 +120,8 @@ block content
                                 option(value=minionCost.name.substring(0,minionCost.name.lastIndexOf(" "))+" "+minionCost.tier)
                         span &nbsp; &nbsp; &nbsp;
                         button#searchButton.btn(onclick="search()") Search
-                    .col-12.col-md-3.col-lg-6
+                    //-.col-12.col-md-3.col-lg-6
+                    .col-12
                         if settings.showDetails == 1
                             button#showAll.btn.btn-link.read-more(onclick="showAll()") Expand All
                             button#hideAll.btn.btn-link.read-more.d-none(onclick="hideAll()") Hide All
@@ -138,16 +139,6 @@ block content
                             th(scope="col") Unit Price (Bazaar)
                             th(scope="col") Total Upgrade Cost 
 
-                    //- if (settings.showDetails==2)
-                    //-     //-show all
-                    //-     -let nextIndex = 0;
-                    //-     -let i=0;
-                    //-     while i<minionsCost.length
-                    //-         +slotRow(nextIndex,true,true)
-                    //-         while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
-                    //-             +minionCostRow(minionsCost[i],i,nextIndex,true)
-                    //-             -i++;
-                    //-         -nextIndex++;
                     if (settings.showDetails==1)
                         //-show top 50, until next minion slot, hide others
                         -let nextIndex = 0;

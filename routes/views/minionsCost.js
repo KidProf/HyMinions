@@ -10,12 +10,11 @@ exports = module.exports = function (req, res) {
     //data validation
     dataValidation(settings);
 
-    //go to minions operation.js
+    //go to minions cost operation.js
     //asyncAwait
     calculateMinionsCost(minions, settings).then((minionsCost)=>{
         let output = {settings: settings, minionsCost: minionsCost};
         console.log(output.settings);
-        //console.log(output.minionsCost);
         res.render("minionsCost",output);
 
     }).catch((err)=>{

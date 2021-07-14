@@ -51,7 +51,6 @@ exports.calculateMinionsCost = async function(minions, settings){
                         }
                         if(minionString==searchString){
                             let tier = rawMinion.substring(underscoreLocation+1);
-                            console.log(minion.name, tier);
                             minion.profilesTier[index][tier-1] = true;
                         }
                     });
@@ -82,6 +81,24 @@ exports.calculateMinionsCost = async function(minions, settings){
                             }
                         });
                     });
+                    if(upgrade.materialsAlt){
+                        upgrade.bazaarPriceAlt=new Array(upgrade.materials.length);
+                        upgrade.materialsAlt.forEach((materialsTier,tier)=>{
+                            if(materialsTier){
+                                upgrade.bazaarPriceAlt[tier] = new Array(materialsTier.length);
+                                materialsTier.forEach((material,index)=>{
+                                    if(bazaarPrices[0][material]){
+                                        upgrade.bazaarPriceAlt[tier][index] = new Array(2);
+                                        upgrade.bazaarPriceAlt[tier][index][0] = bazaarPrices[0][material];
+                                        upgrade.bazaarPriceAlt[tier][index][1] = bazaarPrices[1][material];
+                                    }else{
+                                        upgrade.bazaarPriceAlt[tier][index] = undefined;
+                                    }
+                                });
+                            }
+                        });
+                        console.log(upgrade);
+                    }
                 }
             });
         });
@@ -180,13 +197,32 @@ exports.calculateMinionsCost = async function(minions, settings){
             tierCost.unitPrices = new Array();
             let totalCost = 0;
 
-            minion.upgrade.materials[tier].forEach((material,materialIndex)=>{
+            let useAlt = false;
+            if(upgrade.materialsAlt&&upgrade.materialsAlt[tier]){
+                if(compareMaterialsCost(upgrade.materials[tier],upgrade.quantities[tier],upgrade.bazaarPrice[tier]) > 
+                    compareMaterialsCost(upgrade.materialsAlt[tier],upgrade.quantitiesAlt[tier],upgrade.bazaarPriceAlt[tier])){
+                    useAlt = true;
+                }
+            }
+
+            let materials, quantities, bazaarPrice;
+            if(useAlt){
+                materials = upgrade.materialsAlt[tier];
+                quantities = upgrade.quantitiesAlt[tier];
+                bazaarPrice = upgrade.bazaarPriceAlt[tier];
+            }else{
+                materials = upgrade.materials[tier];
+                quantities = upgrade.quantities[tier];
+                bazaarPrice = upgrade.bazaarPrice[tier];
+            }
+
+            materials.forEach((material,materialIndex)=>{
                 tierCost.upgradeMaterials[materialIndex] = material;
-                if(upgrade.quantities[tier][materialIndex]){
-                    tierCost.upgradeQuantities[materialIndex] = upgrade.quantities[tier][materialIndex];
+                if(quantities[materialIndex]){
+                    tierCost.upgradeQuantities[materialIndex] = quantities[materialIndex];
                     let unitPrice;
-                    if(upgrade.bazaarPrice[tier][materialIndex]!=undefined){
-                        unitPrice = upgrade.bazaarPrice[tier][materialIndex][settings.buyingMethod]*(1+settings.tax/100);
+                    if(bazaarPrice[materialIndex]){
+                        unitPrice = bazaarPrice[materialIndex][settings.buyingMethod]*(1+settings.tax/100);
                     }else if(specialPrices[material]!=undefined){
                         unitPrice = specialPrices[material];
                     }else{
@@ -199,7 +235,6 @@ exports.calculateMinionsCost = async function(minions, settings){
                     tierCost.upgradeQuantities[materialIndex] = "";
                     tierCost.unitPrices[materialIndex] = "";
                 }
-
             });
             tierCost.totalCost = totalCost;
             tierCost.totalCostText = moneyRepresentation(totalCost);
@@ -214,4 +249,21 @@ exports.calculateMinionsCost = async function(minions, settings){
         if(minionCost.length!=0) unsortedMinionsCost.push(minionCost);
     }
 
+    function compareMaterialsCost(materials,quantities,bazaarPrice){
+        let totalCost = 0;
+        materials.forEach((material,materialIndex)=>{
+            if(quantities[materialIndex]){
+                let unitPrice;
+                if(bazaarPrice[materialIndex]){
+                    unitPrice = bazaarPrice[materialIndex][settings.buyingMethod]*(1+settings.tax/100);
+                }else if(specialPrices[material]!=undefined){
+                    unitPrice = specialPrices[material];
+                }else{
+                    unitPrice = 0;
+                }
+                totalCost += unitPrice*quantities[materialIndex];
+            }
+        });
+        return totalCost;
+    }
 }
