@@ -126,9 +126,9 @@ block content
                             button#hideAll.btn.btn-link.read-more.d-none(onclick="hideAll()") Hide All
                         else
                             button.btn.btn-link#showAll.read-more(onclick="appendShowDetails(-1)") Load and Expand All
-                #doubleScroll: table#minionsTable.table.table-dark.w-100
+                #doubleScroll: table#minionsCostTable.table.table-dark.w-100
                     thead
-                        tr
+                        tr.color-row-0
                             th(scope="col")
                             th(scope="col") Minion
                             th(scope="col") Tier
@@ -186,7 +186,7 @@ block content
                     | <br /> Last updated time of profile: #{settings.lastUpdatedProfile} UTC
 
 mixin slotRow(nextIndex,isShown,isLoaded)
-    tr(id="slot"+nextIndex+"Row")
+    tr(id="slot"+nextIndex+"Row" class="color-row-"+nextIndex%7)
         td.text-center.py-3
             if isLoaded == true 
                 if isShown == true
@@ -210,7 +210,7 @@ mixin slotRow(nextIndex,isShown,isLoaded)
                 span #{settings.minionSlots+nextIndex}th slot: #{settings.minionSlotsCostText[nextIndex]} coins
 
 mixin minionCostRow(minionCost,i,nextIndex,isShown)
-    tr(id="minion"+i+"Row" class="collapseNext"+nextIndex class=isShown?undefined:"d-none").collapseNext
+    tr(id="minion"+i+"Row" class="collapseNext"+nextIndex class=isShown?undefined:"d-none" class="color-row-"+nextIndex%7).collapseNext
         td.text-center
             | ##{i+1}
             br
