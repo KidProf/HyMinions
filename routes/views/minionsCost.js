@@ -51,6 +51,9 @@ exports = module.exports = function (req, res) {
         if(!settings.showDetails||!isWithinList(settings.showDetails,[0,1])){
             settings.showDetails = 0;
         }
+        if(settings.useProfile==true){
+            settings.showDetails = 1;
+        }
 
         console.log(settings);
     }

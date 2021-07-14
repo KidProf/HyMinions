@@ -76,9 +76,9 @@ block content
                                 input#overallTax.form-control(type="number" value=settings.tax min="0")
                                 span &nbsp; %
 
-                        .form-group
-                            input#overallShowDetails.checkbox(type="checkbox" checked=(settings.showDetails>=1 ? 'checked' : undefined))
-                            label(for="overallShowDetails") &nbsp; Load All &nbsp;
+                        //- .form-group
+                        //-     input#overallShowDetails.checkbox(type="checkbox" checked=(settings.showDetails>=1 ? 'checked' : undefined))
+                        //-     label(for="overallShowDetails") &nbsp; Load All &nbsp;
             
             br
             button#overallSettings.btn(onclick="generateLink()") Apply
