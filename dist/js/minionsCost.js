@@ -1,4 +1,4 @@
-$("#minionsTable").doubleScroll();
+$("#minionsCostTable").doubleScroll();
 
 //run on load
 let hash = window.location.hash;
