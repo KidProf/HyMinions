@@ -128,7 +128,7 @@ block content
                             button.btn.btn-link#showAll.read-more(onclick="appendShowDetails(-1)") Load and Expand All
                 #doubleScroll: table#minionsCostTable.table.table-dark.w-100
                     thead
-                        tr.color-row-0
+                        tr
                             th(scope="col")
                             th(scope="col") Minion
                             th(scope="col") Tier
@@ -210,7 +210,7 @@ mixin slotRow(nextIndex,isShown,isLoaded)
                 span #{settings.minionSlots+nextIndex}th slot: #{settings.minionSlotsCostText[nextIndex]} coins
 
 mixin minionCostRow(minionCost,i,nextIndex,isShown)
-    tr(id="minion"+i+"Row" class="collapseNext"+nextIndex class=isShown?undefined:"d-none" class="color-row-"+nextIndex%7).collapseNext
+    tr(id="minion"+i+"Row" class="collapseNext"+nextIndex class=isShown?undefined:"d-none").collapseNext
         td.text-center
             | ##{i+1}
             br
