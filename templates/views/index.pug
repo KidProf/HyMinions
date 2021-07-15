@@ -14,12 +14,27 @@ block content
 	.container
 		h1 Welcome to HyMinions! <img src="images/aotd.png" width="40" height="40"/>
 
-		
 		br
 		.my-box
 			.container
-				h4#announcementsHeaderYellow.header: a(href="https://discord.gg/2KabAgsN6Y") <img src="/images/news.png" width="30" height="30"/> NOTICE
-				p I am making a new calculator to calculate which minion is the cheapest to level up based on real-time bazaar price, tailor-made for each profile. <br />It is currently in its testing phase, you are welcome to <a href="https://discord.gg/2KabAgsN6Y">join my Discord</a> to try out the beta version of the new calculator.
+				h4#announcementsHeaderYellow.header: a(href="/minionsCost") <img src="/images/news.png" width="30" height="30"/> UPDATE
+				h3 Minions Crafts Calculator
+				p It calculates the cheapest minions to level up to gain more minion slots, also tailor-made for each profile if you input your Minecraft name. It also shows you how much money you need to spend on materials to unlock a new minion tier.
+				p: a(href="/minionsCost") Click to try
+				#collapseAnnouncements.collapse
+					h4 Integrations with minions profit calculator
+					p When Voidling Minion is out, I often heard some comments saying: "Tier 11 voidling minion costs over 200 million, it is not reasonable putting it on the top of the profit list!" 
+					p I understand that, so here is where my new minion crafts calculator comes in handy. We could estimate the tier of the minions you have based on number of minion slots you have. The default settings are 2x minion slot, so voidling minion would be set at tier x, hence balance the whole ecosystem.
+					p If you enter your Minecraft name, it will calculate the cheapest minion ignoring the minion you have crafted. It could make the crafts list more personalized and useful.
+					p Alternatively, you could leave the Minecraft name box, and it would show the whole crafts list.
+				a.read-more(data-toggle="collapse" href="#collapseAnnouncements" aria-expanded="false" aria-controls="collapseAnnouncements")
+					span.collapsed Show more
+					span.expanded Show less
+		//- br
+		//- .my-box
+		//- 	.container
+		//- 		h4#announcementsHeaderYellow.header: a(href="https://discord.gg/2KabAgsN6Y") <img src="/images/news.png" width="30" height="30"/> NOTICE
+		//- 		p I am making a new calculator to calculate which minion is the cheapest to level up based on real-time bazaar price, tailor-made for each profile. <br />It is currently in its testing phase, you are welcome to <a href="https://discord.gg/2KabAgsN6Y">join my Discord</a> to try out the beta version of the new calculator.
 		//- br
 		//- .my-box
 		//- 	.container
