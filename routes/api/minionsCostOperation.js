@@ -97,7 +97,7 @@ exports.calculateMinionsCost = async function(minions, settings){
                                 });
                             }
                         });
-                        console.log(upgrade);
+                        //console.log(upgrade);
                     }
                 }
             });
@@ -112,31 +112,6 @@ exports.calculateMinionsCost = async function(minions, settings){
     }
 
     console.log("finished findBazaar and findProfile");
-
-    //prepare for the profiles info section
-    settings.minionSlotsNext = new Array();
-    if(settings.useProfile){
-        settings.profileNames=profileNames;
-        settings.profile=Math.min(settings.profile,settings.profileNames.length-1);
-
-        settings.communitySlots=communitySlots[settings.profile];
-        settings.minionCrafts=minionCrafts[settings.profile];
-        minionSlotsCriteria.forEach((criteria,index5)=>{
-            if(criteria>settings.minionCrafts){
-                if(settings.minionSlotsNext.length==0){
-                    settings.minionSlots=index5+6-1;
-                }
-                if(index5<minionSlotsCriteria.length){
-                    settings.minionSlotsNext.push(criteria-settings.minionCrafts);
-                }else if(settings.minionSlotsNext.length==0){
-                    settings.minionSlotsNext.push(0);
-                }
-            }
-        });
-    }else{
-        settings.minionSlots = 6;
-        settings.minionSlotsNext = minionSlotsCriteria;
-    }
 
     let unsortedMinionsCost = new Array(); //2D array
     totalTiers = 0;
@@ -161,16 +136,46 @@ exports.calculateMinionsCost = async function(minions, settings){
         }
     }
     
+    //prepare for the profiles info section
+    //minionSlots, minionSlotsNext
+    settings.minionSlotsNext = new Array();
+    if(settings.useProfile){
+        settings.profileNames=profileNames;
+        settings.profile=Math.min(settings.profile,settings.profileNames.length-1);
+
+        settings.communitySlots=communitySlots[settings.profile];
+        settings.minionCrafts=minionCrafts[settings.profile];
+        minionSlotsCriteria.forEach((criteria,index5)=>{ 
+            if(criteria>settings.minionCrafts){
+                if(settings.minionSlotsNext.length==0){
+                    settings.minionSlots=index5+6-1;
+                }
+                if(index5<minionSlotsCriteria.length){
+                    settings.minionSlotsNext.push(criteria-settings.minionCrafts);
+                }
+            }
+        });
+        settings.minionSlotsNext.push(totalTiers);
+    }else{
+        settings.minionSlots = 5;
+        settings.minionSlotsNext = new Array();
+        minionSlotsCriteria.forEach((slot)=>{
+            settings.minionSlotsNext.push(slot);
+        });
+        settings.minionSlotsNext.push(totalTiers); //total-last element
+    }
+
+    //minionSlotsCosts
     settings.minionSlotsCost = new Array(settings.minionSlotsNext.length);
     for(i=0;i<settings.minionSlotsCost.length;i++){ //init
         settings.minionSlotsCost[i] = 0;
     }
+    let nextIndex=0;
     minionsCost.forEach((minionCost,index)=>{ //calculate
-        settings.minionSlotsNext.forEach((next,index2)=>{
-            if(next>index){
-                settings.minionSlotsCost[index2]+=minionCost.totalCost;
-            }
-        });
+        settings.minionSlotsCost[nextIndex]+=minionCost.totalCost;
+        if(index+1>=settings.minionSlotsNext[nextIndex]){
+            nextIndex++;
+        }
     });
     settings.minionSlotsCostText = new Array(settings.minionSlotsCost.length);
     settings.minionSlotsCost.forEach((cost,index2)=>{ //turn to proper string

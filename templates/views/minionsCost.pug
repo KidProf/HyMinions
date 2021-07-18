@@ -109,7 +109,7 @@ block content
                     h3 Profile Information
                     p Minion Crafts: #{settings.minionCrafts}
                     p Minion Slots: #{settings.minionSlots} + #{settings.communitySlots} (Community Center)
-                    p Crafts to next: #{settings.minionSlotsNext[0]}
+                    p Crafts to next: #{settings.minionSlotsNext.length!=1? settings.minionSlotsNext[0]: "MAXED"}
                     p Coins to next: #{settings.minionSlotsCostText[0]}
                 #search: .form-group.row
                     //-.col-12.col-md-8.col-lg-6
@@ -189,16 +189,17 @@ mixin slotRow(nextIndex,isShown,isLoaded)
             else
                 i.fas.fa-lg.fa-cloud-download-alt(id="showNextButton"+nextIndex onclick="appendShowDetails("+nextIndex+")")
         td(colspan="100%").py-3
+            -let slotNumber = settings.minionSlots+nextIndex+1
             if nextIndex+1 == settings.minionSlotsNext.length
                 span Remaining minions: #{settings.minionSlotsCostText[nextIndex]} coins
-            else if settings.minionSlots+nextIndex == 1 || settings.minionSlots+nextIndex == 21
-                span #{settings.minionSlots+nextIndex}st slot: #{settings.minionSlotsCostText[nextIndex]} coins
-            else if settings.minionSlots+nextIndex == 2 || settings.minionSlots+nextIndex == 22
-                span #{settings.minionSlots+nextIndex}nd slot: #{settings.minionSlotsCostText[nextIndex]} coins
-            else if settings.minionSlots+nextIndex == 3 || settings.minionSlots+nextIndex == 23
-                span #{settings.minionSlots+nextIndex}rd slot: #{settings.minionSlotsCostText[nextIndex]} coins
+            else if slotNumber == 1 || slotNumber == 21
+                span #{slotNumber}st slot: #{settings.minionSlotsCostText[nextIndex]} coins
+            else if slotNumber == 2 || slotNumber == 22
+                span #{slotNumber}nd slot: #{settings.minionSlotsCostText[nextIndex]} coins
+            else if slotNumber == 3 || slotNumber == 23
+                span #{slotNumber}rd slot: #{settings.minionSlotsCostText[nextIndex]} coins
             else
-                span #{settings.minionSlots+nextIndex}th slot: #{settings.minionSlotsCostText[nextIndex]} coins
+                span #{slotNumber}th slot: #{settings.minionSlotsCostText[nextIndex]} coins
 
 mixin minionCostRow(minionCost,i,nextIndex,isShown)
     tr(id="minion"+i+"Row" class="collapseNext"+nextIndex class=isShown?undefined:"d-none").collapseNext
