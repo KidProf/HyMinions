@@ -4156,9 +4156,80 @@ exports.minions = [
                 ],
             },
         ]      
+    },{ //53
+        name: "Hard Stone Minion",
+        id: 20,
+        tierDelay : [14,14,12,12,10,10,9,9,8,8,7,6], //12
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
+        upgrade:{
+            materials: [
+                ["Wooden Pickaxe","Hard Stone"],
+                ["Hard Stone"],
+                ["Enchanted Hard Stone"],
+                ["Enchanted Hard Stone"],
+                ["Enchanted Hard Stone"],
+                ["Enchanted Hard Stone"],
+                ["Enchanted Hard Stone"],
+                ["Enchanted Hard Stone"],
+                ["Enchanted Hard Stone"],
+                ["Concentrated Stone"],
+                ["Concentrated Stone"],
+                ["Concentrated Stone","Coins"],
+            ],
+            quantities: [
+                [1,256],
+                [512],
+                [8],
+                [16],
+                [32],
+                [64],
+                [128],
+                [256],
+                [512],
+                [8],
+                [16],
+                [32,2000000],
+            ],
+        },
+        products : [
+            {
+                item : "Hard Stone",
+                perTime : 1,
+                npcPrice: 1,
+                variants: [
+                    "Hard Stone",
+                    "Enchanted Hard Stone",
+                    "Concentrated Stone",
+                ],
+                variantsEquiv: [
+                    1,
+                    576,
+                    331776,
+                ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
+        ]      
     },
 
-    //TOTAL: 53
+    //TOTAL: 54
     //without flower minion
 ];
 
