@@ -1,5 +1,3 @@
-$("#minionsCostTable").doubleScroll();
-
 //run on load
 let hash = window.location.hash;
 console.log(hash);
@@ -17,6 +15,7 @@ if(hash=="#all"){
     console.log(slotID);
     showCollapseNext(slotID);
 }
+$("#minionsCostTable").doubleScroll();
 
 //functions to provide interaction
 function showCollapseNext(nextIndex){
@@ -24,6 +23,7 @@ function showCollapseNext(nextIndex){
     $(".collapseNext"+nextIndex).removeClass("d-none");
     $("#showNextButton"+nextIndex).addClass("d-none");
     $("#hideNextButton"+nextIndex).removeClass("d-none");
+    $("#minionsCostTable").doubleScroll();
 }
 
 function hideCollapseNext(nextIndex){
@@ -31,6 +31,7 @@ function hideCollapseNext(nextIndex){
     $(".collapseNext"+nextIndex).addClass("d-none");
     $("#showNextButton"+nextIndex).removeClass("d-none");
     $("#hideNextButton"+nextIndex).addClass("d-none");
+    $("#minionsCostTable").doubleScroll();
 }
 function showAll(){
     $(".collapseNext").removeClass("d-none");
@@ -38,6 +39,7 @@ function showAll(){
     $(".hideNextButton").removeClass("d-none");
     $("#showAll").addClass("d-none");
     $("#hideAll").removeClass("d-none");
+    $("#minionsCostTable").doubleScroll();
 }
 function hideAll(){
     $(".collapseNext").addClass("d-none");
@@ -45,6 +47,7 @@ function hideAll(){
     $(".hideNextButton").addClass("d-none");
     $("#showAll").removeClass("d-none");
     $("#hideAll").addClass("d-none");
+    $("#minionsCostTable").doubleScroll();
 }
 function generateLink(){
     let keys = [], values = [];
