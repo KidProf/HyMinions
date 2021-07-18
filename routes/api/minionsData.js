@@ -4228,10 +4228,78 @@ exports.minions = [
                 ],
             },
         ]      
+    },{ //54
+        name: "Flower Minion",
+        id: 20,
+        tierDelay : [30,29,28,27,26,25,24,23,22,20,18],
+        storage: [960,960,960,960,960,960,960,960,960,960,960],
+        warning: "* Auction House prices not supported",
+        toolsRequired: ["* Auction House prices not supported"],
+        upgrade:{
+            putAtLast: 1,
+            materials: [
+                ["Bought from Dark Auction","* Auction House prices not supported"],
+                ["Dandelion","* Auction House prices not supported"],
+                ["Dandelion","* Auction House prices not supported"],
+                ["Dandelion","* Auction House prices not supported"],
+                ["Enchanted Dandelion","* Auction House prices not supported"],
+                ["Enchanted Dandelion","* Auction House prices not supported"],
+                ["Enchanted Dandelion","* Auction House prices not supported"],
+                ["Enchanted Dandelion","* Auction House prices not supported"],
+                ["Enchanted Dandelion","* Auction House prices not supported"],
+                ["Enchanted Dandelion","* Auction House prices not supported"],
+                ["Enchanted Poppy","* Auction House prices not supported"],
+            ],
+            quantities: [
+                [1,1],
+                [160,1],
+                [320,1],
+                [512,1],
+                [8,1],
+                [24,1],
+                [64,1],
+                [128,1],
+                [256,1],
+                [512,1],
+                [8,1],
+            ],
+        },
+        products : [
+            {
+                item : "Flower",
+                perTime : 1,
+                npcPrice: 1,
+                variants: [
+                    "Flower",
+                ],
+                variantsEquiv: [
+                    1,
+                ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
+        ]      
     },
 
-    //TOTAL: 54
-    //without flower minion
+    //TOTAL: 55
+    //flower minion not functioning
 ];
 
 
