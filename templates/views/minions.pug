@@ -54,48 +54,60 @@ block content
             .row
                 #general.col-lg-6.col-12
                     br
-                    h3 General
-                    .form-group
-                        //-pretick use profile to be true for first time visit
-                        input#overallUseProfile.checkbox(type="checkbox" onchange="toggleUseProfile()" checked=(settings.useProfile==false&&(settings.tier!=11) ? undefined:"checked")) 
-                        label(for="overallUseProfile") &nbsp; Use Profile  &nbsp; 
+                    h3 Tier Selection
+                    .form-check
+                        input#overallUseProfile.form-check-input.radio(type="radio" name="tierTypeRadios" checked=(settings.tierType==1 ? "checked":undefined)) 
+                        label(for="overallUseProfile") Use Profile  &nbsp; 
                         +infoBox("profileModal","question","Why is my Minecraft name required?")
                             p If you enter your Minecraft name, it will calculate the profit based on the highest tier of the minion you have crafted. It could make the profit list more personalized and useful when finding the most profitable minions among those you have.
                             p Alternatively, you could uncheck this "Use Profile" box, and select the tier of the minions manually.
-                    .form-group#useProfile(class=(settings.useProfile==false&&(settings.tier!=11) ? "d-none":""))
-                        p Minecraft Name: &nbsp; 
-                            input#overallProfileName.form-control(value=settings.name)
-                        if(settings.profileNames)
-                            label(for="overallProfileProfile") Profile: &nbsp;
-                            select#overallProfileProfile.form-control
-                                -let k=0
-                                while k<settings.profileNames.length
-                                    option(value=k selected=(settings.profile==k?'selected':undefined))=settings.profileNames[k]
-                                    -k++;
+                        .form-group#useProfile
+                            p Minecraft Name: &nbsp; 
+                                input#overallProfileName.form-control(value=settings.name)
+                            if(settings.profileNames)
+                                label(for="overallProfileProfile") Profile: &nbsp;
+                                select#overallProfileProfile.form-control
+                                    -let k=0
+                                    while k<settings.profileNames.length
+                                        option(value=k selected=(settings.profile==k?'selected':undefined))=settings.profileNames[k]
+                                        -k++;
+                    .form-check
+                        input#overallUseSlots.form-check-input.radio(type="radio" name="tierTypeRadios" checked=(settings.tierType==2 ? "checked":undefined)) 
+                        label(for="overallUseSlots") Estimate by number of minion slots:  &nbsp; 
+                        .form-group
+                            .form-check
+                                input#slots10.form-check-input.radio(type="radio" name="slotsRadios" value=10 checked=(settings.slots==10 ? "checked":undefined)) 
+                                label(for="slots10") 10 slots
+                            .form-check
+                                input#slots15.form-check-input.radio(type="radio" name="slotsRadios" value=15 checked=(settings.slots==15 ? "checked":undefined)) 
+                                label(for="slots15") 15 slots
+                            .form-check
+                                input#slots20.form-check-input.radio(type="radio" name="slotsRadios" value=20 checked=(settings.slots==20 ? "checked":undefined)) 
+                                label(for="slots20") 20 slots
+                            .form-check
+                                input#slots23.form-check-input.radio(type="radio" name="slotsRadios" value=23 checked=(!settings.slots||settings.slots==23 ? "checked":undefined)) 
+                                label(for="slots23") 23 slots
+                            .form-check
+                                input#slotsOthers.form-check-input.radio(type="radio" name="slotsRadios" value="others" checked=(settings.slots&&settings.slots!=10&&settings.slots!=15&&settings.slots!=20&&settings.slots!=23 ? "checked":undefined)) 
+                                label(for="slotsOthers") Others: &nbsp;
+                                input#slotsOthersInput.form-control(type="number" value=settings.slots min="5")
+                                span &nbsp; slots
+                    .form-check
+                        input#overallUseTier.form-check-input.radio(type="radio" name="tierTypeRadios" checked=(settings.tierType==0 ? "checked":undefined)) 
+                        label(for="overallUseTier") Manually select Tier: &nbsp;
+                            select#overallTier.form-control
+                                -let j=1
+                                while j<=11
+                                    option(selected=(settings.tier==j ? 'selected':undefined))=j
+                                    -j++;
+                                option(selected=(settings.tier==12 ? 'selected':undefined) value="12") 11/12
                     
-                    .form-group#useTier(class=(settings.useProfile==false&&(settings.tier!=11) ? "":"d-none"))
-                        label(for="overallTier") Tier: &nbsp;
-                        select#overallTier.form-control
-                            -let j=1
-                            while j<=11
-                                option(selected=(settings.tier==j ? 'selected':undefined))=j
-                                -j++;
-                            option(selected=(settings.tier==12 ? 'selected':undefined) value="12") 11/12
+                    br
+                    h3 General
                     .form-group
                         p Fuel/ other perks: &nbsp; 
                             input#overallFuel.form-control(type="number" value=settings.fuel min="0")
                             span &nbsp; %
-                    .form-group
-                        label(for="overallCalculationType") Calculation mode: &nbsp;  
-                        select#overallCalculationType.form-control(onchange="toggleCalculationType()")
-                            option(value="0" selected=(settings.calculationType==0?'selected':undefined)) Old
-                            option(value="1" selected=(settings.calculationType==1?'selected':undefined)) New (based on offline duration)
-                        span &nbsp; 
-                            +infoBox("calculationTypeModal","question","Calculation Modes")
-                                h4 New calculation mode
-                                p It calculates the profit based on your frequency of collecting minions. For example, lapis minions could be a good minion for active players, who collect enchanted lapis before they are automatically converted into enchanted lapis blocks, but not for those who are less active.
-                                h4 Old calculation mode
-                                p The original calculation mode - It calculates the profit based on a particular enchanted form of every product. (e.g. first enchanted form/ most profitable enchanted form) It does not calculate based on your offline duration.
 
                     #autoCalculationType(class=(settings.calculationType==1 ? "":"d-none"))
                         .form-group
@@ -107,28 +119,10 @@ block content
                                     option(value="1" selected=(settings.offlineTimeUnit==1?'selected':undefined)) day(s)
                         small.pl-3 ^If you are not sure about your offline time, you could leave it as 1 day.
                         br
-                        br
-                        h3 Experimental Features
-                        .form-group
-                            //-pretick use profile to be true for first time visit
-                            input#overallSoulflow.checkbox(type="checkbox" checked=settings.soulflow? "checked":undefined) 
-                            label(for="overallSoulflow") &nbsp; Use Lesser Soulflow Engine &nbsp; 
-                            +infoBox("soulflowModal","question","Lesser Soulflow Engine")
-                                h4 Info
-                                p Copied from <a href='https://hypixel-skyblock.fandom.com/wiki/Lesser_Soulflow_Engine'>Skyblock Wiki</a>: 
-                                p The Lesser Soulflow Engine can be used as a minion upgrade. When it is added to a minion, its output will be reduced by 50%. Every 3.6 minutes (220 seconds), it will produce 1x Raw Soulflow. This production rate is unaffected by minion speed, minion Crystals nor Minion Fuel. Minions containing a Lesser Soulflow Engine will have purple particles above them.
-                                p The Lesser Soulflow Engine requires Enderman Slayer level 2 to use.
-                                h4 Technical Details
-                                p For easy implementation for the time being, when the Lesser Soulflow Engine checkbox is checked: 
-                                ul
-                                    li Lesser Soulflow Engine would be added regardless of the existing minion upgrades, so the profits may be inaccurate.
-                                    li This feature only works for the new calculation type
-                                    li Cannot modify Soulflow through individual minion settings
-                                p This function is in beta, bugs may occur.
                 .col-lg-6.col-12  
                     #advanced
                         br
-                        h3 Advanced 
+                        h3 Advanced
                         #manualCalculationType(class=(settings.calculationType==0 ? "":"d-none"))
                             .form-group
                                 label(for="overallProductForm") Products form: &nbsp;
@@ -202,19 +196,32 @@ block content
                             //-             option(value="0.5" selected=(settings.automaticShipping==0.5?'selected':undefined)) Budget Hopper
                             //-             option(value="0.9" selected=(settings.automaticShipping==0.9?'selected':undefined)) Enchanted Hopper
                         
-                            
-                        .form-group
-                            input#overallShowDetails.checkbox(type="checkbox" checked=(settings.showDetails>=1 ? 'checked' : undefined))
-                            label(for="overallShowDetails") &nbsp; Show Info Button &nbsp;
-                            +infoBox("showDetailsModal","question","Show Info")
-                                p If this option is checked, an info button on the rightmost side of the minion table in the minions page, containing all the raw data about the minions. If you spot any incorrect data in the info section, please contact me <a href="/contact">here</a>. You could verify the data with Hypixel Wiki or your own experience in Skyblock.
-
                         .form-group
                             label(for="overallSellingTo") Selling to: &nbsp;
                             select#overallSellingTo.form-control
                                 option(value="1" selected=(settings.sellingTo==1?'selected':undefined)) Max profit (NPC or bazaar)
                                 option(value="0" selected=(settings.sellingTo==0?'selected':undefined)) NPC only
-                        
+                        .form-group
+                            input#overallShowDetails.checkbox(type="checkbox" checked=(settings.showDetails>=1 ? 'checked' : undefined))
+                            label(for="overallShowDetails") &nbsp; Show Info Button &nbsp;
+                            +infoBox("showDetailsModal","question","Show Info")
+                                p If this option is checked, an info button on the rightmost side of the minion table in the minions page, containing all the raw data about the minions. If you spot any incorrect data in the info section, please contact me <a href="/contact">here</a>. You could verify the data with Hypixel Wiki or your own experience in Skyblock.
+                        #autoCalculationTypeMiscellaneous(class=(settings.calculationType==1 ? "":"d-none"))
+                            .form-group
+                                //-pretick use profile to be true for first time visit
+                                input#overallSoulflow.checkbox(type="checkbox" checked=settings.soulflow? "checked":undefined) 
+                                label(for="overallSoulflow") &nbsp; Use Lesser Soulflow Engine &nbsp; 
+                                +infoBox("soulflowModal","question","Lesser Soulflow Engine")
+                                    h4 Info
+                                    p Copied from <a href='https://hypixel-skyblock.fandom.com/wiki/Lesser_Soulflow_Engine'>Skyblock Wiki</a>: 
+                                    p The Lesser Soulflow Engine can be used as a minion upgrade. When it is added to a minion, its output will be reduced by 50%. Every 3.6 minutes (220 seconds), it will produce 1x Raw Soulflow. This production rate is unaffected by minion speed, minion Crystals nor Minion Fuel. Minions containing a Lesser Soulflow Engine will have purple particles above them.
+                                    p The Lesser Soulflow Engine requires Enderman Slayer level 2 to use.
+                                    h4 Technical Details
+                                    p For easy implementation, when the Lesser Soulflow Engine checkbox is checked: 
+                                    ul
+                                        li Lesser Soulflow Engine would be added regardless of the existing minion upgrades, so profits might be overestimated slightly because diamond spreading is equipped regardless.
+                                        li This feature only works for the new calculation type.
+                                        li Cannot modify Soulflow through individual minion settings.
                         br
                         #miscellaneousInline
                             h3 Miscellaneous &nbsp;
@@ -222,6 +229,18 @@ block content
                                 span.collapsed Show more
                                 span.expanded Show less
                         #miscellaneous.collapse
+                            .form-group
+                                label(for="overallCalculationType") Calculation mode: &nbsp;  
+                                select#overallCalculationType.form-control(onchange="toggleCalculationType()")
+                                    option(value="0" selected=(settings.calculationType==0?'selected':undefined)) Old
+                                    option(value="1" selected=(settings.calculationType==1?'selected':undefined)) New (based on offline duration)
+                                span &nbsp; 
+                                    +infoBox("calculationTypeModal","question","Calculation Modes")
+                                        h4 New calculation mode
+                                        p It calculates the profit based on your frequency of collecting minions. For example, lapis minions could be a good minion for active players, who collect enchanted lapis before they are automatically converted into enchanted lapis blocks, but not for those who are less active.
+                                        h4 Old calculation mode
+                                        p The original calculation mode - It calculates the profit based on a particular enchanted form of every product. (e.g. first enchanted form/ most profitable enchanted form) It does not calculate based on your offline duration.
+
                             .form-group
                                 label(for="overallSellingMethod") Selling method in bazaar: &nbsp;
                                 select#overallSellingMethod.form-control

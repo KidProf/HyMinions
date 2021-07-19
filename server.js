@@ -42,4 +42,4 @@ app.use(lessMiddleware('dist'));
 app.use(express.static('dist'));
 
 //start
-app.listen(port, () => console.log(`Hyminions listening at http://localhost:${port}`));
+app.listen(port, () => console.log(`HyMinions listening at http://localhost:${port}`));

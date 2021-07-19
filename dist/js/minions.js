@@ -1,16 +1,16 @@
 $("#minionsTable").doubleScroll();
 
 //functions to provide interactions
-function toggleUseProfile(){
-    let useProfile = $("#overallUseProfile").prop("checked");
-    if(useProfile){
-        $("#useProfile").removeClass("d-none");
-        $("#useTier").addClass("d-none");
-    }else{
-        $("#useTier").removeClass("d-none");
-        $("#useProfile").addClass("d-none");
-    }
-}
+// function toggleUseProfile(){
+//     let useProfile = $("#overallUseProfile").prop("checked");
+//     if(useProfile){
+//         $("#useProfile").removeClass("d-none");
+//         $("#useTier").addClass("d-none");
+//     }else{
+//         $("#useTier").removeClass("d-none");
+//         $("#useProfile").addClass("d-none");
+//     }
+// }
 
 
 function toggleIndividualDiamondSpreading(){
@@ -27,11 +27,13 @@ function toggleCalculationType(){
     if(calculationType==1){
         $("#autoCalculationType").removeClass("d-none");
         $("#autoCalculationTypeAdvanced").removeClass("d-none");
+        $("#autoCalculationTypeMiscellaneous").removeClass("d-none");
         $("#manualCalculationType").addClass("d-none");
     }else{
         $("#manualCalculationType").removeClass("d-none");
         $("#autoCalculationType").addClass("d-none");
         $("#autoCalculationTypeAdvanced").addClass("d-none");
+        $("#autoCalculationTypeMiscellaneous").addClass("d-none");
     }
 }
 
@@ -49,8 +51,12 @@ function toggleMinionChest(){
 function generateLink(){
     let keys = [], values = [];
 
-    //general
-    if($("#overallUseProfile").prop("checked")&&$("#overallProfileName").val()!=0){
+    //tier selection
+    let slotsRadios = $('input[name=slotsRadios]:checked','#overall').val();
+    console.log(slotsRadios)
+    if($("#overallUseProfile").prop("checked")&&$("#overallProfileName").val()!=""){//use profile
+        keys.push("tierType");
+        values.push(1);
         keys.push("name");
         values.push($("#overallProfileName").val());
         if($("#overallProfileProfile")&&$("#overallProfileProfile").children("option:selected").val()!=0&&$("#overallProfileProfile").children("option:selected").val()!=undefined){{
@@ -58,10 +64,35 @@ function generateLink(){
             keys.push("profile");
             values.push($("#overallProfileProfile").children("option:selected").val());
         }}
-    }else if($("#overallTier").children("option:selected").val()!=11){
-        keys.push("tier");
-        values.push($("#overallTier").children("option:selected").val());
+    }else if($("#overallUseSlots").prop("checked")&&slotsRadios=="others"&&$("#slotsOthersInput").val()!=""){//use slots (others)
+        keys.push("slots");
+        values.push($("#slotsOthersInput").val());
+    }else if($("#overallUseSlots").prop("checked")&&slotsRadios&&slotsRadios!="others"){//use slots (radio)
+        keys.push("slots");
+        values.push($('input[name=slotsRadios]:checked','#overall').val());
+    }else{//use tier
+        keys.push("tierType");
+        values.push(0);
+        if($("#overallTier").children("option:selected").val()!=11){
+            keys.push("tier");
+            values.push($("#overallTier").children("option:selected").val());
+        }
     }
+    
+    // if($("#overallUseProfile").prop("checked")&&$("#overallProfileName").val()!=""){
+    //     keys.push("name");
+    //     values.push($("#overallProfileName").val());
+    //     if($("#overallProfileProfile")&&$("#overallProfileProfile").children("option:selected").val()!=0&&$("#overallProfileProfile").children("option:selected").val()!=undefined){{
+            
+    //         keys.push("profile");
+    //         values.push($("#overallProfileProfile").children("option:selected").val());
+    //     }}
+    // }else if($("#overallTier").children("option:selected").val()!=11){
+    //     keys.push("tier");
+    //     values.push($("#overallTier").children("option:selected").val());
+    // }
+
+    //general
     if($("#overallFuel").val()!=25){
         keys.push("fuel");
         values.push($("#overallFuel").val());
