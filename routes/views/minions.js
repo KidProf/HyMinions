@@ -1,4 +1,4 @@
-var {minions} = require("../api/minionsData.js");
+var {minions, minionSlotsCriteria} = require("../api/minionsData.js");
 var {calculateMinionsProfit} = require("../api/minionsOperation.js");
 
 exports = module.exports = function (req, res) {
@@ -27,22 +27,42 @@ exports = module.exports = function (req, res) {
     function dataValidation(settings){
         //assume no error first
         settings.hasError = false;
-        //general
-        if(settings.name){
-            settings.useProfile= true;
-            settings.tier = 11;//for settings page first show 11 option
+
+        //tier selection
+        if(settings.tierType==1&&settings.name){//use profile
             if(!settings.profile){
                 settings.profile=0;
             }
             if(settings.profile=="undefined"){
                 settings.profile=0;
             }
-        }else{
-            settings.useProfile= false;
+        }else if(settings.tierType==0&&settings.tier){//use tier
             if(!settings.tier||!isWithinList(settings.tier,[1,2,3,4,5,6,7,8,9,10,11,12])){
                 settings.tier = 11;
             }
+        }else{//use slots (default)
+            settings.tierType=2;
+            if(!settings.slots||(settings.slots<6||settings.slots>minionSlotsCriteria.length-1+6)){
+                settings.slots=23;
+            }
         }
+        // if(settings.name){
+        //     settings.useProfile= true;
+        //     settings.tier = 11;//for settings page first show 11 option
+        //     if(!settings.profile){
+        //         settings.profile=0;
+        //     }
+        //     if(settings.profile=="undefined"){
+        //         settings.profile=0;
+        //     }
+        // }else{
+        //     settings.useProfile= false;
+        //     if(!settings.tier||!isWithinList(settings.tier,[1,2,3,4,5,6,7,8,9,10,11,12])){
+        //         settings.tier = 11;
+        //     }
+        // }
+
+        //general
         if(!settings.fuel||settings.fuel<0){
             settings.fuel = 25;
         }

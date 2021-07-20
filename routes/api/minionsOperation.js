@@ -6,7 +6,7 @@ let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, hadError=
 exports.calculateMinionsProfit = async function(minions, settings){
     console.log(settings.name,minecraftName);
     //console.log(Date.now()-lastUpdatedBazaar);
-    if((settings.useProfile)&&(settings.name!=minecraftName||hadError||Date.now()-lastUpdatedProfile>5*60*1000)){ //don't call api again if identical name, but call again if prev result has error, 5 min timeout
+    if((settings.tierType==1)&&(settings.name!=minecraftName||hadError||Date.now()-lastUpdatedProfile>5*60*1000)){ //don't call api again if identical name, but call again if prev result has error, 5 min timeout
         minecraftName = settings.name;
         lastUpdatedProfile = Date.now();
         await findProfile(settings.name,settings).then((profilesAjax)=>{
@@ -101,7 +101,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
         return;
     }
 
-    if(settings.useProfile){
+    if(settings.tierType==1){
         settings.profileNames=profileNames;
         settings.profile=Math.min(settings.profile,settings.profileNames.length-1);
 
@@ -148,7 +148,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
         if(minion.hasIndividualSettings==1){
             minion.tier = settings.individualSettings[minion.id].tier; //individual settings override
             minion.fuel = settings.individualSettings[minion.id].fuel;
-        }else if(settings.useProfile){
+        }else if(settings.tierType==1){
             minion.tier=minion.profilesTier[settings.profile]; //use profile minion tier
             minion.fuel = settings.fuel;
         }else{

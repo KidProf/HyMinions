@@ -97,9 +97,11 @@ block content
                         label(for="overallUseTier") Manually select Tier: &nbsp;
                             select#overallTier.form-control
                                 -let j=1
-                                while j<=11
+                                while j<=10
                                     option(selected=(settings.tier==j ? 'selected':undefined))=j
                                     -j++;
+                                //- 11: default
+                                option(selected=(!settings.tier||settings.tier==11 ? 'selected':undefined) value="12") 11
                                 option(selected=(settings.tier==12 ? 'selected':undefined) value="12") 11/12
                     
                     br

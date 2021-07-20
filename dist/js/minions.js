@@ -68,9 +68,11 @@ function generateLink(){
         keys.push("slots");
         values.push($("#slotsOthersInput").val());
     }else if($("#overallUseSlots").prop("checked")&&slotsRadios&&slotsRadios!="others"){//use slots (radio)
-        keys.push("slots");
-        values.push($('input[name=slotsRadios]:checked','#overall').val());
-    }else{//use tier
+        if(slotsRadios!=23){
+            keys.push("slots");
+            values.push(slotsRadios);
+        }
+    }else if($("#overallUseTier").prop("checked")){//use tier
         keys.push("tierType");
         values.push(0);
         if($("#overallTier").children("option:selected").val()!=11){
@@ -78,6 +80,7 @@ function generateLink(){
             values.push($("#overallTier").children("option:selected").val());
         }
     }
+    //else: dont pass any params - so that the default becomes useSlots and 23 slots
     
     // if($("#overallUseProfile").prop("checked")&&$("#overallProfileName").val()!=""){
     //     keys.push("name");
