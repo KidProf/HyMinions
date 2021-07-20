@@ -42,7 +42,7 @@ exports = module.exports = function (req, res) {
             }
         }else{//use slots (default)
             settings.tierType=2;
-            if(!settings.slots||(settings.slots<6||settings.slots>minionSlotsCriteria.length-1+6)){
+            if(!settings.slots||(settings.slots<6||settings.slots>minionSlotsCriteria.length+6)){
                 settings.slots=23;
             }
         }

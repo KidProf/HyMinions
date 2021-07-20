@@ -1,5 +1,6 @@
 var {moneyRepresentation, dateTimeToString, findBazaar, findProfile} = require("./general.js");
-var {soulflowItem} = require("./minionsData.js");
+const { calculateMinionsCostLink } = require("./minionsCostOperation.js");
+var {soulflowItem, minionSlotsCriteria} = require("./minionsData.js");
 
 let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, hadError=false;
     
@@ -48,7 +49,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
         });
         //await Promise.all([findBazaar(), findProfile(settings.name)]);
     }
-    if(settings.sellingTo==1&&(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000)){ //1 min time out
+    if((settings.sellingTo==1||settings.tierType==2)&&(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000)){ //1 min time out
         lastUpdatedBazaar = Date.now();
         await findBazaar(settings).then((bazaarPrices)=>{
             if(bazaarPrices=="error"){
@@ -91,6 +92,46 @@ exports.calculateMinionsProfit = async function(minions, settings){
                     });
                 });
             });
+
+            if(settings.tierType==2){
+                //copied from minionsCostOperation.js
+                minions.forEach((minion)=>{
+                    upgrade = minion.upgrade;
+                    if(upgrade){
+                        upgrade.bazaarPrice=new Array(upgrade.materials.length);
+                        upgrade.materials.forEach((materialsTier,tier)=>{
+                            upgrade.bazaarPrice[tier] = new Array(materialsTier.length);
+                            materialsTier.forEach((material,index)=>{
+                                if(bazaarPrices[0][material]){
+                                    upgrade.bazaarPrice[tier][index] = new Array(2);
+                                    upgrade.bazaarPrice[tier][index][0] = bazaarPrices[0][material];
+                                    upgrade.bazaarPrice[tier][index][1] = bazaarPrices[1][material];
+                                }else{
+                                    upgrade.bazaarPrice[tier][index] = undefined;
+                                }
+                            });
+                        });
+                        if(upgrade.materialsAlt){
+                            upgrade.bazaarPriceAlt=new Array(upgrade.materials.length);
+                            upgrade.materialsAlt.forEach((materialsTier,tier)=>{
+                                if(materialsTier){
+                                    upgrade.bazaarPriceAlt[tier] = new Array(materialsTier.length);
+                                    materialsTier.forEach((material,index)=>{
+                                        if(bazaarPrices[0][material]){
+                                            upgrade.bazaarPriceAlt[tier][index] = new Array(2);
+                                            upgrade.bazaarPriceAlt[tier][index][0] = bazaarPrices[0][material];
+                                            upgrade.bazaarPriceAlt[tier][index][1] = bazaarPrices[1][material];
+                                        }else{
+                                            upgrade.bazaarPriceAlt[tier][index] = undefined;
+                                        }
+                                    });
+                                }
+                            });
+                            //console.log(upgrade);
+                        }
+                    }
+                });
+            }
         });
     }
     settings.lastUpdatedProfile = lastUpdatedProfile ? dateTimeToString(lastUpdatedProfile): null;
@@ -105,6 +146,18 @@ exports.calculateMinionsProfit = async function(minions, settings){
         settings.profileNames=profileNames;
         settings.profile=Math.min(settings.profile,settings.profileNames.length-1);
 
+    }else if(settings.tierType==2){
+        await calculateMinionsCostLink(minions,settings).then((minionsCost)=>{
+            minions.forEach((minion)=>{
+                minion.tier = 0;
+            });
+            let i=0;
+            console.log(minionSlotsCriteria[settings.slots-6]);
+            for(i=0;i<Math.min(minionSlotsCriteria[settings.slots-6],minionsCost.length);i++){
+                minions[minionsCost[i].minionIndex].tier = Math.max(minionsCost[i].tier,minions[minionsCost[i].minionIndex].tier);
+                console.log(minionsCost[i].name,minions[minionsCost[i].minionIndex].name,minions[minionsCost[i].minionIndex].tier);
+            }
+        });
     }
 
     console.log("finished findBazaar and findProfile");
@@ -150,6 +203,9 @@ exports.calculateMinionsProfit = async function(minions, settings){
             minion.fuel = settings.individualSettings[minion.id].fuel;
         }else if(settings.tierType==1){
             minion.tier=minion.profilesTier[settings.profile]; //use profile minion tier
+            minion.fuel = settings.fuel;
+        }else if(settings.tierType==2){
+            //minion.tier set already
             minion.fuel = settings.fuel;
         }else{
             minion.tier = Math.min(settings.tier,minion.tierDelay.length);//some has tier 12 some don't

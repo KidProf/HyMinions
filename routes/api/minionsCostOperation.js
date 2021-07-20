@@ -300,3 +300,110 @@ exports.calculateMinionsCost = async function(minions, settings){
         return totalCost;
     }
 }
+
+exports.calculateMinionsCostLink = async function(minions, settings){
+    console.log("calculateMinionsCostLink");
+
+    let unsortedMinionsCost = new Array(); //2D array
+    let unsortedMinionsCostLast = new Array(); //2D array
+    let totalTiers = 0;
+    minions.forEach((minion,index)=>{
+        calculateMinionCostLink(settings,minion,index);
+    });
+
+    let minionsCost = new Array(); //1D array
+    while(unsortedMinionsCost.length!=0){ //iterate until all elements are sorted, ~~ merge list
+        let minVal, minValIndex;
+        for(j=0;j<unsortedMinionsCost.length;j++){
+            if(!minVal || unsortedMinionsCost[j][0].totalCost < minVal){
+                minVal = unsortedMinionsCost[j][0].totalCost;
+                minValIndex = j;
+            }
+        }
+        //console.log(minValIndex);
+        minionsCost.push(unsortedMinionsCost[minValIndex][0]); //add to sorted list
+        unsortedMinionsCost[minValIndex].shift(); //remove element from unsorted list
+        if(unsortedMinionsCost[minValIndex].length==0){ //remove whole 1D array if it is empty
+            unsortedMinionsCost.splice(minValIndex,1);
+        }
+    }
+    while(unsortedMinionsCostLast.length!=0){ //iterate until all elements are sorted, ~~ merge list
+        let minVal, minValIndex;
+        for(j=0;j<unsortedMinionsCostLast.length;j++){
+            if(!minVal || unsortedMinionsCostLast[j][0].totalCost < minVal){
+                minVal = unsortedMinionsCostLast[j][0].totalCost;
+                minValIndex = j;
+            }
+        }
+        //console.log(minValIndex);
+        minionsCost.push(unsortedMinionsCostLast[minValIndex][0]); //add to sorted list
+        unsortedMinionsCostLast[minValIndex].shift(); //remove element from unsorted list
+        if(unsortedMinionsCostLast[minValIndex].length==0){ //remove whole 1D array if it is empty
+            unsortedMinionsCostLast.splice(minValIndex,1);
+        }
+    }
+
+    return minionsCost;
+
+    function calculateMinionCostLink(settings,minion,index){
+        let minionCost = new Array();
+        for(tier=0;tier<minion.tierDelay.length;tier++){
+            let tierCost = {
+                minionIndex: index,
+                name : minion.name,
+                tier : tier+1,
+            };
+            upgrade = minion.upgrade;
+
+            let useAlt = false;
+            if(upgrade.materialsAlt&&upgrade.materialsAlt[tier]){
+                if(compareMaterialsCost(upgrade.materials[tier],upgrade.quantities[tier],upgrade.bazaarPrice[tier]) > 
+                    compareMaterialsCost(upgrade.materialsAlt[tier],upgrade.quantitiesAlt[tier],upgrade.bazaarPriceAlt[tier])){
+                    useAlt = true;
+                }
+            }
+
+            if(useAlt){
+                tierCost.totalCost = compareMaterialsCost(upgrade.materialsAlt[tier],upgrade.quantitiesAlt[tier],upgrade.bazaarPriceAlt[tier]);
+            }else{
+                tierCost.totalCost = compareMaterialsCost(upgrade.materials[tier],upgrade.quantities[tier],upgrade.bazaarPrice[tier]);
+            }
+
+            if(tier==0&&upgrade.detachTier1==true){
+                if(upgrade.putAtLast){
+                    unsortedMinionsCostLast.push([tierCost]); //seperate tier 1 from the rest of the list
+                }else{
+                    unsortedMinionsCost.push([tierCost]); //seperate tier 1 from the rest of the list
+                }
+                totalTiers++;
+            }else{
+                minionCost.push(tierCost);
+                totalTiers++;
+            }
+        }
+        if(upgrade.putAtLast){
+            if(minionCost.length!=0) unsortedMinionsCostLast.push(minionCost);
+        }else{
+            if(minionCost.length!=0) unsortedMinionsCost.push(minionCost);
+        }
+        
+    }
+
+    function compareMaterialsCost(materials,quantities,bazaarPrice){
+        let totalCost = 0;
+        materials.forEach((material,materialIndex)=>{
+            if(quantities[materialIndex]){
+                let unitPrice;
+                if(bazaarPrice[materialIndex]){
+                    unitPrice = bazaarPrice[materialIndex][0]*(1+settings.tax/100); //default buying method: buy instantly
+                }else if(specialPrices[material]!=undefined){
+                    unitPrice = specialPrices[material];
+                }else{
+                    unitPrice = 0;
+                }
+                totalCost += unitPrice*quantities[materialIndex];
+            }
+        });
+        return totalCost;
+    }
+}

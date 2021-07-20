@@ -36,6 +36,7 @@ exports.minions = [
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
 		type: "Combat",
         upgrade:{
+            detachTier1: true,
             materials: [
                 ["Enchanted Rotten Flesh","Enchanted Diamond","^ For Crystalized Heart","Revenant Flesh","* Requires Revenant Tier 5"],
                 ["Revenant Flesh","Rotten Flesh","^ For Zombie Minion Tier 1","* Requires Revenant Tier 5"],
@@ -64,7 +65,6 @@ exports.minions = [
                 [448,256+128+64+32+16+8,512+320+160+80,undefined,undefined],
                 [64,2000000,undefined,undefined],
             ],
-            detachTier1: true,
         },
         products : [
             {
@@ -132,6 +132,7 @@ exports.minions = [
         tierDelay : [29,29,26,26,23,23,19,19,14.5,14.5,10],
         storage: [64,192,192,384,384,576,576,768,768,960,960],
         upgrade:{
+            detachTier1: true,
             materials: [
                 ["Enchanted Fermented Spider Eye","Tarantula Web","* Requires Tarantula Tier 5"],
                 ["Tarantula Web","String","^ For Spider Minion Tier 1","* Requires Tarantula Tier 5"],
@@ -158,7 +159,6 @@ exports.minions = [
                 [224,128+64+32+16+8,512+320+160+80,undefined,undefined],
                 [448,256+128+64+32+16+8,512+320+160+80,undefined,undefined],
             ],
-            detachTier1: true,
         },
         products : [
             {
@@ -3737,6 +3737,7 @@ exports.minions = [
         tierDelay : [13,13,12,12,11,11,9.5,9.5,8,8,6.5],
         storage: [64,192,192,384,384,576,576,768,768,960,960],
         upgrade:{
+            detachTier1: true,
             materials: [
                 ["Red Gift","* based on 0.12% drop rate"],
                 ["Snow Block"],
@@ -4159,7 +4160,7 @@ exports.minions = [
         ]      
     },{ //53
         name: "Hard Stone Minion",
-        id: 20,
+        id: 53,
         tierDelay : [14,14,12,12,10,10,9,9,8,8,7,6], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
@@ -4230,7 +4231,7 @@ exports.minions = [
         ]      
     },{ //54
         name: "Flower Minion",
-        id: 20,
+        id: 54,
         tierDelay : [30,29,28,27,26,25,24,23,22,20,18],
         storage: [960,960,960,960,960,960,960,960,960,960,960],
         warning: "* Auction House prices not supported",
