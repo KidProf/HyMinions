@@ -1,6 +1,6 @@
 # HyMinions
 
-Hypixel Skyblock - Minions Calculator and Events Timer. Know your most profitable minions! Tailor made for each profile, fully accurate.
+Hypixel Skyblock - Minions Calculator and Events Timer. Know your most profitable minions! Tailor made for each profile, highly accurate.
 
 ## Installation
 
