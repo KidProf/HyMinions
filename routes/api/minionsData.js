@@ -4161,6 +4161,7 @@ exports.minions = [
     },{ //53
         name: "Hard Stone Minion",
         id: 53,
+        rawId: "HARD_STONE",
         tierDelay : [14,14,12,12,10,10,9,9,8,8,7,6], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
