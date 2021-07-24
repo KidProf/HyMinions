@@ -40,20 +40,34 @@ function toggleCalculationType(){
 function toggleMinionChest(){
     console.log("toggleMinionChest");
     let superCompactor = $("#overallSuperCompactor").children("option:selected").val();
-    console.log($("#overallSuperCompactor").children("option:selected").val());
+    //console.log($("#overallSuperCompactor").children("option:selected").val());
     if(superCompactor<=1){
         $("#minionChest").removeClass("d-none");
     }else{
         $("#minionChest").addClass("d-none");
     }
 }
-
+function selectTierTypeRadios(value){
+    console.log("selectTierTypeRadios("+value)
+    let tierTypeRadios = $('input[name=tierTypeRadios]','#overall');
+    switch(value){
+        case 0:
+            $("#overallUseTier").prop("checked",true);
+            break;
+        case 1:
+            $("#overallUseProfile").prop("checked",true);
+            break;
+        case 2:
+            $("#overallUseSlots").prop("checked",true);
+            break;
+    }
+}
 function generateLink(){
     let keys = [], values = [];
 
     //tier selection
     let slotsRadios = $('input[name=slotsRadios]:checked','#overall').val();
-    console.log(slotsRadios)
+    //console.log(slotsRadios)
     if($("#overallUseProfile").prop("checked")&&$("#overallProfileName").val()!=""){//use profile
         keys.push("tierType");
         values.push(1);
@@ -216,7 +230,7 @@ function appendLink(id){
         }while(valuesEndLocation!=-1);
     }
 
-    console.log(id);
+    //console.log(id);
     let i=0;
     while(i<keys.length){
         if(keys[i].includes(id+"individual")){

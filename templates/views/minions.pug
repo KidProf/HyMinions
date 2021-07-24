@@ -56,14 +56,14 @@ block content
                     br
                     h3 Tier Selection
                     .form-check
-                        input#overallUseProfile.form-check-input.radio(type="radio" name="tierTypeRadios" checked=(settings.tierType==1 ? "checked":undefined)) 
+                        input#overallUseProfile.form-check-input.radio(type="radio" name="tierTypeRadios" value=1 checked=(settings.tierType==1 ? "checked":undefined)) 
                         label(for="overallUseProfile") Use Profile  &nbsp; 
                         +infoBox("profileModal","question","Why is my Minecraft name required?")
                             p If you enter your Minecraft name, it will calculate the profit based on the highest tier of the minion you have crafted. It could make the profit list more personalized and useful when finding the most profitable minions among those you have.
                             p Alternatively, you could uncheck this "Use Profile" box, and select the tier of the minions manually.
                         .form-group#useProfile
                             p Minecraft Name: &nbsp; 
-                                input#overallProfileName.form-control(value=settings.name)
+                                input#overallProfileName.form-control(value=settings.name oninput="selectTierTypeRadios(1)")
                             if(settings.profileNames)
                                 label(for="overallProfileProfile") Profile: &nbsp;
                                 select#overallProfileProfile.form-control
@@ -72,7 +72,7 @@ block content
                                         option(value=k selected=(settings.profile==k?'selected':undefined))=settings.profileNames[k]
                                         -k++;
                     .form-check
-                        input#overallUseSlots.form-check-input.radio(type="radio" name="tierTypeRadios" checked=(settings.tierType==2 ? "checked":undefined)) 
+                        input#overallUseSlots.form-check-input.radio(type="radio" name="tierTypeRadios" value=2 checked=(settings.tierType==2 ? "checked":undefined)) 
                         label(for="overallUseSlots") Estimate by number of minion slots:  &nbsp; 
                         +infoBox("slotsModal","question","Estimate by number of minion slots")
                             p We could estimate the tier of the minions you have based on the number of minion slots you have, assuming you craft the minions in ascending order of costs. 
@@ -80,32 +80,32 @@ block content
                             p If you want the profits calculator to be more accurate, you are advised to enter your Minecraft name so that it can obtain the exact minions you have. 
                         .form-group
                             .form-check
-                                input#slots10.form-check-input.radio(type="radio" name="slotsRadios" value=10 checked=(settings.slots==10 ? "checked":undefined)) 
+                                input#slots10.form-check-input.radio(type="radio" name="slotsRadios" value=10 onchange="selectTierTypeRadios(2)" checked=(settings.slots==10 ? "checked":undefined)) 
                                 label(for="slots10") 10 slots
                             .form-check
-                                input#slots15.form-check-input.radio(type="radio" name="slotsRadios" value=15 checked=(settings.slots==15 ? "checked":undefined)) 
+                                input#slots15.form-check-input.radio(type="radio" name="slotsRadios" value=15 onchange="selectTierTypeRadios(2)" checked=(settings.slots==15 ? "checked":undefined)) 
                                 label(for="slots15") 15 slots
                             .form-check
-                                input#slots20.form-check-input.radio(type="radio" name="slotsRadios" value=20 checked=(settings.slots==20 ? "checked":undefined)) 
+                                input#slots20.form-check-input.radio(type="radio" name="slotsRadios" value=20 onchange="selectTierTypeRadios(2)" checked=(settings.slots==20 ? "checked":undefined)) 
                                 label(for="slots20") 20 slots
                             .form-check
-                                input#slots23.form-check-input.radio(type="radio" name="slotsRadios" value=23 checked=(!settings.slots||settings.slots==23 ? "checked":undefined)) 
+                                input#slots23.form-check-input.radio(type="radio" name="slotsRadios" value=23 onchange="selectTierTypeRadios(2)" checked=(!settings.slots||settings.slots==23 ? "checked":undefined)) 
                                 label(for="slots23") 23 slots
                             .form-check
-                                input#slotsOthers.form-check-input.radio(type="radio" name="slotsRadios" value="others" checked=(settings.slots&&settings.slots!=10&&settings.slots!=15&&settings.slots!=20&&settings.slots!=23 ? "checked":undefined)) 
+                                input#slotsOthers.form-check-input.radio(type="radio" name="slotsRadios" value="others" onchange="selectTierTypeRadios(2)" checked=(settings.slots&&settings.slots!=10&&settings.slots!=15&&settings.slots!=20&&settings.slots!=23 ? "checked":undefined)) 
                                 label(for="slotsOthers") Others: &nbsp;
                                 input#slotsOthersInput.form-control(type="number" value=settings.slots min="5")
                                 span &nbsp; slots
                     .form-check
-                        input#overallUseTier.form-check-input.radio(type="radio" name="tierTypeRadios" checked=(settings.tierType==0 ? "checked":undefined)) 
+                        input#overallUseTier.form-check-input.radio(type="radio" name="tierTypeRadios" value=0 checked=(settings.tierType==0 ? "checked":undefined)) 
                         label(for="overallUseTier") Manually select Tier: &nbsp;
-                            select#overallTier.form-control
+                            select#overallTier.form-control(onchange="selectTierTypeRadios(0)")
                                 -let j=1
                                 while j<=10
                                     option(selected=(settings.tier==j ? 'selected':undefined))=j
                                     -j++;
                                 //- 11: default
-                                option(selected=(!settings.tier||settings.tier==11 ? 'selected':undefined) value="12") 11
+                                option(selected=(!settings.tier||settings.tier==11 ? 'selected':undefined) value="11") 11
                                 option(selected=(settings.tier==12 ? 'selected':undefined) value="12") 11/12
                     
                     br
