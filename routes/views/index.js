@@ -33,7 +33,7 @@ exports = module.exports = function (req, res) {
         settings.run = 1;
 
         if(settings.name){
-            settings.useProfile= true;
+            settings.tierType= 1;
             if(!settings.profile){
                 settings.profile=0;
             }
@@ -41,8 +41,8 @@ exports = module.exports = function (req, res) {
                 settings.profile=0;
             }
         }else{
-            settings.useProfile= false;
-            settings.tier = 11;
+            settings.tierType= 2;
+            settings.slots = 23;
         }
 
         if(!settings.offlineTime||settings.offlineTime<=0){
