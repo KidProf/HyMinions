@@ -209,7 +209,7 @@ block content
                                 option(value="0" selected=(settings.sellingTo==0?'selected':undefined)) NPC only
                         .form-group
                             input#overallShowDetails.checkbox(type="checkbox" checked=(settings.showDetails>=1 ? 'checked' : undefined))
-                            label(for="overallShowDetails") &nbsp; Show Info Button &nbsp;
+                            label(for="overallShowDetails") &nbsp; Show Info Button and Details &nbsp;
                             +infoBox("showDetailsModal","question","Show Info")
                                 p If this option is checked, an info button on the rightmost side of the minion table in the minions page, containing all the raw data about the minions. If you spot any incorrect data in the info section, please contact me <a href="/contact">here</a>. You could verify the data with Hypixel Wiki or your own experience in Skyblock.
                         #autoCalculationTypeMiscellaneous(class=(settings.calculationType==1 ? "":"d-none"))

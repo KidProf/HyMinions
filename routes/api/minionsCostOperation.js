@@ -262,6 +262,7 @@ exports.calculateMinionsCost = async function(minions, settings){
             });
             tierCost.totalCost = totalCost;
             tierCost.totalCostText = moneyRepresentation(totalCost);
+            tierCost.totalCostTextDetail = moneyRepresentation(totalCost,1); 
             if(tier==0&&upgrade.detachTier1==true){
                 if(upgrade.putAtLast){
                     unsortedMinionsCostLast.push([tierCost]); //seperate tier 1 from the rest of the list

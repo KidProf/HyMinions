@@ -537,8 +537,8 @@ exports.calculateMinionsProfit = async function(minions, settings){
             //for new cal type, totalProfit means total profit
         });
         
-        minion.totalProfitText = moneyRepresentation(minion.totalProfit);
-        minion.profitPerHour = moneyRepresentation(minion.totalProfit/settings.offlineTime);
+        minion.totalProfitText = moneyRepresentation(minion.totalProfit,settings.showDetails);
+        minion.profitPerHour = moneyRepresentation(minion.totalProfit/settings.offlineTime,settings.showDetails);
 
         //TOOLS
         minion.tools = new Array();
@@ -593,10 +593,10 @@ exports.calculateMinionsProfit = async function(minions, settings){
             }
             if(bazaarPrice>npcPrice){
                 unitPrice = bazaarPrice;
-                result.unitPrice = moneyRepresentation(bazaarPrice);
+                result.unitPrice = moneyRepresentation(bazaarPrice,settings.showDetails);
             }else{
                 unitPrice = npcPrice;
-                result.unitPrice = moneyRepresentation(npcPrice)+" (NPC)";
+                result.unitPrice = moneyRepresentation(npcPrice,settings.showDetails)+" (NPC)";
             }
         }else{//npc only
             if(product.variantsNpcPrices){
@@ -604,7 +604,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
             }else{
                 unitPrice = product.npcPrice*product.variantsEquiv[variantIndex];
             }
-            result.unitPrice = moneyRepresentation(unitPrice)+" (NPC)";
+            result.unitPrice = moneyRepresentation(unitPrice,settings.showDetails)+" (NPC)";
         }
         result.profitPerItem = totalItemsVariant*unitPrice;
         //for diamond spreading
@@ -638,10 +638,10 @@ exports.calculateMinionsProfit = async function(minions, settings){
             }
             if(bazaarPrice>npcPrice){
                 unitPrice = bazaarPrice;
-                result.unitPrice = moneyRepresentation(bazaarPrice);
+                result.unitPrice = moneyRepresentation(bazaarPrice,settings.showDetails);
             }else{
                 unitPrice = npcPrice;
-                result.unitPrice = moneyRepresentation(npcPrice)+" (NPC)";
+                result.unitPrice = moneyRepresentation(npcPrice,settings.showDetails)+" (NPC)";
             } 
         }else{//npc only
             if(product.variantsNpcPrices){
@@ -649,7 +649,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
             }else{
                 unitPrice = product.npcPrice*product.variantsEquiv[variantIndex];
             }
-            result.unitPrice = moneyRepresentation(unitPrice)+" (NPC)";
+            result.unitPrice = moneyRepresentation(unitPrice,settings.showDetails)+" (NPC)";
         }
         result.profitPerItem = itemsPerHour*unitPrice;
         //for diamond spreading
