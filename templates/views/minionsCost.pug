@@ -208,7 +208,7 @@ mixin minionCostRow(minionCost,i,nextIndex,isShown)
             img(src="/images/minions/"+minionCost.name+".png" width="30" height="30")
         td(id="minion"+i+"Name")=minionCost.name
         td(id="minion"+i+"Tier")=minionCost.tier
-        td(id="minion"+i+"TotalCostFront")=minionCost.totalCostText
+        td(id="minion"+i+"TotalCostFront").text-right=minionCost.totalCostText
         td(id="minion"+i+"Items")
             if minionCost.upgradeMaterials
                 each material in minionCost.upgradeMaterials
@@ -224,4 +224,4 @@ mixin minionCostRow(minionCost,i,nextIndex,isShown)
                 each unitPrice in minionCost.unitPrices
                     | #{unitPrice}
                     br
-        td(id="minion"+i+"TotalCost")=minionCost.totalCostTextDetail
+        td(id="minion"+i+"TotalCost").text-right=minionCost.totalCostTextDetail

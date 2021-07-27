@@ -345,9 +345,9 @@ block content
                                     each product in minion.outputProducts
                                         | #{product.unitPrice}
                                         br
-                            td(id="minion"+i+"TotalProfit")=minion.totalProfitText
+                            td(id="minion"+i+"TotalProfit").text-right=minion.totalProfitText
                             if settings.calculationType==1
-                                td(id="minion"+i+"ProfitPerHour")=minion.profitPerHour
+                                td(id="minion"+i+"ProfitPerHour").text-right=minion.profitPerHour
                             td(id="minion"+i+"Settings")
                                 button.btn.btn-blue(id="individualSettings"+i data-toggle="modal" data-target="#individualModal"+i) Settings
                                 if(settings.showDetails==1)
