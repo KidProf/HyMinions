@@ -1,5 +1,5 @@
 //copied from general.js
-exports.moneyRepresentation = function moneyRepresentation(number,showDetails){
+function moneyRepresentation(number,showDetails){
     if(showDetails==1){
         if(number<0){
             return "-" + moneyRepresentationMagnitudeDetail(Math.abs(number));
