@@ -91,10 +91,6 @@ block content
             //- <!-- minionsCost1 -->
             <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3541192882647315" data-ad-slot="7408794849" data-ad-format="auto" data-full-width-responsive="true"></ins>
             <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
-            //- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            //- //- <!-- minions1 -->
-            //- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3541192882647315" data-ad-slot="6074503232" data-ad-format="auto" data-full-width-responsive="true"></ins>
-            //- <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
             br
             if settings&&settings.hasError
                 h1 Error
@@ -134,14 +130,14 @@ block content
                 #doubleScroll: table#minionsCostTable.table.table-dark.w-100
                     thead
                         tr
-                            th(scope="col")
-                            th(scope="col").minionName Minion
+                            th(scope="col").minionRankHeader
+                            th(scope="col").minionNameHeader Minion
                             th(scope="col") Tier
                             th(scope="col") Upgrade Cost
-                            th(scope="col").upgradeMaterials Upgrade materials
+                            th(scope="col").upgradeMaterialsHeader Upgrade materials
                             th(scope="col") Quantity
                             th(scope="col") Unit Price (Bazaar)
-                            th(scope="col") Upgrade Cost 
+                            th(scope="col").upgradeCostHeader Upgrade Cost 
 
                     if (settings.showDetails==1)
                         //-show top 50, until next minion slot, hide others
