@@ -71,9 +71,14 @@ block content
                                     while k<settings.profileNames.length
                                         option(value=k selected=(settings.profile==k?'selected':undefined))=settings.profileNames[k]
                                         -k++;
-                    .form-check
+                    .form-check.mb-3
                         input#overallUseSlots.form-check-input.radio(type="radio" name="tierTypeRadios" value=2 checked=(settings.tierType==2 ? "checked":undefined)) 
-                        label(for="overallUseSlots") Estimate by number of minion slots:  &nbsp; 
+                        label(for="overallUseSlots") Estimate by number of minion slots  &nbsp; 
+                        +infoBox("slotsModal","question","Estimate by number of minion slots")
+                            p We could estimate the tier of the minions you have based on the number of minion slots you have, assuming you craft the minions in ascending order of costs. 
+                            p Please note that it is just an ESTIMATE of the minions you have, the minions you have could be quite different because you might not be buying them in order, and the cost of the minions depends on the market price of materials.
+                            p If you want the profits calculator to be more accurate, you are advised to enter your Minecraft name so that it can obtain the exact minions you have.
+                        br
                         select#overallSlots.form-control(onchange="selectTierTypeRadios(2)")
                             -let l=0;
                             while l<settings.minionSlotsCriteriaLength
@@ -85,13 +90,11 @@ block content
                                 -l++;
                             option(selected=(settings.slots=="maxed" ? 'selected':undefined) value="maxed") Maxed
                         span &nbsp; slots &nbsp;
-                        +infoBox("slotsModal","question","Estimate by number of minion slots")
-                            p We could estimate the tier of the minions you have based on the number of minion slots you have, assuming you craft the minions in ascending order of costs. 
-                            p Please note that it is just an ESTIMATE of the minions you have, the minions you have could be quite different because you might not be buying them in order, and the cost of the minions depends on the market price of materials.
-                            p If you want the profits calculator to be more accurate, you are advised to enter your Minecraft name so that it can obtain the exact minions you have.
                     .form-check
                         input#overallUseTier.form-check-input.radio(type="radio" name="tierTypeRadios" value=0 checked=(settings.tierType==0 ? "checked":undefined)) 
                         label(for="overallUseTier") Manually select tier: &nbsp;
+                        br
+                        span Tier &nbsp;
                         select#overallTier.form-control(onchange="selectTierTypeRadios(0)")
                             -let j=1
                             while j<=10
