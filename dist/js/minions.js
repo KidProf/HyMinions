@@ -78,13 +78,10 @@ function generateLink(){
             keys.push("profile");
             values.push($("#overallProfileProfile").children("option:selected").val());
         }}
-    }else if($("#overallUseSlots").prop("checked")&&slotsRadios=="others"&&$("#slotsOthersInput").val()!=""){//use slots (others)
-        keys.push("slots");
-        values.push($("#slotsOthersInput").val());
-    }else if($("#overallUseSlots").prop("checked")&&slotsRadios&&slotsRadios!="others"){//use slots (radio)
-        if(slotsRadios!=23){
+    }else if($("#overallUseSlots").prop("checked")){//use slots
+        if($("#overallSlots").children("option:selected").val()!=23){
             keys.push("slots");
-            values.push(slotsRadios);
+            values.push($("#overallSlots").children("option:selected").val());
         }
     }else if($("#overallUseTier").prop("checked")){//use tier
         keys.push("tierType");

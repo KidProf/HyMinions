@@ -153,7 +153,11 @@ exports.calculateMinionsProfit = async function(minions, settings){
             });
             let i=0;
             console.log(minionSlotsCriteria[settings.slots-6]);
-            for(i=0;i<Math.min(minionSlotsCriteria[settings.slots-6],minionsCost.length);i++){
+            let repeatUntil = minionsCost.length; //in case when minionSlotsCriteria[index] is undefined/ when index is "Maxed"
+            if(minionSlotsCriteria[settings.slots-6]){
+                repeatUntil = Math.min(minionSlotsCriteria[settings.slots-6],minionsCost.length);
+            }
+            for(i=0;i<repeatUntil;i++){
                 minions[minionsCost[i].minionIndex].tier = Math.max(minionsCost[i].tier,minions[minionsCost[i].minionIndex].tier);
                 console.log(minionsCost[i].name,minions[minionsCost[i].minionIndex].name,minions[minionsCost[i].minionIndex].tier);
             }
@@ -174,13 +178,8 @@ exports.calculateMinionsProfit = async function(minions, settings){
         });
     }
 
-    //check to see if diamond spreading is added to the minions array
-    // if(diamondSpreadingAdded==false){
-    //     minions.forEach((minion)=>{
-    //         minion.products.push(diamondSpreadingItem);
-    //     });
-    //     diamondSpreadingAdded = true;
-    // }
+    //add length of minionSlotsCriteria
+    settings.minionSlotsCriteriaLength = minionSlotsCriteria.length;
 
     //calculate profit
     minions.forEach((minion)=>{
