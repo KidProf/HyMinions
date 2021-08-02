@@ -57,7 +57,7 @@ block content
                     h3 Tier Selection
                     .form-check
                         input#overallUseProfile.form-check-input.radio(type="radio" name="tierTypeRadios" value=1 checked=(settings.tierType==1 ? "checked":undefined)) 
-                        label(for="overallUseProfile") Use Profile  &nbsp; 
+                        label(for="overallUseProfile") Use Profile (Recommended)  &nbsp; 
                         +infoBox("profileModal","question","Why is my Minecraft name required?")
                             p If you enter your Minecraft name, it will calculate the profit based on the highest tier of the minion you have crafted. It could make the profit list more personalized and useful when finding the most profitable minions among those you have.
                             p Alternatively, you could uncheck this "Use Profile" box, and select the tier of the minions manually.
@@ -231,8 +231,8 @@ block content
                             .form-group
                                 label(for="overallCalculationType") Calculation mode: &nbsp;  
                                 select#overallCalculationType.form-control(onchange="toggleCalculationType()")
-                                    option(value="0" selected=(settings.calculationType==0?'selected':undefined)) Old
-                                    option(value="1" selected=(settings.calculationType==1?'selected':undefined)) New (based on offline duration)
+                                    option(value="0" selected=(settings.calculationType==0?'selected':undefined)) Old (Not recommended)
+                                    option(value="1" selected=(settings.calculationType==1?'selected':undefined)) New (Based on offline duration)
                                 span &nbsp; 
                                     +infoBox("calculationTypeModal","question","Calculation Modes")
                                         h4 New calculation mode
