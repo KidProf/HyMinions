@@ -159,7 +159,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
             }
             for(i=0;i<repeatUntil;i++){
                 minions[minionsCost[i].minionIndex].tier = Math.max(minionsCost[i].tier,minions[minionsCost[i].minionIndex].tier);
-                console.log(minionsCost[i].name,minions[minionsCost[i].minionIndex].name,minions[minionsCost[i].minionIndex].tier);
+                //console.log(minionsCost[i].name,minions[minionsCost[i].minionIndex].name,minions[minionsCost[i].minionIndex].tier);
             }
         });
     }

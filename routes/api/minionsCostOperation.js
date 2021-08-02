@@ -25,9 +25,7 @@ exports.calculateMinionsCost = async function(minions, settings){
             profilesAjax.forEach((profile,index)=>{ 
                 //store cute name for data input
                 //console.log(profile);
-                profileNames[index]=profile.cuteName;
-                communitySlots[index]=profile.communitySlots;
-                minionCrafts[index]=profile.rawMinions.length;
+                let minionCraftsProfile = 0;
                 minions.forEach((minion,index3)=>{
                     minion.profilesTier[index] = new Array(minion.tierDelay.length);
                     minion.profilesTier[index].forEach((crafted)=>{
@@ -39,7 +37,7 @@ exports.calculateMinionsCost = async function(minions, settings){
                     //e.g. to get "TARANTULA" from "TARANTULA_4"
                     let underscoreLocation = rawMinion.lastIndexOf("_");
                     let searchString = rawMinion.substring(0,underscoreLocation);
-    
+                    
                     //search it with each minion name
                     minions.forEach((minion,index4)=>{
                         let minionString;
@@ -51,10 +49,18 @@ exports.calculateMinionsCost = async function(minions, settings){
                         }
                         if(minionString==searchString){
                             let tier = rawMinion.substring(underscoreLocation+1);
+                            if(!minion.profilesTier[index][tier-1]){
+                                minionCraftsProfile++;
+                            }else{
+                                console.log("DUPLICATE",rawMinion);
+                            }
                             minion.profilesTier[index][tier-1] = true;
                         }
                     });
                 });
+                profileNames[index]=profile.cuteName;
+                communitySlots[index]=profile.communitySlots;
+                minionCrafts[index]=minionCraftsProfile;
             });
         });
     }
