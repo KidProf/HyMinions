@@ -36,7 +36,7 @@ exports = module.exports = function (req, res) {
             if(settings.profile=="undefined"){
                 settings.profile=0;
             }
-        }else if(settings.tierType==0&&settings.tier){//use tier
+        }else if(settings.tierType==0){//use tier
             if(!settings.tier||!isWithinList(settings.tier,[1,2,3,4,5,6,7,8,9,10,11,12])){
                 settings.tier = 11;
             }
@@ -66,6 +66,12 @@ exports = module.exports = function (req, res) {
         if(!settings.fuel||settings.fuel<0){
             settings.fuel = 25;
         }
+        if(!settings.offlineTime||settings.offlineTime<=0){
+            settings.offlineTime = 24;
+        }
+        if(!settings.offlineTimeUnit||!isWithinList(settings.offlineTimeUnit,[0,1])){
+            settings.offlineTimeUnit = 1;
+        }
     
         //Advanced
         if(!settings.diamondSpreading||!isWithinList(settings.diamondSpreading,[0,1,2])){
@@ -77,15 +83,9 @@ exports = module.exports = function (req, res) {
         if(!settings.productForm||!isWithinList(settings.productForm,[-2,-1,0,1,2])){
             settings.productForm = -2;
         }
-        if(!settings.offlineTime||settings.offlineTime<=0){
-            settings.offlineTime = 24;
-        }
         //SOULFLOW
         if(!settings.soulflow||!isWithinList(settings.soulflow,[0,1])){
             settings.soulflow = 0;
-        }
-        if(!settings.offlineTimeUnit||!isWithinList(settings.offlineTimeUnit,[0,1])){
-            settings.offlineTimeUnit = 1;
         }
         if(!settings.superCompactor||!isWithinList(settings.superCompactor,[0,1,2,3])){
             settings.superCompactor = 3;
