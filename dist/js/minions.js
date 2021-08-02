@@ -264,10 +264,14 @@ function appendLink(id){
 
 function search(){
     window.location.hash="#content";
-    let searchingName = $("#searchInput").val();
+    let searchingName = $("#searchInput").val().toLowerCase();
+    let results = new Array();
     for(i=0;i<$("#searchDatalist").children("option").length;i++){
-        if(searchingName==$("#searchDatalist").children("option").eq(i).val()){
-            window.location.hash="#minion"+i+"Row";
+        let target = $("#searchDatalist").children("option").eq(i).val().toLowerCase();
+        if(target.includes(searchingName)){ //ALT: searchingName==target.substring(0,searchingName.length)
+            results.push(i);
         };
     }
+    console.log(results);
+    if(results.length==1) window.location.hash="#minion"+results[0]+"Row";
 }
