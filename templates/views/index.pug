@@ -171,7 +171,7 @@ block content
 							.row
 								.offset-2.col-4.text-center: h5 Minion
 								.col-2.text-center: h5 Tier
-								.col-4: h5 Total Profit
+								.col-4.totalProfitTitleRightAlign: h5 Total Profit
 							- let i = 0
 							while i<5
 								.row.align-items-center
@@ -181,7 +181,7 @@ block content
 										img(src="/images/minions/"+minions[i].name+".png").d-inline
 									.col-4.text-center: p(id="minion"+i+"Name").mb-0=minions[i].name.substring(0, minions[i].name.lastIndexOf(" "))
 									.col-2.text-center: p(id="minion"+i+"Tier").mb-0=minions[i].tier
-									.col-4: p(id="minion"+i+"Profit").mb-0=minions[i].totalProfitText
+									.col-4: p(id="minion"+i+"Profit").mb-0.text-right.totalProfitRightAlign=minions[i].totalProfitText
 								- i++;
 							
 							#collapseMinions.collapse
@@ -193,7 +193,7 @@ block content
 											img(src="/images/minions/"+minions[i].name+".png").d-inline
 										.col-4.text-center: p(id="minion"+i+"Name").mb-0=minions[i].name.substring(0, minions[i].name.lastIndexOf(" "))
 										.col-2.text-center: p(id="minion"+i+"Tier").mb-0=minions[i].tier
-										.col-4: p(id="minion"+i+"Profit").mb-0=minions[i].totalProfitText
+										.col-4: p(id="minion"+i+"Profit").mb-0.text-right.totalProfitRightAlign=minions[i].totalProfitText
 									- i++;
 
 						a.read-more(data-toggle="collapse" href="#collapseMinions" aria-expanded="false" aria-controls="collapseMinions")

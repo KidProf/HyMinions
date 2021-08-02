@@ -92,14 +92,24 @@
 }
 
 #minionsIndexTable{
-    @media (max-width: 768px) {
+    @media (max-width: 768px) { //xs, sm
         .row{
             min-height: 60px;
         }
     }
-    @media (min-width: 768px) {
+    @media (min-width: 768px) { //md, lg, xl
         .row{
             min-height: 45px;
+        }
+    }
+    @media (max-width: 500px) { //when width of column is smaller than 60px
+        .totalProfitTitleRightAlign{
+            text-align: right;
+        }
+    }
+    @media (min-width: 500px) { //normal case
+        .totalProfitRightAlign{
+            width: 100px;
         }
     }
     img{
