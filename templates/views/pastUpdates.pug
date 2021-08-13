@@ -1,0 +1,97 @@
+extends ../layouts/default
+
+block append variables
+	- var currentPage = "abouts";
+
+block content
+	.container
+		h1 Past Updates
+		p It is a delightful trip down memory lane. Thank you for supporting HyMinions throughout the past year.
+		p Please note that this page shows major updates only.
+		
+		br
+		.my-box
+			.container
+				h4.announcementsHeaderYellow.header: a(href="/minionsCost") <img src="/images/news.png" width="30" height="30"/> UPDATE
+				h3.d-inline-block Minions Crafts Calculator &nbsp; &nbsp;
+				p.d-inline-block: a(href="/minionsCost") Click to try
+				p Jul 2021
+				p It calculates the cheapest minions to level up to gain more minion slots, also tailor-made for each profile if you input your Minecraft name. It also shows you how much money you need to spend on materials to unlock a new minion tier.
+				#collapseAnnouncementsJul2021.collapse
+					h4 Integrations with minions profit calculator
+					p When Voidling Minion is out, I often heard some comments saying: "Tier 11 voidling minion costs over 200 million, it is not reasonable putting it on the top of the profit list!" 
+					p I understand that, so here is where my new minion crafts calculator comes in handy. We could estimate the tier of the minions you have based on the number of minion slots you have. The default setting is 23 minion slots, so voidling minion would be set at tier 3, hence balance the whole ecosystem.
+					h4 Miscellaneous
+					p Added Hardstone Minion
+				a.read-more(data-toggle="collapse" href="#collapseAnnouncementsJul2021" aria-expanded="false" aria-controls="collapseAnnouncements1")
+					span.collapsed Show more
+					span.expanded Show less
+		br
+		.my-box
+			.container
+				h4.discordHeader.header: a(href="https://discord.gg/2KabAgsN6Y") <img src="/images/discord.png" width="30" height="30"/> DISCORD
+				p Jun 2021
+				p I have recently created a Discord server, join and chat about HyMinions, Hypixel Skyblock or even other games! 
+				a(href="https://discord.gg/2KabAgsN6Y") Invite link
+		br
+		.my-box
+			.container
+				h4.announcementsHeaderYellow.header: a(href="/minions") <img src="/images/news.png" width="30" height="30"/> UPDATE 
+				h3.d-inline-block Minion Calculator Update &nbsp; &nbsp;
+				p.d-inline-block: a(href="/minions") Click to try
+				p May 2021
+				p The new minion calculator would calculate the profit based on your frequency of collecting minions.
+				p For example, lapis minions could be a good minion for active players, who collect enchanted lapis before they are automatically converted into enchanted lapis blocks, but not for those who are less active.
+				#collapseAnnouncementsMay2021.collapse
+					p To use the new minion calculator, you could either type in your name and offline duration right here on the homepage or go to the <a href="/minions">minions</a> page if you would like to change some settings. (e.g. fuel/ diamond spreading)
+					p If you wish to use the old settings, you could click <a href="minions/?calculationType=0&diamondSpreading=1&sellingMethod=0">here</a> to have the previous settings prefilled for you. 
+					h4 Link sharing
+					p You could share the URL of the website after you have entered your settings and clicked apply. For example, <a href="/minions/?name=technoblade&offlineTime=240&/#content"> this link </a> gives the minion profit list of Technoblade for 10 days of offline time.
+					p This saves time typing your desired settings every time you visit the site, and it makes sharing specific minion profit lists easier.
+					h4 Miscellaneous
+					ul
+						li Added tier 12 farming minions
+						li Changed default settings from "sell offer" to "sell instantly" at the bazaar, to stabilize the bazaar prices
+						li Aesthetic improvements
+						li Fixed Voidling Minion product output amount
+						li Added Lesser Soulflow Engine as an experimental feature
+						li Added Voidling Minion and new variants of ender pearl
+					p You could submit bug reports or comments <a href="/contact">here</a>. I hope you all like the update. Thank you!
+				a.read-more(data-toggle="collapse" href="#collapseAnnouncementsMay2021" aria-expanded="false" aria-controls="collapseAnnouncements")
+					span.collapsed Show more
+					span.expanded Show less
+		br
+		.my-box
+			.container
+				h4.announcementsHeaderYellow.header <img src="/images/news.png" width="30" height="30"/> UPDATE
+				p Jan 2021
+				p.
+					Hello visitors! Hope you have enjoyed my minion calculator. I have made some updates to the website.
+				ul
+					li Added <a href="/forge">forge options comparison</a>.
+					li Added Enchanted Mithril and Enchanted Titanium.
+					li Added Mithril and Tier 12 minions.
+					li Added manual calibration in events page for Daylight Saving Time adjustments.
+				p.
+					If you spot a bug, feel free to <a href="/contact">contact me</a>.
+		br
+		.my-box
+			.container
+				h4.announcementsHeaderYellow.header <img src="/images/news.png" width="30" height="30"/> UPDATE
+				p Dec 2020
+				p.
+					Hello visitors! Hope you have enjoyed my minion calculator. I have made some updates to the website.
+				ul
+					li <a href="/events">NEW events page with new events added</a>
+					li new <a href="/abouts">abouts</a> page and <a href="/abouts">contact me</a> page
+		br
+		.my-box
+			.container
+				h4.minionsHeader.header: a(href="/minions") <img src="/images/minions.png" width="30" height="30"/> MINIONS 
+				p Initial release in Jun 2020
+		br
+		.my-box
+			.container
+				h4.eventsHeader.header: a(href="/events") <img src="/images/events.png" width="30" height="30"/> EVENTS 
+				p Initial release in Jun 2020
+

@@ -27,6 +27,7 @@ app.get('/minionscost',minionsCostView);
 app.get('/minions',minionsView);
 app.get('/forge',(req,res)=>{res.render("forge");});
 app.get('/abouts',(req,res)=>{res.render("abouts");});
+app.get('/abouts/pastupdates',(req,res)=>{res.render("pastUpdates");});
 app.get('/contact',(req,res)=>{res.render("contact");});
 
 //api
