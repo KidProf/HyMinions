@@ -184,7 +184,7 @@ block content
 									.col-4: p(id="minion"+i+"Profit").mb-0.text-right.totalProfitRightAlign=minions[i].totalProfitText
 								- i++;
 							
-							#collapseMinions.collapse
+							#collapseMinions.collapse.show
 								while i<minions.length
 									.row.align-items-center
 										.col-2.text-center
@@ -196,7 +196,7 @@ block content
 										.col-4: p(id="minion"+i+"Profit").mb-0.text-right.totalProfitRightAlign=minions[i].totalProfitText
 									- i++;
 
-						a.read-more(data-toggle="collapse" href="#collapseMinions" aria-expanded="false" aria-controls="collapseMinions")
+						a.read-more(data-toggle="collapse" href="#collapseMinions" aria-expanded="true" aria-controls="collapseMinions")
 							span.collapsed Show more
 							span.expanded Show less
 				
