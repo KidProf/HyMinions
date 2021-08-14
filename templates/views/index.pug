@@ -18,18 +18,12 @@ block content
 		.my-box
 			.container
 				h4.announcementsHeaderYellow.header: a(href="/minionsCost") <img src="/images/news.png" width="30" height="30"/> UPDATE
-				h3.d-inline-block Minions Crafts Calculator &nbsp; &nbsp;
-				p.d-inline-block: a(href="/minionsCost") Click to try
-				p It calculates the cheapest minions to level up to gain more minion slots, also tailor-made for each profile if you input your Minecraft name. It also shows you how much money you need to spend on materials to unlock a new minion tier.
-				#collapseAnnouncements.collapse
-					h4 Integrations with minions profit calculator
-					p When Voidling Minion is out, I often heard some comments saying: "Tier 11 voidling minion costs over 200 million, it is not reasonable putting it on the top of the profit list!" 
-					p I understand that, so here is where my new minion crafts calculator comes in handy. We could estimate the tier of the minions you have based on the number of minion slots you have. The default setting is 23 minion slots, so voidling minion would be set at tier 3, hence balance the whole ecosystem.
-					h4 Miscellaneous
-					p Added Hardstone Minion
-				a.read-more(data-toggle="collapse" href="#collapseAnnouncements" aria-expanded="false" aria-controls="collapseAnnouncements")
-					span.collapsed Show more
-					span.expanded Show less
+				p Made some small tweaks here and there to improve functionality.
+				ul
+					li Updated <a href="/abouts">abouts</a> and <a href="/abouts">contacts</a> page
+					li Added clear button
+					li Other minor changes (Full list please refer to <a href="https://discord.gg/2KabAgsN6Y">discord</a>)
+				p I understand that new features sometimes come with new bugs, feel free to <a href="/abouts">contact me</a> if you spot a bug.
 		//- br
 		//- .my-box
 		//- 	.container
@@ -43,39 +37,6 @@ block content
 		//- 		p However, I have made slight changes to the code so that it can calculate minions profit with NPC price. Even though the minions profit calculator will not be in full function, at least you can see the items that different minions generate.
 		//- 		p Sorry for the inconvenience caused and I hope you would use my minion calculator again when both Hypixel and Hypixel API functions normally.
 		//- 		p: a(href="minions/?sellingTo=0") Click here to check the calculator with NPC price
-		//- br
-		//- .my-box
-		//- 	.container
-		//- 		h4.announcementsHeaderYellow.header: a(href="/minions") <img src="/images/news.png" width="30" height="30"/> UPDATE 
-		//- 		h3 Minion Calculator Update
-		//- 		a(href="/minions") Click to check
-		//- 		ul
-		//- 			li Fixed Voidling Minion product output amount
-		//- 			li Added Lesser Soulflow Engine as an experimental feature
-		//- 			li Added Voidling Minion and new variants of ender pearl
-		//- 			li Brand new minion calculator which more suits your actual needs
-				
-		//- 		#collapseAnnouncements.collapse
-		//- 			h4 New minion calculator
-		//- 			p The new minion calculator would calculate the profit based on your frequency of collecting minions.
-		//- 			p For example, lapis minions could be a good minion for active players, who collect enchanted lapis before they are automatically converted into enchanted lapis blocks, but not for those who are less active.
-		//- 			p To use the new minion calculator, you could either type in your name and offline duration right here on the homepage or go to the <a href="/minions">minions</a> page if you would like to change some settings. (e.g. fuel/ diamond spreading)
-		//- 			p If you wish to use the old settings, you could click <a href="minions/?calculationType=0&diamondSpreading=1&sellingMethod=0">here</a> to have the previous settings prefilled for you. 
-		//- 			h4 Link sharing
-		//- 			p You could share the URL of the website after you have entered your settings and clicked apply. For example, <a href="/minions/?name=technoblade&offlineTime=240&/#content"> this link </a> gives the minion profit list of Technoblade for 10 days of offline time.
-		//- 			p This saves time typing your desired settings every time you visit the site, and it makes sharing specific minion profit lists easier.
-		//- 			h4 Miscellaneous
-		//- 			ul
-		//- 				li Added tier 12 farming minions
-		//- 				li Changed default settings from "sell offer" to "sell instantly" at the bazaar, to stabilize the bazaar prices
-		//- 				li Aesthetic improvements
-		//- 			p You could submit bug reports or comments <a href="/contact">here</a>. I hope you all like the update. Thank you!
-		//- 		a.read-more(data-toggle="collapse" href="#collapseAnnouncements" aria-expanded="false" aria-controls="collapseAnnouncements")
-		//- 			span.collapsed Show more
-		//- 			span.expanded Show less
-		//- 		//- p.
-		//- 		//- 	If you spot a bug, feel free to <a href="/contact">contact me</a>.
-
 		br
 		.my-box
 			.container
@@ -207,7 +168,12 @@ block content
 						p: small Based on minions With Enchanted Lava Bucket, Diamond Spreading and Dwarven Super Compactor 3000 equipped. You are expected to sell your products using "sell instantly".
 						p: small If you leave Minecraft Name blank, we would estimate the minions you have if you have 23 minion slots.
 						a(href="/minions") Click here for more settings and calculation details
-		
+		br
+		.my-box
+			.container
+				h4.minionsCostHeader.header: a(href="/minionsCost") <img src="/images/minionsCost.png" width="30" height="30"/> MINIONS (CRAFTS)
+				p It calculates the cheapest minions to level up to gain more minion slots, also tailor-made for each profile if you input your Minecraft name. It also shows you how much money you need to spend on materials to unlock a new minion tier.
+				p: a(href="/minionsCost") Click to try
 		br
 		.my-box
 			.container
