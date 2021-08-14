@@ -29,7 +29,8 @@ exports = module.exports = function (req, res) {
         settings.hasError = false;
 
         //tier selection
-        if(settings.tierType==1&&settings.name){//use profile
+        if(settings.name){//use profile (even doesnt have tierType=1)
+            settings.tierType=1;
             if(!settings.profile){
                 settings.profile=0;
             }

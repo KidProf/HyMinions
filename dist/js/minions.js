@@ -69,8 +69,8 @@ function generateLink(){
     let slotsRadios = $('input[name=slotsRadios]:checked','#overall').val();
     //console.log(slotsRadios)
     if($("#overallUseProfile").prop("checked")&&$("#overallProfileName").val()!=""){//use profile
-        keys.push("tierType");
-        values.push(1);
+        // keys.push("tierType");
+        // values.push(1);
         keys.push("name");
         values.push($("#overallProfileName").val());
         if($("#overallProfileProfile")&&$("#overallProfileProfile").children("option:selected").val()!=0&&$("#overallProfileProfile").children("option:selected").val()!=undefined){{
