@@ -99,8 +99,9 @@ function generateLinkIndex(){
     }
     let string = "/?"
     for(let i=0;i<keys.length;i++){
-        string += keys[i]+"="+values[i]+"&";
+        if(i!=0) string+="&";
+        string += keys[i]+"="+values[i];
     }
-    string += "/#content";
+    string += "#content";
     window.location.href=string;
 }
