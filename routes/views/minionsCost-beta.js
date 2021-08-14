@@ -36,6 +36,7 @@ exports = module.exports = function (req, res) {
             if(settings.profile=="undefined"){
                 settings.profile=0;
             }
+
         }else{
             settings.useProfile= false;
         }
@@ -52,6 +53,15 @@ exports = module.exports = function (req, res) {
         }
         if(settings.useProfile==true){
             settings.showDetails = 1;
+        }
+        if(!settings.filterSlayers||!isWithinList(settings.filterSlayers,[0,1])){ //default, will filter slayers
+            settings.filterSlayers = 1;
+        }
+        if(!settings.filterCollections||!isWithinList(settings.filterCollections,[0,1])){ //default, will filter collections
+            settings.filterCollections = 1;
+        }
+        if(!settings.bottomSlayers||!isWithinList(settings.bottomSlayers,[0,1])){ //default, will filter slayers
+            settings.bottomSlayers = 0;
         }
 
         console.log(settings);

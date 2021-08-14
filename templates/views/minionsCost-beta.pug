@@ -41,13 +41,17 @@ block content
         p What are the cheapest minions to level up to gain more minion slots?
         //-TEMP
         h3 Warning
-        p This feature is in beta, bugs may occur.
+        p The filter and search functions are in beta, bugs may occur.
         #overall
             .row
                 #general.col-lg-6.col-12
                     br
                     h3 General
                     .form-group
+                        .form-group
+                            input#overallUseProfile.checkbox(type="checkbox" onclick="toggleUseProfile()" checked=(settings.useProfile==true ? 'checked' : undefined))
+                            label(for="overallShowDetails") &nbsp; Use Profile
+                    .form-group#profileName
                         p Minecraft Name (Recommended): &nbsp; 
                             input#overallProfileName.form-control(value=settings.name)
                             span &nbsp; &nbsp; 
@@ -75,10 +79,17 @@ block content
                             label(for="overallTax") Tax in bazaar: &nbsp; 
                                 input#overallTax.form-control(type="number" value=settings.tax min="0")
                                 span &nbsp; %
-
-                        //- .form-group
-                        //-     input#overallShowDetails.checkbox(type="checkbox" checked=(settings.showDetails>=1 ? 'checked' : undefined))
-                        //-     label(for="overallShowDetails") &nbsp; Load All &nbsp;
+                        #slayerCollectionsUseProfile(class=(settings.useProfile==true ? undefined : "d-none"))
+                            .form-group
+                                input#overallFilterSlayers.checkbox(type="checkbox" checked=(settings.filterSlayers==1 ? 'checked' : undefined))
+                                label(for="overallFilterSlayers") &nbsp; Based on slayers level you have
+                            //- .form-group
+                            //-     input#overallFilterCollections.checkbox(type="checkbox" checked=(settings.filterCollections==1 ? 'checked' : undefined))
+                            //-     label(for="overallFilterCollections") &nbsp; Based on collections you have
+                        #slayerCollectionsNoProfile(class=(settings.useProfile==true ? 'd-none' : undefined))
+                            .form-group
+                                input#overallBottomSlayers.checkbox(type="checkbox" checked=(settings.bottomSlayers==1 ? 'checked' : undefined))
+                                label(for="overallBottomSlayers") &nbsp; Put slayer minions to bottom of list
             
             br
             button#overallSettings.btn(onclick="generateLink()") Apply

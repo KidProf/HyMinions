@@ -18,6 +18,17 @@ if(hash=="#all"){
 $("#minionsCostTable").doubleScroll();
 
 //functions to provide interaction
+function toggleUseProfile(){
+    let useProfile = $("#overallUseProfile").prop("checked");
+    if(useProfile){
+        $("#slayerCollectionsUseProfile").removeClass("d-none");
+        $("#slayerCollectionsNoProfile").addClass("d-none");
+    }else{
+        $("#slayerCollectionsUseProfile").addClass("d-none");
+        $("#slayerCollectionsNoProfile").removeClass("d-none");
+    }
+}
+
 function showCollapseNext(nextIndex){
     console.log("showCollapseNext("+nextIndex);
     $(".collapseNext"+nextIndex).removeClass("d-none");
@@ -53,14 +64,26 @@ function generateLink(){
     let keys = [], values = [];
 
     //general
-    if($("#overallProfileName").val()!=""){
+    if($("#overallUseProfile").prop("checked")&&$("#overallProfileName").val()!=""){
         keys.push("name");
         values.push($("#overallProfileName").val());
         if($("#overallProfileProfile")&&$("#overallProfileProfile").children("option:selected").val()!=0&&$("#overallProfileProfile").children("option:selected").val()!=undefined){{
-            
             keys.push("profile");
             values.push($("#overallProfileProfile").children("option:selected").val());
         }}
+        if($("#overallFilterSlayers").prop("checked")!=1){ //default, will filter slayers
+            keys.push("filterSlayers");
+            values.push($("#overallFilterSlayers").prop("checked")? 1 : 0);
+        }
+        if($("#overallFilterCollections").prop("checked")!=1){ //default, will filter collections
+            keys.push("filterCollections");
+            values.push($("#overallFilterCollections").prop("checked")? 1 : 0);
+        }
+    }else{
+        if($("#overallBottomSlayers").prop("checked")!=0){ //default, won't filter slayers
+            keys.push("bottomSlayers");
+            values.push($("#overallBottomSlayers").prop("checked")? 1 : 0);
+        }
     }
 
     //advanced
@@ -76,13 +99,19 @@ function generateLink(){
         keys.push("tax");
         values.push($("#overallTax").val());
     }
-    if($("#overallShowDetails").prop("checked")){
+    // if($("#overallShowDetails").prop("checked")){
+    //     keys.push("showDetails");
+    //     values.push(1);
+    // }
+
+    //keep show details if showDetails=1 exists
+    if(window.location.href.includes("showDetails=1")){
         keys.push("showDetails");
         values.push(1);
     }
 
     //output
-    let string = "/minionscost"
+    let string = "/minionscost-beta"
     for(let i=0;i<keys.length;i++){
         string += i==0 ? "?" : "&";
         string += keys[i]+"="+values[i];
@@ -143,7 +172,7 @@ function appendShowDetails(nextIndex){
     values.push(1);
 
     //output
-    let string = "/minionscost"
+    let string = "/minionscost-beta"
     for(let i=0;i<keys.length;i++){
         string += i==0 ? "?" : "&";
         string += keys[i]+"="+values[i];

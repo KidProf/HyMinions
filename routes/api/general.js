@@ -140,6 +140,12 @@ exports.findProfile = async function findProfile(name,settings){
                             });
                         }
                         profilesAjax[index]["communitySlots"] = communitySlots;
+                        profilesAjax[index]["slayerBosses"] = {
+                            "revenant5" : profile[slayer_bosses][zombie][claimed_levels][level_5],
+                            "revenant9" : profile[slayer_bosses][zombie][claimed_levels][level_9_special],
+                            "tarantula5" : profile[slayer_bosses][spider][claimed_levels][level_5],
+                            "voidling4" : profile[slayer_bosses][enderman][claimed_levels][level_4],
+                        };
                         profilesAjax[index]["cuteName"] = profile["cute_name"];
                     });
                     profilesAjax.sort((a,b)=>{

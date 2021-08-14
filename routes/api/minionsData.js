@@ -65,6 +65,20 @@ exports.minions = [
                 [448,256+128+64+32+16+8,512+320+160+80,undefined,undefined],
                 [64,2000000,undefined,undefined],
             ],
+            slayerRequirements: [
+                "revenant5",
+                "revenant5",
+                "revenant5",
+                "revenant5",
+                "revenant5",
+                "revenant5",
+                "revenant5",
+                "revenant5",
+                "revenant5",
+                "revenant5",
+                "revenant5",
+                "revenant9",
+            ]
         },
         products : [
             {
@@ -159,6 +173,19 @@ exports.minions = [
                 [224,128+64+32+16+8,512+320+160+80,undefined,undefined],
                 [448,256+128+64+32+16+8,512+320+160+80,undefined,undefined],
             ],
+            slayerRequirements: [
+                "tarantula5",
+                "tarantula5",
+                "tarantula5",
+                "tarantula5",
+                "tarantula5",
+                "tarantula5",
+                "tarantula5",
+                "tarantula5",
+                "tarantula5",
+                "tarantula5",
+                "tarantula5",
+            ]
         },
         products : [
             {
@@ -4101,6 +4128,19 @@ exports.minions = [
                 [224,128+64+32+16+8,512+320+160+80,undefined,undefined],
                 [448,96+48+24+8,96+48+24+8,128+64,undefined,undefined],
             ],
+            slayerRequirements: [
+                "voidling4",
+                "voidling4",
+                "voidling4",
+                "voidling4",
+                "voidling4",
+                "voidling4",
+                "voidling4",
+                "voidling4",
+                "voidling4",
+                "voidling4",
+                "voidling4",
+            ]
         },
         //noDiamondSpreading : 1,
         products : [
@@ -4239,6 +4279,7 @@ exports.minions = [
         toolsRequired: ["* Auction House prices not supported"],
         upgrade:{
             putAtLast: 1,
+            warning: true,
             materials: [
                 ["Bought from Dark Auction","* Auction House prices not supported"],
                 ["Dandelion","* Auction House prices not supported"],
