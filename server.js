@@ -11,6 +11,7 @@ const getMinionsApi = require('./routes/api/getBazaarApiForge');
 const getProfileApi = require('./routes/api/getProfileApiForge');
 const minionsView = require("./routes/views/minions.js");
 const minionsCostView = require("./routes/views/minionsCost.js");
+const minionsCostBetaView = require("./routes/views/minionsCost-beta.js");
 const indexView = require("./routes/views/index.js");
 
 //constants
@@ -24,6 +25,7 @@ app.get('/',indexView);
 app.get('/events',(req,res)=>{res.render("events");});
 //app.get('/minions',(req,res)=>{res.sendFile(path.join(__dirname, '/dist', 'minions.html'))});
 app.get('/minionscost',minionsCostView);
+app.get('/minionscost-beta',minionsCostBetaView);
 app.get('/minions',minionsView);
 app.get('/forge',(req,res)=>{res.render("forge");});
 app.get('/abouts',(req,res)=>{res.render("abouts");});
