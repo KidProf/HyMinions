@@ -269,6 +269,9 @@ function search(){
     let results = new Array();
     for(i=0;i<$("#searchDatalist").children("option").length;i++){
         let target = $("#searchDatalist").children("option").eq(i).val().toLowerCase();
+        if(target==searchingName){ //if exact match, then directly move to the row
+            window.location.hash="#minion"+i+"Row";
+        }
         if(target.includes(searchingName)){ //ALT: searchingName==target.substring(0,searchingName.length)
             results.push(i);
         };
