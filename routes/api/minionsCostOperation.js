@@ -9,7 +9,7 @@ exports.calculateMinionsCost = async function(minions, settings){
     console.log("calculateMinionsCost");
     console.log(settings.name,minecraftName);
     //console.log(Date.now()-lastUpdatedBazaar);
-    if((settings.useProfile)&&(settings.name!=minecraftName||hadError||Date.now()-lastUpdatedProfile>5*60*1000)){ //don't call api again if identical name, but call again if prev result has error, 5 min timeout
+    if((settings.useProfile)&&(!minecraftName||settings.name.toLowerCase()!=minecraftName.toLowerCase()||hadError||Date.now()-lastUpdatedProfile>5*60*1000)){ //don't call api again if identical name, but call again if prev result has error, 5 min timeout
         minecraftName = settings.name;
         lastUpdatedProfile = Date.now();
         await findProfile(settings.name,settings).then((profilesAjax)=>{

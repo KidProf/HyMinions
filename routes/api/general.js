@@ -117,8 +117,8 @@ exports.findProfile = async function findProfile(name,settings){
         setTimeout(() => {
             fetch("https://api.mojang.com/users/profiles/minecraft/"+name)
             .then(result => result.json())
-            .then(({id}) => {
-                //console.log(id);
+            .then(({id, name}) => {
+                settings.name=name; //fix case
                 fetch("https://api.hypixel.net/skyblock/profiles?key="+process.env.HYPIXEL_KEY+"&uuid="+id)
                 .then(result => result.json())
                 .then(({profiles}) => {
