@@ -97,11 +97,19 @@ function generateLinkIndex(){
         }
 
     }
-    let string = "/?"
+    let string = "/"
     for(let i=0;i<keys.length;i++){
-        if(i!=0) string+="&";
+        string += i==0 ? "?" : "&";
         string += keys[i]+"="+values[i];
     }
     string += "#content";
     window.location.href=string;
+}
+
+function clearInput(){
+    $("#overallProfileName").val("");
+    $("#overallProfileProfile").addClass("d-none");
+    $("#overallProfileProfileLabel").addClass("d-none");
+    $("#overallOfflineTimeUnit").val("1");
+    $("#overallOfflineTime").val(1);
 }

@@ -65,7 +65,7 @@ block content
                             p Minecraft Name: &nbsp; 
                                 input#overallProfileName.form-control(value=settings.name oninput="selectTierTypeRadios(1)")
                             if(settings.profileNames)
-                                label(for="overallProfileProfile") Profile: &nbsp;
+                                label#overallProfileProfileLabel(for="overallProfileProfile") Profile: &nbsp;
                                 select#overallProfileProfile.form-control
                                     -let k=0;
                                     while k<settings.profileNames.length
@@ -255,6 +255,8 @@ block content
                                     span &nbsp; %
             br
             button#overallSettings.btn(onclick="generateLink()") Apply
+            span &nbsp; &nbsp; &nbsp;
+            button.btn.btn-link.read-more(onclick="clearInput()") Clear
             br
             br
 

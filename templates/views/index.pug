@@ -104,7 +104,7 @@ block content
 						p Minecraft Name (Recommended): &nbsp; 
 							input#overallProfileName.form-control(value=settings.name)
 						if(settings.profileNames)
-							label(for="overallProfileProfile") Profile: &nbsp;
+							label#overallProfileProfileLabel(for="overallProfileProfile") Profile: &nbsp;
 							select#overallProfileProfile.form-control
 								-let k=0
 								while k<settings.profileNames.length
@@ -118,6 +118,8 @@ block content
 								option(value="0" selected=(settings.offlineTimeUnit==0?'selected':undefined)) hour(s)
 								option(value="1" selected=(settings.offlineTimeUnit==1?'selected':undefined)) day(s)
 					button#overallSettings.btn(onclick="generateLinkIndex()") Calculate
+					span &nbsp; &nbsp; &nbsp;
+					button.btn.btn-link.read-more(onclick="clearInput()") Clear
 				
 				br
 				#content

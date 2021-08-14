@@ -55,7 +55,7 @@ block content
                                 p If you enter your Minecraft name, it will calculate the cheapest minion ignoring the minion you have crafted. It could make the crafts list more personalized and useful.
                                 p Alternatively, you could leave the Minecraft name box, and it would show the whole crafts list.
                         if(settings.profileNames)
-                            label(for="overallProfileProfile") Profile: &nbsp;
+                            label#overallProfileProfileLabel(for="overallProfileProfile") Profile: &nbsp;
                             select#overallProfileProfile.form-control
                                 -let k=0
                                 while k<settings.profileNames.length
@@ -82,6 +82,8 @@ block content
             
             br
             button#overallSettings.btn(onclick="generateLink()") Apply
+            span &nbsp; &nbsp; &nbsp;
+            button.btn.btn-link.read-more(onclick="clearInput()") Clear
             br
             br
 

@@ -66,8 +66,6 @@ function generateLink(){
     let keys = [], values = [];
 
     //tier selection
-    let slotsRadios = $('input[name=slotsRadios]:checked','#overall').val();
-    //console.log(slotsRadios)
     if($("#overallUseProfile").prop("checked")&&$("#overallProfileName").val()!=""){//use profile
         // keys.push("tierType");
         // values.push(1);
@@ -191,9 +189,9 @@ function generateLink(){
     }
 
     //output
-    let string = "/minions?"
+    let string = "/minions"
     for(let i=0;i<keys.length;i++){
-        if(i!=0) string+="&";
+        string += i==0 ? "?" : "&";
         string += keys[i]+"="+values[i];
     }
     string += "#content";
@@ -251,15 +249,16 @@ function appendLink(id){
         i++;
     }
 
-
     // console.log(keys);
     // console.log(values);
+
     //output
-    let string = "/minions/?"
+    let string = "/minions"
     for(let i=0;i<keys.length;i++){
-        string += keys[i]+"="+values[i]+"&";
+        string += i==0 ? "?" : "&";
+        string += keys[i]+"="+values[i];
     }
-    string += "/#content";
+    string += "#content";
     window.location.href=string;
 }
 
@@ -278,4 +277,39 @@ function search(){
     }
     console.log(results);
     if(results.length==1) window.location.hash="#minion"+results[0]+"Row";
+}
+
+function clearInput(){
+    console.log("clearInput()");
+
+    //tier selection
+    $("#overallUseSlots").prop("checked",true);
+    $("#overallProfileName").val("");
+    $("#overallProfileProfile").addClass("d-none");
+    $("#overallProfileProfileLabel").addClass("d-none");
+    $("#overallSlots").val("23"); //for select, must pass in string
+    $("#overallTier").val("11");
+
+
+    //general
+    $("#overallFuel").val(25);
+    $("#overallCalculationType").val("1");
+    $("#overallOfflineTimeUnit").val("1");
+    $("#overallOfflineTime").val(1);
+
+    //advanced
+    $("#overallSoulflow").prop("checked",false);
+    $("#overallSuperCompactor").val("3");
+    $("#overallDiamondSpreading").prop("checked",true);
+    $("#overallNoCrafting").prop("checked",false);
+
+    $("#overallProductForm").val("-2");
+    $("#overallDiamondSpreadingDwarvenCompactor").val("2");
+
+    $("#overallShowDetails").prop("checked",false);
+    $("#overallSellingTo").val("1");
+    
+    //misc
+    $("#overallSellingMethod").val("1");
+    $("#overallTax").val(1);
 }
