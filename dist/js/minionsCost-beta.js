@@ -28,7 +28,17 @@ function toggleUseProfile(){
         $("#slayerCollectionsNoProfile").removeClass("d-none");
     }
 }
-
+function setUseProfile(){
+    if($("#overallProfileName").val()!=""){
+        $("#overallUseProfile").prop("checked",true);
+        $("#slayerCollectionsUseProfile").removeClass("d-none");
+        $("#slayerCollectionsNoProfile").addClass("d-none");
+    }else{
+        $("#overallUseProfile").prop("checked",false);
+        $("#slayerCollectionsUseProfile").addClass("d-none");
+        $("#slayerCollectionsNoProfile").removeClass("d-none");
+    }
+}
 function showCollapseNext(nextIndex){
     console.log("showCollapseNext("+nextIndex);
     $(".collapseNext"+nextIndex).removeClass("d-none");

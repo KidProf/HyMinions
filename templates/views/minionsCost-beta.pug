@@ -5,7 +5,7 @@ block append js
     script(src="/js/minionsCost-beta.js")
     	
 block append variables
-    - var currentPage = "minionsCost";
+    - var currentPage = "minionsCost-beta";
 
 block meta
     meta(name="description" content="It calculates the cheapest minions to level up to gain more minion slots, also tailor-made for each profile if you input your Minecraft name.")
@@ -53,7 +53,7 @@ block content
                             label(for="overallShowDetails") &nbsp; Use Profile
                     .form-group#profileName
                         p Minecraft Name (Recommended): &nbsp; 
-                            input#overallProfileName.form-control(value=settings.name)
+                            input#overallProfileName.form-control(value=settings.name oninput="setUseProfile()")
                             span &nbsp; &nbsp; 
                             +infoBox("profileModal","question","Why is my Minecraft name required?")
                                 p If you enter your Minecraft name, it will calculate the cheapest minion ignoring the minion you have crafted. It could make the crafts list more personalized and useful.
@@ -101,8 +101,8 @@ block content
         #content
             hr
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3541192882647315" crossorigin="anonymous"></script>
-            //- <!-- minionsCost1 -->
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3541192882647315" data-ad-slot="7408794849" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            //- minionsCost-beta1
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3541192882647315" data-ad-slot="6124486969" data-ad-format="auto" data-full-width-responsive="true"></ins>
             <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
             br
             if settings&&settings.hasError

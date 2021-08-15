@@ -286,8 +286,8 @@ exports.calculateMinionsCost = async function(minions, settings){
             tierCost.totalCostText = moneyRepresentation(totalCost);
             tierCost.totalCostTextDetail = moneyRepresentation(totalCost,1); 
 
-            //danger notation
-            if(upgrade.slayerRequirements){
+            if(upgrade.slayerRequirements&&settings.filterSlayers&&settings.useProfile){
+                //danger notation
                 if(!profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier]]){
                     tierCost.danger = true;
                     upgrade.putAtLast = true;
@@ -295,27 +295,26 @@ exports.calculateMinionsCost = async function(minions, settings){
                     tierCost.danger = false;
                     upgrade.putAtLast = false;
                 }
-            }
-
-            if(upgrade.slayerRequirements&&settings.filterSlayers&&settings.useProfile){
                 //filterSlayers
-                let currentSlayer = profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier]];
-                let nextSlayer = profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier+1]]
-                if(tier==0&&upgrade.detachTier1==true){
-                    if(upgrade.putAtLast){
-                        unsortedMinionsCostLast.push([tierCost]); //seperate tier 1 from the rest of the list
+                if(settings.filterSlayers){
+                    let currentSlayer = profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier]];
+                    let nextSlayer = profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier+1]]
+                    if(tier==0&&upgrade.detachTier1==true){
+                        if(upgrade.putAtLast){
+                            unsortedMinionsCostLast.push([tierCost]); //seperate tier 1 from the rest of the list
+                        }else{
+                            unsortedMinionsCost.push([tierCost]); //seperate tier 1 from the rest of the list
+                        }
+                        totalTiers++;
+                    }else if(currentSlayer&&!nextSlayer){
+                        unsortedMinionsCost.push(minionCost);
+                        minionCost = new Array();
+                        upgrade.putAtLast = true;
+                        totalTiers++;
                     }else{
-                        unsortedMinionsCost.push([tierCost]); //seperate tier 1 from the rest of the list
+                        minionCost.push(tierCost);
+                        totalTiers++;
                     }
-                    totalTiers++;
-                }else if(currentSlayer&&!nextSlayer){
-                    unsortedMinionsCost.push(minionCost);
-                    minionCost = new Array();
-                    upgrade.putAtLast = true;
-                    totalTiers++;
-                }else{
-                    minionCost.push(tierCost);
-                    totalTiers++;
                 }
             }else{
                 if(tier==0&&upgrade.detachTier1==true){
