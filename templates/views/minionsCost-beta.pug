@@ -83,9 +83,9 @@ block content
                             .form-group
                                 input#overallFilterSlayers.checkbox(type="checkbox" checked=(settings.filterSlayers==1 ? 'checked' : undefined))
                                 label(for="overallFilterSlayers") &nbsp; Based on slayers level you have
-                            //- .form-group
-                            //-     input#overallFilterCollections.checkbox(type="checkbox" checked=(settings.filterCollections==1 ? 'checked' : undefined))
-                            //-     label(for="overallFilterCollections") &nbsp; Based on collections you have
+                            .form-group
+                                input#overallFilterCollections.checkbox(type="checkbox" checked=(settings.filterCollections==1 ? 'checked' : undefined))
+                                label(for="overallFilterCollections") &nbsp; Based on collections you have
                         #slayerCollectionsNoProfile(class=(settings.useProfile==true ? 'd-none' : undefined))
                             .form-group
                                 input#overallBottomSlayers.checkbox(type="checkbox" checked=(settings.bottomSlayers==1 ? 'checked' : undefined))
@@ -124,6 +124,8 @@ block content
                     p Minion Slots: #{settings.minionSlots} + #{settings.communitySlots} (Community Center)
                     p Crafts to next: #{settings.minionSlotsNext.length!=1? settings.minionSlotsNext[0]: "MAXED"}
                     p Coins to next: #{settings.minionSlotsCostText[0]}
+                    if settings.collectionsDisabled
+                        p.loss Collection API access for this profile is disabled. Click <a href="https://www.youtube.com/watch?v=-_LIyA5lNMU">here</a> to see how to enable API access.
                 #search: .form-group.row
                     //-.col-12.col-md-8.col-lg-6
                         label(for="searchInput") Search: &nbsp;

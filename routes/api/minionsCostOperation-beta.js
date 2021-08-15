@@ -18,12 +18,14 @@ exports.calculateMinionsCost = async function(minions, settings){
             }
             minions.forEach((minion,index6)=>{
                 minion.profilesTier = new Array(profilesAjax.length);
+                minion.profilesCollection = new Array(profilesAjax.length);
             });
             profileNames = new Array(profilesAjax.length);
             profileInfo = {
                 communitySlots : new Array(profilesAjax.length),
                 minionCrafts : new Array(profilesAjax.length),
                 slayerBosses : new Array(profilesAjax.length),
+                collectionsDisabled : new Array(profilesAjax.length),
             }
             profilesAjax.forEach((profile,index)=>{ 
                 //store cute name for data input
@@ -36,6 +38,9 @@ exports.calculateMinionsCost = async function(minions, settings){
                     });
                 });
                 //for each crafted minion entry
+                if(settings.filterCollections&&(!profile.rawCollections||profile.rawCollections.length==0)){ //collections does not exist
+                    profileInfo.collectionsDisabled[index] = true;
+                }
                 profile.rawMinions.forEach((rawMinion,index2)=>{
                     //e.g. to get "TARANTULA" from "TARANTULA_4"
                     let underscoreLocation = rawMinion.lastIndexOf("_");
@@ -58,6 +63,29 @@ exports.calculateMinionsCost = async function(minions, settings){
                                 console.log("DUPLICATE",rawMinion);
                             }
                             minion.profilesTier[index][tier-1] = true;
+                        }
+                    });
+                });
+                //for each collection entry
+                profile.rawCollections.forEach((rawCollection,index2)=>{
+                    //e.g. to get "TARANTULA" from "TARANTULA_4"
+                    let underscoreLocation = rawCollection.lastIndexOf("_");
+                    let searchString = rawCollection.substring(0,underscoreLocation);
+                    
+                    //search it with each minion name
+                    minions.forEach((minion,index4)=>{
+                        let minionString;
+                        if(minion.rawCollectionId){
+                            minionString = minion.rawCollectionId;
+                        }else{
+                            let minionLocation = minion.name.lastIndexOf(" ");
+                            minionString = minion.name.substring(0,minionLocation).toUpperCase();
+                        }
+                        if(minionString==searchString||minion.rawCollectionId=="NONE"){
+                            let tier = rawCollection.substring(underscoreLocation+1);
+                            if(tier==1){
+                                minion.profilesCollection[index] = true;
+                            }
                         }
                     });
                 });
@@ -171,6 +199,7 @@ exports.calculateMinionsCost = async function(minions, settings){
 
         settings.communitySlots=profileInfo.communitySlots[settings.profile];
         settings.minionCrafts=profileInfo.minionCrafts[settings.profile];
+        settings.collectionsDisabled=profileInfo.collectionsDisabled[settings.profile];
         minionSlotsCriteria.forEach((criteria,index5)=>{ 
             if(criteria>settings.minionCrafts){
                 if(settings.minionSlotsNext.length==0){
@@ -216,16 +245,30 @@ exports.calculateMinionsCost = async function(minions, settings){
     function calculateMinionCost(settings,minion){
         let minionCost = new Array();
         upgrade = minion.upgrade;
-        if(upgrade.slayerRequirements&&!settings.useProfile){
-            if(settings.bottomSlayers){
-                upgrade.putAtLast = true;
+
+
+        //danger notation - collection, filterCollections
+        if(settings.useProfile){
+            if(!minion.profilesCollection[settings.profile]){
+                upgrade.danger = true;
+                if(settings.filterCollections&&!settings.collectionsDisabled) upgrade.putAtLast = true;
+            }else{
+                upgrade.danger = false;
+                upgrade.putAtLast = false;
+            }
+        }else{
+            if(upgrade.slayerRequirements){//bottomSlayers
+                if(settings.bottomSlayers){
+                    upgrade.putAtLast = true;
+                }else{
+                    upgrade.putAtLast = false;
+                }
             }else{
                 upgrade.putAtLast = false;
             }
+            upgrade.danger = false;
+
         }
-        // if(settings.filterSlayers){
-        //     upgrade.putAtLast = true;
-        // }
         for(tier=0;tier<minion.tierDelay.length;tier++){
             if(settings.useProfile&&minion.profilesTier[settings.profile][tier]){ //useProfile and has crafted already, skip
                 continue;
@@ -287,10 +330,10 @@ exports.calculateMinionsCost = async function(minions, settings){
             tierCost.totalCostTextDetail = moneyRepresentation(totalCost,1); 
 
             if(upgrade.slayerRequirements&&settings.filterSlayers&&settings.useProfile){
-                //danger notation
+                //danger notation - slayer
                 if(!profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier]]){
                     tierCost.danger = true;
-                    upgrade.putAtLast = true;
+                    if(settings.filterSlayers) upgrade.putAtLast = true;
                 }else{
                     tierCost.danger = false;
                     upgrade.putAtLast = false;
@@ -300,7 +343,7 @@ exports.calculateMinionsCost = async function(minions, settings){
                     let currentSlayer = profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier]];
                     let nextSlayer = profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier+1]]
                     if(tier==0&&upgrade.detachTier1==true){
-                        if(upgrade.putAtLast){
+                        if(upgrade.putAtLast||upgrade.defaultPutAtLast){
                             unsortedMinionsCostLast.push([tierCost]); //seperate tier 1 from the rest of the list
                         }else{
                             unsortedMinionsCost.push([tierCost]); //seperate tier 1 from the rest of the list
@@ -318,7 +361,7 @@ exports.calculateMinionsCost = async function(minions, settings){
                 }
             }else{
                 if(tier==0&&upgrade.detachTier1==true){
-                    if(upgrade.putAtLast){
+                    if(upgrade.putAtLast||upgrade.defaultPutAtLast){
                         unsortedMinionsCostLast.push([tierCost]); //seperate tier 1 from the rest of the list
                     }else{
                         unsortedMinionsCost.push([tierCost]); //seperate tier 1 from the rest of the list
@@ -330,7 +373,7 @@ exports.calculateMinionsCost = async function(minions, settings){
                 }
             }
         }
-        if(upgrade.putAtLast){
+        if(upgrade.putAtLast||upgrade.defaultPutAtLast){
             if(minionCost.length!=0) unsortedMinionsCostLast.push(minionCost);
         }else{
             if(minionCost.length!=0) unsortedMinionsCost.push(minionCost);

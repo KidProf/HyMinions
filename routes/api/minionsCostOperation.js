@@ -270,7 +270,7 @@ exports.calculateMinionsCost = async function(minions, settings){
             tierCost.totalCostText = moneyRepresentation(totalCost);
             tierCost.totalCostTextDetail = moneyRepresentation(totalCost,1); 
             if(tier==0&&upgrade.detachTier1==true){
-                if(upgrade.putAtLast){
+                if(upgrade.defaultPutAtLast){
                     unsortedMinionsCostLast.push([tierCost]); //seperate tier 1 from the rest of the list
                 }else{
                     unsortedMinionsCost.push([tierCost]); //seperate tier 1 from the rest of the list
@@ -281,7 +281,7 @@ exports.calculateMinionsCost = async function(minions, settings){
                 totalTiers++;
             }
         }
-        if(upgrade.putAtLast){
+        if(upgrade.defaultPutAtLast){
             if(minionCost.length!=0) unsortedMinionsCostLast.push(minionCost);
         }else{
             if(minionCost.length!=0) unsortedMinionsCost.push(minionCost);
@@ -375,9 +375,8 @@ exports.calculateMinionsCostLink = async function(minions, settings){
             }else{
                 tierCost.totalCost = compareMaterialsCost(upgrade.materials[tier],upgrade.quantities[tier],upgrade.bazaarPrice[tier]);
             }
-
             if(tier==0&&upgrade.detachTier1==true){
-                if(upgrade.putAtLast){
+                if(upgrade.defaultPutAtLast){
                     unsortedMinionsCostLast.push([tierCost]); //seperate tier 1 from the rest of the list
                 }else{
                     unsortedMinionsCost.push([tierCost]); //seperate tier 1 from the rest of the list
@@ -388,7 +387,7 @@ exports.calculateMinionsCostLink = async function(minions, settings){
                 totalTiers++;
             }
         }
-        if(upgrade.putAtLast){
+        if(upgrade.defaultPutAtLast){
             if(minionCost.length!=0) unsortedMinionsCostLast.push(minionCost);
         }else{
             if(minionCost.length!=0) unsortedMinionsCost.push(minionCost);

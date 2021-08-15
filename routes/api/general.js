@@ -126,9 +126,15 @@ exports.findProfile = async function findProfile(name,settings){
                     profiles.forEach((profile, index)=>{
                         profilesAjax[index] = new Object();
                         profilesAjax[index]["rawMinions"] = new Array();
+                        profilesAjax[index]["rawCollections"] = new Array();
                         Object.keys(profile["members"]).forEach((member, index2)=>{
                             if(profile["members"][member]["crafted_generators"]){
                                 profilesAjax[index]["rawMinions"].push(...profile["members"][member]["crafted_generators"]);
+                            }
+                        });
+                        Object.keys(profile["members"]).forEach((member, index2)=>{
+                            if(profile["members"][member]["unlocked_coll_tiers"]){
+                                profilesAjax[index]["rawCollections"].push(...profile["members"][member]["unlocked_coll_tiers"]);
                             }
                         });
                         let communitySlots = 0;
@@ -161,7 +167,6 @@ exports.findProfile = async function findProfile(name,settings){
                                 profilesAjax[index]["slayerBosses"]["voidling4"] = true;
                             }
                         });
-
                         profilesAjax[index]["cuteName"] = profile["cute_name"];
                     });
                     profilesAjax.sort((a,b)=>{
