@@ -141,11 +141,27 @@ exports.findProfile = async function findProfile(name,settings){
                         }
                         profilesAjax[index]["communitySlots"] = communitySlots;
                         profilesAjax[index]["slayerBosses"] = {
-                            "revenant5" : profile[slayer_bosses][zombie][claimed_levels][level_5],
-                            "revenant9" : profile[slayer_bosses][zombie][claimed_levels][level_9_special],
-                            "tarantula5" : profile[slayer_bosses][spider][claimed_levels][level_5],
-                            "voidling4" : profile[slayer_bosses][enderman][claimed_levels][level_4],
+                            "revenant5": false,
+                            "revenant9": false,
+                            "tarantula5": false,
+                            "voidling4": false,
                         };
+                    
+                        Object.keys(profile["members"]).forEach((member, index2)=>{
+                            if(profile["members"][member]["slayer_bosses"]["zombie"]&&profile["members"][member]["slayer_bosses"]["zombie"]["claimed_levels"]["level_5"]){
+                                profilesAjax[index]["slayerBosses"]["revenant5"] = true;
+                            }
+                            if(profile["members"][member]["slayer_bosses"]["zombie"]&&profile["members"][member]["slayer_bosses"]["zombie"]["claimed_levels"]["level_9_special"]){
+                                profilesAjax[index]["slayerBosses"]["revenant9"] = true;
+                            }
+                            if(profile["members"][member]["slayer_bosses"]["spider"]&&profile["members"][member]["slayer_bosses"]["spider"]["claimed_levels"]["level_5"]){
+                                profilesAjax[index]["slayerBosses"]["tarantula5"] = true;
+                            }
+                            if(profile["members"][member]["slayer_bosses"]["enderman"]&&profile["members"][member]["slayer_bosses"]["enderman"]["claimed_levels"]["level_4"]){
+                                profilesAjax[index]["slayerBosses"]["voidling4"] = true;
+                            }
+                        });
+
                         profilesAjax[index]["cuteName"] = profile["cute_name"];
                     });
                     profilesAjax.sort((a,b)=>{

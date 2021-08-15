@@ -222,7 +222,7 @@ mixin minionCostRow(minionCost,i,nextIndex,isShown)
         td(id="minion"+i+"Name")=minionCost.name
         td(id="minion"+i+"Tier")=minionCost.tier
         td(id="minion"+i+"TotalCostFront").text-right=minionCost.totalCostText
-        td(id="minion"+i+"Items")
+        td(id="minion"+i+"Items" class=(minionCost.warning?"live":"") class=(minionCost.danger?"loss":""))
             if minionCost.upgradeMaterials
                 each material in minionCost.upgradeMaterials
                     | #{material}
