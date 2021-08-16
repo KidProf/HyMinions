@@ -38,9 +38,6 @@ exports.calculateMinionsCost = async function(minions, settings){
                     });
                 });
                 //for each crafted minion entry
-                if(settings.filterCollections&&(!profile.rawCollections||profile.rawCollections.length==0)){ //collections does not exist
-                    profileInfo.collectionsDisabled[index] = true;
-                }
                 profile.rawMinions.forEach((rawMinion,index2)=>{
                     //e.g. to get "TARANTULA" from "TARANTULA_4"
                     let underscoreLocation = rawMinion.lastIndexOf("_");
@@ -66,6 +63,9 @@ exports.calculateMinionsCost = async function(minions, settings){
                         }
                     });
                 });
+                if(settings.filterCollections&&(!profile.rawCollections||profile.rawCollections.length==0)){ //collections does not exist
+                    profileInfo.collectionsDisabled[index] = true;
+                }
                 //for each collection entry
                 profile.rawCollections.forEach((rawCollection,index2)=>{
                     //e.g. to get "TARANTULA" from "TARANTULA_4"
@@ -249,12 +249,12 @@ exports.calculateMinionsCost = async function(minions, settings){
 
         //danger notation - collection, filterCollections
         if(settings.useProfile){
-            if(!minion.profilesCollection[settings.profile]){
-                upgrade.danger = true;
-                if(settings.filterCollections&&!settings.collectionsDisabled) upgrade.putAtLast = true;
-            }else{
+            if(profileInfo.collectionsDisabled[settings.profile]||minion.profilesCollection[settings.profile]){
                 upgrade.danger = false;
                 upgrade.putAtLast = false;
+            }else{
+                upgrade.danger = true;
+                if(settings.filterCollections) upgrade.putAtLast = true;
             }
         }else{
             if(upgrade.slayerRequirements){//bottomSlayers
