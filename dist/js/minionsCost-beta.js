@@ -39,6 +39,44 @@ function setUseProfile(){
         $("#slayerCollectionsNoProfile").removeClass("d-none");
     }
 }
+function toggleFilterMinionsSelectAll(){
+    let selectAll = $("#filterMinionsSelectAll").prop("checked");
+    if(selectAll){
+        $('#filterMinionsBody input:checkbox').each(function() {
+            $(this).prop("checked",true);
+        });
+    }else{
+        $('#filterMinionsBody input:checkbox').each(function() {
+            $(this).prop("checked",false);
+        });
+    }
+}
+function setFilterMinionsSelectAll(){
+    if($('#filterMinionsBody input:checkbox:not(:checked)').length==0){
+        $("#filterMinionsSelectAll").prop("checked",true);
+    }else{
+        $("#filterMinionsSelectAll").prop("checked",false);
+    }
+}
+function toggleFilterTiersSelectAll(){
+    let selectAll = $("#filterTiersSelectAll").prop("checked");
+    if(selectAll){
+        $('#filterTiersBody input:checkbox').each(function() {
+            $(this).prop("checked",true);
+        });
+    }else{
+        $('#filterTiersBody input:checkbox').each(function() {
+            $(this).prop("checked",false);
+        });
+    }
+}
+function setFilterTiersSelectAll(){
+    if($('#filterTiersBody input:checkbox:not(:checked)').length==0){
+        $("#filterTiersSelectAll").prop("checked",true);
+    }else{
+        $("#filterTiersSelectAll").prop("checked",false);
+    }
+}
 function showCollapseNext(nextIndex){
     console.log("showCollapseNext("+nextIndex);
     $(".collapseNext"+nextIndex).removeClass("d-none");
@@ -119,6 +157,16 @@ function generateLink(){
         keys.push("showDetails");
         values.push(1);
     }
+
+    //filter
+    $('#filterMinionsBody input:checkbox:not(:checked)').each(function() {
+        keys.push("filterMinions");
+        values.push($(this).attr('value'));
+    });
+    $('#filterTiersBody input:checkbox:not(:checked)').each(function() {
+        keys.push("filterTiers");
+        values.push($(this).attr('value'));
+    });
 
     //output
     let string = "/minionscost-beta"

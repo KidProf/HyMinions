@@ -50,7 +50,7 @@ block content
                     .form-group
                         .form-group
                             input#overallUseProfile.checkbox(type="checkbox" onclick="toggleUseProfile()" checked=(settings.useProfile==true ? 'checked' : undefined))
-                            label(for="overallShowDetails") &nbsp; Use Profile
+                            label(for="overallUseProfile") &nbsp; Use Profile
                     .form-group#profileName
                         p Minecraft Name (Recommended): &nbsp; 
                             input#overallProfileName.form-control(value=settings.name oninput="setUseProfile()")
@@ -100,10 +100,14 @@ block content
                                 span.collapsed Show more
                                 span.expanded Show less
                         #filterMinions.collapse
-                            for minion in minions
-                                .form-group
-                                    input.checkbox(type="checkbox" value=minion.id id="filterMinions"+minion.id)
-                                    label(for="filterMinions"+minion.id) &nbsp; !{minion.name}
+                            input.checkbox#filterMinionsSelectAll(type="checkbox" checked=(settings.filterMinions&&settings.filterMinions.length!=0 ? undefined:"checked") onclick="toggleFilterMinionsSelectAll()")
+                            label(for="filterMinionsSelectAll") &nbsp; Select All
+                            hr
+                            #filterMinionsBody
+                                for minion in minions
+                                    .form-group
+                                        input.checkbox(type="checkbox" value=minion.id id="filterMinions"+minion.id checked=(settings.filterMinions&&settings.filterMinions.includes(minion.id.toString()) ? undefined:"checked") onclick="setFilterMinionsSelectAll()")
+                                        label(for="filterMinions"+minion.id) &nbsp; !{minion.name}
                         br
                         br
                         .miscellaneousInline
@@ -112,12 +116,16 @@ block content
                                 span.collapsed Show more
                                 span.expanded Show less
                         #filterTiers.collapse
-                            - let i = 0
-                            while i<12
-                                .form-group
-                                    input.checkbox(type="checkbox" value=i id="filterTiers"+i)
-                                    label(for="filterTiers"+i) &nbsp; !{i+1}
-                                -i++;
+                            input.checkbox#filterTiersSelectAll(type="checkbox" checked=(settings.filterTiers&&settings.filterTiers.length!=0 ? undefined:"checked") onclick="toggleFilterTiersSelectAll()")
+                            label(for="filterTiersSelectAll") &nbsp; Select All
+                            hr
+                            #filterTiersBody
+                                - let i = 0
+                                while i<12
+                                    .form-group
+                                        input.checkbox(type="checkbox" value=(i+1) id="filterTiers"+i checked=(settings.filterTiers&&settings.filterTiers.includes((i+1).toString()) ? undefined:"checked")  onclick="setFilterTiersSelectAll()")
+                                        label(for="filterTiers"+i) &nbsp; Tier !{i+1}
+                                    -i++;
             br
             button#overallSettings.btn(onclick="generateLink()") Apply
             span &nbsp; &nbsp; &nbsp;
@@ -191,7 +199,7 @@ block content
                                 +minionCostRow(minionsCost[i],i,nextIndex,true)
                                 -i++;
                             -nextIndex++;
-                        while nextIndex<settings.minionSlotsNext.length
+                        while nextIndex<settings.minionSlotsNext.length && i<minionsCost.length
                             +slotRow(nextIndex,false,true)
                             while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
                                 +minionCostRow(minionsCost[i],i,nextIndex,false)
@@ -231,7 +239,7 @@ mixin slotRow(nextIndex,isShown,isLoaded)
                 i.fas.fa-lg.fa-cloud-download-alt(id="showNextButton"+nextIndex onclick="appendShowDetails("+nextIndex+")")
         td(colspan="100%").py-3
             -let slotNumber = settings.minionSlots+nextIndex+1
-            if nextIndex+1 == settings.minionSlotsNext.length
+            if nextIndex+1 == settings.minionSlotsNext.length || settings.minionSlotsNext[nextIndex] > minionsCost.length
                 span Remaining minions: #{settings.minionSlotsCostText[nextIndex]} coins
             else if slotNumber == 1 || slotNumber == 21
                 span #{slotNumber}st slot: #{settings.minionSlotsCostText[nextIndex]} coins

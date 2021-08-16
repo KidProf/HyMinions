@@ -279,6 +279,12 @@ exports.calculateMinionsCost = async function(minions, settings){
             if(settings.useProfile&&minion.profilesTier[settings.profile][tier]){ //useProfile and has crafted already, skip
                 continue;
             }
+            if(settings.filterMinions&&settings.filterMinions.includes(minion.id.toString())){
+                continue;
+            }
+            if(settings.filterTiers&&settings.filterTiers.includes((tier+1).toString())){
+                continue;
+            }
             let tierCost = {
                 name : minion.name,
                 tier : tier+1,
@@ -475,7 +481,7 @@ exports.calculateMinionsCostLink = async function(minions, settings){
             }
 
             if(tier==0&&upgrade.detachTier1==true){
-                if(upgrade.putAtLast){
+                if(upgrade.defaultPutAtLast){
                     unsortedMinionsCostLast.push([tierCost]); //seperate tier 1 from the rest of the list
                 }else{
                     unsortedMinionsCost.push([tierCost]); //seperate tier 1 from the rest of the list
@@ -486,7 +492,7 @@ exports.calculateMinionsCostLink = async function(minions, settings){
                 totalTiers++;
             }
         }
-        if(upgrade.putAtLast){
+        if(upgrade.defaultPutAtLast){
             if(minionCost.length!=0) unsortedMinionsCostLast.push(minionCost);
         }else{
             if(minionCost.length!=0) unsortedMinionsCost.push(minionCost);
