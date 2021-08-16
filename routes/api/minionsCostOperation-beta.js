@@ -240,6 +240,12 @@ exports.calculateMinionsCost = async function(minions, settings){
         settings.minionSlotsCostText[index2] = moneyRepresentation(cost);
     });
 
+    minions.sort((a,b) =>{
+        if(b.name<a.name) return 1; //name asc
+        else if(b.name>a.name) return -1;
+        else return 0;
+    });
+
     return minionsCost;
 
     function calculateMinionCost(settings,minion){

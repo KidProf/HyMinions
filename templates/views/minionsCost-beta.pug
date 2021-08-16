@@ -65,7 +65,6 @@ block content
                                 while k<settings.profileNames.length
                                     option(value=k selected=(settings.profile==k?'selected':undefined))=settings.profileNames[k]
                                     -k++;
-                .col-lg-6.col-12  
                     #advanced
                         br
                         h3 Advanced
@@ -90,7 +89,35 @@ block content
                             .form-group
                                 input#overallBottomSlayers.checkbox(type="checkbox" checked=(settings.bottomSlayers==1 ? 'checked' : undefined))
                                 label(for="overallBottomSlayers") &nbsp; Put slayer minions to bottom of list
-            
+                .col-lg-6.col-12
+                    #filter
+                        br
+                        h3 Filter
+                        br
+                        .miscellaneousInline
+                            h4 Minions &nbsp;
+                            a.read-more(data-toggle="collapse" href="#filterMinions" aria-expanded="false" aria-controls="filterMinions")
+                                span.collapsed Show more
+                                span.expanded Show less
+                        #filterMinions.collapse
+                            for minion in minions
+                                .form-group
+                                    input.checkbox(type="checkbox" value=minion.id id="filterMinions"+minion.id)
+                                    label(for="filterMinions"+minion.id) &nbsp; !{minion.name}
+                        br
+                        br
+                        .miscellaneousInline
+                            h4 Tiers &nbsp;
+                            a.read-more(data-toggle="collapse" href="#filterTiers" aria-expanded="false" aria-controls="filterTiers")
+                                span.collapsed Show more
+                                span.expanded Show less
+                        #filterTiers.collapse
+                            - let i = 0
+                            while i<12
+                                .form-group
+                                    input.checkbox(type="checkbox" value=i id="filterTiers"+i)
+                                    label(for="filterTiers"+i) &nbsp; !{i+1}
+                                -i++;
             br
             button#overallSettings.btn(onclick="generateLink()") Apply
             span &nbsp; &nbsp; &nbsp;

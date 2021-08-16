@@ -13,7 +13,7 @@ exports = module.exports = function (req, res) {
     //go to minions cost operation.js
     //asyncAwait
     calculateMinionsCost(minions, settings).then((minionsCost)=>{
-        let output = {settings: settings, minionsCost: minionsCost};
+        let output = {settings: settings, minionsCost: minionsCost, minions: minions};
         console.log(output.settings);
         res.render("minionsCost-beta",output);
 
