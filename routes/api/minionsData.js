@@ -32,6 +32,7 @@ exports.minions = [
     { //0
         name: "Revenant Minion",
         id: 0,
+        rawCollectionId: "NONE",
         tierDelay : [29,29,26,26,23,23,19,19,14.5,14.5,10,8], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960,960],
 		type: "Combat",
@@ -143,6 +144,7 @@ exports.minions = [
     },{ //1
         name: "Tarantula Minion",
         id: 1,
+        rawCollectionId: "NONE",
         tierDelay : [29,29,26,26,23,23,19,19,14.5,14.5,10],
         storage: [64,192,192,384,384,576,576,768,768,960,960],
         upgrade:{
@@ -4134,6 +4136,7 @@ exports.minions = [
     },{ //52
         name: "Voidling Minion",
         id: 52,
+        rawCollectionId: "NONE",
         tierDelay : [45,45,42,42,39,39,35,35,30,30,24],
         storage: [64,192,192,384,384,576,576,768,768,960,960],
         upgrade:{

@@ -147,6 +147,10 @@ function generateLink(){
         keys.push("tax");
         values.push($("#overallTax").val());
     }
+    if($("#overallDisplayMethod").children("option:selected").val()!=1){
+        keys.push("displayMethod");
+        values.push($("#overallDisplayMethod").children("option:selected").val());
+    }
     // if($("#overallShowDetails").prop("checked")){
     //     keys.push("showDetails");
     //     values.push(1);

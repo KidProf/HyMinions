@@ -65,19 +65,25 @@ block content
                                 while k<settings.profileNames.length
                                     option(value=k selected=(settings.profile==k?'selected':undefined))=settings.profileNames[k]
                                     -k++;
-                    #advanced
-                        br
-                        h3 Advanced
-                        .form-group
-                            label(for="overallBuyingMethod") Buying method in bazaar: &nbsp;
-                            select#overallBuyingMethod.form-control
-                                option(value="1" selected=(settings.buyingMethod==1?'selected':undefined)) Buy order
-                                option(value="0" selected=(settings.buyingMethod==0?'selected':undefined)) Buy instantly
-                                
-                        .form-group
-                            label(for="overallTax") Tax in bazaar: &nbsp; 
-                                input#overallTax.form-control(type="number" value=settings.tax min="0")
-                                span &nbsp; %
+                #advanced.col-lg-6.col-12
+                    br
+                    h3 Advanced
+                    .form-group
+                        label(for="overallBuyingMethod") Buying method in bazaar: &nbsp;
+                        select#overallBuyingMethod.form-control
+                            option(value="1" selected=(settings.buyingMethod==1?'selected':undefined)) Buy order
+                            option(value="0" selected=(settings.buyingMethod==0?'selected':undefined)) Buy instantly
+                            
+                    .form-group
+                        label(for="overallTax") Tax in bazaar: &nbsp; 
+                            input#overallTax.form-control(type="number" value=settings.tax min="0")
+                            span &nbsp; %
+            #filter
+                br
+                h3 Filters
+                br
+                .row
+                    .col-lg-6.col-12
                         #slayerCollectionsUseProfile(class=(settings.useProfile==true ? undefined : "d-none"))
                             .form-group
                                 input#overallFilterSlayers.checkbox(type="checkbox" checked=(settings.filterSlayers==1 ? 'checked' : undefined))
@@ -89,11 +95,14 @@ block content
                             .form-group
                                 input#overallBottomSlayers.checkbox(type="checkbox" checked=(settings.bottomSlayers==1 ? 'checked' : undefined))
                                 label(for="overallBottomSlayers") &nbsp; Put slayer minions to bottom of list
-                .col-lg-6.col-12
-                    #filter
-                        br
-                        h3 Filter
-                        br
+                    .col-lg-6.col-12
+                        .form-group
+                            label(for="overallDisplayMethod") Filtered data will be &nbsp;
+                            select#overallDisplayMethod.form-control
+                                option(value="1" selected=(settings.displayMethod==1?'selected':undefined)) put at the end of list
+                                option(value="0" selected=(settings.displayMethod==0?'selected':undefined)) removed
+                .row
+                    .col-lg-6.col-12
                         .miscellaneousInline
                             h4 Minions &nbsp;
                             a.read-more(data-toggle="collapse" href="#filterMinions" aria-expanded="false" aria-controls="filterMinions")
@@ -108,8 +117,7 @@ block content
                                     .form-group
                                         input.checkbox(type="checkbox" value=minion.id id="filterMinions"+minion.id checked=(settings.filterMinions&&settings.filterMinions.includes(minion.id.toString()) ? undefined:"checked") onclick="setFilterMinionsSelectAll()")
                                         label(for="filterMinions"+minion.id) &nbsp; !{minion.name}
-                        br
-                        br
+                    .col-lg-6.col-12
                         .miscellaneousInline
                             h4 Tiers &nbsp;
                             a.read-more(data-toggle="collapse" href="#filterTiers" aria-expanded="false" aria-controls="filterTiers")
@@ -126,6 +134,7 @@ block content
                                         input.checkbox(type="checkbox" value=(i+1) id="filterTiers"+i checked=(settings.filterTiers&&settings.filterTiers.includes((i+1).toString()) ? undefined:"checked")  onclick="setFilterTiersSelectAll()")
                                         label(for="filterTiers"+i) &nbsp; Tier !{i+1}
                                     -i++;
+            br
             br
             button#overallSettings.btn(onclick="generateLink()") Apply
             span &nbsp; &nbsp; &nbsp;

@@ -2,6 +2,7 @@ var fetch = require('cross-fetch');
 var {moneyRepresentation, dateTimeToString, findBazaar, findProfile} = require("./general.js");
 var {specialPrices, minionSlotsCriteria} = require("./minionsData.js");
 var itemNames = require("./itemNames.json");
+const e = require('express');
 
 let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, profileInfo, hadError=false;
     
@@ -252,45 +253,44 @@ exports.calculateMinionsCost = async function(minions, settings){
         let minionCost = new Array();
         upgrade = minion.upgrade;
 
-
+        upgrade.unfit = false;
+        upgrade.danger = false;
         //danger notation - collection, filterCollections
         if(settings.useProfile){
-            if(profileInfo.collectionsDisabled[settings.profile]||minion.profilesCollection[settings.profile]){
-                upgrade.danger = false;
-                upgrade.putAtLast = false;
-            }else{
+            if(!(profileInfo.collectionsDisabled[settings.profile]||minion.profilesCollection[settings.profile])){
                 upgrade.danger = true;
-                if(settings.filterCollections) upgrade.putAtLast = true;
+                if(settings.filterCollections) upgrade.unfit = true;
             }
         }else{
-            if(upgrade.slayerRequirements){//bottomSlayers
-                if(settings.bottomSlayers){
-                    upgrade.putAtLast = true;
-                }else{
-                    upgrade.putAtLast = false;
-                }
-            }else{
-                upgrade.putAtLast = false;
+            if(upgrade.slayerRequirements&&settings.bottomSlayers){//bottomSlayers
+                upgrade.unfit = true;
             }
-            upgrade.danger = false;
 
         }
+
+        //filterMinions
+        if(settings.filterMinions&&settings.filterMinions.includes(minion.id.toString())){
+            upgrade.unfit = true;
+        }
+
+        //filterTiers
+        if(settings.filterTiers&&settings.filterTiers.includes((tier+1).toString())){
+            upgrade.unfit = true;
+        }
+
         for(tier=0;tier<minion.tierDelay.length;tier++){
             if(settings.useProfile&&minion.profilesTier[settings.profile][tier]){ //useProfile and has crafted already, skip
                 continue;
             }
-            if(settings.filterMinions&&settings.filterMinions.includes(minion.id.toString())){
-                continue;
-            }
-            if(settings.filterTiers&&settings.filterTiers.includes((tier+1).toString())){
-                continue;
+            if(upgrade.unfit){ 
+                if(settings.displayMethod==0) continue; //displayMethod = remove from list
+                else upgrade.putAtLast = true; //displayMethod = put at bottom of list
             }
             let tierCost = {
                 name : minion.name,
                 tier : tier+1,
             };
             
-
             tierCost.warning = upgrade.warning;
             tierCost.danger = upgrade.danger;
             tierCost.upgradeMaterials = new Array();
@@ -342,29 +342,34 @@ exports.calculateMinionsCost = async function(minions, settings){
             tierCost.totalCostTextDetail = moneyRepresentation(totalCost,1); 
 
             if(upgrade.slayerRequirements&&settings.filterSlayers&&settings.useProfile){
-                //danger notation - slayer
-                if(!profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier]]){
+                //danger notation - slayer, filterSlayers
+                console.log("348",upgrade.slayerRequirements[tier]);
+                console.log("349",profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier]]);
+                let currentSlayer = profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier]];
+                let nextSlayer = profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier+1]]
+                if(!currentSlayer){
                     tierCost.danger = true;
-                    if(settings.filterSlayers) upgrade.putAtLast = true;
-                }else{
-                    tierCost.danger = false;
-                    upgrade.putAtLast = false;
+                    upgrade.unfit = true;
                 }
                 //filterSlayers
                 if(settings.filterSlayers){
-                    let currentSlayer = profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier]];
-                    let nextSlayer = profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier+1]]
+                    console.log("357",upgrade.putAtLast);
+                    console.log("358",upgrade.unfit);
+                    if(upgrade.unfit&&settings.displayMethod==0){
+                            continue; //remove
+                    }
                     if(tier==0&&upgrade.detachTier1==true){
-                        if(upgrade.putAtLast||upgrade.defaultPutAtLast){
+                        if(upgrade.unfit||upgrade.defaultPutAtLast){
                             unsortedMinionsCostLast.push([tierCost]); //seperate tier 1 from the rest of the list
                         }else{
                             unsortedMinionsCost.push([tierCost]); //seperate tier 1 from the rest of the list
                         }
                         totalTiers++;
                     }else if(currentSlayer&&!nextSlayer){
+                        minionCost.push(tierCost);
                         unsortedMinionsCost.push(minionCost);
                         minionCost = new Array();
-                        upgrade.putAtLast = true;
+                        upgrade.unfit = true; //seems not working, so added a line, 20 lines before, to do the same thing
                         totalTiers++;
                     }else{
                         minionCost.push(tierCost);

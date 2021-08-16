@@ -54,6 +54,8 @@ exports = module.exports = function (req, res) {
         if(settings.useProfile==true){
             settings.showDetails = 1;
         }
+
+        //filters
         if(!settings.filterSlayers||!isWithinList(settings.filterSlayers,[0,1])){ //default, will filter slayers
             settings.filterSlayers = 1;
         }
@@ -62,6 +64,9 @@ exports = module.exports = function (req, res) {
         }
         if(!settings.bottomSlayers||!isWithinList(settings.bottomSlayers,[0,1])){ //default, will filter slayers
             settings.bottomSlayers = 0;
+        }
+        if(!settings.displayMethod||!isWithinList(settings.displayMethod,[0,1])){ //default, will filter slayers
+            settings.displayMethod = 1;
         }
 
         console.log(settings);
