@@ -162,7 +162,7 @@ exports.calculateMinionsCost = async function(minions, settings){
     let minionsCost = new Array(); //1D array
     while(unsortedMinionsCost.length!=0){ //iterate until all elements are sorted, ~~ merge list
         let minVal, minValIndex;
-        for(j=0;j<unsortedMinionsCost.length;j++){
+        for(let j=0;j<unsortedMinionsCost.length;j++){
             if(!minVal || unsortedMinionsCost[j][0].totalCost < minVal){
                 minVal = unsortedMinionsCost[j][0].totalCost;
                 minValIndex = j;
@@ -175,14 +175,21 @@ exports.calculateMinionsCost = async function(minions, settings){
             unsortedMinionsCost.splice(minValIndex,1);
         }
     }
+    //console.log(unsortedMinionsCostLast);
     while(unsortedMinionsCostLast.length!=0){ //iterate until all elements are sorted, ~~ merge list
         let minVal, minValIndex;
-        for(j=0;j<unsortedMinionsCostLast.length;j++){
-            if(!minVal || unsortedMinionsCostLast[j][0].totalCost < minVal){
-                minVal = unsortedMinionsCostLast[j][0].totalCost;
-                minValIndex = j;
+        for(let k=0;k<unsortedMinionsCostLast.length;k++){
+            if(minVal==undefined || unsortedMinionsCostLast[k][0].totalCost < minVal){
+                // console.log("minVal",minVal);
+                // console.log("unsortedMinionsCostLast[k][0].name",unsortedMinionsCostLast[k][0].name);
+                // console.log("unsortedMinionsCostLast[k][0].totalCost",unsortedMinionsCostLast[k][0].totalCost);
+                // console.log("minValIndex",k);
+                // console.log("___");
+                minVal = unsortedMinionsCostLast[k][0].totalCost;
+                minValIndex = k;
             }
         }
+        console.log(unsortedMinionsCostLast[minValIndex][0].name,unsortedMinionsCostLast[minValIndex][0].tier);
         //console.log(minValIndex);
         minionsCost.push(unsortedMinionsCostLast[minValIndex][0]); //add to sorted list
         unsortedMinionsCostLast[minValIndex].shift(); //remove element from unsorted list
@@ -254,6 +261,7 @@ exports.calculateMinionsCost = async function(minions, settings){
         upgrade = minion.upgrade;
 
         upgrade.unfit = false;
+        upgrade.putAtLast = false;
         upgrade.danger = false;
         //danger notation - collection, filterCollections
         if(settings.useProfile){
@@ -343,8 +351,8 @@ exports.calculateMinionsCost = async function(minions, settings){
 
             if(upgrade.slayerRequirements&&settings.filterSlayers&&settings.useProfile){
                 //danger notation - slayer, filterSlayers
-                console.log("348",upgrade.slayerRequirements[tier]);
-                console.log("349",profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier]]);
+                // console.log("348",upgrade.slayerRequirements[tier]);
+                // console.log("349",profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier]]);
                 let currentSlayer = profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier]];
                 let nextSlayer = profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier+1]]
                 if(!currentSlayer){
@@ -353,8 +361,8 @@ exports.calculateMinionsCost = async function(minions, settings){
                 }
                 //filterSlayers
                 if(settings.filterSlayers){
-                    console.log("357",upgrade.putAtLast);
-                    console.log("358",upgrade.unfit);
+                    // console.log("357",upgrade.putAtLast);
+                    // console.log("358",upgrade.unfit);
                     if(upgrade.unfit&&settings.displayMethod==0){
                             continue; //remove
                     }
