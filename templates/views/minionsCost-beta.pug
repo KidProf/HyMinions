@@ -101,6 +101,7 @@ block content
                             select#overallDisplayMethod.form-control
                                 option(value="1" selected=(settings.displayMethod==1?'selected':undefined)) put at the end of list
                                 option(value="0" selected=(settings.displayMethod==0?'selected':undefined)) removed
+                br
                 h3 Filters
                 br
                 .row
@@ -120,6 +121,8 @@ block content
                                     .form-group
                                         input.checkbox(type="checkbox" value=minion.id id="filterMinions"+minion.id checked=(settings.filterMinions&&settings.filterMinions.includes(minion.id.toString()) ? undefined:"checked") onclick="setFilterMinionsSelectAll()")
                                         label(for="filterMinions"+minion.id) &nbsp; !{minion.name}
+                        br
+                        br
                     .col-lg-6.col-12
                         .miscellaneousInline
                             h4 Tiers &nbsp;
@@ -137,7 +140,8 @@ block content
                                         input.checkbox(type="checkbox" value=(i+1) id="filterTiers"+i checked=(settings.filterTiers&&settings.filterTiers.includes((i+1).toString()) ? undefined:"checked")  onclick="setFilterTiersSelectAll()")
                                         label(for="filterTiers"+i) &nbsp; Tier !{i+1}
                                     -i++;
-            br
+                        br
+                        br
             br
             button#overallSettings.btn(onclick="generateLink()") Apply
             span &nbsp; &nbsp; &nbsp;

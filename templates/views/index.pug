@@ -115,16 +115,16 @@ block content
 						p: small Based on minions With Enchanted Lava Bucket, Diamond Spreading and Dwarven Super Compactor 3000 equipped. You are expected to sell your products using "sell instantly".
 						p: small If you leave Minecraft Name blank, we would estimate the minions you have if you have 23 minion slots.
 						a(href="/minions") Click here for more settings and calculation details
-					else if !minions || !settings
+					else if settings.hasError
 						h1 Error
-						p.lead An unexpected error has occured.
+						p.lead=settings.errorMsg
 						h3 Is Hypixel API down?
 						p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
 						p If so, we could not calculate minions profit based on the latest bazaar price. However, you may try <a href="minions/?sellingTo=0">this set of settings</a> to obtain the minions profit in NPC price instead, until the Hypixel API is fixed.
 						p You may make a bug report <a href="/contact">here</a> if the above set of settings also does not work. Sorry for the inconvenience caused.
-					else if settings.hasError
+					else if !minions || !settings
 						h1 Error
-						p.lead=settings.errorMsg
+						p.lead An unexpected error has occured.
 						h3 Is Hypixel API down?
 						p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
 						p If so, we could not calculate minions profit based on the latest bazaar price. However, you may try <a href="minions/?sellingTo=0">this set of settings</a> to obtain the minions profit in NPC price instead, until the Hypixel API is fixed.

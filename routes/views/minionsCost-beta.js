@@ -8,21 +8,21 @@ exports = module.exports = function (req, res) {
     let settings = req.query;
 
     //data validation
-    dataValidation(settings);
-
-    //go to minions cost operation.js
-    //asyncAwait
-    calculateMinionsCost(minions, settings).then((minionsCost)=>{
-        let output = {settings: settings, minionsCost: minionsCost, minions: minions};
-        console.log(output.settings);
-        res.render("minionsCost-beta",output);
-
-    }).catch((err)=>{
-        console.log(err);
+    if(!dataValidation(settings)){
         res.render("minionsCost-beta",{settings: settings});
-    });
-    
+    }else{
+        //go to minions cost operation.js
+        //asyncAwait
+        calculateMinionsCost(minions, settings).then((minionsCost)=>{
+            let output = {settings: settings, minionsCost: minionsCost, minions: minions};
+            console.log(output.settings);
+            res.render("minionsCost-beta",output);
 
+        }).catch((err)=>{
+            console.log(err);
+            res.render("minionsCost-beta",{settings: settings});
+        });
+    }
 
     function dataValidation(settings){
         //assume no error first
@@ -70,6 +70,16 @@ exports = module.exports = function (req, res) {
         }
 
         console.log(settings);
+        
+        var reg=/^\w+$/;
+        if(settings.name&&!reg.test(settings.name)){
+            console.log("Invalid Minecraft Name");
+            settings.hasError = true;
+            settings.errorMsg = "Invalid Minecraft Name. It should only contains letters, numbers and underscores.";
+            return false;
+        }else{
+            return true;
+        }
     }
 
     function isWithinList(number,list){
