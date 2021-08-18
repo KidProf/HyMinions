@@ -263,11 +263,17 @@ exports.calculateMinionsCost = async function(minions, settings){
         upgrade.unfit = false;
         upgrade.putAtLast = false;
         upgrade.danger = false;
+
+        //filterMinions
+        if(settings.filterMinions&&settings.filterMinions.includes(minion.id.toString())){
+            return;
+        }
+        
         //danger notation - collection, filterCollections
         if(settings.useProfile){
             if(!(profileInfo.collectionsDisabled[settings.profile]||minion.profilesCollection[settings.profile])){
                 upgrade.danger = true;
-                if(settings.filterCollections) upgrade.unfit = true;
+                if(settings.filterCollections==1) upgrade.unfit = true;
             }
         }else{
             if(upgrade.slayerRequirements&&settings.bottomSlayers){//bottomSlayers
@@ -276,18 +282,12 @@ exports.calculateMinionsCost = async function(minions, settings){
 
         }
 
-        //filterMinions
-        if(settings.filterMinions&&settings.filterMinions.includes(minion.id.toString())){
-            upgrade.unfit = true;
-        }
-
-        //filterTiers
-        if(settings.filterTiers&&settings.filterTiers.includes((tier+1).toString())){
-            upgrade.unfit = true;
-        }
-
         for(tier=0;tier<minion.tierDelay.length;tier++){
             if(settings.useProfile&&minion.profilesTier[settings.profile][tier]){ //useProfile and has crafted already, skip
+                continue;
+            }
+            //filterTiers
+            if(settings.filterTiers&&settings.filterTiers.includes((tier+1).toString())){
                 continue;
             }
             if(upgrade.unfit){ 
@@ -349,7 +349,7 @@ exports.calculateMinionsCost = async function(minions, settings){
             tierCost.totalCostText = moneyRepresentation(totalCost);
             tierCost.totalCostTextDetail = moneyRepresentation(totalCost,1); 
 
-            if(upgrade.slayerRequirements&&settings.filterSlayers&&settings.useProfile){
+            if(upgrade.slayerRequirements&&settings.filterSlayers==1&&settings.useProfile){
                 //danger notation - slayer, filterSlayers
                 // console.log("348",upgrade.slayerRequirements[tier]);
                 // console.log("349",profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier]]);
@@ -360,11 +360,15 @@ exports.calculateMinionsCost = async function(minions, settings){
                     upgrade.unfit = true;
                 }
                 //filterSlayers
-                if(settings.filterSlayers){
+                if(settings.filterSlayers==1){
                     // console.log("357",upgrade.putAtLast);
                     // console.log("358",upgrade.unfit);
-                    if(upgrade.unfit&&settings.displayMethod==0){
+                    if(upgrade.unfit){
+                        if(settings.displayMethod==0){
                             continue; //remove
+                        }else{
+                            upgrade.putAtLast = true;
+                        }
                     }
                     if(tier==0&&upgrade.detachTier1==true){
                         if(upgrade.unfit||upgrade.defaultPutAtLast){
@@ -377,7 +381,7 @@ exports.calculateMinionsCost = async function(minions, settings){
                         minionCost.push(tierCost);
                         unsortedMinionsCost.push(minionCost);
                         minionCost = new Array();
-                        upgrade.unfit = true; //seems not working, so added a line, 20 lines before, to do the same thing
+                        //upgrade.unfit = true;  //seems not working, so added a line, 20 lines before, to do the same thing
                         totalTiers++;
                     }else{
                         minionCost.push(tierCost);

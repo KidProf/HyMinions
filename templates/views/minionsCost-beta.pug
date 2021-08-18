@@ -80,7 +80,7 @@ block content
                             span &nbsp; %
             #filter
                 br
-                h3 Filters
+                h3 Excludes
                 br
                 .row
                     .col-lg-6.col-12
@@ -94,14 +94,17 @@ block content
                         #slayerCollectionsNoProfile(class=(settings.useProfile==true ? 'd-none' : undefined))
                             .form-group
                                 input#overallBottomSlayers.checkbox(type="checkbox" checked=(settings.bottomSlayers==1 ? 'checked' : undefined))
-                                label(for="overallBottomSlayers") &nbsp; Exclude slayer minions
+                                label(for="overallBottomSlayers") &nbsp; Exclude slayer minions 
                     .col-lg-6.col-12
                         .form-group
                             label(for="overallDisplayMethod") Excluded crafts should be &nbsp;
                             select#overallDisplayMethod.form-control
                                 option(value="1" selected=(settings.displayMethod==1?'selected':undefined)) put at the end of list
                                 option(value="0" selected=(settings.displayMethod==0?'selected':undefined)) removed
+                h3 Filters
+                br
                 .row
+                    //- filtered minions must be removed
                     .col-lg-6.col-12
                         .miscellaneousInline
                             h4 Minions &nbsp;

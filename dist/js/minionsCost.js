@@ -88,7 +88,9 @@ function generateLink(){
         string += keys[i]+"="+values[i];
     }
     string += "#content";
-    window.location.href=string;
+    
+    if(location.origin+string==window.location.href) location.reload();
+    else window.location.href=string;
 }
 
 function search(){
