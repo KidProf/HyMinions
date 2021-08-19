@@ -66,6 +66,12 @@ function updateEvents(){
 
 
 //MINIONS
+$("#minionsInput").keydown(function(event) {
+    if (event.keyCode === 13) {
+        generateLinkIndex();
+    }
+});
+
 function generateLinkIndex(){
     let keys = [], values = [];
 

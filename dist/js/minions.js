@@ -1,5 +1,11 @@
 $("#minionsTable").doubleScroll();
 
+$("#overall").keydown(function(event) {
+    if (event.keyCode === 13) {
+        generateLink();
+    }
+});
+
 //functions to provide interactions
 // function toggleUseProfile(){
 //     let useProfile = $("#overallUseProfile").prop("checked");

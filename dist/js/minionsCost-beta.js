@@ -17,6 +17,12 @@ if(hash=="#all"){
 }
 $("#minionsCostTable").doubleScroll();
 
+$("#overall").keydown(function(event) {
+    if (event.keyCode === 13) {
+        generateLink();
+    }
+});
+
 //functions to provide interaction
 function toggleUseProfile(){
     let useProfile = $("#overallUseProfile").prop("checked");
