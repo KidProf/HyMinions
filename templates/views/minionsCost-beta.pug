@@ -231,7 +231,7 @@ block content
                                 +minionCostRow(minionsCost[i],i,nextIndex,true)
                                 -i++;
                             -nextIndex++;
-                        while nextIndex<settings.minionSlotsNext.length
+                        while nextIndex<settings.minionSlotsNext.length && settings.minionSlotsNext[nextIndex-1] <minionsCost.length
                             +slotRow(nextIndex,false,false)
                             -nextIndex++;
 
