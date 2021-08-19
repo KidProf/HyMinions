@@ -1,7 +1,11 @@
 //run on load
 let hash = window.location.hash;
 console.log(hash);
-if(hash=="#all"){
+if(hash=="#all50"){
+    //expand all
+    $(".collapseNext").removeClass("d-none");
+    window.location.hash = "#minion50Row";
+}else if(hash=="#all"){
     //expand all
     $(".collapseNext").removeClass("d-none");
     $(".showNextButton").addClass("d-none");
@@ -104,6 +108,7 @@ function showAll(){
     $(".hideNextButton").removeClass("d-none");
     $("#showAll").addClass("d-none");
     $("#hideAll").removeClass("d-none");
+    $("#showAllBottom").addClass("d-none");
     $("#minionsCostTable").doubleScroll();
 }
 function hideAll(){
@@ -156,6 +161,10 @@ function generateLink(){
     if($("#overallDisplayMethod").children("option:selected").val()!=1){
         keys.push("displayMethod");
         values.push($("#overallDisplayMethod").children("option:selected").val());
+    }
+    if($("#overallShowSlots").prop("checked")!=1){
+        keys.push("showSlots");
+        values.push($("#overallShowSlots").prop("checked") ? 1 : 0);
     }
     // if($("#overallShowDetails").prop("checked")){
     //     keys.push("showDetails");
@@ -249,6 +258,8 @@ function appendShowDetails(nextIndex){
     }
     if(nextIndex==-1){
         string += "#all";
+    }else if(nextIndex==-2){
+        string += "#all50";
     }else{
         string += "#slot"+nextIndex+"Row";
     }

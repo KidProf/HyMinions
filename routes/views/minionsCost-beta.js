@@ -68,6 +68,9 @@ exports = module.exports = function (req, res) {
         if(!settings.displayMethod||!isWithinList(settings.displayMethod,[0,1])){ //default, will filter slayers
             settings.displayMethod = 1;
         }
+        if(!settings.showSlots||!isWithinList(settings.showSlots,[0,1])){ //default, will filter slayers
+            settings.showSlots = 1;
+        }
 
         console.log(settings);
         

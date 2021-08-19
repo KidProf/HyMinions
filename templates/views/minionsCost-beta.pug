@@ -101,6 +101,9 @@ block content
                             select#overallDisplayMethod.form-control
                                 option(value="1" selected=(settings.displayMethod==1?'selected':undefined)) put at the end of list
                                 option(value="0" selected=(settings.displayMethod==0?'selected':undefined)) removed
+                        .form-group
+                            input#overallShowSlots.checkbox(type="checkbox" checked=(settings.showSlots==1 ? 'checked' : undefined))
+                            label(for="overallShowSlots") &nbsp; Show slot information
                 br
                 h3 Filters
                 br
@@ -188,11 +191,12 @@ block content
                         button#searchButton.btn(onclick="search()") Search
                     //-.col-12.col-md-3.col-lg-6
                     .col-12
-                        if settings.showDetails == 1
-                            button#showAll.btn.btn-link.read-more(onclick="showAll()") Expand All
-                            button#hideAll.btn.btn-link.read-more.d-none(onclick="hideAll()") Hide All
-                        else
-                            button.btn.btn-link#showAll.read-more(onclick="appendShowDetails(-1)") Load and Expand All
+                        if settings.showSlots==1
+                            if settings.showDetails == 1
+                                button#showAll.btn.btn-link.read-more(onclick="showAll()") Expand All
+                                button#hideAll.btn.btn-link.read-more.d-none(onclick="hideAll()") Hide All
+                            else
+                                button.btn.btn-link#showAll.read-more(onclick="appendShowDetails(-1)") Load and Expand All
                 #doubleScroll: table#minionsCostTable.table.table-dark.w-100
                     thead
                         tr
@@ -210,13 +214,15 @@ block content
                         -let nextIndex = 0;
                         -let i=0;
                         while i<Math.min(50,minionsCost.length)
-                            +slotRow(nextIndex,true,true)
+                            if settings.showSlots==1
+                                +slotRow(nextIndex,true,true)
                             while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
                                 +minionCostRow(minionsCost[i],i,nextIndex,true)
                                 -i++;
                             -nextIndex++;
                         while nextIndex<settings.minionSlotsNext.length && i<minionsCost.length
-                            +slotRow(nextIndex,false,true)
+                            if settings.showSlots==1
+                                +slotRow(nextIndex,false,true)
                             while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
                                 +minionCostRow(minionsCost[i],i,nextIndex,false)
                                 -i++;
@@ -226,14 +232,21 @@ block content
                         -let nextIndex = 0;
                         -let i=0;
                         while i<Math.min(50,minionsCost.length)
-                            +slotRow(nextIndex,true,true)
+                            if settings.showSlots==1
+                                +slotRow(nextIndex,true,true)
                             while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
                                 +minionCostRow(minionsCost[i],i,nextIndex,true)
                                 -i++;
                             -nextIndex++;
                         while nextIndex<settings.minionSlotsNext.length && settings.minionSlotsNext[nextIndex-1] <minionsCost.length
-                            +slotRow(nextIndex,false,false)
+                            if settings.showSlots==1
+                                +slotRow(nextIndex,false,false)
                             -nextIndex++;
+
+            if settings.showSlots==0
+                if settings.showDetails == 0
+                    button.btn.btn-link#showAllBottom.read-more(onclick="appendShowDetails(-2)") Load and Expand All
+                br
 
             p: small
                 if(settings.lastUpdatedBazaar)
