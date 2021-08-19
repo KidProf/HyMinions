@@ -1,10 +1,17 @@
 //run on load
 let hash = window.location.hash;
 console.log(hash);
-if(hash=="#all50"){
+console.log(hash.includes("#allMinions"));
+if(hash.substring(0,11)=="#allMinions"){
     //expand all
     $(".collapseNext").removeClass("d-none");
-    window.location.hash = "#minion50Row";
+    $(".showNextButton").addClass("d-none");
+    $(".hideNextButton").removeClass("d-none");
+    $("#showAll").addClass("d-none");
+    $("#hideAll").removeClass("d-none");
+    rowNumber = hash.substring(11);
+    console.log(rowNumber);
+    window.location.hash = "#minion"+rowNumber+"Row";
 }else if(hash=="#all"){
     //expand all
     $(".collapseNext").removeClass("d-none");
@@ -201,15 +208,28 @@ function generateLink(){
 
 function search(){
     window.location.hash="#content";
-    let searchingName = $("#searchInput").val();
+    let searchingName = $("#searchInput").val().toLowerCase();
+    let results = new Array();
     for(i=0;i<$("#searchDatalist").children("option").length;i++){
-        if(searchingName==$("#searchDatalist").children("option").eq(i).val()){
-            window.location.hash="#minion"+i+"Row";
+        let target = $("#searchDatalist").children("option").eq(i).val().toLowerCase();
+        if(target==searchingName){ //if exact match, then directly move to the row
+            showAll();
+            appendShowDetails(null,i);
+        }
+        if(target.includes(searchingName)){ //ALT: searchingName==target.substring(0,searchingName.length)
+            results.push(i);
         };
     }
+    console.log(results);
+    if(results.length==1){
+        showAll();
+        appendShowDetails(null,results[0]);
+    }
+    
 }
 
-function appendShowDetails(nextIndex){
+
+function appendShowDetails(nextIndex,minionIndex){
     let keys = [], values = [];
     
     let currentURL = window.location.href;
@@ -252,20 +272,35 @@ function appendShowDetails(nextIndex){
 
     //output
     let string = "/minionscost-beta"
+    let hash = ""
     for(let i=0;i<keys.length;i++){
         string += i==0 ? "?" : "&";
         string += keys[i]+"="+values[i];
     }
-    if(nextIndex==-1){
-        string += "#all";
-    }else if(nextIndex==-2){
-        string += "#all50";
+    if(nextIndex){
+        if(nextIndex==-1){
+            hash = "#all";
+        }else{
+            hash = "#slot"+nextIndex+"Row";
+        }
     }else{
-        string += "#slot"+nextIndex+"Row";
+        if(location.origin+string==window.location.href.substring(0,window.location.href.indexOf("#"))){
+            hash = "#minion"+minionIndex+"Row";
+        }else{
+            hash = "#allMinions"+minionIndex;
+        }
+        
     }
-
     console.log(string);
-    window.location.href=string;
+    console.log(hash);
+
+    console.log(location.origin+string);
+    console.log(window.location.href.substring(0,window.location.href.indexOf("#")));
+    if(location.origin+string==window.location.href.substring(0,window.location.href.indexOf("#"))){
+        window.location.hash=hash;
+    }else{
+        window.location.href=string+hash;
+    }
 }
 
 function clearInput(){
