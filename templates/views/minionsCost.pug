@@ -39,14 +39,21 @@ block content
         +infoBox("minionsTitleModal","info","Minions Crafts Calculator")
             p It calculates the cheapest minions to level up to gain more minion slots, also tailor-made for each profile if you input your Minecraft name. It also shows you how much money you need to spend on materials to unlock a new minion tier.
         p What are the cheapest minions to level up to gain more minion slots?
+        //-TEMP
+        h3 Warning
+        p The filter and search functions are in beta, bugs may occur.
         #overall
             .row
                 #general.col-lg-6.col-12
                     br
                     h3 General
                     .form-group
+                        .form-group
+                            input#overallUseProfile.checkbox(type="checkbox" onclick="toggleUseProfile()" checked=(settings.useProfile==true ? 'checked' : undefined))
+                            label(for="overallUseProfile") &nbsp; Use Profile
+                    .form-group#profileName
                         p Minecraft Name (Recommended): &nbsp; 
-                            input#overallProfileName.form-control(value=settings.name)
+                            input#overallProfileName.form-control(value=settings.name oninput="setUseProfile()")
                             span &nbsp; &nbsp; 
                             +infoBox("profileModal","question","Why is my Minecraft name required?")
                                 p If you enter your Minecraft name, it will calculate the cheapest minion ignoring the minion you have crafted. It could make the crafts list more personalized and useful.
@@ -58,25 +65,86 @@ block content
                                 while k<settings.profileNames.length
                                     option(value=k selected=(settings.profile==k?'selected':undefined))=settings.profileNames[k]
                                     -k++;
-                .col-lg-6.col-12  
-                    #advanced
+                #advanced.col-lg-6.col-12
+                    br
+                    h3 Advanced
+                    .form-group
+                        label(for="overallBuyingMethod") Buying method in bazaar: &nbsp;
+                        select#overallBuyingMethod.form-control
+                            option(value="1" selected=(settings.buyingMethod==1?'selected':undefined)) Buy order
+                            option(value="0" selected=(settings.buyingMethod==0?'selected':undefined)) Buy instantly
+                            
+                    .form-group
+                        label(for="overallTax") Tax in bazaar: &nbsp; 
+                            input#overallTax.form-control(type="number" value=settings.tax min="0")
+                            span &nbsp; %
+            #filter
+                br
+                h3 Excludes
+                br
+                .row
+                    .col-lg-6.col-12
+                        #slayerCollectionsUseProfile(class=(settings.useProfile==true ? undefined : "d-none"))
+                            .form-group
+                                input#overallFilterSlayers.checkbox(type="checkbox" checked=(settings.filterSlayers==1 ? 'checked' : undefined))
+                                label(for="overallFilterSlayers") &nbsp; Exclude locked slayer minions
+                            .form-group
+                                input#overallFilterCollections.checkbox(type="checkbox" checked=(settings.filterCollections==1 ? 'checked' : undefined))
+                                label(for="overallFilterCollections") &nbsp; Exclude locked minions (collections)
+                        #slayerCollectionsNoProfile(class=(settings.useProfile==true ? 'd-none' : undefined))
+                            .form-group
+                                input#overallBottomSlayers.checkbox(type="checkbox" checked=(settings.bottomSlayers==1 ? 'checked' : undefined))
+                                label(for="overallBottomSlayers") &nbsp; Exclude slayer minions 
+                    .col-lg-6.col-12
+                        .form-group
+                            label(for="overallDisplayMethod") Excluded crafts should be &nbsp;
+                            select#overallDisplayMethod.form-control
+                                option(value="1" selected=(settings.displayMethod==1?'selected':undefined)) put at the end of list
+                                option(value="0" selected=(settings.displayMethod==0?'selected':undefined)) removed
+                        .form-group
+                            input#overallShowSlots.checkbox(type="checkbox" checked=(settings.showSlots==1 ? 'checked' : undefined))
+                            label(for="overallShowSlots") &nbsp; Show slot information
+                br
+                h3 Filters
+                br
+                .row
+                    //- filtered minions must be removed
+                    .col-lg-6.col-12
+                        .miscellaneousInline
+                            h4 Minions &nbsp;
+                            a.read-more(data-toggle="collapse" href="#filterMinions" aria-expanded="false" aria-controls="filterMinions")
+                                span.collapsed Show more
+                                span.expanded Show less
+                        #filterMinions.collapse
+                            input.checkbox#filterMinionsSelectAll(type="checkbox" checked=(settings.filterMinions&&settings.filterMinions.length!=0 ? undefined:"checked") onclick="toggleFilterMinionsSelectAll()")
+                            label(for="filterMinionsSelectAll") &nbsp; Select All
+                            hr
+                            #filterMinionsBody
+                                for minion in minions
+                                    .form-group
+                                        input.checkbox(type="checkbox" value=minion.id id="filterMinions"+minion.id checked=(settings.filterMinions&&settings.filterMinions.includes(minion.id.toString()) ? undefined:"checked") onclick="setFilterMinionsSelectAll()")
+                                        label(for="filterMinions"+minion.id) &nbsp; !{minion.name}
                         br
-                        h3 Advanced
-                        .form-group
-                            label(for="overallBuyingMethod") Buying method in bazaar: &nbsp;
-                            select#overallBuyingMethod.form-control
-                                option(value="1" selected=(settings.buyingMethod==1?'selected':undefined)) Buy order
-                                option(value="0" selected=(settings.buyingMethod==0?'selected':undefined)) Buy instantly
-                                
-                        .form-group
-                            label(for="overallTax") Tax in bazaar: &nbsp; 
-                                input#overallTax.form-control(type="number" value=settings.tax min="0")
-                                span &nbsp; %
-
-                        //- .form-group
-                        //-     input#overallShowDetails.checkbox(type="checkbox" checked=(settings.showDetails>=1 ? 'checked' : undefined))
-                        //-     label(for="overallShowDetails") &nbsp; Load All &nbsp;
-            
+                        br
+                    .col-lg-6.col-12
+                        .miscellaneousInline
+                            h4 Tiers &nbsp;
+                            a.read-more(data-toggle="collapse" href="#filterTiers" aria-expanded="false" aria-controls="filterTiers")
+                                span.collapsed Show more
+                                span.expanded Show less
+                        #filterTiers.collapse
+                            input.checkbox#filterTiersSelectAll(type="checkbox" checked=(settings.filterTiers&&settings.filterTiers.length!=0 ? undefined:"checked") onclick="toggleFilterTiersSelectAll()")
+                            label(for="filterTiersSelectAll") &nbsp; Select All
+                            hr
+                            #filterTiersBody
+                                - let i = 0
+                                while i<12
+                                    .form-group
+                                        input.checkbox(type="checkbox" value=(i+1) id="filterTiers"+i checked=(settings.filterTiers&&settings.filterTiers.includes((i+1).toString()) ? undefined:"checked")  onclick="setFilterTiersSelectAll()")
+                                        label(for="filterTiers"+i) &nbsp; Tier !{i+1}
+                                    -i++;
+                        br
+                        br
             br
             button#overallSettings.btn(onclick="generateLink()") Apply
             span &nbsp; &nbsp; &nbsp;
@@ -90,6 +158,12 @@ block content
             //- <!-- minionsCost1 -->
             <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3541192882647315" data-ad-slot="7408794849" data-ad-format="auto" data-full-width-responsive="true"></ins>
             <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+            
+            //- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3541192882647315" crossorigin="anonymous"></script>
+            //- //- minionsCost-beta1
+            //- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3541192882647315" data-ad-slot="6124486969" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            //- <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+            
             br
             if settings&&settings.hasError
                 h1 Error
@@ -110,22 +184,29 @@ block content
                     p Minion Slots: #{settings.minionSlots} + #{settings.communitySlots} (Community Center)
                     p Crafts to next: #{settings.minionSlotsNext.length!=1? settings.minionSlotsNext[0]: "MAXED"}
                     p Coins to next: #{settings.minionSlotsCostText[0]}
+                    if settings.collectionsDisabled
+                        p.loss Collection API access for this profile is disabled. Click <a href="https://www.youtube.com/watch?v=-_LIyA5lNMU">here</a> to see how to enable API access, so that we could put the minions that you cannot craft at the bottom of the list.
                 #search: .form-group.row
-                    //-.col-12.col-md-8.col-lg-6
+                    .col-12.col-md-8.col-lg-6
                         label(for="searchInput") Search: &nbsp;
                         input#searchInput(list="searchDatalist").form-control
                         datalist#searchDatalist
-                            each minionCost in minionsCost
-                                option(value=minionCost.name.substring(0,minionCost.name.lastIndexOf(" "))+" "+minionCost.tier)
+                            -let nextIndexSearch = 0;
+                            -let j=0;
+                            while nextIndexSearch<settings.minionSlotsNext.length && j<minionsCost.length
+                                while j<settings.minionSlotsNext[nextIndexSearch]&&j<minionsCost.length
+                                    option(value=minionsCost[j].name.substring(0,minionsCost[j].name.lastIndexOf(" "))+" "+minionsCost[j].tier)
+                                    -j++;
+                                -nextIndexSearch++;
                         span &nbsp; &nbsp; &nbsp;
                         button#searchButton.btn(onclick="search()") Search
-                    //-.col-12.col-md-3.col-lg-6
-                    .col-12
-                        if settings.showDetails == 1
-                            button#showAll.btn.btn-link.read-more(onclick="showAll()") Expand All
-                            button#hideAll.btn.btn-link.read-more.d-none(onclick="hideAll()") Hide All
-                        else
-                            button.btn.btn-link#showAll.read-more(onclick="appendShowDetails(-1)") Load and Expand All
+                    .col-12.col-md-3.col-lg-6
+                        if settings.showSlots==1
+                            if settings.showDetails == 1
+                                button#showAll.btn.btn-link.read-more(onclick="showAll()") Expand All
+                                button#hideAll.btn.btn-link.read-more.d-none(onclick="hideAll()") Hide All
+                            else
+                                button.btn.btn-link#showAll.read-more(onclick="appendShowDetails(-1)") Load and Expand All
                 #doubleScroll: table#minionsCostTable.table.table-dark.w-100
                     thead
                         tr
@@ -143,13 +224,15 @@ block content
                         -let nextIndex = 0;
                         -let i=0;
                         while i<Math.min(50,minionsCost.length)
-                            +slotRow(nextIndex,true,true)
+                            if settings.showSlots==1
+                                +slotRow(nextIndex,true,true)
                             while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
                                 +minionCostRow(minionsCost[i],i,nextIndex,true)
                                 -i++;
                             -nextIndex++;
-                        while nextIndex<settings.minionSlotsNext.length
-                            +slotRow(nextIndex,false,true)
+                        while nextIndex<settings.minionSlotsNext.length && i<minionsCost.length
+                            if settings.showSlots==1
+                                +slotRow(nextIndex,false,true)
                             while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
                                 +minionCostRow(minionsCost[i],i,nextIndex,false)
                                 -i++;
@@ -159,15 +242,24 @@ block content
                         -let nextIndex = 0;
                         -let i=0;
                         while i<Math.min(50,minionsCost.length)
-                            +slotRow(nextIndex,true,true)
+                            if settings.showSlots==1
+                                +slotRow(nextIndex,true,true)
                             while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
                                 +minionCostRow(minionsCost[i],i,nextIndex,true)
                                 -i++;
                             -nextIndex++;
-                        while nextIndex<settings.minionSlotsNext.length
-                            +slotRow(nextIndex,false,false)
+                        while nextIndex<settings.minionSlotsNext.length && settings.minionSlotsNext[nextIndex-1] <minionsCost.length
+                            if settings.showSlots==1
+                                +slotRow(nextIndex,false,false)
                             -nextIndex++;
 
+            if settings.showSlots==0
+                if settings.showDetails == 0
+                    button.btn.btn-link#showAllBottom.read-more(onclick="appendShowDetails(null,50)") Load and Expand All
+                    br
+                else
+                    button.btn.btn-link#showAllBottom.read-more(onclick="showAll()") Expand All
+                    br
             p: small
                 if(settings.lastUpdatedBazaar)
                     | Last updated time of bazaar price: #{settings.lastUpdatedBazaar} UTC
@@ -188,7 +280,7 @@ mixin slotRow(nextIndex,isShown,isLoaded)
                 i.fas.fa-lg.fa-cloud-download-alt(id="showNextButton"+nextIndex onclick="appendShowDetails("+nextIndex+")")
         td(colspan="100%").py-3
             -let slotNumber = settings.minionSlots+nextIndex+1
-            if nextIndex+1 == settings.minionSlotsNext.length
+            if nextIndex+1 == settings.minionSlotsNext.length || settings.minionSlotsNext[nextIndex] > minionsCost.length
                 span Remaining minions: #{settings.minionSlotsCostText[nextIndex]} coins
             else if slotNumber == 1 || slotNumber == 21
                 span #{slotNumber}st slot: #{settings.minionSlotsCostText[nextIndex]} coins
@@ -208,7 +300,7 @@ mixin minionCostRow(minionCost,i,nextIndex,isShown)
         td(id="minion"+i+"Name")=minionCost.name
         td(id="minion"+i+"Tier")=minionCost.tier
         td(id="minion"+i+"TotalCostFront").text-right=minionCost.totalCostText
-        td(id="minion"+i+"Items")
+        td(id="minion"+i+"Items" class=(minionCost.warning?"live":"") class=(minionCost.danger?"loss":""))
             if minionCost.upgradeMaterials
                 each material in minionCost.upgradeMaterials
                     | #{material}

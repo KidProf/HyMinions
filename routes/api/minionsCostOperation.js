@@ -2,14 +2,15 @@ var fetch = require('cross-fetch');
 var {moneyRepresentation, dateTimeToString, findBazaar, findProfile} = require("./general.js");
 var {specialPrices, minionSlotsCriteria} = require("./minionsData.js");
 var itemNames = require("./itemNames.json");
+const e = require('express');
 
-let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, communitySlots, minionCrafts, hadError=false;
+let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, profileInfo, hadError=false;
     
 exports.calculateMinionsCost = async function(minions, settings){
     console.log("calculateMinionsCost");
     console.log(settings.name,minecraftName);
     //console.log(Date.now()-lastUpdatedBazaar);
-    if((settings.useProfile)&&(!minecraftName||settings.name.toLowerCase()!=minecraftName.toLowerCase()||hadError||Date.now()-lastUpdatedProfile>5*60*1000)){ //don't call api again if identical name, but call again if prev result has error, 5 min timeout
+    if((settings.useProfile)&&(!minecraftName||settings.name.toLowerCase()!=minecraftName.toLowerCase()||hadError||Date.now()-lastUpdatedProfile>60*1000)){ //don't call api again if identical name, but call again if prev result has error, 1 min timeout
         minecraftName = settings.name;
         lastUpdatedProfile = Date.now();
         await findProfile(settings.name,settings).then((profilesAjax)=>{
@@ -18,10 +19,15 @@ exports.calculateMinionsCost = async function(minions, settings){
             }
             minions.forEach((minion,index6)=>{
                 minion.profilesTier = new Array(profilesAjax.length);
+                minion.profilesCollection = new Array(profilesAjax.length);
             });
             profileNames = new Array(profilesAjax.length);
-            communitySlots = new Array(profilesAjax.length);
-            minionCrafts = new Array(profilesAjax.length);
+            profileInfo = {
+                communitySlots : new Array(profilesAjax.length),
+                minionCrafts : new Array(profilesAjax.length),
+                slayerBosses : new Array(profilesAjax.length),
+                collectionsDisabled : new Array(profilesAjax.length),
+            }
             profilesAjax.forEach((profile,index)=>{ 
                 //store cute name for data input
                 //console.log(profile);
@@ -58,9 +64,36 @@ exports.calculateMinionsCost = async function(minions, settings){
                         }
                     });
                 });
+                if(settings.filterCollections&&(!profile.rawCollections||profile.rawCollections.length==0)){ //collections does not exist
+                    profileInfo.collectionsDisabled[index] = true;
+                }
+                //for each collection entry
+                profile.rawCollections.forEach((rawCollection,index2)=>{
+                    //e.g. to get "TARANTULA" from "TARANTULA_4"
+                    let underscoreLocation = rawCollection.lastIndexOf("_");
+                    let searchString = rawCollection.substring(0,underscoreLocation);
+                    
+                    //search it with each minion name
+                    minions.forEach((minion,index4)=>{
+                        let minionString;
+                        if(minion.rawCollectionId){
+                            minionString = minion.rawCollectionId;
+                        }else{
+                            let minionLocation = minion.name.lastIndexOf(" ");
+                            minionString = minion.name.substring(0,minionLocation).toUpperCase();
+                        }
+                        if(minionString==searchString||minion.rawCollectionId=="NONE"){
+                            let tier = rawCollection.substring(underscoreLocation+1);
+                            if(tier==1){
+                                minion.profilesCollection[index] = true;
+                            }
+                        }
+                    });
+                });
                 profileNames[index]=profile.cuteName;
-                communitySlots[index]=profile.communitySlots;
-                minionCrafts[index]=minionCraftsProfile;
+                profileInfo.communitySlots[index]=profile.communitySlots;
+                profileInfo.minionCrafts[index]=minionCraftsProfile;
+                profileInfo.slayerBosses[index] = profile.slayerBosses;
             });
         });
     }
@@ -129,7 +162,7 @@ exports.calculateMinionsCost = async function(minions, settings){
     let minionsCost = new Array(); //1D array
     while(unsortedMinionsCost.length!=0){ //iterate until all elements are sorted, ~~ merge list
         let minVal, minValIndex;
-        for(j=0;j<unsortedMinionsCost.length;j++){
+        for(let j=0;j<unsortedMinionsCost.length;j++){
             if(!minVal || unsortedMinionsCost[j][0].totalCost < minVal){
                 minVal = unsortedMinionsCost[j][0].totalCost;
                 minValIndex = j;
@@ -142,14 +175,21 @@ exports.calculateMinionsCost = async function(minions, settings){
             unsortedMinionsCost.splice(minValIndex,1);
         }
     }
+    //console.log(unsortedMinionsCostLast);
     while(unsortedMinionsCostLast.length!=0){ //iterate until all elements are sorted, ~~ merge list
         let minVal, minValIndex;
-        for(j=0;j<unsortedMinionsCostLast.length;j++){
-            if(!minVal || unsortedMinionsCostLast[j][0].totalCost < minVal){
-                minVal = unsortedMinionsCostLast[j][0].totalCost;
-                minValIndex = j;
+        for(let k=0;k<unsortedMinionsCostLast.length;k++){
+            if(minVal==undefined || unsortedMinionsCostLast[k][0].totalCost < minVal){
+                // console.log("minVal",minVal);
+                // console.log("unsortedMinionsCostLast[k][0].name",unsortedMinionsCostLast[k][0].name);
+                // console.log("unsortedMinionsCostLast[k][0].totalCost",unsortedMinionsCostLast[k][0].totalCost);
+                // console.log("minValIndex",k);
+                // console.log("___");
+                minVal = unsortedMinionsCostLast[k][0].totalCost;
+                minValIndex = k;
             }
         }
+        console.log(unsortedMinionsCostLast[minValIndex][0].name,unsortedMinionsCostLast[minValIndex][0].tier);
         //console.log(minValIndex);
         minionsCost.push(unsortedMinionsCostLast[minValIndex][0]); //add to sorted list
         unsortedMinionsCostLast[minValIndex].shift(); //remove element from unsorted list
@@ -165,8 +205,9 @@ exports.calculateMinionsCost = async function(minions, settings){
         settings.profileNames=profileNames;
         settings.profile=Math.min(settings.profile,settings.profileNames.length-1);
 
-        settings.communitySlots=communitySlots[settings.profile];
-        settings.minionCrafts=minionCrafts[settings.profile];
+        settings.communitySlots=profileInfo.communitySlots[settings.profile];
+        settings.minionCrafts=profileInfo.minionCrafts[settings.profile];
+        settings.collectionsDisabled=profileInfo.collectionsDisabled[settings.profile];
         minionSlotsCriteria.forEach((criteria,index5)=>{ 
             if(criteria>settings.minionCrafts){
                 if(settings.minionSlotsNext.length==0){
@@ -207,21 +248,59 @@ exports.calculateMinionsCost = async function(minions, settings){
         settings.minionSlotsCostText[index2] = moneyRepresentation(cost);
     });
 
+    minions.sort((a,b) =>{
+        if(b.name<a.name) return 1; //name asc
+        else if(b.name>a.name) return -1;
+        else return 0;
+    });
+
     return minionsCost;
 
     function calculateMinionCost(settings,minion){
         let minionCost = new Array();
+        upgrade = minion.upgrade;
+
+        upgrade.unfit = false;
+        upgrade.putAtLast = false;
+        upgrade.danger = false;
+
+        //filterMinions
+        if(settings.filterMinions&&settings.filterMinions.includes(minion.id.toString())){
+            return;
+        }
+        
+        //danger notation - collection, filterCollections
+        if(settings.useProfile){
+            if(!(profileInfo.collectionsDisabled[settings.profile]||minion.profilesCollection[settings.profile])){
+                upgrade.danger = true;
+                if(settings.filterCollections==1) upgrade.unfit = true;
+            }
+        }else{
+            if(upgrade.slayerRequirements&&settings.bottomSlayers){//bottomSlayers
+                upgrade.unfit = true;
+            }
+
+        }
+
         for(tier=0;tier<minion.tierDelay.length;tier++){
             if(settings.useProfile&&minion.profilesTier[settings.profile][tier]){ //useProfile and has crafted already, skip
                 continue;
+            }
+            //filterTiers
+            if(settings.filterTiers&&settings.filterTiers.includes((tier+1).toString())){
+                continue;
+            }
+            if(upgrade.unfit){ 
+                if(settings.displayMethod==0) continue; //displayMethod = remove from list
+                else upgrade.putAtLast = true; //displayMethod = put at bottom of list
             }
             let tierCost = {
                 name : minion.name,
                 tier : tier+1,
             };
-            upgrade = minion.upgrade;
-
-            tierCost.warning = false;
+            
+            tierCost.warning = upgrade.warning;
+            tierCost.danger = upgrade.danger;
             tierCost.upgradeMaterials = new Array();
             tierCost.upgradeQuantities = new Array();
             tierCost.unitPrices = new Array();
@@ -269,19 +348,61 @@ exports.calculateMinionsCost = async function(minions, settings){
             tierCost.totalCost = totalCost;
             tierCost.totalCostText = moneyRepresentation(totalCost);
             tierCost.totalCostTextDetail = moneyRepresentation(totalCost,1); 
-            if(tier==0&&upgrade.detachTier1==true){
-                if(upgrade.defaultPutAtLast){
-                    unsortedMinionsCostLast.push([tierCost]); //seperate tier 1 from the rest of the list
-                }else{
-                    unsortedMinionsCost.push([tierCost]); //seperate tier 1 from the rest of the list
+
+            if(upgrade.slayerRequirements&&settings.filterSlayers==1&&settings.useProfile){
+                //danger notation - slayer, filterSlayers
+                // console.log("348",upgrade.slayerRequirements[tier]);
+                // console.log("349",profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier]]);
+                let currentSlayer = profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier]];
+                let nextSlayer = profileInfo.slayerBosses[settings.profile][upgrade.slayerRequirements[tier+1]]
+                if(!currentSlayer){
+                    tierCost.danger = true;
+                    upgrade.unfit = true;
                 }
-                totalTiers++;
+                //filterSlayers
+                if(settings.filterSlayers==1){
+                    // console.log("357",upgrade.putAtLast);
+                    // console.log("358",upgrade.unfit);
+                    if(upgrade.unfit){
+                        if(settings.displayMethod==0){
+                            continue; //remove
+                        }else{
+                            upgrade.putAtLast = true;
+                        }
+                    }
+                    if(tier==0&&upgrade.detachTier1==true){
+                        if(upgrade.unfit||upgrade.defaultPutAtLast){
+                            unsortedMinionsCostLast.push([tierCost]); //seperate tier 1 from the rest of the list
+                        }else{
+                            unsortedMinionsCost.push([tierCost]); //seperate tier 1 from the rest of the list
+                        }
+                        totalTiers++;
+                    }else if(currentSlayer&&!nextSlayer){
+                        minionCost.push(tierCost);
+                        unsortedMinionsCost.push(minionCost);
+                        minionCost = new Array();
+                        //upgrade.unfit = true;  //seems not working, so added a line, 20 lines before, to do the same thing
+                        totalTiers++;
+                    }else{
+                        minionCost.push(tierCost);
+                        totalTiers++;
+                    }
+                }
             }else{
-                minionCost.push(tierCost);
-                totalTiers++;
+                if(tier==0&&upgrade.detachTier1==true){
+                    if(upgrade.putAtLast||upgrade.defaultPutAtLast){
+                        unsortedMinionsCostLast.push([tierCost]); //seperate tier 1 from the rest of the list
+                    }else{
+                        unsortedMinionsCost.push([tierCost]); //seperate tier 1 from the rest of the list
+                    }
+                    totalTiers++;
+                }else{
+                    minionCost.push(tierCost);
+                    totalTiers++;
+                }
             }
         }
-        if(upgrade.defaultPutAtLast){
+        if(upgrade.putAtLast||upgrade.defaultPutAtLast){
             if(minionCost.length!=0) unsortedMinionsCostLast.push(minionCost);
         }else{
             if(minionCost.length!=0) unsortedMinionsCost.push(minionCost);
@@ -375,6 +496,7 @@ exports.calculateMinionsCostLink = async function(minions, settings){
             }else{
                 tierCost.totalCost = compareMaterialsCost(upgrade.materials[tier],upgrade.quantities[tier],upgrade.bazaarPrice[tier]);
             }
+
             if(tier==0&&upgrade.detachTier1==true){
                 if(upgrade.defaultPutAtLast){
                     unsortedMinionsCostLast.push([tierCost]); //seperate tier 1 from the rest of the list
