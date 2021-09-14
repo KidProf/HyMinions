@@ -2524,7 +2524,7 @@ exports.minions = [
         storage: [64,192,192,384,384,576,576,768,768,960,960],
         upgrade:{
             materials: [
-                ["Wooden Shovel","Clay"],
+                ["Wooden Pickaxe","Clay"],
                 ["Clay"],
                 ["Clay"],
                 ["Clay"],

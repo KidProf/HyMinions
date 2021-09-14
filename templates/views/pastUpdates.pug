@@ -1,7 +1,7 @@
 extends ../layouts/default
 
 block append variables
-	- var currentPage = "abouts";
+	- var currentPage = "";
 
 block content
 	.container
@@ -9,6 +9,24 @@ block content
 		p It is a delightful trip down memory lane. Thank you for supporting HyMinions throughout the past year.
 		p Please note that this page shows major updates only.
 		
+		br
+		.my-box
+			.container
+				h4.announcementsHeaderYellow.header: a(href="/minionscost") <img src="/images/news.png" width="30" height="30"/> UPDATE
+				h4 Improvements to Minion Crafts Calculator
+				p Aug 2021
+				ul
+					li Moving locked slayer minions to the end of list 
+					li Moving minions that you do not have the collection to craft to the end of list 
+					li Searching directly for the minion you want.
+					li Filtering for specific minions or tiers.
+					li (24 Aug) Fixed the bug where "the player has not played skyblock before" bug.
+					li Updated <a href="/abouts">abouts</a> and <a href="/abouts">contacts</a> page
+					li Added clear button
+					li Other minor changes (Full list please refer to <a href="https://discord.gg/2KabAgsN6Y">discord</a>)
+				p I understand that new features sometimes come with new bugs, feel free to <a href="/abouts">contact me</a> if you spot a bug.
+				p: a(href="/minionscost") Click to try
+
 		br
 		.my-box
 			.container
