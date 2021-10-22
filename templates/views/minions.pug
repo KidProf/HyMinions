@@ -284,8 +284,9 @@ block content
                 p You may make a bug report <a href="/contact">here</a> if the above set of settings also does not work. Sorry for the inconvenience caused.
             else
                 //- TEMP: removal of old calculation mode warning
-                h2.live Warning! You are using the old calculation mode, which will be removed soon.
-                p.live If there are some reason you would prefer the old calculation mode over the new one, you are advised to <a href="/contact">voice out</a>, to see if I can integrate the feature you wanted to the new calculation type.
+                if settings.calculationType == 0 
+                    h2.live Warning! You are using the old calculation mode, which will be removed soon.
+                    p.live If there are some reason you would prefer the old calculation mode over the new one, you are advised to <a href="/contact">voice out</a>, to see if I can integrate the feature you wanted to the new calculation type.
                 #search: .form-group
                     label(for="searchInput") Search: &nbsp;
                     input#searchInput(list="searchDatalist").form-control

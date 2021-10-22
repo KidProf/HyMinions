@@ -72,7 +72,6 @@ exports.calculateMinionsCost = async function(minions, settings){
                     //e.g. to get "TARANTULA" from "TARANTULA_4"
                     let underscoreLocation = rawCollection.lastIndexOf("_");
                     let searchString = rawCollection.substring(0,underscoreLocation);
-                    
                     //search it with each minion name
                     minions.forEach((minion,index4)=>{
                         let minionString;
@@ -84,7 +83,7 @@ exports.calculateMinionsCost = async function(minions, settings){
                         }
                         if(minionString==searchString||minion.rawCollectionId=="NONE"){
                             let tier = rawCollection.substring(underscoreLocation+1);
-                            if(tier==1){
+                            if(tier==(minion.collectionMinTier||1)){
                                 minion.profilesCollection[index] = true;
                             }
                         }

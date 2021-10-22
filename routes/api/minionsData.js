@@ -3650,6 +3650,7 @@ exports.minions = [
         name: "Fishing Minion",
         id: 47,
         rawCollectionId: "RAW_FISH",
+        collectionMinTier: 2,
         tierDelay : [78,75,72,72,68,68,62.5,62.5,53,53,35],
         storage: [640,640,640,704,704,768,768,832,832,896,960],
         upgrade:{
