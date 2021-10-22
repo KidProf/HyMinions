@@ -60,7 +60,7 @@ block content
                         label(for="overallUseProfile") Use Profile (Recommended)  &nbsp; 
                         +infoBox("profileModal","question","Why is my Minecraft name required?")
                             p If you enter your Minecraft name, it will calculate the profit based on the highest tier of the minion you have crafted. It could make the profit list more personalized and useful when finding the most profitable minions among those you have.
-                            p Alternatively, you could uncheck this "Use Profile" box, and select the tier of the minions manually.
+                            p Alternatively, you could choose "Estimate by number of minion slots" or "Manually choose tier", and select the minion slots you have/ tier of the minions manually.
                         .form-group#useProfile
                             p Minecraft Name: &nbsp; 
                                 input#overallProfileName.form-control(value=settings.name oninput="selectTierTypeRadios(1)")
@@ -75,9 +75,10 @@ block content
                         input#overallUseSlots.form-check-input.radio(type="radio" name="tierTypeRadios" value=2 checked=(settings.tierType==2 ? "checked":undefined)) 
                         label(for="overallUseSlots") Estimate by number of minion slots  &nbsp; 
                         +infoBox("slotsModal","question","Estimate by number of minion slots")
-                            p We could estimate the tier of the minions you have based on the number of minion slots you have, assuming you craft the minions in ascending order of costs. 
-                            p Please note that it is just an ESTIMATE of the minions you have, the minions you have could be quite different because you might not be buying them in order, and the cost of the minions depends on the market price of materials.
-                            p If you want the profits calculator to be more accurate, you are advised to enter your Minecraft name so that it can obtain the exact minions you have.
+                            p Please note that this is not the minions you have. 23 is the default value as I think that is what some late game players may have.
+                            p It is an estimation of the minions they have for people who do not want to put their names in. Assuming you craft the minions in ascending order of costs, until you have enough unique minions to unlock the minion slot you specified. 
+                            p The aim is to exclude exceptionally expensive minions like Voidling Tier 11. However, if you want to get the most out of the calculator, you are advised to enter your Minecraft name so that it can obtain the exact minions you have.
+                            p.small Please note that it is just an ESTIMATE of the minions you have, the minions you have could be quite different because you might not be buying them in order, and the cost of the minions depends on the market price of materials.
                         br
                         select#overallSlots.form-control(onchange="selectTierTypeRadios(2)")
                             -let l=0;
