@@ -39,9 +39,6 @@ block content
         +infoBox("minionsTitleModal","info","Minions Crafts Calculator")
             p It calculates the cheapest minions to level up to gain more minion slots, also tailor-made for each profile if you input your Minecraft name. It also shows you how much money you need to spend on materials to unlock a new minion tier.
         p What are the cheapest minions to level up to gain more minion slots?
-        //-TEMP
-        h3 Warning
-        p The filter and search functions are in beta, bugs may occur.
         #overall
             .row
                 #general.col-lg-6.col-12
@@ -87,25 +84,40 @@ block content
                         #slayerCollectionsUseProfile(class=(settings.useProfile==true ? undefined : "d-none"))
                             .form-group
                                 input#overallFilterSlayers.checkbox(type="checkbox" checked=(settings.filterSlayers==1 ? 'checked' : undefined))
-                                label(for="overallFilterSlayers") &nbsp; Exclude locked slayer minions
+                                label(for="overallFilterSlayers") &nbsp; Exclude locked slayer minions &nbsp; 
+                                +infoBox("filterSlayersModal","question","Exclude locked slayer minions")
+                                    p If checked, slayer minions that you cannot craft based on your slayer level will be put at the end of the list/ removed from the list. (based on your selection)
                             .form-group
                                 input#overallFilterCollections.checkbox(type="checkbox" checked=(settings.filterCollections==1 ? 'checked' : undefined))
-                                label(for="overallFilterCollections") &nbsp; Exclude locked minions (collections)
+                                label(for="overallFilterCollections") &nbsp; Exclude locked minions (collections) &nbsp; 
+                                +infoBox("filterCollectionsModal","question","Exclude locked minions (collections)")
+                                    p If checked, minions that you cannot craft based on the collections you have will be put at the end of the list/ removed from the list. (based on your selection)
+                                    p This feature would require collections API enabled. Click <a href="https://www.youtube.com/watch?v=-_LIyA5lNMU">here</a> to see how to enable API access.
                         #slayerCollectionsNoProfile(class=(settings.useProfile==true ? 'd-none' : undefined))
                             .form-group
                                 input#overallBottomSlayers.checkbox(type="checkbox" checked=(settings.bottomSlayers==1 ? 'checked' : undefined))
-                                label(for="overallBottomSlayers") &nbsp; Exclude slayer minions 
+                                label(for="overallBottomSlayers") &nbsp; Exclude slayer minions &nbsp; 
+                                +infoBox("bottomSlayersModal","question","Exclude slayer minions")
+                                    p If checked, all slayer minions will be put at the end of the list/ removed from the list. (based on your selection)
                     .col-lg-6.col-12
                         .form-group
                             label(for="overallDisplayMethod") Excluded crafts should be &nbsp;
                             select#overallDisplayMethod.form-control
                                 option(value="1" selected=(settings.displayMethod==1?'selected':undefined)) put at the end of list
                                 option(value="0" selected=(settings.displayMethod==0?'selected':undefined)) removed
+                            span &nbsp; &nbsp; 
+                            +infoBox("excludedCraftsModal","question","Excluded crafts should be ...")
+                                p Decide whether the excluded minions (as you selected on the left/ above), should be put at the end of list or removed from the list.
                         .form-group
                             input#overallShowSlots.checkbox(type="checkbox" checked=(settings.showSlots==1 ? 'checked' : undefined))
-                            label(for="overallShowSlots") &nbsp; Show slot information
+                            label(for="overallShowSlots") &nbsp; Show slot information &nbsp; 
+                            +infoBox("showSlotsModal","question","Show slot information")
+                                p If checked, the colored line showing amount of coins needed and the slot that you are unlocking, should appear, such as "6th slot: 901.7 coins"
                 br
-                h3 Filters
+                h3.d-inline-block Filters
+                p.d-inline-block &nbsp; &nbsp; &nbsp;
+                +infoBox("filtersModal","question","Filters")
+                    p Only checked minions/tiers would appear in the list.
                 br
                 .row
                     //- filtered minions must be removed
@@ -184,7 +196,7 @@ block content
                     p Minion Slots: #{settings.minionSlots} + #{settings.communitySlots} (Community Center)
                     p Crafts to next: #{settings.minionSlotsNext.length!=1? settings.minionSlotsNext[0]: "MAXED"}
                     p Coins to next: #{settings.minionSlotsCostText[0]}
-                    if settings.collectionsDisabled
+                    if settings.collectionsDisabled && settings.filterCollections==1
                         p.loss Collection API access for this profile is disabled. Click <a href="https://www.youtube.com/watch?v=-_LIyA5lNMU">here</a> to see how to enable API access, so that we could put the minions that you cannot craft at the bottom of the list.
                 #search: .form-group.row
                     .col-12.col-md-8.col-lg-6
