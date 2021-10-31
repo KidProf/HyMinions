@@ -1,6 +1,6 @@
 var fetch = require('cross-fetch');
 var itemNames = require("./itemNames.json");
-var {minions, soulflowItem} = require("./minionsData.js");
+var {forgeItems} = require("./forgeData.js");
 
 //copied from events.js
 exports.dateTimeToString = function dateTimeToString(dateTime){
@@ -189,6 +189,37 @@ exports.findProfile = async function findProfile(name,settings){
                 console.log("catch from mojang",err);
                 settings.hasError=true;
                 settings.errorMsg = "Error occured when finding the profile. The player does not exist.";
+                resolve("error");
+            });
+        }, 1000);
+    });
+}
+
+exports.findAuction = async function findAuction(settings,page){
+    return new Promise((resolve)=>{
+        setTimeout(() => {
+            fetch("https://api.hypixel.net/skyblock/auctions?page="+page+"&key="+process.env.HYPIXEL_KEY)
+            .then(result => result.json())
+            .then(({ auctions,totalPages }) => {
+                settings.totalPages = totalPages;
+                let forgeAuctions=[];
+                auctions.forEach((auction)=>{
+                    if(forgeItems.includes(auction["item_name"])&&auction.bin==true){
+                        forgeAuctions.push({
+                            name: auction["item_name"],
+                            price: auction["starting_bid"],
+                        });
+                    }
+                });
+                console.log(forgeAuctions);
+
+                resolve("");
+                
+            })
+            .catch((err)=>{
+                console.log("catch from bazaar",err);
+                settings.hasError=true;
+                settings.errorMsg = "Error occured when getting bazaar prices.";
                 resolve("error");
             });
         }, 1000);

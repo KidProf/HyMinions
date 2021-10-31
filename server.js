@@ -11,6 +11,7 @@ const getMinionsApi = require('./routes/api/getBazaarApiForge');
 const getProfileApi = require('./routes/api/getProfileApiForge');
 const minionsView = require("./routes/views/minions.js");
 const minionsCostView = require("./routes/views/minionsCost.js");
+const forgeView = require("./routes/views/forge.js");
 //const minionsCostBetaView = require("./routes/views/minionsCost-beta.js");
 const indexView = require("./routes/views/index.js");
 
@@ -28,6 +29,7 @@ app.get('/minionscost',minionsCostView);
 app.get('/minionscost-beta',(req,res)=>{res.redirect("/minionscost")});
 app.get('/minions',minionsView);
 app.get('/forge',(req,res)=>{res.render("forge");});
+app.get('/new-forge',forgeView);
 app.get('/abouts',(req,res)=>{res.render("abouts");});
 app.get('/abouts/pastupdates',(req,res)=>{res.render("pastUpdates");});
 app.get('/contact',(req,res)=>{res.render("contact");});
