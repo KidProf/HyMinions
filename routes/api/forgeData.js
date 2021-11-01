@@ -2,6 +2,9 @@ exports.forgeItems = [ //items to look up from the auctions api
     "Drill Engine",
     "Fuel Tank",
     "Bejeweled Handle",
+    "Glacite Jewel",
+    "Golden Plate",
+    "Treasurite",
 ]
 
 
@@ -165,6 +168,9 @@ exports.forges = [
                 quantity: [
                     1,
                 ],
+                fromBazaar: [
+                    true,
+                ]
             }
         ],
         duration : 30,

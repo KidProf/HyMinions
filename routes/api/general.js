@@ -202,18 +202,28 @@ exports.findAuction = async function findAuction(settings,page){
             .then(result => result.json())
             .then(({ auctions,totalPages }) => {
                 settings.totalPages = totalPages;
-                let forgeAuctions=[];
+                let minAuctionFragment=[];
                 auctions.forEach((auction)=>{
-                    if(forgeItems.includes(auction["item_name"])&&auction.bin==true){
-                        forgeAuctions.push({
-                            name: auction["item_name"],
-                            price: auction["starting_bid"],
-                        });
+                    if(auction.bin){
+                        let found = false;
+                        minAuctionFragment.forEach((minAuction,index)=>{
+                            if(minAuction.name == auction["item_name"]){
+                                if(minAuction.price>auction["starting_bid"]){
+                                    minAuction.price = auction["starting_bid"]; //take minimum
+                                }
+                            }
+                        })
+                        if(!found){
+                            minAuctionFragment.push({
+                                name: auction["item_name"],
+                                price: auction["starting_bid"],
+                            });
+                        }
                     }
                 });
-                console.log(forgeAuctions);
+                console.log(minAuctionFragment);
 
-                resolve("");
+                resolve(minAuctionFragment);
                 
             })
             .catch((err)=>{

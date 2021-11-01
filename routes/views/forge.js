@@ -1,38 +1,42 @@
-var {minions} = require("../api/minionsData.js");
+var {forges} = require("../api/forgeData.js");
 var {findAuction} = require("../api/general.js");
-var {calculateMinionsProfit} = require("../api/minionsOperation.js");
+var {calculateForge} = require("../api/forgeOperation.js");
 
 exports = module.exports = function (req, res) {
     console.log(req.query);
     let settings = req.query;
 
-    for(let i=0;i<60;i++){
-        findAuction(settings,i);
-    }
-    res.render("index",{settings: settings});
-    // if(settings.run==1){
-    //     if(!dataValidation(settings)){
-    //         res.render("index",{settings: settings});
-    //     }else{
-    //         calculateMinionsProfit(minions, settings).then(()=>{
-    //             let output = {settings: settings, minions: minions};
-    //             console.log(output.settings);
-    //             res.render("index",output);
+    if(settings.run==1){
+        if(!dataValidation(settings)){
+            res.render("newForge",{settings: settings});
+        }else{
+            calculateForge(forges, settings).then(()=>{
+                let output = {settings: settings, forges: forges};
+                console.log(output.settings);
+                res.render("newForge",output);
         
-    //         }).catch((err)=>{
-    //             console.log(err);
-    //             res.render("index",{settings: settings});
-    //         });
-    //     }
-    // }else{
-    //     settings.run = 0;
-    //     settings.offlineTime = 24;
-    //     settings.offlineTimeUnit = 1;
-    //     console.log(settings);
-    //     res.render("index",{settings: settings});
-    // }
+            }).catch((err)=>{
+                console.log(err);
+                res.render("newForge",{settings: settings});
+            });
+        }
+        res.render("newForge",{settings: settings});
+        
+        for(let i=0;i<60;i++){
+            findAuction(settings,i);
+        }
 
+    }else{
+        settings.run = 0;
+        // settings.offlineTime = 24;
+        // settings.offlineTimeUnit = 1;
+        console.log(settings);
+        res.render("newForge",{settings: settings});
+    }
 
+    function dataValidation(settings){
+        return true;
+    }
     // function dataValidation(settings){
     //     //assume no error first
     //     settings.hasError = false;
