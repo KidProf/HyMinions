@@ -78,7 +78,7 @@ function moneyRepresentationMagnitudeDetail(number){
 exports.findBazaar = async function findBazaar(settings){
     return new Promise((resolve)=>{
         setTimeout(() => {
-            fetch("https://api.hypixel.net/skyblock/bazaar?key="+process.env.HYPIXEL_KEY)
+            fetch("https://api.hypixel.net/skyblock/bazaar")
             .then(result => result.json())
             .then(({ products }) => {
                 var pricesAjax = new Array(2);
@@ -195,38 +195,62 @@ exports.findProfile = async function findProfile(name,settings){
     });
 }
 
-exports.findAuction = async function findAuction(settings,page){
+//internal
+async function findAuction(settings,page){
     return new Promise((resolve)=>{
         setTimeout(() => {
-            fetch("https://api.hypixel.net/skyblock/auctions?page="+page+"&key="+process.env.HYPIXEL_KEY)
+            fetch("https://api.hypixel.net/skyblock/auctions?page="+page)
             .then(result => result.json())
             .then(({ auctions,totalPages }) => {
                 settings.totalPages = totalPages;
-                let minAuctionFragment=[];
+                let minAuctionFragment={}; //object with keys item names, values prices
                 auctions.forEach((auction)=>{
                     if(auction.bin){
-                        let found = false;
-                        minAuctionFragment.forEach((minAuction,index)=>{
-                            if(minAuction.name == auction["item_name"]){
-                                if(minAuction.price>auction["starting_bid"]){
-                                    minAuction.price = auction["starting_bid"]; //take minimum
-                                }
-                            }
-                        })
-                        if(!found){
-                            minAuctionFragment.push({
-                                name: auction["item_name"],
-                                price: auction["starting_bid"],
-                            });
+                        if(!minAuctionFragment[auction["item_name"]]||minAuctionFragment[auction["item_name"]]>auction["starting_bid"]){
+                            minAuctionFragment[auction["item_name"]] = auction["starting_bid"];
                         }
                     }
                 });
-                console.log(minAuctionFragment);
-
                 resolve(minAuctionFragment);
                 
             })
             .catch((err)=>{
+                console.log("catch from bazaar",err);
+                settings.hasError=true;
+                settings.errorMsg = "Error occured when getting bazaar prices.";
+                resolve("error");
+            });
+        }, 1000);
+    });
+}
+
+exports.findAuctions = async function findAuctions(settings){
+    return new Promise((resolve)=>{
+        setTimeout(() => {
+            findAuction(settings,0).then((minAuctionFragment0)=>{
+                console.log(settings.totalPages);
+                let promiseList = [];
+                for(i=1;i<settings.totalPages;i++){
+                    promiseList.push(findAuction(settings,i));
+                }
+                Promise.all(promiseList).then((minAuctionFragments) => { //call other pages after knowing total number of pages
+                    console.log(minAuctionFragments.length);
+                    let minAuctions = minAuctionFragment0;
+                    minAuctionFragments.forEach((minAuctionFragment)=>{
+                        Object.keys(minAuctionFragment).forEach((itemName)=>{
+                            if(!minAuctions[itemName]||minAuctions[itemName]>minAuctionFragment[itemName]){
+                                minAuctions[itemName] = minAuctionFragment[itemName];
+                            }
+                        });
+                    });
+                    resolve(minAuctions);
+                }).catch((err)=>{
+                    console.log("catch from bazaar",err);
+                    settings.hasError=true;
+                    settings.errorMsg = "Error occured when getting bazaar prices.";
+                    resolve("error");
+                });;
+            }).catch((err)=>{
                 console.log("catch from bazaar",err);
                 settings.hasError=true;
                 settings.errorMsg = "Error occured when getting bazaar prices.";

@@ -1,4 +1,4 @@
-var {moneyRepresentation, dateTimeToString, findBazaar, findProfile, findAuction} = require("./general.js");
+var {moneyRepresentation, dateTimeToString, findBazaar, findProfile, findAuctions} = require("./general.js");
 const { calculateMinionsCostLink } = require("./minionsCostOperation.js");
 var {soulflowItem, minionSlotsCriteria} = require("./minionsData.js");
 
@@ -50,102 +50,68 @@ exports.calculateForge = async function(forges, settings){
     //     //await Promise.all([findBazaar(), findProfile(settings.name)]);
     // }
 
-    // if((settings.sellingTo==1||settings.tierType==2)&&(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000)){ //1 min time out
-    //     lastUpdatedBazaar = Date.now();
-    //     await findBazaar(settings).then((bazaarPrices)=>{
-    //         if(bazaarPrices=="error"){
-    //             return;
-    //         }
-    //         soulflowItem.bazaarPrice=new Array(soulflowItem.variants.length);
-    //         soulflowItem.variants.forEach((variant,index)=>{
-    //             soulflowItem.bazaarPrice[index] = new Array(2);
-    //             if(bazaarPrices[0][variant]){
-    //                 soulflowItem.bazaarPrice[index][0] = bazaarPrices[0][variant];
-    //                 soulflowItem.bazaarPrice[index][1] = bazaarPrices[1][variant];
-    //             }else{
-    //                 //use NPC price as substitute
-    //                 if(soulflowItem.variantsNpcPrices){
-    //                     soulflowItem.bazaarPrice[index][0] = soulflowItem.variantsNpcPrices[index];
-    //                 }else{
-    //                     soulflowItem.bazaarPrice[index][0] = soulflowItem.npcPrice*soulflowItem.variantsEquiv[index];
-    //                 }
-    //                 soulflowItem.bazaarPrice[index][1] = soulflowItem.bazaarPrice[index][0];
-    //             }
-    //         });
+    if(settings.sellingTo==1&&(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000)){ //1 min time out
+        lastUpdatedBazaar = Date.now();
+        await findBazaar(settings).then((bazaarPrices)=>{
+            if(bazaarPrices=="error"){
+                return;
+            }
+            // soulflowItem.bazaarPrice=new Array(soulflowItem.variants.length);
+            // soulflowItem.variants.forEach((variant,index)=>{
+            //     soulflowItem.bazaarPrice[index] = new Array(2);
+            //     if(bazaarPrices[0][variant]){
+            //         soulflowItem.bazaarPrice[index][0] = bazaarPrices[0][variant];
+            //         soulflowItem.bazaarPrice[index][1] = bazaarPrices[1][variant];
+            //     }else{
+            //         //use NPC price as substitute
+            //         if(soulflowItem.variantsNpcPrices){
+            //             soulflowItem.bazaarPrice[index][0] = soulflowItem.variantsNpcPrices[index];
+            //         }else{
+            //             soulflowItem.bazaarPrice[index][0] = soulflowItem.npcPrice*soulflowItem.variantsEquiv[index];
+            //         }
+            //         soulflowItem.bazaarPrice[index][1] = soulflowItem.bazaarPrice[index][0];
+            //     }
+            // });
 
-    //         minions.forEach((minion)=>{
-    //             minion.products.forEach((product)=>{
-    //                 product.bazaarPrice=new Array(product.variants.length);
-    //                 product.variants.forEach((variant,index)=>{
-    //                     product.bazaarPrice[index] = new Array(2);
-    //                     if(bazaarPrices[0][variant]){
-    //                         product.bazaarPrice[index][0] = bazaarPrices[0][variant];
-    //                         product.bazaarPrice[index][1] = bazaarPrices[1][variant];
-    //                     }else{
-    //                         //use NPC price as substitute
-    //                         if(product.variantsNpcPrices){
-    //                             product.bazaarPrice[index][0] = product.variantsNpcPrices[index];
-    //                         }else{
-    //                             product.bazaarPrice[index][0] = product.npcPrice*product.variantsEquiv[index];
-    //                         }
-    //                         product.bazaarPrice[index][1] = product.bazaarPrice[index][0];
-    //                     }
-    //                 });
-    //             });
-    //         });
-
-    //         if(settings.tierType==2){
-    //             //copied from minionsCostOperation.js
-    //             minions.forEach((minion)=>{
-    //                 upgrade = minion.upgrade;
-    //                 if(upgrade){
-    //                     upgrade.bazaarPrice=new Array(upgrade.materials.length);
-    //                     upgrade.materials.forEach((materialsTier,tier)=>{
-    //                         upgrade.bazaarPrice[tier] = new Array(materialsTier.length);
-    //                         materialsTier.forEach((material,index)=>{
-    //                             if(bazaarPrices[0][material]){
-    //                                 upgrade.bazaarPrice[tier][index] = new Array(2);
-    //                                 upgrade.bazaarPrice[tier][index][0] = bazaarPrices[0][material];
-    //                                 upgrade.bazaarPrice[tier][index][1] = bazaarPrices[1][material];
-    //                             }else{
-    //                                 upgrade.bazaarPrice[tier][index] = undefined;
-    //                             }
-    //                         });
-    //                     });
-    //                     if(upgrade.materialsAlt){
-    //                         upgrade.bazaarPriceAlt=new Array(upgrade.materials.length);
-    //                         upgrade.materialsAlt.forEach((materialsTier,tier)=>{
-    //                             if(materialsTier){
-    //                                 upgrade.bazaarPriceAlt[tier] = new Array(materialsTier.length);
-    //                                 materialsTier.forEach((material,index)=>{
-    //                                     if(bazaarPrices[0][material]){
-    //                                         upgrade.bazaarPriceAlt[tier][index] = new Array(2);
-    //                                         upgrade.bazaarPriceAlt[tier][index][0] = bazaarPrices[0][material];
-    //                                         upgrade.bazaarPriceAlt[tier][index][1] = bazaarPrices[1][material];
-    //                                     }else{
-    //                                         upgrade.bazaarPriceAlt[tier][index] = undefined;
-    //                                     }
-    //                                 });
-    //                             }
-    //                         });
-    //                         //console.log(upgrade);
-    //                     }
-    //                 }
-    //             });
-    //         }
-    //     });
-    // }
-
-    for(let i = 0;i<60; i++){
-        findAuction(settings,i);
+            // minions.forEach((minion)=>{
+            //     minion.products.forEach((product)=>{
+            //         product.bazaarPrice=new Array(product.variants.length);
+            //         product.variants.forEach((variant,index)=>{
+            //             product.bazaarPrice[index] = new Array(2);
+            //             if(bazaarPrices[0][variant]){
+            //                 product.bazaarPrice[index][0] = bazaarPrices[0][variant];
+            //                 product.bazaarPrice[index][1] = bazaarPrices[1][variant];
+            //             }else{
+            //                 //use NPC price as substitute
+            //                 if(product.variantsNpcPrices){
+            //                     product.bazaarPrice[index][0] = product.variantsNpcPrices[index];
+            //                 }else{
+            //                     product.bazaarPrice[index][0] = product.npcPrice*product.variantsEquiv[index];
+            //                 }
+            //                 product.bazaarPrice[index][1] = product.bazaarPrice[index][0];
+            //             }
+            //         });
+            //     });
+            // });
+        });
     }
+
+    // for(let i = 0;i<60; i++){
+    //     findAuction(settings,i);
+    // }
     
     //TODO: a way to view it even when API is down
-    if((hadError||lastUpdateAuction==null||Date.now()-lastUpdateAuction>5*60*1000)){ //call again if prev result has error, 5 min timeout
-        
-        // await findAuction(settings,0).then((minAuctionFragment)=>{
-        //     console.log(minAuctionFragment);
-        // })
+    if(settings.sellingTo==1||lastUpdateAuction==null||Date.now()-lastUpdateAuction>5*60*1000){ //call again if prev result has error, 5 min timeout        
+        await findAuctions(settings).then((minAuctions)=>{
+            console.log(minAuctions);
+            
+            //incorporate minAuctions into forges
+            forges.forEach((forge)=>{
+                if(!forge.toBazaar){ //product
+                    
+                } 
+            })
+        });
     }
 
     settings.lastUpdateAuction = lastUpdateAuction ? dateTimeToString(lastUpdateAuction): null;

@@ -7,6 +7,8 @@ exports = module.exports = function (req, res) {
     let settings = req.query;
 
     if(settings.run==1){
+        settings.sellingTo = 1;
+
         if(!dataValidation(settings)){
             res.render("newForge",{settings: settings});
         }else{
@@ -20,12 +22,6 @@ exports = module.exports = function (req, res) {
                 res.render("newForge",{settings: settings});
             });
         }
-        res.render("newForge",{settings: settings});
-        
-        for(let i=0;i<60;i++){
-            findAuction(settings,i);
-        }
-
     }else{
         settings.run = 0;
         // settings.offlineTime = 24;
