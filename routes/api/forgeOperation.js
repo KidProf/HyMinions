@@ -108,11 +108,21 @@ exports.calculateForge = async function(forges, settings){
             //incorporate minAuctions into forges
             forges.forEach((forge)=>{
                 if(!forge.toBazaar){ //product
-                    
+                    forge.price = minAuctions[forge.name];
                 } 
-            })
+                forge.materials.forEach((material)=>{
+                    material.prices = new Array(material.options.length).fill(0);
+                    for(let i=0;i<material.options.length;i++){
+                        if(!(material.fromBazaar&&material.fromBazaar[i])){
+                            material.prices[i] = minAuctions[forge.name];
+                        }
+                    }
+                })
+            });
         });
     }
+
+    console.log(forges);
 
     settings.lastUpdateAuction = lastUpdateAuction ? dateTimeToString(lastUpdateAuction): null;
     settings.lastUpdatedProfile = lastUpdatedProfile ? dateTimeToString(lastUpdatedProfile): null;
@@ -123,13 +133,43 @@ exports.calculateForge = async function(forges, settings){
         return;
     }
 
-    // if(settings.tierType==1){
-    //     settings.profileNames=profileNames;
-    //     settings.profile=Math.min(settings.profile,settings.profileNames.length-1);
-
-    // }else if(settings.tierType==2){
-    // }
-
     console.log("finished findBazaar and findProfile");
 
+    let outputForges = [];
+    forges.forEach((forge)=>{
+        let outputForge = {
+            name: forge.name,
+            materials: new Array(forge.materials.length),
+            totalCost: 0,
+        };
+        outputForges.materials.forEach((material,index)=>{
+            let minIndex = compareMaterialCost(material);
+            price = material.prices[minIndex]*(1-settings.tax/100);
+            output.materials[index] = {
+                name: material.options[minIndex],
+                quantity: material.quantity[minIndex],
+                price: price,
+                priceText: moneyRepresentation(price,settings.showDetails) + material.fromBazaar && material.fromBazaar[index] ? " (BZ)" : " (AH)",
+            }
+            outputForge.totalCost += price;
+        });
+
+        //profit
+        //net profit
+        //display, done
+
+        outputForges.push(outputForge);
+    });
+    function compareMaterialCost(material){
+        let minIndex = 0;
+        let minCost = material.prices[0]*material.quantity[0];
+        for(let i=1;i<material.options.length;i++){
+            let cost = material.prices[i]*material.quantity[i];
+            if(minCost > cost){
+                minCost = cost;
+                minIndex = i;
+            }
+        }
+        return minIndex;
+    }
 }
