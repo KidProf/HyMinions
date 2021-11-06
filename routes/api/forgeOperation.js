@@ -56,54 +56,27 @@ exports.calculateForge = async function(forges, settings){
             if(bazaarPrices=="error"){
                 return;
             }
-            // soulflowItem.bazaarPrice=new Array(soulflowItem.variants.length);
-            // soulflowItem.variants.forEach((variant,index)=>{
-            //     soulflowItem.bazaarPrice[index] = new Array(2);
-            //     if(bazaarPrices[0][variant]){
-            //         soulflowItem.bazaarPrice[index][0] = bazaarPrices[0][variant];
-            //         soulflowItem.bazaarPrice[index][1] = bazaarPrices[1][variant];
-            //     }else{
-            //         //use NPC price as substitute
-            //         if(soulflowItem.variantsNpcPrices){
-            //             soulflowItem.bazaarPrice[index][0] = soulflowItem.variantsNpcPrices[index];
-            //         }else{
-            //             soulflowItem.bazaarPrice[index][0] = soulflowItem.npcPrice*soulflowItem.variantsEquiv[index];
-            //         }
-            //         soulflowItem.bazaarPrice[index][1] = soulflowItem.bazaarPrice[index][0];
-            //     }
-            // });
-
-            // minions.forEach((minion)=>{
-            //     minion.products.forEach((product)=>{
-            //         product.bazaarPrice=new Array(product.variants.length);
-            //         product.variants.forEach((variant,index)=>{
-            //             product.bazaarPrice[index] = new Array(2);
-            //             if(bazaarPrices[0][variant]){
-            //                 product.bazaarPrice[index][0] = bazaarPrices[0][variant];
-            //                 product.bazaarPrice[index][1] = bazaarPrices[1][variant];
-            //             }else{
-            //                 //use NPC price as substitute
-            //                 if(product.variantsNpcPrices){
-            //                     product.bazaarPrice[index][0] = product.variantsNpcPrices[index];
-            //                 }else{
-            //                     product.bazaarPrice[index][0] = product.npcPrice*product.variantsEquiv[index];
-            //                 }
-            //                 product.bazaarPrice[index][1] = product.bazaarPrice[index][0];
-            //             }
-            //         });
-            //     });
-            // });
+            //incorporate bazaar prices into forges
+            forges.forEach((forge)=>{
+                if(forge.toBazaar){ //product
+                    forge.price = bazaarPrices[1][forge.name]; //sell instantly
+                } 
+                forge.materials.forEach((material)=>{
+                    material.prices = new Array(material.options.length).fill(0);
+                    for(let i=0;i<material.options.length;i++){
+                        if(material.fromBazaar&&material.fromBazaar[i]){
+                            material.prices[i] = bazaarPrices[0][material.name]; //buy instantly
+                        }
+                    }
+                })
+            });
         });
     }
-
-    // for(let i = 0;i<60; i++){
-    //     findAuction(settings,i);
-    // }
     
     //TODO: a way to view it even when API is down
     if(settings.sellingTo==1||lastUpdateAuction==null||Date.now()-lastUpdateAuction>5*60*1000){ //call again if prev result has error, 5 min timeout        
         await findAuctions(settings).then((minAuctions)=>{
-            console.log(minAuctions);
+            console.log("number of unique auctions:",minAuctions.length);
             
             //incorporate minAuctions into forges
             forges.forEach((forge)=>{
@@ -114,7 +87,7 @@ exports.calculateForge = async function(forges, settings){
                     material.prices = new Array(material.options.length).fill(0);
                     for(let i=0;i<material.options.length;i++){
                         if(!(material.fromBazaar&&material.fromBazaar[i])){
-                            material.prices[i] = minAuctions[forge.name];
+                            material.prices[i] = minAuctions[material.name];
                         }
                     }
                 })
@@ -141,25 +114,31 @@ exports.calculateForge = async function(forges, settings){
             name: forge.name,
             materials: new Array(forge.materials.length),
             totalCost: 0,
+            price: forge.price,
+            duration: forge.duration,
         };
-        outputForges.materials.forEach((material,index)=>{
+        forge.materials.forEach((material,index)=>{
             let minIndex = compareMaterialCost(material);
             price = material.prices[minIndex]*(1-settings.tax/100);
-            output.materials[index] = {
+            outputForge.materials[index] = {
                 name: material.options[minIndex],
                 quantity: material.quantity[minIndex],
                 price: price,
-                priceText: moneyRepresentation(price,settings.showDetails) + material.fromBazaar && material.fromBazaar[index] ? " (BZ)" : " (AH)",
+                priceText: moneyRepresentation(price,settings.showDetails)/* + material.fromBazaar && material.fromBazaar[minIndex] ? " (BZ)" : " (AH)"*/,
             }
             outputForge.totalCost += price;
         });
+        outputForge.profit = outputForge.price - outputForge.totalCost;
+        outputForge.profitPerHour = outputForge.profit/outputForge.duration;
 
-        //profit
-        //net profit
-        //display, done
+        outputForge.profitText = moneyRepresentation(outputForge.profit);
+        outputForge.profitPerHourText = moneyRepresentation(outputForge.profitPerHourText);
 
         outputForges.push(outputForge);
     });
+
+    return outputForges;
+
     function compareMaterialCost(material){
         let minIndex = 0;
         let minCost = material.prices[0]*material.quantity[0];

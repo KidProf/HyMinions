@@ -193,141 +193,63 @@ block content
                 p If you think it is not an API problem, you may make a bug report <a href="/contact">here</a>. Sorry for the inconvenience caused.
             else
                 h3 SUCCESS
-            //-     if settings.useProfile
-            //-         h3 Profile Information
-            //-         p Minion Crafts: #{settings.minionCrafts}
-            //-         p Minion Slots: #{settings.minionSlots} + #{settings.communitySlots} (Community Center)
-            //-         p Crafts to next: #{settings.minionSlotsNext.length!=1? settings.minionSlotsNext[0]: "MAXED"}
-            //-         p Coins to next: #{settings.minionSlotsCostText[0]}
-            //-         if settings.collectionsDisabled && settings.filterCollections==1
-            //-             p.loss Collection API access for this profile is disabled. Click <a href="https://www.youtube.com/watch?v=-_LIyA5lNMU">here</a> to see how to enable API access, so that we could put the minions that you cannot craft at the bottom of the list.
-            //-     #search: .form-group.row
-            //-         .col-12.col-md-8.col-lg-6
-            //-             label(for="searchInput") Search: &nbsp;
-            //-             input#searchInput(list="searchDatalist").form-control
-            //-             datalist#searchDatalist
-            //-                 -let nextIndexSearch = 0;
-            //-                 -let j=0;
-            //-                 while nextIndexSearch<settings.minionSlotsNext.length && j<minionsCost.length
-            //-                     while j<settings.minionSlotsNext[nextIndexSearch]&&j<minionsCost.length
-            //-                         option(value=minionsCost[j].name.substring(0,minionsCost[j].name.lastIndexOf(" "))+" "+minionsCost[j].tier)
-            //-                         -j++;
-            //-                     -nextIndexSearch++;
-            //-             span &nbsp; &nbsp; &nbsp;
-            //-             button#searchButton.btn(onclick="search()") Search
-            //-         .col-12.col-md-3.col-lg-6
-            //-             if settings.showSlots==1
-            //-                 if settings.showDetails == 1
-            //-                     button#showAll.btn.btn-link.read-more(onclick="showAll()") Expand All
-            //-                     button#hideAll.btn.btn-link.read-more.d-none(onclick="hideAll()") Hide All
-            //-                 else
-            //-                     button.btn.btn-link#showAll.read-more(onclick="appendShowDetails(-1)") Load and Expand All
-            //-     #doubleScroll: table#minionsCostTable.table.table-dark.w-100
-            //-         thead
-            //-             tr
-            //-                 th(scope="col").minionRankHeader
-            //-                 th(scope="col").minionNameHeader Minion
-            //-                 th(scope="col") Tier
-            //-                 th(scope="col") Upgrade Cost
-            //-                 th(scope="col").upgradeMaterialsHeader Upgrade materials
-            //-                 th(scope="col") Quantity
-            //-                 th(scope="col") Unit Price (Bazaar)
-            //-                 th(scope="col").upgradeCostHeader Upgrade Cost 
-
-            //-         if (settings.showDetails==1)
-            //-             //-show top 50, until next minion slot, hide others
-            //-             -let nextIndex = 0;
-            //-             -let i=0;
-            //-             while i<Math.min(50,minionsCost.length)
-            //-                 if settings.showSlots==1
-            //-                     +slotRow(nextIndex,true,true)
-            //-                 while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
-            //-                     +minionCostRow(minionsCost[i],i,nextIndex,true)
-            //-                     -i++;
-            //-                 -nextIndex++;
-            //-             while nextIndex<settings.minionSlotsNext.length && i<minionsCost.length
-            //-                 if settings.showSlots==1
-            //-                     +slotRow(nextIndex,false,true)
-            //-                 while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
-            //-                     +minionCostRow(minionsCost[i],i,nextIndex,false)
-            //-                     -i++;
-            //-                 -nextIndex++;
-            //-         else
-            //-             //-show top 50, until next minion slot, dont load others
-            //-             -let nextIndex = 0;
-            //-             -let i=0;
-            //-             while i<Math.min(50,minionsCost.length)
-            //-                 if settings.showSlots==1
-            //-                     +slotRow(nextIndex,true,true)
-            //-                 while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
-            //-                     +minionCostRow(minionsCost[i],i,nextIndex,true)
-            //-                     -i++;
-            //-                 -nextIndex++;
-            //-             while nextIndex<settings.minionSlotsNext.length && settings.minionSlotsNext[nextIndex-1] <minionsCost.length
-            //-                 if settings.showSlots==1
-            //-                     +slotRow(nextIndex,false,false)
-            //-                 -nextIndex++;
-
-            //- if settings.showSlots==0
-            //-     if settings.showDetails == 0
-            //-         button.btn.btn-link#showAllBottom.read-more(onclick="appendShowDetails(null,50)") Load and Expand All
-            //-         br
-            //-     else
-            //-         button.btn.btn-link#showAllBottom.read-more(onclick="showAll()") Expand All
-            //-         br
-            //- p: small
-            //-     if(settings.lastUpdatedBazaar)
-            //-         | Last updated time of bazaar price: #{settings.lastUpdatedBazaar} UTC
-            //-     if(settings.lastUpdatedProfile)
-            //-         | <br /> Last updated time of profile: #{settings.lastUpdatedProfile} UTC
-
-mixin slotRow(nextIndex,isShown,isLoaded)
-    tr(id="slot"+nextIndex+"Row" class="color-row-"+nextIndex%7)
-        td.text-center.py-3
-            if isLoaded == true 
-                if isShown == true
-                    i.fas.fa-lg.fa-plus-circle.showNextButton(id="showNextButton"+nextIndex onclick="showCollapseNext("+nextIndex+")").d-none
-                    i.fas.fa-lg.fa-minus-circle.hideNextButton(id="hideNextButton"+nextIndex onclick="hideCollapseNext("+nextIndex+")")
-                else
-                    i.fas.fa-lg.fa-plus-circle.showNextButton(id="showNextButton"+nextIndex onclick="showCollapseNext("+nextIndex+")")
-                    i.fas.fa-lg.fa-minus-circle.hideNextButton(id="hideNextButton"+nextIndex onclick="hideCollapseNext("+nextIndex+")").d-none
-            else
-                i.fas.fa-lg.fa-cloud-download-alt(id="showNextButton"+nextIndex onclick="appendShowDetails("+nextIndex+")")
-        td(colspan="100%").py-3
-            -let slotNumber = settings.minionSlots+nextIndex+1
-            if nextIndex+1 == settings.minionSlotsNext.length || settings.minionSlotsNext[nextIndex] > minionsCost.length
-                span Remaining minions: #{settings.minionSlotsCostText[nextIndex]} coins
-            else if slotNumber == 1 || slotNumber == 21
-                span #{slotNumber}st slot: #{settings.minionSlotsCostText[nextIndex]} coins
-            else if slotNumber == 2 || slotNumber == 22
-                span #{slotNumber}nd slot: #{settings.minionSlotsCostText[nextIndex]} coins
-            else if slotNumber == 3 || slotNumber == 23
-                span #{slotNumber}rd slot: #{settings.minionSlotsCostText[nextIndex]} coins
-            else
-                span #{slotNumber}th slot: #{settings.minionSlotsCostText[nextIndex]} coins
-
-mixin minionCostRow(minionCost,i,nextIndex,isShown)
-    tr(id="minion"+i+"Row" class="collapseNext"+nextIndex class=isShown?undefined:"d-none").collapseNext
-        td.text-center
-            | ##{i+1}
-            br
-            img(src="/images/minions/"+minionCost.name+".png" width="30" height="30")
-        td(id="minion"+i+"Name")=minionCost.name
-        td(id="minion"+i+"Tier")=minionCost.tier
-        td(id="minion"+i+"TotalCostFront").text-right=minionCost.totalCostText
-        td(id="minion"+i+"Items" class=(minionCost.warning?"live":"") class=(minionCost.danger?"loss":""))
-            if minionCost.upgradeMaterials
-                each material in minionCost.upgradeMaterials
-                    | #{material}
-                    br
-        td(id="minion"+i+"NumberOfItems")
-            if minionCost.upgradeQuantities
-                each quantity in minionCost.upgradeQuantities
-                    | #{quantity}
-                    br
-        td(id="minion"+i+"BazaarPrices")
-            if minionCost.unitPrices
-                each unitPrice in minionCost.unitPrices
-                    | #{unitPrice}
-                    br
-        td(id="minion"+i+"TotalCost").text-right=minionCost.totalCostTextDetail
+                //-     #search: .form-group.row
+                //-         .col-12.col-md-8.col-lg-6
+                //-             label(for="searchInput") Search: &nbsp;
+                //-             input#searchInput(list="searchDatalist").form-control
+                //-             datalist#searchDatalist
+                //-                 -let nextIndexSearch = 0;
+                //-                 -let j=0;
+                //-                 while nextIndexSearch<settings.minionSlotsNext.length && j<minionsCost.length
+                //-                     while j<settings.minionSlotsNext[nextIndexSearch]&&j<minionsCost.length
+                //-                         option(value=minionsCost[j].name.substring(0,minionsCost[j].name.lastIndexOf(" "))+" "+minionsCost[j].tier)
+                //-                         -j++;
+                //-                     -nextIndexSearch++;
+                //-             span &nbsp; &nbsp; &nbsp;
+                //-             button#searchButton.btn(onclick="search()") Search
+                //-         .col-12.col-md-3.col-lg-6
+                //-             if settings.showSlots==1
+                //-                 if settings.showDetails == 1
+                //-                     button#showAll.btn.btn-link.read-more(onclick="showAll()") Expand All
+                //-                     button#hideAll.btn.btn-link.read-more.d-none(onclick="hideAll()") Hide All
+                //-                 else
+                //-                     button.btn.btn-link#showAll.read-more(onclick="appendShowDetails(-1)") Load and Expand All
+                #doubleScroll: table#minionsCostTable.table.table-dark.w-100
+                    thead
+                        tr
+                            th(scope="col")
+                            th(scope="col") Product <br /> (Profit per forge)
+                            th(scope="col") Materials <br /> (Cheapest variant)
+                            th(scope="col") Upgrade Cost
+                            th(scope="col") Time Taken <br /> (Hours)
+                            th(scope="col") Unit cost of material <br />
+                            th(scope="col") Cost of materials <br /> 
+                            th(scope="col") Profit per forge
+                            th(scope="col") Profit per hour
+                    - let i = 0
+                    for outputForge in outputForges 
+                        tr(id="forge"+i+"Row")
+                            td="#"+(i+1)
+                            td(id="forge"+i+"Name")=outputForge.name
+                            td(id="forge"+i+"MaterialsName")
+                                if outputForge.materials
+                                    each material in outputForge.materials
+                                        | #{material.quantity} x #{material.name}
+                                        br
+                            td(id="forge"+i+"Time")=outputForge.duration
+                            td(id="forge"+i+"UnitCost")
+                                if outputForge.materials
+                                    each material in outputForge.materials
+                                        | #{material.priceText}
+                                        br
+                            td(id="forge"+i+"Cost")=outputForge.totalCost
+                            td(id="forge"+i+"ProductPrice")=outputForge.price
+                            td(id="forge"+i+"NetProfit")=outputForge.profitText
+                            td(id="forge"+i+"ProfitPerHour")=outputForge.profitPerHourText
+            p: small
+                if(settings.lastUpdatedBazaar)
+                    | Last updated time of bazaar price: #{settings.lastUpdatedBazaar} UTC
+                if(settings.lastUpdatedAuction)
+                    | <br /> Last updated time of auction price: #{settings.lastUpdatedAuction} UTC
+                if(settings.lastUpdatedProfile)
+                    | <br /> Last updated time of profile: #{settings.lastUpdatedProfile} UTC

@@ -13,8 +13,8 @@ exports = module.exports = function (req, res) {
         if(!dataValidation(settings)){
             res.render("newForge",{settings: settings});
         }else{
-            calculateForge(forges, settings).then(()=>{
-                let output = {settings: settings, forges: forges};
+            calculateForge(forges, settings).then((outputForges)=>{
+                let output = {settings: settings, forges: forges, outputForges: outputForges};
                 console.log(output.settings);
                 res.render("newForge",output);
         

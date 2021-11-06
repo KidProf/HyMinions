@@ -211,13 +211,14 @@ async function findAuction(settings,page){
                         }
                     }
                 });
+                console.log("auction page fetch done " + page);
                 resolve(minAuctionFragment);
                 
             })
             .catch((err)=>{
-                console.log("catch from bazaar",err);
+                console.log("catch from findAuction",err);
                 settings.hasError=true;
-                settings.errorMsg = "Error occured when getting bazaar prices.";
+                settings.errorMsg = "Error occured when getting auction prices.";
                 resolve("error");
             });
         }, 1000);
@@ -234,7 +235,6 @@ exports.findAuctions = async function findAuctions(settings){
                     promiseList.push(findAuction(settings,i));
                 }
                 Promise.all(promiseList).then((minAuctionFragments) => { //call other pages after knowing total number of pages
-                    console.log(minAuctionFragments.length);
                     let minAuctions = minAuctionFragment0;
                     minAuctionFragments.forEach((minAuctionFragment)=>{
                         Object.keys(minAuctionFragment).forEach((itemName)=>{
@@ -245,15 +245,15 @@ exports.findAuctions = async function findAuctions(settings){
                     });
                     resolve(minAuctions);
                 }).catch((err)=>{
-                    console.log("catch from bazaar",err);
+                    console.log("catch from findAuctions",err);
                     settings.hasError=true;
-                    settings.errorMsg = "Error occured when getting bazaar prices.";
+                    settings.errorMsg = "Error occured when getting auction prices.";
                     resolve("error");
                 });;
             }).catch((err)=>{
-                console.log("catch from bazaar",err);
+                console.log("catch from findAuctions",err);
                 settings.hasError=true;
-                settings.errorMsg = "Error occured when getting bazaar prices.";
+                settings.errorMsg = "Error occured when getting auction prices.";
                 resolve("error");
             });
         }, 1000);
