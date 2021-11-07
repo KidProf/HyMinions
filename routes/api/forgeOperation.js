@@ -2,7 +2,7 @@ var {moneyRepresentation, dateTimeToString, findBazaar, findProfile, findAuction
 const { calculateMinionsCostLink } = require("./minionsCostOperation.js");
 var {soulflowItem, minionSlotsCriteria} = require("./minionsData.js");
 
-let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, lastUpdateAuction, profileNames, hadError=false;
+let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, lastUpdatedAuction, profileNames, hadError=false;
     
 exports.calculateForge = async function(forges, settings){
     console.log(settings.name,minecraftName);
@@ -62,10 +62,12 @@ exports.calculateForge = async function(forges, settings){
                     forge.price = bazaarPrices[1][forge.name]; //sell instantly
                 } 
                 forge.materials.forEach((material)=>{
-                    material.prices = new Array(material.options.length).fill(0);
+                    if(!material.prices){
+                        material.prices = new Array(material.options.length).fill(0);
+                    }
                     for(let i=0;i<material.options.length;i++){
                         if(material.fromBazaar&&material.fromBazaar[i]){
-                            material.prices[i] = bazaarPrices[0][material.name]; //buy instantly
+                            material.prices[i] = bazaarPrices[0][material.options[i]]; //buy instantly
                         }
                     }
                 })
@@ -74,7 +76,8 @@ exports.calculateForge = async function(forges, settings){
     }
     
     //TODO: a way to view it even when API is down
-    if(settings.sellingTo==1||lastUpdateAuction==null||Date.now()-lastUpdateAuction>5*60*1000){ //call again if prev result has error, 5 min timeout        
+    if(settings.sellingTo==1&&lastUpdatedAuction==null||Date.now()-lastUpdatedAuction>5*60*1000){ //call again if prev result has error, 5 min timeout        
+        lastUpdatedAuction = Date.now();
         await findAuctions(settings).then((minAuctions)=>{
             console.log("number of unique auctions:",minAuctions.length);
             
@@ -84,10 +87,12 @@ exports.calculateForge = async function(forges, settings){
                     forge.price = minAuctions[forge.name];
                 } 
                 forge.materials.forEach((material)=>{
-                    material.prices = new Array(material.options.length).fill(0);
+                    if(!material.prices){
+                        material.prices = new Array(material.options.length).fill(0);
+                    }
                     for(let i=0;i<material.options.length;i++){
                         if(!(material.fromBazaar&&material.fromBazaar[i])){
-                            material.prices[i] = minAuctions[material.name];
+                            material.prices[i] = minAuctions[material.options[i]];
                         }
                     }
                 })
@@ -97,7 +102,7 @@ exports.calculateForge = async function(forges, settings){
 
     console.log(forges);
 
-    settings.lastUpdateAuction = lastUpdateAuction ? dateTimeToString(lastUpdateAuction): null;
+    settings.lastUpdatedAuction = lastUpdatedAuction ? dateTimeToString(lastUpdatedAuction): null;
     settings.lastUpdatedProfile = lastUpdatedProfile ? dateTimeToString(lastUpdatedProfile): null;
     settings.lastUpdatedBazaar = lastUpdatedBazaar ? dateTimeToString(lastUpdatedBazaar) : null;
 
@@ -114,29 +119,42 @@ exports.calculateForge = async function(forges, settings){
             name: forge.name,
             materials: new Array(forge.materials.length),
             totalCost: 0,
-            price: forge.price,
+            price: forge.price*(1-settings.tax/100),
+            priceText: moneyRepresentation(forge.price*(1-settings.tax/100),settings.showDetails) + (forge.toBazaar ? " (BZ)" : " (AH)"),
             duration: forge.duration,
         };
         forge.materials.forEach((material,index)=>{
             let minIndex = compareMaterialCost(material);
-            price = material.prices[minIndex]*(1-settings.tax/100);
+            let price = material.prices[minIndex]*(1+settings.tax/100);
+            console.log(material.options);
+            console.log(material.fromBazaar);
+            console.log(material.prices);
+            console.log(price);
             outputForge.materials[index] = {
                 name: material.options[minIndex],
                 quantity: material.quantity[minIndex],
                 price: price,
-                priceText: moneyRepresentation(price,settings.showDetails)/* + material.fromBazaar && material.fromBazaar[minIndex] ? " (BZ)" : " (AH)"*/,
+                priceText: moneyRepresentation(price,settings.showDetails) + ((material.fromBazaar && material.fromBazaar[minIndex]) ? " (BZ)" : " (AH)"),
             }
-            outputForge.totalCost += price;
+            outputForge.totalCost += price*outputForge.materials[index].quantity;
         });
+        outputForge.totalCostText = moneyRepresentation(outputForge.totalCost);
         outputForge.profit = outputForge.price - outputForge.totalCost;
         outputForge.profitPerHour = outputForge.profit/outputForge.duration;
 
         outputForge.profitText = moneyRepresentation(outputForge.profit);
-        outputForge.profitPerHourText = moneyRepresentation(outputForge.profitPerHourText);
+        outputForge.profitPerHourText = moneyRepresentation(outputForge.profitPerHour);
 
         outputForges.push(outputForge);
     });
 
+    outputForges.sort((a,b)=>{
+        if(b.profit>a.profit) return 1; //profit desc
+        else if(b.profit<a.profit) return -1;
+        else if(b.name<a.name) return 1; //name asc
+        else if(b.name>a.name) return -1;
+        else return 0;
+    })
     return outputForges;
 
     function compareMaterialCost(material){

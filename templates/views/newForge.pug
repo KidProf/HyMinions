@@ -40,9 +40,12 @@ block content
         +infoBox("minionsTitleModal","info","Minions Crafts Calculator")
             p It calculates the cheapest minions to level up to gain more minion slots, also tailor-made for each profile if you input your Minecraft name. It also shows you how much money you need to spend on materials to unlock a new minion tier.
         p Most profitable forge options when you are offline.
-        //-TODO
-        h3 Warning
-        p This page is in beta, bugs may occur.
+        h3 To be continued
+        ul
+            li Data input
+            li Customizable settings (e.g. HOTM level, sort by profit per forge/hour)
+            li Improvements for loading time (or at least make the loading responsive)
+            li Warning: This page is in beta, bugs may occur.
 
         #overall
             //- .row
@@ -178,7 +181,7 @@ block content
             
             br
             if settings&&settings.run==0
-                p Click Apply to calculate.
+                p Click Apply to calculate. Please note that the loading time will be significantly longer than the other calculators, as it needs to make around 60 API calls to get all the auction data.
             else if settings&&settings.hasError
                 h1 Error
                 p.lead=settings.errorMsg
@@ -220,17 +223,20 @@ block content
                             th(scope="col")
                             th(scope="col") Product <br /> (Profit per forge)
                             th(scope="col") Materials <br /> (Cheapest variant)
-                            th(scope="col") Upgrade Cost
                             th(scope="col") Time Taken <br /> (Hours)
-                            th(scope="col") Unit cost of material <br />
+                            th(scope="col") Unit cost of material(s) <br />
                             th(scope="col") Cost of materials <br /> 
-                            th(scope="col") Profit per forge
+                            th(scope="col") Price of product <br /> 
+                            th(scope="col") Profit per forge <br />
                             th(scope="col") Profit per hour
                     - let i = 0
                     for outputForge in outputForges 
                         tr(id="forge"+i+"Row")
                             td="#"+(i+1)
-                            td(id="forge"+i+"Name")=outputForge.name
+                            td(id="forge"+i+"Name")
+                                | #{outputForge.name}
+                                br
+                                | (#{outputForge.profitText})
                             td(id="forge"+i+"MaterialsName")
                                 if outputForge.materials
                                     each material in outputForge.materials
@@ -242,10 +248,11 @@ block content
                                     each material in outputForge.materials
                                         | #{material.priceText}
                                         br
-                            td(id="forge"+i+"Cost")=outputForge.totalCost
-                            td(id="forge"+i+"ProductPrice")=outputForge.price
+                            td(id="forge"+i+"Cost")=outputForge.totalCostText
+                            td(id="forge"+i+"ProductPrice")=outputForge.priceText
                             td(id="forge"+i+"NetProfit")=outputForge.profitText
                             td(id="forge"+i+"ProfitPerHour")=outputForge.profitPerHourText
+                        - i++;
             p: small
                 if(settings.lastUpdatedBazaar)
                     | Last updated time of bazaar price: #{settings.lastUpdatedBazaar} UTC

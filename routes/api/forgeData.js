@@ -151,6 +151,9 @@ exports.forges = [
                 quantity: [
                     10,
                 ],
+                fromBazaar: [
+                    true,
+                ],
             },{
                 options: [
                     "Refined Diamond",
