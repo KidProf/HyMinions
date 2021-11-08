@@ -195,7 +195,6 @@ block content
                 p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
                 p If you think it is not an API problem, you may make a bug report <a href="/contact">here</a>. Sorry for the inconvenience caused.
             else
-                h3 SUCCESS
                 //-     #search: .form-group.row
                 //-         .col-12.col-md-8.col-lg-6
                 //-             label(for="searchInput") Search: &nbsp;
@@ -222,12 +221,12 @@ block content
                         tr
                             th(scope="col")
                             th(scope="col") Product <br /> (Profit per forge)
+                            th(scope="col") Duration <br /> (Hours)
+                            th(scope="col") Price of product 
                             th(scope="col") Materials <br /> (Cheapest variant)
-                            th(scope="col") Time Taken <br /> (Hours)
-                            th(scope="col") Unit cost of material(s) <br />
-                            th(scope="col") Cost of materials <br /> 
-                            th(scope="col") Price of product <br /> 
-                            th(scope="col") Profit per forge <br />
+                            th(scope="col") Unit cost of material(s)
+                            th(scope="col") Cost of materials
+                            th(scope="col") Profit per forge
                             th(scope="col") Profit per hour
                     - let i = 0
                     for outputForge in outputForges 
@@ -237,19 +236,20 @@ block content
                                 | #{outputForge.name}
                                 br
                                 | (#{outputForge.profitText})
+                            td(id="forge"+i+"Time")=outputForge.duration
+                            td(id="forge"+i+"ProductPrice")=outputForge.priceText
                             td(id="forge"+i+"MaterialsName")
                                 if outputForge.materials
                                     each material in outputForge.materials
                                         | #{material.quantity} x #{material.name}
                                         br
-                            td(id="forge"+i+"Time")=outputForge.duration
                             td(id="forge"+i+"UnitCost")
                                 if outputForge.materials
                                     each material in outputForge.materials
                                         | #{material.priceText}
                                         br
                             td(id="forge"+i+"Cost")=outputForge.totalCostText
-                            td(id="forge"+i+"ProductPrice")=outputForge.priceText
+                            
                             td(id="forge"+i+"NetProfit")=outputForge.profitText
                             td(id="forge"+i+"ProfitPerHour")=outputForge.profitPerHourText
                         - i++;
