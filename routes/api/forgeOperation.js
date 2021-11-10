@@ -59,7 +59,7 @@ exports.calculateForge = async function(forges, settings){
             //incorporate bazaar prices into forges
             forges.forEach((forge)=>{
                 if(forge.toBazaar){ //product
-                    forge.price = bazaarPrices[1][forge.name]; //sell instantly
+                    forge.price = bazaarPrices[1][forge.name] || 0; //sell instantly
                 } 
                 forge.materials.forEach((material)=>{
                     if(!material.prices){
@@ -67,7 +67,7 @@ exports.calculateForge = async function(forges, settings){
                     }
                     for(let i=0;i<material.options.length;i++){
                         if(material.fromBazaar&&material.fromBazaar[i]){
-                            material.prices[i] = bazaarPrices[0][material.options[i]]; //buy instantly
+                            material.prices[i] = bazaarPrices[0][material.options[i]] || material.prices[i]; //buy instantly
                         }
                     }
                 })
@@ -84,15 +84,16 @@ exports.calculateForge = async function(forges, settings){
             //incorporate minAuctions into forges
             forges.forEach((forge)=>{
                 if(!forge.toBazaar){ //product
-                    forge.price = minAuctions[forge.name];
+                    forge.price = minAuctions[forge.name] || 0;
                 } 
                 forge.materials.forEach((material)=>{
                     if(!material.prices){
                         material.prices = new Array(material.options.length).fill(0);
+                        console.log(material.prices);
                     }
                     for(let i=0;i<material.options.length;i++){
                         if(!(material.fromBazaar&&material.fromBazaar[i])){
-                            material.prices[i] = minAuctions[material.options[i]];
+                            material.prices[i] = minAuctions[material.options[i]] || material.prices[i];
                         }
                     }
                 })
