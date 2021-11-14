@@ -209,6 +209,7 @@ async function findAuction(settings,page){
                         if(!minAuctionFragment[auction["item_name"]]||minAuctionFragment[auction["item_name"]]>auction["starting_bid"]){
                             minAuctionFragment[auction["item_name"]] = auction["starting_bid"];
                         }
+                        console.log(auction["amount"]); 
                     }
                 });
                 console.log("auction page fetch done " + page);

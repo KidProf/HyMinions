@@ -2092,10 +2092,10 @@ exports.minions = [
         storage: [64,192,192,384,384,576,576,768,768,960,960],
         upgrade:{
             materials: [
-                ["Wooden Pickaxe","Quartz"],
-                ["Quartz"],
-                ["Quartz"],
-                ["Quartz"],
+                ["Wooden Pickaxe","Nether Quartz"],
+                ["Nether Quartz"],
+                ["Nether Quartz"],
+                ["Nether Quartz"],
                 ["Enchanted Quartz"],
                 ["Enchanted Quartz"],
                 ["Enchanted Quartz"],
@@ -2120,7 +2120,7 @@ exports.minions = [
         },
         products : [
             {
-                item : "Quartz",
+                item : "Nether Quartz",
                 perTime : 1,
                 npcPrice: 4,
                 canCompactor: true,
@@ -2130,7 +2130,7 @@ exports.minions = [
                     minimumEnchanted: 1,
                 },
                 variants: [
-                    "Quartz",
+                    "Nether Quartz",
                     "Enchanted Quartz",
                     "Enchanted Quartz Block"
                 ],
@@ -4184,7 +4184,7 @@ exports.minions = [
         //noDiamondSpreading : 1,
         products : [
             {
-                item : "Quartz",
+                item : "Nether Quartz",
                 perTime : 0.4,
                 npcPrice: 4,
                 canCompactor: true,
@@ -4194,7 +4194,7 @@ exports.minions = [
                     minimumEnchanted: 1,
                 },
                 variants: [
-                    "Quartz",
+                    "Nether Quartz",
                     "Enchanted Quartz",
                     "Enchanted Quartz Block"
                 ],

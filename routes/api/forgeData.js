@@ -326,6 +326,7 @@ exports.forges = [
         hotmRequirement: 4,
     },{ //9
         name : "Perfect Jasper Gemstone",
+        toBazaar: true,
         npcPrice: 0,
         materials: [
             {
@@ -356,6 +357,7 @@ exports.forges = [
     },{ //10
         name : "Perfect Ruby Gemstone",
         npcPrice: 0,
+        toBazaar: true,
         materials: [
             {
                 options: [
@@ -385,6 +387,7 @@ exports.forges = [
     },{ //11
         name : "Perfect Jade Gemstone",
         npcPrice: 0,
+        toBazaar: true,
         materials: [
             {
                 options: [
@@ -414,6 +417,7 @@ exports.forges = [
     },{ //12
         name : "Perfect Sapphire Gemstone",
         npcPrice: 0,
+        toBazaar: true,
         materials: [
             {
                 options: [
@@ -443,6 +447,7 @@ exports.forges = [
     },{ //13
         name : "Perfect Amber Gemstone",
         npcPrice: 0,
+        toBazaar: true,
         materials: [
             {
                 options: [
@@ -472,6 +477,7 @@ exports.forges = [
     },{ //14
         name : "Perfect Topaz Gemstone",
         npcPrice: 0,
+        toBazaar: true,
         materials: [
             {
                 options: [
@@ -501,6 +507,7 @@ exports.forges = [
     },{ //15
         name : "Perfect Amethyst Gemstone",
         npcPrice: 0,
+        toBazaar: true,
         materials: [
             {
                 options: [
