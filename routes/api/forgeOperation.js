@@ -79,8 +79,6 @@ exports.calculateForge = async function(forges, settings){
     if(settings.sellingTo==1&&lastUpdatedAuction==null||Date.now()-lastUpdatedAuction>5*60*1000){ //call again if prev result has error, 5 min timeout        
         lastUpdatedAuction = Date.now();
         await findAuctions(settings).then((minAuctions)=>{
-            console.log("number of unique auctions:",minAuctions.length);
-            
             //incorporate minAuctions into forges
             forges.forEach((forge)=>{
                 if(!forge.toBazaar){ //product
@@ -89,7 +87,7 @@ exports.calculateForge = async function(forges, settings){
                 forge.materials.forEach((material)=>{
                     if(!material.prices){
                         material.prices = new Array(material.options.length).fill(0);
-                        console.log(material.prices);
+                        //console.log(material.prices);
                     }
                     for(let i=0;i<material.options.length;i++){
                         if(!(material.fromBazaar&&material.fromBazaar[i])){
@@ -100,8 +98,6 @@ exports.calculateForge = async function(forges, settings){
             });
         });
     }
-
-    console.log(forges);
 
     settings.lastUpdatedAuction = lastUpdatedAuction ? dateTimeToString(lastUpdatedAuction): null;
     settings.lastUpdatedProfile = lastUpdatedProfile ? dateTimeToString(lastUpdatedProfile): null;

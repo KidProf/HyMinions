@@ -1,4 +1,5 @@
 var fetch = require('cross-fetch');
+var nbt = require('nbt');
 var itemNames = require("./itemNames.json");
 var {forgeItems} = require("./forgeData.js");
 
@@ -206,11 +207,22 @@ async function findAuction(settings,page){
                 let minAuctionFragment={}; //object with keys item names, values prices
                 auctions.forEach((auction)=>{
                     if(auction.bin){
-                        if(!minAuctionFragment[auction["item_name"]]||minAuctionFragment[auction["item_name"]]>auction["starting_bid"]){
-                            minAuctionFragment[auction["item_name"]] = auction["starting_bid"];
+                        let quantity = 1;
+                        // const data = Buffer.from(auction["item_bytes"], 'base64');
+                        // nbt.parse(data, (error, json) => {
+                        //     if (error) {
+                        //         console.log(error);
+                        //     }
+                        //     // console.log(json);
+                        //     quantity = json.value.i.value.value[0].Count.value || 1;
+                        //     return json;
+                        // });
+                        let currentPrice = auction["starting_bid"]/quantity;
+                        if(!minAuctionFragment[auction["item_name"]]||minAuctionFragment[auction["item_name"]]>currentPrice){
+                            minAuctionFragment[auction["item_name"]] = currentPrice;
                         }
-                        console.log(auction["amount"]); 
                     }
+                    
                 });
                 console.log("auction page fetch done " + page);
                 resolve(minAuctionFragment);
