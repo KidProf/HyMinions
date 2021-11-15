@@ -2639,6 +2639,60 @@ exports.minions = [
                 ]
             },
             {
+                item : "Enchanted Poisonous Potato",
+                perTime : 0.01, //0.01
+                npcPrice: 1600,
+                variants: [
+                    "Enchanted Poisonous Potato",
+                ],
+                variantsEquiv: [
+                    1,
+                ]
+            },
+            {
+                item : "Poisonous Potato",
+                perTime : 0.02, //0.02
+                npcPrice: 10,
+                variants: [
+                    "Poisonous Potato",
+                    "Enchanted Poisonous Potato",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                ]
+            },
+            {
+                item : "Potato",
+                perTime : 0.01, //0.01
+                npcPrice: 1,
+                variants: [
+                    "Potato",
+                    "Enchanted Potato",
+                    "Enchanted Baked Potato",
+                    "Hot Potato Book",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600,
+                    25600,
+                ]
+            },
+            {
+                item : "Carrot",
+                perTime : 0.01, //0.01
+                npcPrice: 1,
+                variants: [
+                    "Carrot",
+                    "Enchanted Carrot",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                ]
+            },
+            {
                 item: "Diamond (Spreading)",
                 npcPrice: 8,
                 canCompactor: true,
