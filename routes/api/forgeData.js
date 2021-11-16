@@ -803,6 +803,7 @@ exports.forges = [
         ],
         duration : 23,
         hotmRequirement: 6,
+    }
 ];
 
 //TOTAL: 16
