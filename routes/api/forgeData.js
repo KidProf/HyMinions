@@ -1,8 +1,51 @@
+exports.sourceBazaar = 1;
+exports.sourceAuction = 2;
+exports.sourceWarning = 3;
+exports.sourceOthers = 4;
+
+
+//SAMPLE
+// { //3
+//     name : "name surrounded by double quotes",
+//     npcPrice: find it if you can, if not put 0 here,
+//     source: write this.fromBazaar if from bazaar, else do not add the source,
+//     materials: [
+//         {
+//             options: [ //for bazaar, probably may have more than one option
+//                 "Enchanted Block of Coal",
+//                 "Enchanted Coal",
+//                 "Coal",
+//             ],
+//             quantity: [
+//                 2,
+//                 320,
+//                 51200,
+//             ],
+//             source: [ //denote they are from bazaar
+//                 this.sourceBazaar,
+//                 this.sourceBazaar,
+//                 this.sourceBazaar,
+//             ],
+//         },{
+//         options: [ //for auction, probably only have one option, enclose that option with [] (let it be a list with 1 element)
+//             "Golden Plate",
+//         ],
+//         quantity: [
+//             1,
+//         ],
+//         //no need add source here
+// },
+//     ],
+//     duration : 10,
+//     hotmRequirement: 2, //hotm level
+//     gemstoneRequirement: 9 //remove this line of no need
+// },
+
 exports.forges = [
     { ///0
         name : "Refined Diamond",
         npcPrice: 4096,
-        toBazaar: true,
+        source: this.sourceBazaar,
         materials: [
             {
                 options: [
@@ -15,10 +58,10 @@ exports.forges = [
                     320,
                     51200,
                 ],
-                fromBazaar: [
-                    true,
-                    true,
-                    true,
+                source: [
+                    this.sourceBazaar,
+                    this.sourceBazaar,
+                    this.sourceBazaar,
                 ],
             }
         ],
@@ -27,7 +70,7 @@ exports.forges = [
     },{ //1
         name : "Refined Mithril",
         npcPrice: 256000,
-        toBazaar: true,
+        source: this.sourceBazaar,
         materials: [
             {
                 options: [
@@ -38,9 +81,9 @@ exports.forges = [
                     160,
                     25600,
                 ],
-                fromBazaar: [
-                    true,
-                    true,
+                source: [
+                    this.sourceBazaar,
+                    this.sourceBazaar,
                 ],
             }
         ],
@@ -49,7 +92,7 @@ exports.forges = [
     },{ //2
         name : "Refined Titanium",
         npcPrice: 51200,
-        toBazaar: true,
+        source: this.sourceBazaar,
         materials: [
             {
                 options: [
@@ -60,9 +103,9 @@ exports.forges = [
                     16,
                     2560,
                 ],
-                fromBazaar: [
-                    true,
-                    true,
+                source: [
+                    this.sourceBazaar,
+                    this.sourceBazaar,
                 ],
             }
         ],
@@ -83,10 +126,10 @@ exports.forges = [
                     320,
                     51200,
                 ],
-                fromBazaar: [
-                    true,
-                    true,
-                    true,
+                source: [
+                    this.sourceBazaar,
+                    this.sourceBazaar,
+                    this.sourceBazaar,
                 ],
             }
         ],
@@ -122,10 +165,10 @@ exports.forges = [
                     160,
                     25600,
                 ],
-                fromBazaar: [
-                    true,
-                    true,
-                    true,
+                source: [
+                    this.sourceBazaar,
+                    this.sourceBazaar,
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -138,10 +181,10 @@ exports.forges = [
                     480,
                     76800,
                 ],
-                fromBazaar: [
-                    true,
-                    true,
-                    true,
+                source: [
+                    this.sourceBazaar,
+                    this.sourceBazaar,
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -157,8 +200,8 @@ exports.forges = [
                 quantity: [
                     10,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -167,9 +210,9 @@ exports.forges = [
                 quantity: [
                     1,
                 ],
-                fromBazaar: [
-                    true,
-                ]
+                source: [
+                    this.sourceBazaar,
+                ],
             }
         ],
         duration : 30,
@@ -189,10 +232,10 @@ exports.forges = [
                     320,
                     51200,
                 ],
-                fromBazaar: [
-                    true,
-                    true,
-                    true,
+                source: [
+                    this.sourceBazaar,
+                    this.sourceBazaar,
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -208,8 +251,8 @@ exports.forges = [
                 quantity: [
                     1,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },
         ],
@@ -226,8 +269,8 @@ exports.forges = [
                 quantity: [
                     5,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -247,10 +290,10 @@ exports.forges = [
                     160,
                     25600,
                 ],
-                fromBazaar: [
-                    true,
-                    true,
-                    true,
+                source: [
+                    this.sourceBazaar,
+                    this.sourceBazaar,
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -259,8 +302,8 @@ exports.forges = [
                 quantity: [
                     1,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },
         ],
@@ -277,8 +320,8 @@ exports.forges = [
                 quantity: [
                     4,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -287,8 +330,8 @@ exports.forges = [
                 quantity: [
                     4,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -297,8 +340,8 @@ exports.forges = [
                 quantity: [
                     4,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -307,8 +350,8 @@ exports.forges = [
                 quantity: [
                     4,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -317,8 +360,8 @@ exports.forges = [
                 quantity: [
                     320,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },
         ],
@@ -326,7 +369,7 @@ exports.forges = [
         hotmRequirement: 4,
     },{ //9
         name : "Perfect Jasper Gemstone",
-        toBazaar: true,
+        source: this.sourceBazaar,
         npcPrice: 0,
         materials: [
             {
@@ -336,8 +379,8 @@ exports.forges = [
                 quantity: [
                     5,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -346,9 +389,12 @@ exports.forges = [
                 quantity: [
                     1,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceWarning,
                 ],
+                prices: [
+                    0,
+                ]
             },
         ],
         duration : 20,
@@ -357,7 +403,7 @@ exports.forges = [
     },{ //10
         name : "Perfect Ruby Gemstone",
         npcPrice: 0,
-        toBazaar: true,
+        source: this.sourceBazaar,
         materials: [
             {
                 options: [
@@ -366,8 +412,8 @@ exports.forges = [
                 quantity: [
                     5,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -376,9 +422,12 @@ exports.forges = [
                 quantity: [
                     1,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceWarning,
                 ],
+                prices: [
+                    0,
+                ]
             },
         ],
         duration : 20,
@@ -387,7 +436,7 @@ exports.forges = [
     },{ //11
         name : "Perfect Jade Gemstone",
         npcPrice: 0,
-        toBazaar: true,
+        source: this.sourceBazaar,
         materials: [
             {
                 options: [
@@ -396,8 +445,8 @@ exports.forges = [
                 quantity: [
                     5,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -406,9 +455,12 @@ exports.forges = [
                 quantity: [
                     1,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceWarning,
                 ],
+                prices: [
+                    0,
+                ]
             },
         ],
         duration : 20,
@@ -417,7 +469,7 @@ exports.forges = [
     },{ //12
         name : "Perfect Sapphire Gemstone",
         npcPrice: 0,
-        toBazaar: true,
+        source: this.sourceBazaar,
         materials: [
             {
                 options: [
@@ -426,8 +478,8 @@ exports.forges = [
                 quantity: [
                     5,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -436,9 +488,12 @@ exports.forges = [
                 quantity: [
                     1,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceWarning,
                 ],
+                prices: [
+                    0,
+                ]
             },
         ],
         duration : 20,
@@ -447,7 +502,7 @@ exports.forges = [
     },{ //13
         name : "Perfect Amber Gemstone",
         npcPrice: 0,
-        toBazaar: true,
+        source: this.sourceBazaar,
         materials: [
             {
                 options: [
@@ -456,8 +511,8 @@ exports.forges = [
                 quantity: [
                     5,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -466,9 +521,12 @@ exports.forges = [
                 quantity: [
                     1,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceWarning,
                 ],
+                prices: [
+                    0,
+                ]
             },
         ],
         duration : 20,
@@ -477,7 +535,7 @@ exports.forges = [
     },{ //14
         name : "Perfect Topaz Gemstone",
         npcPrice: 0,
-        toBazaar: true,
+        source: this.sourceBazaar,
         materials: [
             {
                 options: [
@@ -486,8 +544,8 @@ exports.forges = [
                 quantity: [
                     5,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -496,9 +554,12 @@ exports.forges = [
                 quantity: [
                     1,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceWarning,
                 ],
+                prices: [
+                    0,
+                ]
             },
         ],
         duration : 20,
@@ -507,7 +568,7 @@ exports.forges = [
     },{ //15
         name : "Perfect Amethyst Gemstone",
         npcPrice: 0,
-        toBazaar: true,
+        source: this.sourceBazaar,
         materials: [
             {
                 options: [
@@ -516,8 +577,8 @@ exports.forges = [
                 quantity: [
                     5,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -526,9 +587,12 @@ exports.forges = [
                 quantity: [
                     1,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceWarning,
                 ],
+                prices: [
+                    0,
+                ]
             },
         ],
         duration : 20,
@@ -547,9 +611,9 @@ exports.forges = [
                     30,
                     4800,
                 ],
-                fromBazaar: [
-                    true,
-                    true,
+                source: [
+                    this.sourceBazaar,
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -567,9 +631,9 @@ exports.forges = [
                     10,
                     1600,
                 ],
-                fromBazaar: [
-                    true,
-                    true,
+                source: [
+                    this.sourceBazaar,
+                    this.sourceBazaar,
                 ],
             },
         ],
@@ -593,8 +657,8 @@ exports.forges = [
                 quantity: [
                     5,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },
         ],
@@ -611,8 +675,8 @@ exports.forges = [
                 quantity: [
                     2,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },
         ],
@@ -629,8 +693,8 @@ exports.forges = [
                 quantity: [
                     3,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },
         ],
@@ -647,8 +711,8 @@ exports.forges = [
                 quantity: [
                     256,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },
         ],
@@ -665,8 +729,8 @@ exports.forges = [
                 quantity: [
                     48,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -675,8 +739,8 @@ exports.forges = [
                 quantity: [
                     80,
                 ],
-                fromBazaar: [
-                    true,
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -687,9 +751,9 @@ exports.forges = [
                     80,
                     1600,
                 ],
-                fromBazaar: [
-                    true,
-                    true,
+                source: [
+                    this.sourceBazaar,
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -698,7 +762,9 @@ exports.forges = [
                 quantity: [
                     25000,
                 ],
-                prices: [1],
+                prices: [
+                    1,
+                ],
             },
         ],
         duration : 5,

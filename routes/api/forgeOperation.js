@@ -1,6 +1,6 @@
 var {moneyRepresentation, dateTimeToString, findBazaar, findProfile, findAuctions} = require("./general.js");
 const { calculateMinionsCostLink } = require("./minionsCostOperation.js");
-var {soulflowItem, minionSlotsCriteria} = require("./minionsData.js");
+var {sourceBazaar,sourceAuction,sourceWarning,sourceOthers} = require("./forgeData.js");
 
 let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, lastUpdatedAuction, profileNames, hadError=false;
     
@@ -58,7 +58,7 @@ exports.calculateForge = async function(forges, settings){
             }
             //incorporate bazaar prices into forges
             forges.forEach((forge)=>{
-                if(forge.toBazaar){ //product
+                if(forge.source == sourceBazaar){ //product
                     forge.price = bazaarPrices[1][forge.name] || 0; //sell instantly
                 } 
                 forge.materials.forEach((material)=>{
@@ -66,7 +66,7 @@ exports.calculateForge = async function(forges, settings){
                         material.prices = new Array(material.options.length).fill(0);
                     }
                     for(let i=0;i<material.options.length;i++){
-                        if(material.fromBazaar&&material.fromBazaar[i]){
+                        if(material.source&&material.source[i]==sourceBazaar){
                             material.prices[i] = bazaarPrices[0][material.options[i]] || material.prices[i]; //buy instantly
                         }
                     }
@@ -81,8 +81,8 @@ exports.calculateForge = async function(forges, settings){
         await findAuctions(settings).then((minAuctions)=>{
             //incorporate minAuctions into forges
             forges.forEach((forge)=>{
-                if(!forge.toBazaar){ //product
-                    forge.price = minAuctions[forge.name] || 0;
+                if(!forge.source){ //not given source
+                    forge.price = minAuctions[forge.name] || 0; //product
                 } 
                 forge.materials.forEach((material)=>{
                     if(!material.prices){
@@ -90,7 +90,7 @@ exports.calculateForge = async function(forges, settings){
                         //console.log(material.prices);
                     }
                     for(let i=0;i<material.options.length;i++){
-                        if(!(material.fromBazaar&&material.fromBazaar[i])){
+                        if(!(material.source&&material.source[i])){
                             material.prices[i] = minAuctions[material.options[i]] || material.prices[i];
                         }
                     }
@@ -117,21 +117,17 @@ exports.calculateForge = async function(forges, settings){
             materials: new Array(forge.materials.length),
             totalCost: 0,
             price: forge.price*(1-settings.tax/100),
-            priceText: moneyRepresentation(forge.price*(1-settings.tax/100),settings.showDetails) + (forge.toBazaar ? " (BZ)" : " (AH)"),
+            priceText: moneyRepresentation(forge.price*(1-settings.tax/100),settings.showDetails) + (forge.source ? printSource(forge.source): " (AH)"),
             duration: forge.duration,
         };
         forge.materials.forEach((material,index)=>{
             let minIndex = compareMaterialCost(material);
             let price = material.prices[minIndex]*(1+settings.tax/100);
-            console.log(material.options);
-            console.log(material.fromBazaar);
-            console.log(material.prices);
-            console.log(price);
             outputForge.materials[index] = {
                 name: material.options[minIndex],
                 quantity: material.quantity[minIndex],
                 price: price,
-                priceText: moneyRepresentation(price,settings.showDetails) + ((material.fromBazaar && material.fromBazaar[minIndex]) ? " (BZ)" : " (AH)"),
+                priceText: moneyRepresentation(price,settings.showDetails) + ((material.source && material.source[minIndex]) ? printSource(material.source[minIndex]) : " (AH)"),
             }
             outputForge.totalCost += price*outputForge.materials[index].quantity;
         });
@@ -165,5 +161,15 @@ exports.calculateForge = async function(forges, settings){
             }
         }
         return minIndex;
+    }
+
+    function printSource(source){
+        if(source==sourceBazaar){
+            return " (BZ)";
+        }else if(source==sourceAuction){
+            return " (AH)";
+        }else{
+            return "";
+        }
     }
 }
