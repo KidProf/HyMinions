@@ -70,6 +70,7 @@ block content
 							select#overallOfflineTimeUnit.form-control
 								option(value="0" selected=(settings.offlineTimeUnit==0?'selected':undefined)) hour(s)
 								option(value="1" selected=(settings.offlineTimeUnit==1?'selected':undefined)) day(s)
+						small.pl-3 ^If you are not sure about your offline time, you could leave it as 1 day.
 					button#overallSettings.btn(onclick="generateLinkIndex()") Calculate
 					span &nbsp; &nbsp; &nbsp;
 					button.btn.btn-link.read-more(onclick="clearInput()") Clear
