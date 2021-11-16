@@ -230,7 +230,7 @@ block content
                             th(scope="col") Profit per hour
                     - let i = 0
                     for outputForge in outputForges 
-                        tr(id="forge"+i+"Row")
+                        tr(id="forge"+i+"Row" class=(outputForge.profit<0?"loss":""))
                             td="#"+(i+1)
                             td(id="forge"+i+"Name")
                                 | #{outputForge.name}
