@@ -769,7 +769,40 @@ exports.forges = [
         ],
         duration : 5,
         hotmRequirement: 2,
-    },
+    },{ //22
+        name : "Divan's Helmet",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Divan Fragment",
+                ],
+                quantity: [
+                    5,
+                ],
+
+            },{
+                options: [
+                    "Gemstone Mixture",
+                ],
+                quantity: [
+                    10,
+                ],
+            },{
+                options: [
+                    "Flawless Ruby Gemstone",
+                ],
+                quantity: [
+                    1,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+
+            },
+        ],
+        duration : 23,
+        hotmRequirement: 6,
 ];
 
 //TOTAL: 16
