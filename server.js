@@ -46,5 +46,7 @@ app.set('views','templates/views');
 app.use(lessMiddleware('dist'));
 app.use(express.static('dist'));
 
+app.get("*",(req,res)=>{res.render("404");});
+
 //start
 app.listen(port, () => console.log(`HyMinions listening at http://localhost:${port}`));
