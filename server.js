@@ -32,6 +32,7 @@ app.get('/forge',(req,res)=>{res.render("forge");});
 app.get('/new-forge',forgeView);
 app.get('/abouts',(req,res)=>{res.render("abouts");});
 app.get('/abouts/pastupdates',(req,res)=>{res.render("pastUpdates");});
+app.get('/minions/info',(req,res)=>{res.render("infos/infoMinions");});
 app.get('/contact',(req,res)=>{res.render("contact");});
 
 //api
