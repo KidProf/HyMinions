@@ -40,13 +40,13 @@ app.get('/api/get-profile-api/:name',getProfileApi);
 
 //app.set, app.use
 app.set("view engine","pug");
-app.set('views','templates/views');
+app.set('views','templates/views/');
 
 //css, js
 app.use(lessMiddleware('dist'));
 app.use(express.static('dist'));
 
-app.get("*",(req,res)=>{res.render("404");});
+app.get("*",(req,res)=>{res.render("errors/404");});
 
 //start
 app.listen(port, () => console.log(`HyMinions listening at http://localhost:${port}`));
