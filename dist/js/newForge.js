@@ -42,3 +42,15 @@ function generateLink(){
     if(location.origin+string==window.location.href) location.reload();
     else window.location.href=string;
 }
+
+let hiddenCols = [];
+function hideCol(col){
+    hiddenCols.push(col);
+    $("."+col).addClass("d-none");
+}
+
+function unhideCol(){
+    hiddenCols.forEach((hiddenCol)=>{
+        $("."+hiddenCol).removeClass("d-none");
+    })
+}
