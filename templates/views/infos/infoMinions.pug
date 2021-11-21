@@ -14,21 +14,71 @@ block content
         h3.mt-4 Contents
         hr
         ol
-            li: a(href="#") Settings Explained
+            li
+                | <a href="#settingsExplained"> Settings Explained</a>
+                ul
+                    li: a(href="#minecraftName") Why is my Minecraft Name required?
+                    li: a(href="#minionSlotsTierType") Estimate by number of minion slots
+                    li: a(href="#minionSlotsManualType") Manually choose tier
+                    li: a(href="#fuel") Fuel/ other perks
+                    li: a(href="#offlineTime") Offline time
+
             li: a(href="#")
             li: a(href="#disclaimer") Disclaimer
             li: a(href="#disclaimer") FAQ
             li 
                 | Nested
-                ol
+                ul
                     li LOL 
                     li another lol 
 
-        h3#disclaimer.mt-4 Settings Explained
+        h3#settingsExplained.mt-4 Settings Explained
         hr
-        p TL;DR: Default settings should be suitable for most of you. In my opinion, your Minecraft name is the most crucial piece of information to make the calculator useful for you, but it is down to personal preference. If you prefer not to, there is an <a href="#minecraftName">alternative estimation method</a>.
+        p TL;DR: Default settings should be suitable for most of you. In my opinion, your Minecraft name is the most crucial piece of information to make the calculator useful for you, but it is down to personal preference. If you prefer not to, there are alternative estimation methods including <a href="#minionSlotsTierType">Estimate by number of minion slots</a> and <a href="#manualTierType">Manually choose tier</a>.
         
+        br
         h4#minecraftName Why is my Minecraft Name required?
+        p If you enter your Minecraft name, it will calculate the profit based on the highest tier of the minion you have crafted. It could make the profit list more personalized and useful when finding the most profitable minions among those you have.
+        
+        br
+        h4#minionSlotsTierType Estimate by number of minion slots
+        p Please note that this is not the minions you have. 23 is the default value as I think that is what some late game players may have.
+        p It is an estimation of the minions they have for people who do not want to put their names in. Assuming you craft the minions in ascending order of costs, until you have enough unique minions to unlock the minion slot you specified. 
+        p The aim is to exclude exceptionally expensive minions like Voidling Tier 11. However, if you want to get the most out of the calculator, you are advised to enter your Minecraft name so that it can obtain the exact minions you have.
+        p.small Please note that it is just an ESTIMATE of the minions you have, the minions you have could be quite different because you might not be buying them in order, and the cost of the minions depends on the market price of materials.
+        
+        br
+        h4#minionSlotsManualType Manually choose tier
+        p All minions would have the chosen tier. If you would like to change tier of specific minions, you can go to <a href="#individualSettings">individual settings</a>.
+        
+        br
+        h4#fuel Fuel/ other perks
+        p Write down the boosts you have in a percentage. They include the minion fuel slot, beacons etc.. I do not plan on letting you select specific fuel or perks on this website directly because there are so many choices.
+
+        br
+        h4#offlineTime Offline time
+        p It calculates the profit based on your frequency of collecting minions. For example, lapis minions could be a good minion for active players, who collect enchanted lapis before they are automatically converted into enchanted lapis blocks, but not for those who are less active.
+        p Although offline time is important in some special scenarios, you could leave it as 1 day if your offline time is not consistent/ you are not sure about your offline time.
+        
+        br
+        h4#diamondSpreading Diamond Spreading
+        p.
+            A minion upgrade that makes the minion generates 1 diamond every 10 items produced as a bonus, hence increasing the profit significantly for some of the minions, such as snow minions. 
+            You could refer to the <a href='https://hypixel-skyblock.fandom.com/wiki/Diamond_Spreading'>Skyblock wiki</a> for more information.
+
+        br
+        h4#differentCompactors Different Compactors
+        h5 Compactor
+        p A minion upgrade for early game players which compacts items into their block form. This only works for certain minions like diamond minions and emerald minions. It increases the minion storage.
+        p It is normal that the calculator recommends selling the items in the enchanted form rather than the base form, as the enchanted forms may sell more than the base form. You could always convert the product blocks into their respective enchanted form. Alternatively, you could also change the product blocks back into their base form and sell them to the bazaar for most of the product blocks. You could refer to the <a href='https://hypixel-skyblock.fandom.com/wiki/Compactor'>Skyblock wiki</a> for more information.
+        
+        h5 Super Compactor 3000
+        p A minion upgrade for mid to late game players which compacts items into their enchanted form. You cannot covert the enchanted items back to original items, therefore, it may affect the total profit. The calculator would take this factor into account and calculate the profit accurately. You could refer to the <a href="https://hypixel-skyblock.fandom.com/wiki/Super_Compactor_3000">Skyblock wiki</a> for more information.
+
+        h5 Dwarven Super Compactor
+        p It is a super compactor 3000 and a super smelter all-in-one. It allows more minions, such as iron minion, to equip diamond spreading and increase their profits as a result. You could refer to the <a href='https://hypixel-skyblock.fandom.com/wiki/Dwarven_Super_Compactor'>Skyblock wiki</a> for more information.
+
+
 
         h3#disclaimer.mt-4 Disclaimer
         hr
@@ -50,3 +100,7 @@ block content
         br
         h4 Q: I am an ironman mode player, how can I get NPC prices only?
         p A: There is a "Selling to" setting in the advanced section of the settings, you could change it to "NPC". Alternatively, you could use <a href="/minions?sellingTo=0">this link</a> to have it set automatically.
+
+        br
+        h4 Q: How often does this website refresh?
+        p A: There is no database system associated to the website, so it would refresh as long as Hypixel API refreshes.
