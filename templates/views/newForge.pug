@@ -216,11 +216,12 @@ block content
                 //-                     button#hideAll.btn.btn-link.read-more.d-none(onclick="hideAll()") Hide All
                 //-                 else
                 //-                     button.btn.btn-link#showAll.read-more(onclick="appendShowDetails(-1)") Load and Expand All
-                #doubleScroll: table#minionsCostTable.table.table-dark.w-100
+                #doubleScroll: table#forgeTable.table.table-dark.w-100
                     thead
                         tr
                             th(scope="col")
                             th(scope="col") Product <br /> (Profit per forge)
+                            th(scope="col") Req. HOTM <br /> Level
                             th(scope="col") Duration <br /> (Hours)
                             th(scope="col") Price of product 
                             th(scope="col") Materials <br /> (Cheapest variant)
@@ -236,6 +237,10 @@ block content
                                 | #{outputForge.name}
                                 br
                                 | (#{outputForge.profitText})
+                            td(id="forge"+i+"Hotm")
+                                | #{outputForge.hotmRequirement}
+                                if outputForge.gemstoneRequirement
+                                    | <br />+ Gemstone #{outputForge.gemstoneRequirement}
                             td(id="forge"+i+"Time")=outputForge.duration
                             td(id="forge"+i+"ProductPrice")=outputForge.priceText
                             td(id="forge"+i+"MaterialsName")

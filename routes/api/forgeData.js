@@ -399,7 +399,7 @@ exports.forges = [
         ],
         duration : 20,
         hotmRequirement: 5,
-        gemstoneRequirement: 9
+        gemstoneRequirement: 10,
     },{ //10
         name : "Perfect Ruby Gemstone",
         npcPrice: 0,
@@ -432,7 +432,7 @@ exports.forges = [
         ],
         duration : 20,
         hotmRequirement: 5,
-        gemstoneRequirement: 9
+        gemstoneRequirement: 10,
     },{ //11
         name : "Perfect Jade Gemstone",
         npcPrice: 0,
@@ -465,7 +465,7 @@ exports.forges = [
         ],
         duration : 20,
         hotmRequirement: 5,
-        gemstoneRequirement: 9
+        gemstoneRequirement: 10,
     },{ //12
         name : "Perfect Sapphire Gemstone",
         npcPrice: 0,
@@ -498,7 +498,7 @@ exports.forges = [
         ],
         duration : 20,
         hotmRequirement: 5,
-        gemstoneRequirement: 9
+        gemstoneRequirement: 10,
     },{ //13
         name : "Perfect Amber Gemstone",
         npcPrice: 0,
@@ -531,7 +531,7 @@ exports.forges = [
         ],
         duration : 20,
         hotmRequirement: 5,
-        gemstoneRequirement: 9
+        gemstoneRequirement: 10,
     },{ //14
         name : "Perfect Topaz Gemstone",
         npcPrice: 0,
@@ -564,7 +564,7 @@ exports.forges = [
         ],
         duration : 20,
         hotmRequirement: 5,
-        gemstoneRequirement: 9
+        gemstoneRequirement: 10,
     },{ //15
         name : "Perfect Amethyst Gemstone",
         npcPrice: 0,
@@ -597,7 +597,7 @@ exports.forges = [
         ],
         duration : 20,
         hotmRequirement: 5,
-        gemstoneRequirement: 9
+        gemstoneRequirement: 10,
     },{ //16
         name : "Mithril Pickaxe",
         npcPrice: 0,
@@ -770,7 +770,7 @@ exports.forges = [
         duration : 5,
         hotmRequirement: 2,
     },{ //22
-        name : "Helmet of Divan",
+        name : "Helmet Of Divan",
         npcPrice: 0,
         materials: [
             {
@@ -804,7 +804,7 @@ exports.forges = [
         duration : 23,
         hotmRequirement: 6,
     },{ //23
-        name : "Chestplate of Divan",
+        name : "Chestplate Of Divan",
         npcPrice: 0,
         materials: [
             {
@@ -838,7 +838,7 @@ exports.forges = [
         duration : 23,
         hotmRequirement: 6,
     },{ //24
-        name : "Leggings of Divan",
+        name : "Leggings Of Divan",
         npcPrice: 0,
         materials: [
             {
@@ -872,7 +872,7 @@ exports.forges = [
         duration : 23,
         hotmRequirement: 6,	
     },{ //25
-        name : "Boots of Divan",
+        name : "Boots Of Divan",
         npcPrice: 0,
         materials: [
             {
@@ -924,7 +924,7 @@ exports.forges = [
         ],
         duration : 0,
         hotmRequirement: 0,
-        gemstoneRequirement: 0
+        gemstoneRequirement: 5,
     },{ //27
         name : "Fine Amber Gemstone",
         npcPrice: 0,
@@ -944,7 +944,7 @@ exports.forges = [
         ],
         duration : 0,
         hotmRequirement: 0,
-        gemstoneRequirement: 0
+        gemstoneRequirement: 5,
     },{ //28
         name : "Fine Topaz Gemstone",
         npcPrice: 0,
@@ -964,7 +964,7 @@ exports.forges = [
         ],
         duration : 0,
         hotmRequirement: 0,
-        gemstoneRequirement: 0
+        gemstoneRequirement: 5,
     },{ //29
         name : "Fine Sapphire Gemstone",
         npcPrice: 0,
@@ -984,7 +984,7 @@ exports.forges = [
         ],
         duration : 0,
         hotmRequirement: 0,
-        gemstoneRequirement: 0
+        gemstoneRequirement: 5,
     },{ //30
         name : "Fine Amethyst Gemstone",
         npcPrice: 0,
@@ -1004,7 +1004,7 @@ exports.forges = [
         ],
         duration : 0,
         hotmRequirement: 0,
-        gemstoneRequirement: 0
+        gemstoneRequirement: 5,
     },{ //31
         name : "Fine Jasper Gemstone",
         npcPrice: 0,
@@ -1024,7 +1024,7 @@ exports.forges = [
         ],
         duration : 0,
         hotmRequirement: 0,
-        gemstoneRequirement: 0
+        gemstoneRequirement: 5,
     },{ //32
         name : "Fine Ruby Gemstone",
         npcPrice: 0,
@@ -1044,7 +1044,7 @@ exports.forges = [
         ],
         duration : 0,
         hotmRequirement: 0,
-        gemstoneRequirement: 0
+        gemstoneRequirement: 5,
     },{ //33
         name : "Flawless Jade Gemstone",
         npcPrice: 0,
@@ -1064,7 +1064,7 @@ exports.forges = [
         ],
         duration : 0,
         hotmRequirement: 0,
-        gemstoneRequirement: 0
+        gemstoneRequirement: 9,
     },{ //34
         name : "Flawless Amber Gemstone",
         npcPrice: 0,
@@ -1084,7 +1084,7 @@ exports.forges = [
         ],
         duration : 0,
         hotmRequirement: 0,
-        gemstoneRequirement: 0
+        gemstoneRequirement: 9,
     },{ //35
         name : "Flawless Topaz Gemstone",
         npcPrice: 0,
@@ -1104,7 +1104,7 @@ exports.forges = [
         ],
         duration : 0,
         hotmRequirement: 0,
-        gemstoneRequirement: 0
+        gemstoneRequirement: 9,
     },{ //36
         name : "Flawless Sapphire Gemstone",
         npcPrice: 0,
@@ -1124,7 +1124,7 @@ exports.forges = [
         ],
         duration : 0,
         hotmRequirement: 0,
-        gemstoneRequirement: 0
+        gemstoneRequirement: 9,
     },{ //37
         name : "Flawless Amethyst Gemstone",
         npcPrice: 0,
@@ -1144,7 +1144,7 @@ exports.forges = [
         ],
         duration : 0,
         hotmRequirement: 0,
-        gemstoneRequirement: 0
+        gemstoneRequirement: 9,
     },{ //38
         name : "Flawless Jasper Gemstone",
         npcPrice: 0,
@@ -1164,7 +1164,7 @@ exports.forges = [
         ],
         duration : 0,
         hotmRequirement: 0,
-        gemstoneRequirement: 0
+        gemstoneRequirement: 9,
     },{ //39
         name : "Flawless Ruby Gemstone",
         npcPrice: 0,
@@ -1184,7 +1184,7 @@ exports.forges = [
         ],
         duration : 0,
         hotmRequirement: 0,
-        gemstoneRequirement: 0
+        gemstoneRequirement: 9,
 		},
 ];
 

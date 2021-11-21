@@ -119,6 +119,8 @@ exports.calculateForge = async function(forges, settings){
             price: forge.price*(1-settings.tax/100),
             priceText: moneyRepresentation(forge.price*(1-settings.tax/100),settings.showDetails) + (forge.source ? printSource(forge.source): " (AH)"),
             duration: forge.duration,
+            gemstoneRequirement: forge.gemstoneRequirement,
+            hotmRequirement: forge.hotmRequirement,
         };
         forge.materials.forEach((material,index)=>{
             let minIndex = compareMaterialCost(material);
