@@ -2,6 +2,7 @@ extends ../layouts/default
 
 block append js
     script(src="/js/jquery/jquery.doubleScroll.js")
+    script(src="/js/general.js")
     script(src="/js/newForge.js")
     	
 block append variables
@@ -223,7 +224,7 @@ block content
                             th(scope="col") 
                                 | Product <br /> 
                                 | (Profit per forge) <br /> 
-                                button.btn.btn-link(onClick="unhideCol()") Unhide all columns
+                                button#unhideAllCols.btn.btn-link(onClick="unhideCol()").invisible Unhide all columns
                             th(scope="col").forgeHotm 
                                 | Req. HOTM <br /> 
                                 | Level <br />
