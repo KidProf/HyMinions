@@ -1,3 +1,18 @@
+let hiddenCols = [];
+function hideCol(col){
+    $("."+col).addClass("d-none");
+    $("#unhideAllCols").removeClass("invisible");
+    hiddenCols.push(col);
+    
+}
+
+function unhideCol(){
+    hiddenCols.forEach((hiddenCol)=>{
+        $("."+hiddenCol).removeClass("d-none");
+    })
+    $("#unhideAllCols").addClass("invisible");
+}
+
 //copied from general.js
 function moneyRepresentation(number,showDetails){
     if(showDetails==1){
