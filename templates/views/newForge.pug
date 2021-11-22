@@ -276,26 +276,26 @@ block content
                                 | #{outputForge.name}
                                 br
                                 | (#{outputForge.profitText})
-                            td(id="forge"+i+"Hotm")
+                            td(id="forge"+i+"Hotm").forgeHotm
                                 | #{outputForge.hotmRequirement}
                                 if outputForge.gemstoneRequirement
                                     | <br />+ Gemstone #{outputForge.gemstoneRequirement}
-                            td(id="forge"+i+"Time")=outputForge.duration
-                            td(id="forge"+i+"ProductPrice")=outputForge.priceText
-                            td(id="forge"+i+"MaterialsName")
+                            td(id="forge"+i+"Duration").forgeDuration=outputForge.duration
+                            td(id="forge"+i+"ProductPrice").forgeProductPrice=outputForge.priceText
+                            td(id="forge"+i+"MaterialsName").forgeMaterialsName
                                 if outputForge.materials
                                     each material in outputForge.materials
                                         | #{material.quantity} x #{material.name}
                                         br
-                            td(id="forge"+i+"UnitCost")
+                            td(id="forge"+i+"UnitCost").forgeUnitCost
                                 if outputForge.materials
                                     each material in outputForge.materials
                                         | #{material.priceText}
                                         br
-                            td(id="forge"+i+"Cost")=outputForge.totalCostText
+                            td(id="forge"+i+"Cost").forgeCost=outputForge.totalCostText
                             
-                            td(id="forge"+i+"NetProfit")=outputForge.profitText
-                            td(id="forge"+i+"ProfitPerHour")=outputForge.profitPerHourText
+                            td(id="forge"+i+"NetProfit").forgeNetProfit=outputForge.profitText
+                            td(id="forge"+i+"ProfitPerHour").forgeProfitPerHour=outputForge.profitPerHourText
                         - i++;
             p: small
                 if(settings.lastUpdatedBazaar)
