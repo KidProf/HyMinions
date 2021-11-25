@@ -3,7 +3,8 @@ exports.sourceAuction = 2;
 exports.sourceWarning = 3;
 exports.sourceOthers = 4;
 
-
+exports.auctionTax = 1;
+exports.auctionTaxThreshold = 1000000;
 //SAMPLE
 // { //3
 //     name : "name surrounded by double quotes",
@@ -764,6 +765,9 @@ exports.forges = [
                 ],
                 prices: [
                     1,
+                ],
+                source: [
+                    this.sourceOthers,
                 ],
             },
         ],

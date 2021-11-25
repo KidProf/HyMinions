@@ -8,7 +8,7 @@ exports = module.exports = function (req, res) {
 
     if(settings.run==1){
         settings.sellingTo = 1;
-        settings.tax = 1;
+        settings.tax = 1.125;
 
         if(!dataValidation(settings)){
             res.render("newForge",{settings: settings});

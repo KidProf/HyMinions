@@ -1,6 +1,6 @@
 var {moneyRepresentation, dateTimeToString, findBazaar, findProfile, findAuctions} = require("./general.js");
 const { calculateMinionsCostLink } = require("./minionsCostOperation.js");
-var {sourceBazaar,sourceAuction,sourceWarning,sourceOthers} = require("./forgeData.js");
+var {sourceBazaar,sourceAuction,sourceWarning,sourceOthers,auctionTax,auctionTaxThreshold} = require("./forgeData.js");
 
 let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, lastUpdatedAuction, profileNames, hadError=false;
     
@@ -116,20 +116,56 @@ exports.calculateForge = async function(forges, settings){
             name: forge.name,
             materials: new Array(forge.materials.length),
             totalCost: 0,
-            price: forge.price*(1-settings.tax/100),
-            priceText: moneyRepresentation(forge.price*(1-settings.tax/100),settings.showDetails) + (forge.source ? printSource(forge.source): " (AH)"),
             duration: forge.duration,
             gemstoneRequirement: forge.gemstoneRequirement,
             hotmRequirement: forge.hotmRequirement,
         };
+        let price, priceText;
+        switch(forge.source){
+            case sourceBazaar:
+                price = forge.price*(1-settings.tax/100);
+                priceText = moneyRepresentation(price,settings.showDetails) + " (BZ)";
+                break;
+            case sourceOthers,sourceWarning:
+                price = forge.price;
+                priceText = moneyRepresentation(price,settings.showDetails);
+                break;
+            default: //AH
+                price = forge.price >= auctionTaxThreshold ? forge.price*(1-auctionTax/100) : forge.price;
+                priceText = moneyRepresentation(price,settings.showDetails) + " (AH)";
+                break;
+        }
+        outputForge.price = price;
+        outputForge.priceText = priceText;
+
         forge.materials.forEach((material,index)=>{
             let minIndex = compareMaterialCost(material);
-            let price = material.prices[minIndex]*(1+settings.tax/100);
+            let priceBeforeTax = material.prices[minIndex];
+            if(material.source){
+                switch(material.source[minIndex]){
+                    case sourceBazaar:
+                        price = priceBeforeTax*(1+settings.tax/100); //PLUS
+                        priceText = moneyRepresentation(price,settings.showDetails) + " (BZ)";
+                        break;
+                    case sourceOthers,sourceWarning:
+                        price = priceBeforeTax;
+                        priceText = moneyRepresentation(price,settings.showDetails);
+                        break;
+                    default: //AH
+                        price = priceBeforeTax; //no tax when u buy stuff
+                        priceText = moneyRepresentation(price,settings.showDetails) + " (AH)";
+                        break;
+                }
+            }else{//AH
+                price = priceBeforeTax; //no tax when u buy stuff
+                priceText = moneyRepresentation(price,settings.showDetails) + " (AH)";
+            }
+
             outputForge.materials[index] = {
                 name: material.options[minIndex],
                 quantity: material.quantity[minIndex],
                 price: price,
-                priceText: moneyRepresentation(price,settings.showDetails) + ((material.source && material.source[minIndex]) ? printSource(material.source[minIndex]) : " (AH)"),
+                priceText: priceText,
             }
             outputForge.totalCost += price*outputForge.materials[index].quantity;
         });
@@ -163,15 +199,5 @@ exports.calculateForge = async function(forges, settings){
             }
         }
         return minIndex;
-    }
-
-    function printSource(source){
-        if(source==sourceBazaar){
-            return " (BZ)";
-        }else if(source==sourceAuction){
-            return " (AH)";
-        }else{
-            return "";
-        }
     }
 }
