@@ -46,7 +46,7 @@ exports = module.exports = function (req, res) {
             settings.buyingMethod = 0;
         }
         if(!settings.tax||settings.tax<0){
-            settings.tax = 1;
+            settings.tax = 1.125;
         }
         if(!settings.showDetails||!isWithinList(settings.showDetails,[0,1])){
             settings.showDetails = 0;

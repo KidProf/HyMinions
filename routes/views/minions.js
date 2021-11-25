@@ -122,7 +122,7 @@ exports = module.exports = function (req, res) {
             settings.sellingMethod = 1;
         }
         if(!settings.tax||settings.tax<0){
-            settings.tax = 1;
+            settings.tax = 1.125;
         }
 
         //individual
