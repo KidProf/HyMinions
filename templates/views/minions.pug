@@ -210,7 +210,7 @@ block content
                                 option(value="0" selected=(settings.sellingTo==0?'selected':undefined)) NPC only
                         .form-group
                             input#overallShowDetails.checkbox(type="checkbox" checked=(settings.showDetails>=1 ? 'checked' : undefined))
-                            label(for="overallShowDetails") &nbsp; Show Info Button and Details &nbsp;
+                            label(for="overallShowDetails") &nbsp; Show Raw Data Button and Details &nbsp;
                             +infoBox("showDetailsModal","question","Show Info")
                                 p If this option is checked, an info button on the rightmost side of the minion table in the minions page, containing all the raw data about the minions. If you spot any incorrect data in the info section, please contact me <a href="/contact">here</a>. You could verify the data with Hypixel Wiki or your own experience in Skyblock.
                         #autoCalculationTypeMiscellaneous(class=(settings.calculationType==1 ? "":"d-none"))
@@ -359,7 +359,7 @@ block content
                                 button.btn.btn-blue(id="individualSettings"+i data-toggle="modal" data-target="#individualModal"+i) Settings
                                 if(settings.showDetails==1)
                                     br
-                                    button.mt-2.btn.btn-blue(id="individualInfo"+i data-toggle="modal" data-target="#infoModal"+i) Info
+                                    button.mt-2.btn.btn-blue(id="individualInfo"+i data-toggle="modal" data-target="#infoModal"+i) Raw Data
                         - i++;
                 
                 - i=0;
@@ -410,7 +410,6 @@ block content
                             +infoBox("infoModal"+i,"rightInfo",minion.name)
                                 span Selected tier: #{minion.tier} <br />
                                 span Selected fuel: #{minion.fuel}% <br />
-                                span Calculation formula: sum of all products(offline duration(in hours)*3600/time between actions(in seconds)/2 (due to offline)*generated per time*(1+fuel(in %)/100))<br />
                                 br
                                 h3 Products
                                 each product in minion.products
