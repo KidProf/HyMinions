@@ -60,7 +60,7 @@ exports = module.exports = function (req, res) {
         settings.calculationType = 1;
         settings.sellingTo = 1;
         settings.sellingMethod = 1;
-        settings.tax = 1;
+        settings.tax = 1.125;
         settings.soulflow = 0;
         settings.noCrafting = 0;
         settings.showDetails = 0;
