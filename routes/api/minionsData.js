@@ -2644,9 +2644,11 @@ exports.minions = [
                 npcPrice: 1600,
                 variants: [
                     "Enchanted Poisonous Potato",
+                    "Enchanted Poisonous Potato", //need this line to make old calculation mode work, as need at least 1 enchanted form
                 ],
                 variantsEquiv: [
                     1,
+                    1, //need this line to make old calculation mode work, as need at least 1 enchanted form
                 ]
             },
             {

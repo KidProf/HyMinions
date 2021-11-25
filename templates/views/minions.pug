@@ -236,18 +236,18 @@ block content
                                 span.collapsed Show more
                                 span.expanded Show less
                         #miscellaneous.collapse
-                            .form-group
-                                label(for="overallCalculationType") Calculation mode: &nbsp;  
-                                select#overallCalculationType.form-control(onchange="toggleCalculationType()")
-                                    option(value="0" selected=(settings.calculationType==0?'selected':undefined)) Old (Not recommended)
-                                    option(value="1" selected=(settings.calculationType==1?'selected':undefined)) New (Based on offline duration)
-                                span &nbsp; 
-                                    +infoBox("calculationTypeModal","question","Calculation Modes")
-                                        h4 New calculation mode
-                                        p It calculates the profit based on your frequency of collecting minions. For example, lapis minions could be a good minion for active players, who collect enchanted lapis before they are automatically converted into enchanted lapis blocks, but not for those who are less active.
-                                        h4 Old calculation mode
-                                        p The original calculation mode - It calculates the profit based on a particular enchanted form of every product. (e.g. first enchanted form/ most profitable enchanted form) It does not calculate based on your offline duration.
-                                        p.live Note: The old calculation mode will be removed soon. If there are some reason you would prefer the old calculation mode over the new one, you are advised to <a href="/contact">voice out</a>, to see if I can integrate the feature you wanted to the new calculation type.
+                            //- .form-group
+                            //-     label(for="overallCalculationType") Calculation mode: &nbsp;  
+                            //-     select#overallCalculationType.form-control(onchange="toggleCalculationType()")
+                            //-         option(value="0" selected=(settings.calculationType==0?'selected':undefined)) Old (Not recommended)
+                            //-         option(value="1" selected=(settings.calculationType==1?'selected':undefined)) New (Based on offline duration)
+                            //-     span &nbsp; 
+                            //-         +infoBox("calculationTypeModal","question","Calculation Modes")
+                            //-             h4 New calculation mode
+                            //-             p It calculates the profit based on your frequency of collecting minions. For example, lapis minions could be a good minion for active players, who collect enchanted lapis before they are automatically converted into enchanted lapis blocks, but not for those who are less active.
+                            //-             h4 Old calculation mode
+                            //-             p The original calculation mode - It calculates the profit based on a particular enchanted form of every product. (e.g. first enchanted form/ most profitable enchanted form) It does not calculate based on your offline duration.
+                            //-             p.live Note: The old calculation mode will be removed soon. If there are some reason you would prefer the old calculation mode over the new one, you are advised to <a href="/contact">voice out</a>, to see if I can integrate the feature you wanted to the new calculation type.
                             .form-group
                                 label(for="overallSellingMethod") Selling method in bazaar: &nbsp;
                                 select#overallSellingMethod.form-control

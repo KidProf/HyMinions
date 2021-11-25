@@ -646,6 +646,7 @@ exports.calculateMinionsProfit = async function(minions, settings){
             if(product.variantsNpcPrices){
                 unitPrice = product.variantsNpcPrices[variantIndex];
             }else{
+                console.log(product,variantIndex);
                 unitPrice = product.npcPrice*product.variantsEquiv[variantIndex];
             }
             result.unitPrice = moneyRepresentation(unitPrice,settings.showDetails)+" (NPC)";
