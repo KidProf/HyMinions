@@ -61,12 +61,12 @@ block content
                     h3 Tier Selection
                     .form-check
                         input#overallUseProfile.form-check-input.radio(type="radio" name="tierTypeRadios" value=1 checked=(settings.tierType==1 ? "checked":undefined)) 
-                        label(for="overallUseProfile") Use Profile (Recommended)  &nbsp; 
+                        label(for="overallUseProfile") Use profile (Recommended)  &nbsp; 
                         +infoBox("profileModal","question","Why is my Minecraft name required?")
                             p If you enter your Minecraft name, it will calculate the profit based on the highest tier of the minion you have crafted. It could make the profit list more personalized and useful when finding the most profitable minions among those you have.
                             p Alternatively, you could choose "Estimate by number of minion slots" or "Manually choose tier", and select the minion slots you have/ tier of the minions manually.
                         .form-group#useProfile
-                            p Minecraft Name: &nbsp; 
+                            p Minecraft name: &nbsp; 
                                 input#overallProfileName.form-control(value=settings.name oninput="selectTierTypeRadios(1)")
                             if(settings.profileNames)
                                 label#overallProfileProfileLabel(for="overallProfileProfile") Profile: &nbsp;
@@ -186,7 +186,7 @@ block content
                             #minionChest(class=(settings.superCompactor<=1 ? "":"d-none"))
                                 .form-group
                                     input#overallNoCrafting.checkbox(type="checkbox" checked=(settings.noCrafting>=1 ? 'checked' : undefined))
-                                    label(for="overallNoCrafting") &nbsp; No Crafting &nbsp;
+                                    label(for="overallNoCrafting") &nbsp; No crafting &nbsp;
                             //-     .form-group
                             //-         label(for="overallMinionChest") Minion Chest: &nbsp;
                             //-         select#overallMinionChest.form-control
@@ -210,7 +210,7 @@ block content
                                 option(value="0" selected=(settings.sellingTo==0?'selected':undefined)) NPC only
                         .form-group
                             input#overallShowDetails.checkbox(type="checkbox" checked=(settings.showDetails>=1 ? 'checked' : undefined))
-                            label(for="overallShowDetails") &nbsp; Show Raw Data Button and Details &nbsp;
+                            label(for="overallShowDetails") &nbsp; Show raw data button and details &nbsp;
                             +infoBox("showDetailsModal","question","Show Info")
                                 p If this option is checked, an info button on the rightmost side of the minion table in the minions page, containing all the raw data about the minions. If you spot any incorrect data in the info section, please contact me <a href="/contact">here</a>. You could verify the data with Hypixel Wiki or your own experience in Skyblock.
                         #autoCalculationTypeMiscellaneous(class=(settings.calculationType==1 ? "":"d-none"))
@@ -236,18 +236,18 @@ block content
                                 span.collapsed Show more
                                 span.expanded Show less
                         #miscellaneous.collapse
-                            //- .form-group
-                            //-     label(for="overallCalculationType") Calculation mode: &nbsp;  
-                            //-     select#overallCalculationType.form-control(onchange="toggleCalculationType()")
-                            //-         option(value="0" selected=(settings.calculationType==0?'selected':undefined)) Old (Not recommended)
-                            //-         option(value="1" selected=(settings.calculationType==1?'selected':undefined)) New (Based on offline duration)
-                            //-     span &nbsp; 
-                            //-         +infoBox("calculationTypeModal","question","Calculation Modes")
-                            //-             h4 New calculation mode
-                            //-             p It calculates the profit based on your frequency of collecting minions. For example, lapis minions could be a good minion for active players, who collect enchanted lapis before they are automatically converted into enchanted lapis blocks, but not for those who are less active.
-                            //-             h4 Old calculation mode
-                            //-             p The original calculation mode - It calculates the profit based on a particular enchanted form of every product. (e.g. first enchanted form/ most profitable enchanted form) It does not calculate based on your offline duration.
-                            //-             p.live Note: The old calculation mode will be removed soon. If there are some reason you would prefer the old calculation mode over the new one, you are advised to <a href="/contact">voice out</a>, to see if I can integrate the feature you wanted to the new calculation type.
+                            .form-group
+                                label(for="overallCalculationType") Calculation mode: &nbsp;  
+                                select#overallCalculationType.form-control(onchange="toggleCalculationType()")
+                                    option(value="0" selected=(settings.calculationType==0?'selected':undefined)) Old (Not recommended)
+                                    option(value="1" selected=(settings.calculationType==1?'selected':undefined)) New (Based on offline duration)
+                                span &nbsp; 
+                                    +infoBox("calculationTypeModal","question","Calculation Modes")
+                                        h4 New calculation mode
+                                        p It calculates the profit based on your frequency of collecting minions. For example, lapis minions could be a good minion for active players, who collect enchanted lapis before they are automatically converted into enchanted lapis blocks, but not for those who are less active.
+                                        h4 Old calculation mode
+                                        p The original calculation mode - It calculates the profit based on a particular enchanted form of every product. (e.g. first enchanted form/ most profitable enchanted form) It does not calculate based on your offline duration.
+                                        p.live Note: The old calculation mode will be removed soon. If there are some reason you would prefer the old calculation mode over the new one, you are advised to <a href="/contact">voice out</a>, to see if I can integrate the feature you wanted to the new calculation type.
                             .form-group
                                 label(for="overallSellingMethod") Selling method in bazaar: &nbsp;
                                 select#overallSellingMethod.form-control
