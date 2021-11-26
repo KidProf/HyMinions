@@ -34,8 +34,8 @@ app.get('/abouts',(req,res)=>{res.render("abouts");});
 app.get('/abouts/pastupdates',(req,res)=>{res.render("pastUpdates");});
 app.get('/contact',(req,res)=>{res.render("contact");});
 
-app.get('/minions/info',(req,res)=>{res.render("infos/infoMinions");});
-app.get('/forge/info',(req,res)=>{res.render("infos/infoForge");});
+app.get('/info/minions',(req,res)=>{res.render("infos/infoMinions");});
+app.get('/info/forge',(req,res)=>{res.render("infos/infoForge");});
 
 //api
 app.get('/api/get-minions-api',getMinionsApi);
