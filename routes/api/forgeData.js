@@ -3,7 +3,13 @@ exports.sourceAuction = 2;
 exports.sourceWarning = 3;
 exports.sourceOthers = 4;
 
+exports.auctionTax = 1;
+exports.auctionTaxThreshold = 1000000;
 
+exports.hotmXpList = [0,3000,12000,37000,97000,197000,347000];
+                //lvl 1 2    3 ...
+
+exports.gemstoneCollectionName = "GEMSTONE_COLLECTION";
 //SAMPLE
 // { //3
 //     name : "name surrounded by double quotes",
@@ -399,7 +405,7 @@ exports.forges = [
         ],
         duration : 20,
         hotmRequirement: 5,
-        gemstoneRequirement: 9
+        gemstoneRequirement: 10,
     },{ //10
         name : "Perfect Ruby Gemstone",
         npcPrice: 0,
@@ -432,7 +438,7 @@ exports.forges = [
         ],
         duration : 20,
         hotmRequirement: 5,
-        gemstoneRequirement: 9
+        gemstoneRequirement: 10,
     },{ //11
         name : "Perfect Jade Gemstone",
         npcPrice: 0,
@@ -465,7 +471,7 @@ exports.forges = [
         ],
         duration : 20,
         hotmRequirement: 5,
-        gemstoneRequirement: 9
+        gemstoneRequirement: 10,
     },{ //12
         name : "Perfect Sapphire Gemstone",
         npcPrice: 0,
@@ -498,7 +504,7 @@ exports.forges = [
         ],
         duration : 20,
         hotmRequirement: 5,
-        gemstoneRequirement: 9
+        gemstoneRequirement: 10,
     },{ //13
         name : "Perfect Amber Gemstone",
         npcPrice: 0,
@@ -531,7 +537,7 @@ exports.forges = [
         ],
         duration : 20,
         hotmRequirement: 5,
-        gemstoneRequirement: 9
+        gemstoneRequirement: 10,
     },{ //14
         name : "Perfect Topaz Gemstone",
         npcPrice: 0,
@@ -564,7 +570,7 @@ exports.forges = [
         ],
         duration : 20,
         hotmRequirement: 5,
-        gemstoneRequirement: 9
+        gemstoneRequirement: 10,
     },{ //15
         name : "Perfect Amethyst Gemstone",
         npcPrice: 0,
@@ -597,7 +603,7 @@ exports.forges = [
         ],
         duration : 20,
         hotmRequirement: 5,
-        gemstoneRequirement: 9
+        gemstoneRequirement: 10,
     },{ //16
         name : "Mithril Pickaxe",
         npcPrice: 0,
@@ -765,11 +771,430 @@ exports.forges = [
                 prices: [
                     1,
                 ],
+                source: [
+                    this.sourceOthers,
+                ],
             },
         ],
         duration : 5,
         hotmRequirement: 2,
-    },
+    },{ //22
+        name : "Helmet Of Divan",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Divan Fragment",
+                ],
+                quantity: [
+                    5,
+                ],
+
+            },{
+                options: [
+                    "Gemstone Mixture",
+                ],
+                quantity: [
+                    10,
+                ],
+            },{
+                options: [
+                    "Flawless Ruby Gemstone",
+                ],
+                quantity: [
+                    1,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+
+            },
+        ],
+        duration : 23,
+        hotmRequirement: 6,
+    },{ //23
+        name : "Chestplate Of Divan",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Divan Fragment",
+                ],
+                quantity: [
+                    8,
+                ],
+
+            },{
+                options: [
+                    "Gemstone Mixture",
+                ],
+                quantity: [
+                    10,
+                ],
+            },{
+                options: [
+                    "Flawless Ruby Gemstone",
+                ],
+                quantity: [
+                    1,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+
+            },
+        ],
+        duration : 23,
+        hotmRequirement: 6,
+    },{ //24
+        name : "Leggings Of Divan",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Divan Fragment",
+                ],
+                quantity: [
+                    7,
+                ],
+
+            },{
+                options: [
+                    "Gemstone Mixture",
+                ],
+                quantity: [
+                    10,
+                ],
+            },{
+                options: [
+                    "Flawless Ruby Gemstone",
+                ],
+                quantity: [
+                    1,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+
+            },
+        ],
+        duration : 23,
+        hotmRequirement: 6,	
+    },{ //25
+        name : "Boots Of Divan",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Divan Fragment",
+                ],
+                quantity: [
+                    4,
+                ],
+
+            },{
+                options: [
+                    "Gemstone Mixture",
+                ],
+                quantity: [
+                    10,
+                ],
+            },{
+                options: [
+                    "Flawless Ruby Gemstone",
+                ],
+                quantity: [
+                    1,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+
+            },
+        ],
+        duration : 23,
+        hotmRequirement: 6,
+    },{ //26
+        name : "Fine Jade Gemstone",
+        npcPrice: 0,
+        source: this.sourceBazaar,
+        materials: [
+            {
+                options: [
+                    "Flawed Jade Gemstone",
+                ],
+                quantity: [
+                    80,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+        ],
+        duration : 0,
+        hotmRequirement: 0,
+        gemstoneRequirement: 5,
+    },{ //27
+        name : "Fine Amber Gemstone",
+        npcPrice: 0,
+        source: this.sourceBazaar,
+        materials: [
+            {
+                options: [
+                    "Flawed Amber Gemstone",
+                ],
+                quantity: [
+                    80,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+        ],
+        duration : 0,
+        hotmRequirement: 0,
+        gemstoneRequirement: 5,
+    },{ //28
+        name : "Fine Topaz Gemstone",
+        npcPrice: 0,
+        source: this.sourceBazaar,
+        materials: [
+            {
+                options: [
+                    "Flawed Topaz Gemstone",
+                ],
+                quantity: [
+                    80,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+        ],
+        duration : 0,
+        hotmRequirement: 0,
+        gemstoneRequirement: 5,
+    },{ //29
+        name : "Fine Sapphire Gemstone",
+        npcPrice: 0,
+        source: this.sourceBazaar,
+        materials: [
+            {
+                options: [
+                    "Flawed Sapphire Gemstone",
+                ],
+                quantity: [
+                    80,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+        ],
+        duration : 0,
+        hotmRequirement: 0,
+        gemstoneRequirement: 5,
+    },{ //30
+        name : "Fine Amethyst Gemstone",
+        npcPrice: 0,
+        source: this.sourceBazaar,
+        materials: [
+            {
+                options: [
+                    "Flawed Amethyst Gemstone",
+                ],
+                quantity: [
+                    80,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+        ],
+        duration : 0,
+        hotmRequirement: 0,
+        gemstoneRequirement: 5,
+    },{ //31
+        name : "Fine Jasper Gemstone",
+        npcPrice: 0,
+        source: this.sourceBazaar,
+        materials: [
+            {
+                options: [
+                    "Flawed Jasper Gemstone",
+                ],
+                quantity: [
+                    80,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+        ],
+        duration : 0,
+        hotmRequirement: 0,
+        gemstoneRequirement: 5,
+    },{ //32
+        name : "Fine Ruby Gemstone",
+        npcPrice: 0,
+        source: this.sourceBazaar,
+        materials: [
+            {
+                options: [
+                    "Flawed Ruby Gemstone",
+                ],
+                quantity: [
+                    80,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+        ],
+        duration : 0,
+        hotmRequirement: 0,
+        gemstoneRequirement: 5,
+    },{ //33
+        name : "Flawless Jade Gemstone",
+        npcPrice: 0,
+        source: this.sourceBazaar,
+        materials: [
+            {
+                options: [
+                    "Fine Jade Gemstone",
+                ],
+                quantity: [
+                    80,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+        ],
+        duration : 0,
+        hotmRequirement: 0,
+        gemstoneRequirement: 9,
+    },{ //34
+        name : "Flawless Amber Gemstone",
+        npcPrice: 0,
+        source: this.sourceBazaar,
+        materials: [
+            {
+                options: [
+                    "Fine Amber Gemstone",
+                ],
+                quantity: [
+                    80,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+        ],
+        duration : 0,
+        hotmRequirement: 0,
+        gemstoneRequirement: 9,
+    },{ //35
+        name : "Flawless Topaz Gemstone",
+        npcPrice: 0,
+        source: this.sourceBazaar,
+        materials: [
+            {
+                options: [
+                    "Fine Topaz Gemstone",
+                ],
+                quantity: [
+                    80,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+        ],
+        duration : 0,
+        hotmRequirement: 0,
+        gemstoneRequirement: 9,
+    },{ //36
+        name : "Flawless Sapphire Gemstone",
+        npcPrice: 0,
+        source: this.sourceBazaar,
+        materials: [
+            {
+                options: [
+                    "Fine Sapphire Gemstone",
+                ],
+                quantity: [
+                    80,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+        ],
+        duration : 0,
+        hotmRequirement: 0,
+        gemstoneRequirement: 9,
+    },{ //37
+        name : "Flawless Amethyst Gemstone",
+        npcPrice: 0,
+        source: this.sourceBazaar,
+        materials: [
+            {
+                options: [
+                    "Fine Amethyst Gemstone",
+                ],
+                quantity: [
+                    80,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+        ],
+        duration : 0,
+        hotmRequirement: 0,
+        gemstoneRequirement: 9,
+    },{ //38
+        name : "Flawless Jasper Gemstone",
+        npcPrice: 0,
+        source: this.sourceBazaar,
+        materials: [
+            {
+                options: [
+                    "Fine Jasper Gemstone",
+                ],
+                quantity: [
+                    80,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+        ],
+        duration : 0,
+        hotmRequirement: 0,
+        gemstoneRequirement: 9,
+    },{ //39
+        name : "Flawless Ruby Gemstone",
+        npcPrice: 0,
+        source: this.sourceBazaar,
+        materials: [
+            {
+                options: [
+                    "Fine Ruby Gemstone",
+                ],
+                quantity: [
+                    80,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+        ],
+        duration : 0,
+        hotmRequirement: 0,
+        gemstoneRequirement: 9,
+		},
 ];
 
 //TOTAL: 16

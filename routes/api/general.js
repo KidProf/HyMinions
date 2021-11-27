@@ -128,16 +128,19 @@ exports.findProfile = async function findProfile(name,settings){
                         profilesAjax[index] = new Object();
                         profilesAjax[index]["rawMinions"] = new Array();
                         profilesAjax[index]["rawCollections"] = new Array();
+                        //unique minions crafted for minions cost cal and minions cal
                         Object.keys(profile["members"]).forEach((member, index2)=>{
                             if(profile["members"][member]["crafted_generators"]){
                                 profilesAjax[index]["rawMinions"].push(...profile["members"][member]["crafted_generators"]);
                             }
                         });
+                        //collections for minions cost cal
                         Object.keys(profile["members"]).forEach((member, index2)=>{
                             if(profile["members"][member]["unlocked_coll_tiers"]){
                                 profilesAjax[index]["rawCollections"].push(...profile["members"][member]["unlocked_coll_tiers"]);
                             }
                         });
+                        //community slots for minions cost cal
                         let communitySlots = 0;
                         if(profile["community_upgrades"]&&profile["community_upgrades"]["upgrade_states"]){
                             profile["community_upgrades"]["upgrade_states"].forEach((upgrade)=>{
@@ -153,8 +156,9 @@ exports.findProfile = async function findProfile(name,settings){
                             "tarantula5": false,
                             "voidling4": false,
                         };
-                    
+                        profilesAjax[index]["hotmXp"] = -1;
                         Object.keys(profile["members"]).forEach((member, index2)=>{
+                            //slayer levels for minions cost cal
                             if(profile["members"][member]["slayer_bosses"]){
                                 if(profile["members"][member]["slayer_bosses"]?.["zombie"]?.["claimed_levels"]?.["level_5"]){
                                     profilesAjax[index]["slayerBosses"]["revenant5"] = true;
@@ -169,6 +173,15 @@ exports.findProfile = async function findProfile(name,settings){
                                     profilesAjax[index]["slayerBosses"]["voidling4"] = true;
                                 }
                             }
+
+                            //hotm level for forge cal
+                            // console.log(180,profile["members"][member]["mining_core"]?.["experience"]);
+                            if(profile["members"][member]["mining_core"]?.["experience"]){
+                                profilesAjax[index]["hotmXp"] = Math.max(profile["members"][member]["mining_core"]?.["experience"],profilesAjax[index]["hotmXp"]);
+                                // console.log(183,profilesAjax[index]["hotmXp"]);
+                            }
+                            
+                            // console.log(186,profilesAjax[index]["hotmXp"]);
 
                         });
                         profilesAjax[index]["cuteName"] = profile["cute_name"];
