@@ -117,42 +117,42 @@ function generateLink(){
     }
 
     //advanced
-    if($("#overallCalculationType").children("option:selected").val()==1){
-        if($("#overallOfflineTimeUnit").val()==1){ //use day as unit
-            if($("#overallOfflineTime").val()!=1){
-                keys.push("offlineTime");
-                values.push($("#overallOfflineTime").val()*24);
-            }
-        }else{ //use hour as unit
-            keys.push("offlineTimeUnit");
-            values.push($("#overallOfflineTimeUnit").val());
-            if($("#overallOfflineTime").val()!=24){
-                keys.push("offlineTime");
-                values.push($("#overallOfflineTime").val());
-            }
-    
+    // if($("#overallCalculationType").children("option:selected").val()==1){
+    if($("#overallOfflineTimeUnit").val()==1){ //use day as unit
+        if($("#overallOfflineTime").val()!=1){
+            keys.push("offlineTime");
+            values.push($("#overallOfflineTime").val()*24);
         }
-        //SOULFLOW
-        if($("#overallSoulflow").prop("checked")){
-            keys.push("soulflow");
-            values.push(1);
+    }else{ //use hour as unit
+        keys.push("offlineTimeUnit");
+        values.push($("#overallOfflineTimeUnit").val());
+        if($("#overallOfflineTime").val()!=24){
+            keys.push("offlineTime");
+            values.push($("#overallOfflineTime").val());
         }
 
-        if($("#overallSuperCompactor").children("option:selected").val()==3){
-            if(!$("#overallDiamondSpreading").prop("checked")){
-                keys.push("diamondSpreading");
-                values.push(0);
-            }
-        }else{
-            keys.push("superCompactor");
-            values.push($("#overallSuperCompactor").children("option:selected").val());
+    }
+    //SOULFLOW
+    if($("#overallSoulflow").prop("checked")){
+        keys.push("soulflow");
+        values.push(1);
+    }
+
+    if($("#overallSuperCompactor").children("option:selected").val()==3){
+        if(!$("#overallDiamondSpreading").prop("checked")){
             keys.push("diamondSpreading");
-            values.push($("#overallDiamondSpreading").prop("checked")? 1 : 0);
+            values.push(0);
         }
-        if($("#overallNoCrafting").prop("checked")){
-            keys.push("noCrafting");
-            values.push(1);
-        }
+    }else{
+        keys.push("superCompactor");
+        values.push($("#overallSuperCompactor").children("option:selected").val());
+        keys.push("diamondSpreading");
+        values.push($("#overallDiamondSpreading").prop("checked")? 1 : 0);
+    }
+    if($("#overallNoCrafting").prop("checked")){
+        keys.push("noCrafting");
+        values.push(1);
+    }
         // if($("#overallSuperCompactor").children("option:selected").val()<=1){
         //     if($("#overallMinionChest").children("option:selected").val()!=9){
         //         keys.push("minionChest");
@@ -163,18 +163,18 @@ function generateLink(){
         //         values.push($("#overallAutomaticShipping").children("option:selected").val());
         //     }
         // }
-    }else{
-        keys.push("calculationType");
-        values.push($("#overallCalculationType").children("option:selected").val());
-        if($("#overallProductForm").children("option:selected").val()!=-2){
-            keys.push("productForm");
-            values.push($("#overallProductForm").children("option:selected").val());
-        }
-        if($("#overallDiamondSpreadingDwarvenCompactor").children("option:selected").val()!=2){
-            keys.push("diamondSpreading");
-            values.push($("#overallDiamondSpreadingDwarvenCompactor").children("option:selected").val());
-        }
-    }
+    // }else{
+    //     keys.push("calculationType");
+    //     values.push($("#overallCalculationType").children("option:selected").val());
+    //     if($("#overallProductForm").children("option:selected").val()!=-2){
+    //         keys.push("productForm");
+    //         values.push($("#overallProductForm").children("option:selected").val());
+    //     }
+    //     if($("#overallDiamondSpreadingDwarvenCompactor").children("option:selected").val()!=2){
+    //         keys.push("diamondSpreading");
+    //         values.push($("#overallDiamondSpreadingDwarvenCompactor").children("option:selected").val());
+    //     }
+    // }
     if($("#overallShowDetails").prop("checked")){
         keys.push("showDetails");
         values.push(1);
@@ -189,7 +189,7 @@ function generateLink(){
         keys.push("sellingMethod");
         values.push($("#overallSellingMethod").children("option:selected").val());
     }
-    if($("#overallTax").val()!=1){
+    if($("#overallTax").val()!=1.125){
         keys.push("tax");
         values.push($("#overallTax").val());
     }
