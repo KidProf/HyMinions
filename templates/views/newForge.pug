@@ -49,124 +49,63 @@ block content
             li Warning: This page is in beta, bugs may occur.
 
         #overall
-            //- .row
-            //-     #general.col-lg-6.col-12
-            //-         br
-            //-         h3 General
-            //-         .form-group
-            //-             .form-group
-            //-                 input#overallUseProfile.checkbox(type="checkbox" onclick="toggleUseProfile()" checked=(settings.useProfile==true ? 'checked' : undefined))
-            //-                 label(for="overallUseProfile") &nbsp; Use Profile
-            //-         .form-group#profileName
-            //-             p Minecraft Name (Recommended): &nbsp; 
-            //-                 input#overallProfileName.form-control(value=settings.name oninput="setUseProfile()")
-            //-                 span &nbsp; &nbsp; 
-            //-                 +infoBox("profileModal","question","Why is my Minecraft name required?")
-            //-                     p If you enter your Minecraft name, it will calculate the cheapest minion ignoring the minion you have crafted. It could make the crafts list more personalized and useful.
-            //-                     p Alternatively, you could uncheck this "Use Profile" box, and it would show the whole crafts list.
-            //-             if(settings.profileNames)
-            //-                 label#overallProfileProfileLabel(for="overallProfileProfile") Profile: &nbsp;
-            //-                 select#overallProfileProfile.form-control
-            //-                     -let k=0
-            //-                     while k<settings.profileNames.length
-            //-                         option(value=k selected=(settings.profile==k?'selected':undefined))=settings.profileNames[k]
-            //-                         -k++;
-            //-     #advanced.col-lg-6.col-12
-            //-         br
-            //-         h3 Advanced
-            //-         .form-group
-            //-             label(for="overallBuyingMethod") Buying method in bazaar: &nbsp;
-            //-             select#overallBuyingMethod.form-control
-            //-                 option(value="1" selected=(settings.buyingMethod==1?'selected':undefined)) Buy order
-            //-                 option(value="0" selected=(settings.buyingMethod==0?'selected':undefined)) Buy instantly
-                            
-            //-         .form-group
-            //-             label(for="overallTax") Tax in bazaar: &nbsp; 
-            //-                 input#overallTax.form-control(type="number" value=settings.tax min="0")
-            //-                 span &nbsp; %
-            //- #filter
-            //-     br
-            //-     h3 Excludes
-            //-     br
-            //-     .row
-            //-         .col-lg-6.col-12
-            //-             #slayerCollectionsUseProfile(class=(settings.useProfile==true ? undefined : "d-none"))
-            //-                 .form-group
-            //-                     input#overallFilterSlayers.checkbox(type="checkbox" checked=(settings.filterSlayers==1 ? 'checked' : undefined))
-            //-                     label(for="overallFilterSlayers") &nbsp; Exclude locked slayer minions &nbsp; 
-            //-                     +infoBox("filterSlayersModal","question","Exclude locked slayer minions")
-            //-                         p If checked, slayer minions that you cannot craft based on your slayer level will be put at the end of the list/ removed from the list. (based on your selection)
-            //-                 .form-group
-            //-                     input#overallFilterCollections.checkbox(type="checkbox" checked=(settings.filterCollections==1 ? 'checked' : undefined))
-            //-                     label(for="overallFilterCollections") &nbsp; Exclude locked minions (collections) &nbsp; 
-            //-                     +infoBox("filterCollectionsModal","question","Exclude locked minions (collections)")
-            //-                         p If checked, minions that you cannot craft based on the collections you have will be put at the end of the list/ removed from the list. (based on your selection)
-            //-                         p This feature would require collections API enabled. Click <a href="https://www.youtube.com/watch?v=-_LIyA5lNMU">here</a> to see how to enable API access.
-            //-             #slayerCollectionsNoProfile(class=(settings.useProfile==true ? 'd-none' : undefined))
-            //-                 .form-group
-            //-                     input#overallBottomSlayers.checkbox(type="checkbox" checked=(settings.bottomSlayers==1 ? 'checked' : undefined))
-            //-                     label(for="overallBottomSlayers") &nbsp; Exclude slayer minions &nbsp; 
-            //-                     +infoBox("bottomSlayersModal","question","Exclude slayer minions")
-            //-                         p If checked, all slayer minions will be put at the end of the list/ removed from the list. (based on your selection)
-            //-         .col-lg-6.col-12
-            //-             .form-group
-            //-                 label(for="overallDisplayMethod") Excluded crafts should be &nbsp;
-            //-                 select#overallDisplayMethod.form-control
-            //-                     option(value="1" selected=(settings.displayMethod==1?'selected':undefined)) put at the end of list
-            //-                     option(value="0" selected=(settings.displayMethod==0?'selected':undefined)) removed
-            //-                 span &nbsp; &nbsp; 
-            //-                 +infoBox("excludedCraftsModal","question","Excluded crafts should be ...")
-            //-                     p Decide whether the excluded minions (as you selected on the left/ above), should be put at the end of list or removed from the list.
-            //-             .form-group
-            //-                 input#overallShowSlots.checkbox(type="checkbox" checked=(settings.showSlots==1 ? 'checked' : undefined))
-            //-                 label(for="overallShowSlots") &nbsp; Show slot information &nbsp; 
-            //-                 +infoBox("showSlotsModal","question","Show slot information")
-            //-                     p If checked, the colored line showing amount of coins needed and the slot that you are unlocking, should appear, such as "6th slot: 901.7 coins"
-            //-     br
-            //-     h3.d-inline-block Filters
-            //-     p.d-inline-block &nbsp; &nbsp; &nbsp;
-            //-     +infoBox("filtersModal","question","Filters")
-            //-         p Only checked minions/tiers would appear in the list.
-            //-     br
-            //-     .row
-            //-         //- filtered minions must be removed
-            //-         .col-lg-6.col-12
-            //-             .miscellaneousInline
-            //-                 h4 Minions &nbsp;
-            //-                 a.read-more(data-toggle="collapse" href="#filterMinions" aria-expanded="false" aria-controls="filterMinions")
-            //-                     span.collapsed Show more
-            //-                     span.expanded Show less
-            //-             #filterMinions.collapse
-            //-                 input.checkbox#filterMinionsSelectAll(type="checkbox" checked=(settings.filterMinions&&settings.filterMinions.length!=0 ? undefined:"checked") onclick="toggleFilterMinionsSelectAll()")
-            //-                 label(for="filterMinionsSelectAll") &nbsp; Select All
-            //-                 hr
-            //-                 #filterMinionsBody
-            //-                     for minion in minions
-            //-                         .form-group
-            //-                             input.checkbox(type="checkbox" value=minion.id id="filterMinions"+minion.id checked=(settings.filterMinions&&settings.filterMinions.includes(minion.id.toString()) ? undefined:"checked") onclick="setFilterMinionsSelectAll()")
-            //-                             label(for="filterMinions"+minion.id) &nbsp; !{minion.name}
-            //-             br
-            //-             br
-            //-         .col-lg-6.col-12
-            //-             .miscellaneousInline
-            //-                 h4 Tiers &nbsp;
-            //-                 a.read-more(data-toggle="collapse" href="#filterTiers" aria-expanded="false" aria-controls="filterTiers")
-            //-                     span.collapsed Show more
-            //-                     span.expanded Show less
-            //-             #filterTiers.collapse
-            //-                 input.checkbox#filterTiersSelectAll(type="checkbox" checked=(settings.filterTiers&&settings.filterTiers.length!=0 ? undefined:"checked") onclick="toggleFilterTiersSelectAll()")
-            //-                 label(for="filterTiersSelectAll") &nbsp; Select All
-            //-                 hr
-            //-                 #filterTiersBody
-            //-                     - let i = 0
-            //-                     while i<12
-            //-                         .form-group
-            //-                             input.checkbox(type="checkbox" value=(i+1) id="filterTiers"+i checked=(settings.filterTiers&&settings.filterTiers.includes((i+1).toString()) ? undefined:"checked")  onclick="setFilterTiersSelectAll()")
-            //-                             label(for="filterTiers"+i) &nbsp; Tier !{i+1}
-            //-                         -i++;
-            //-             br
-            //-             br
-            //- br
+            .row
+                #general.col-lg-6.col-12
+                    br
+                    h3 General
+                    .form-group
+                        .form-group
+                            input#overallUseProfile.checkbox(type="checkbox" onclick="toggleUseProfile()" checked=(settings.useProfile==true ? 'checked' : undefined))
+                            label(for="overallUseProfile") &nbsp; Use Profile
+                    .form-group#profileName
+                        p Minecraft Name (Recommended): &nbsp; 
+                            input#overallProfileName.form-control(value=settings.name oninput="setUseProfile()")
+                            span &nbsp; &nbsp; 
+                            +infoBox("profileModal","question","Why is my Minecraft name required?")
+                                p If you enter your Minecraft name, it will calculate the cheapest minion ignoring the minion you have crafted. It could make the crafts list more personalized and useful.
+                                p Alternatively, you could uncheck this "Use Profile" box, and it would show the whole crafts list.
+                        if(settings.profileNames)
+                            label#overallProfileProfileLabel(for="overallProfileProfile") Profile: &nbsp;
+                            select#overallProfileProfile.form-control
+                                -let k=0
+                                while k<settings.profileNames.length
+                                    option(value=k selected=(settings.profile==k?'selected':undefined))=settings.profileNames[k]
+                                    -k++;
+                    .form-group
+                        span HOTM Level: &nbsp;
+                        select#overallHotmLevel.form-control
+                            -let j=0
+                            while j<=7
+                                option(selected=(settings.hotmLevel==j ? 'selected':undefined))=j
+                                -j++;
+                            //- 7: default
+                            //- option(selected=(!settings.hotmLevel||settings.hotmLevel==7 ? 'selected':undefined) value="7") 7
+                    .form-group
+                        span Gemstone Collection Level: &nbsp;
+                        select#overallGemstoneCollectionLevel.form-control
+                            -let l=0
+                            while l<=11
+                                option(selected=(settings.gemstoneCollectionLevel==l ? 'selected':undefined))=l
+                                -l++;
+                            //- 11: default
+                            //- option(selected=(!settings.gemstoneCollectionLevel||settings.gemstoneCollectionLevel==10 ? 'selected':undefined) value="10") 10
+                #advanced.col-lg-6.col-12
+                    br
+                    h3 Advanced
+                    //- .form-group
+                    //-     label(for="overallAccuracy") Accuracy: &nbsp;
+                    //-     select#overallAccuracy.form-control
+                    //-         option(value="0" selected=(settings.accuracy==0?'selected':undefined)) No API
+                    //-         option(value="1" selected=(settings.accuracy==1?'selected':undefined)) Medium
+                    //-         option(value="2" selected=(settings.accuracy==2?'selected':undefined)) High
+                    //-         option(value="3" selected=(settings.accuracy==3?'selected':undefined)) Very High                             
+                    .form-group
+                        label(for="overallTax") Tax in bazaar: &nbsp; 
+                            input#overallTax.form-control(type="number" value=settings.tax min="0")
+                            span &nbsp; %
+                    p: small Tax in auction house is 1% when selling items above 1M coins. The AH prices below are the current lowest BIN. The bazaar prices are based on buy instantly and sell instantly.
+                    br
+            
             button#overallSettings.btn(onclick="generateLink()") Apply
         //-     span &nbsp; &nbsp; &nbsp;
         //-     button.btn.btn-link.read-more(onclick="clearInput()") Clear
@@ -179,7 +118,9 @@ block content
             //- //- <!-- forge-1 -->
             //- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3541192882647315" data-ad-slot="9361469877" data-ad-format="auto" data-full-width-responsive="true"></ins>
             //- <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
-            
+            if settings.useProfile
+                if settings.collectionsDisabled
+                    p.loss Collection API access for this profile is disabled. Click <a href="https://www.youtube.com/watch?v=-_LIyA5lNMU">here</a> to see how to enable API access, so that we could put the minions that you cannot craft at the bottom of the list.
             br
             if settings&&settings.run==0
                 p Click Apply to calculate. Please note that the loading time will be significantly longer than the other calculators, as it needs to make around 60 API calls to get all the auction data.
@@ -270,13 +211,15 @@ block content
                                 //- i.pt-2.fas.fa-question-circle(href="/forge/info")
                     - let i = 0
                     for outputForge in outputForges 
-                        tr(id="forge"+i+"Row" class=(outputForge.profit<0?"loss":""))
+                        tr(id="forge"+i+"Row" class=(outputForge.danger?"loss":""))
                             td="#"+(i+1)
                             td(id="forge"+i+"Name")
+                                //- loss -> yellow label
                                 | #{outputForge.name}
                                 br
-                                | (#{outputForge.profitText})
-                            td(id="forge"+i+"Hotm").forgeHotm
+                                span(class=(outputForge.profit<0?"warning":"")) (#{outputForge.profitText})
+                            td(id="forge"+i+"Hotm" class=(outputForge.requirementNotMet==true?"warning":"")).forgeHotm
+                                //- when requirement not met
                                 | #{outputForge.hotmRequirement}
                                 if outputForge.gemstoneRequirement
                                     | <br />+ Gemstone #{outputForge.gemstoneRequirement}
@@ -294,8 +237,9 @@ block content
                                         br
                             td(id="forge"+i+"Cost").forgeCost=outputForge.totalCostText
                             
-                            td(id="forge"+i+"NetProfit").forgeNetProfit=outputForge.profitText
-                            td(id="forge"+i+"ProfitPerHour").forgeProfitPerHour=outputForge.profitPerHourText
+                            td(id="forge"+i+"NetProfit" class=(outputForge.profit<0?"warning":"")).forgeNetProfit=outputForge.profitText
+                            td(id="forge"+i+"ProfitPerHour" class=(outputForge.profit<0?"warning":"")).forgeProfitPerHour=outputForge.profitPerHourText
+                            //- loss -> yellow label
                         - i++;
             p: small
                 if(settings.lastUpdatedBazaar)

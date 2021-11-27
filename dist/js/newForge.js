@@ -1,5 +1,18 @@
 $("#forgeTable").doubleScroll();
 
+//functions to provide interaction
+function toggleUseProfile(){
+    let useProfile = $("#overallUseProfile").prop("checked");
+}
+
+function setUseProfile(){
+    if($("#overallProfileName").val()!=""){
+        $("#overallUseProfile").prop("checked",true);
+    }else{
+        $("#overallUseProfile").prop("checked",false);
+    }
+}
+
 function generateLink(){
     let keys = [], values = [];
 
@@ -7,30 +20,33 @@ function generateLink(){
     keys.push("run");
     values.push("1");
 
-    // if($("#overallProfileName").val()!=""){
-    //     keys.push("name");
-    //     values.push($("#overallProfileName").val().toLowerCase());
-    //     if($("#overallProfileProfile")&&$("#overallProfileProfile").children("option:selected").val()!=0&&$("#overallProfileProfile").children("option:selected").val()!=undefined){{
-            
-    //         keys.push("profile");
-    //         values.push($("#overallProfileProfile").children("option:selected").val());
-    //     }}
-    // }
+    if($("#overallUseProfile").prop("checked")&&$("#overallProfileName").val()!=""){
+        keys.push("name");
+        values.push($("#overallProfileName").val().toLowerCase());
+        if($("#overallProfileProfile")&&$("#overallProfileProfile").children("option:selected").val()!=0&&$("#overallProfileProfile").children("option:selected").val()!=undefined){{
+            keys.push("profile");
+            values.push($("#overallProfileProfile").children("option:selected").val());
+        }}
+    }else{
+        if($("#overallHotmLevel").children("option:selected").val()!=7){
+            keys.push("hotmLevel");
+            values.push($("#overallHotmLevel").children("option:selected").val());
+        }
+        if($("#overallGemstoneCollectionLevel").children("option:selected").val()!=11){
+            keys.push("gemstoneCollectionLevel");
+            values.push($("#overallGemstoneCollectionLevel").children("option:selected").val());
+        }
+    }
 
-    // if($("#overallOfflineTimeUnit").val()==1){ //use day as unit
-    //     if($("#overallOfflineTime").val()!=1){
-    //         keys.push("offlineTime");
-    //         values.push($("#overallOfflineTime").val()*24);
-    //     }
-    // }else{ //use hour as unit
-    //     keys.push("offlineTimeUnit");
-    //     values.push($("#overallOfflineTimeUnit").val());
-    //     if($("#overallOfflineTime").val()!=24){
-    //         keys.push("offlineTime");
-    //         values.push($("#overallOfflineTime").val());
-    //     }
-
+    //advanced
+    // if($("#overallAccuracy").val()!=2){
+    //     keys.push("accuracy");
+    //     values.push($("#overallAccuracy").val());
     // }
+    if($("#overallTax").val()!=1.125){
+        keys.push("tax");
+        values.push($("#overallTax").val());
+    }
     
     let string = "/new-forge"
     for(let i=0;i<keys.length;i++){
