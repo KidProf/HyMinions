@@ -1194,7 +1194,456 @@ exports.forges = [
         duration : 0,
         hotmRequirement: 0,
         gemstoneRequirement: 9,
-		},
+    },{ //40
+        name : "Refined Mithril Pickaxe",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Refined Mithril",
+                ],
+                quantity: [
+                    3,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },{
+                options: [
+                    "Bejeweled Handle",
+                ],
+                quantity: [
+                    2,
+                ],
+            },{
+                options: [
+                    "Refined Diamond",
+                ],
+                quantity: [
+                    1,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },{
+                options: [
+                    "Enchanted Gold",
+                    "Gold Ingot",
+                ],
+                quantity: [
+                    30,
+                    4800,
+                ],
+                source: [
+                    this.sourceBazaar,
+                    this.sourceBazaar,
+                ],
+            }
+        ],
+        duration : 22,
+        hotmRequirement: 3,
+    },{ //41
+        name : "Mithril Drill SX-R226",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Drill Engine",
+                ],
+                quantity: [
+                    1,
+                ],
+            },{
+                options: [
+                    "Refined Mithril",
+                ],
+                quantity: [
+                    3,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },{
+                options: [
+                    "Fuel Tank",
+                ],
+                quantity: [
+                    1,
+                ],
+            },
+        ],
+        duration : 4,
+        hotmRequirement: 3,
+    },{ //42
+        name : "Mithril-Infused Fuel Tank",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Mithril Plate",
+                ],
+                quantity: [
+                    3,
+                ],
+            },{
+                options: [
+                    "Fuel Tank",
+                ],
+                quantity: [
+                    5,
+                ],
+            }
+        ],
+        duration : 10,
+        hotmRequirement: 3,
+    },{ //43
+        name : "Mithril-Plated Drill Engine",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Mithril Plate",
+                ],
+                quantity: [
+                    3,
+                ],
+            },{
+                options: [
+                    "Drill Engine",
+                ],
+                quantity: [
+                    2,
+                ],
+            }
+        ],
+        duration : 15,
+        hotmRequirement: 3,
+    },{ //44
+        name : "Beacon III",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Beacon II",
+                ],
+                quantity: [
+                    1,
+                ],
+            },{
+                options: [
+                    "Refined Mithril",
+                ],
+                quantity: [
+                    10,
+                ],
+                source:[
+                    this.sourceBazaar,
+                ]
+            }
+        ],
+        duration : 30,
+        hotmRequirement: 3,
+    },{ //45
+        name : "Titanium Ring",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Titanium Talisman",
+                ],
+                quantity: [
+                    1,
+                ],
+            },{
+                options: [
+                    "Refined Titanium",
+                ],
+                quantity: [
+                    6,
+                ],
+                source:[
+                    this.sourceBazaar,
+                ]
+            }
+        ],
+        duration : 20,
+        hotmRequirement: 3,
+    },{ //46
+        name : "Pure Mithril",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Refined Mithril",
+                ],
+                quantity: [
+                    2,
+                ],
+                source:[
+                    this.sourceBazaar,
+                ]
+            }
+        ],
+        duration : 12,
+        hotmRequirement: 3,
+    },{ //47
+        name : "Rock Gemstone",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Enchanted Cobblestone",
+                    "Cobblestone",
+                ],
+                quantity: [
+                    128,
+                    20480,
+                ],
+                source:[
+                    this.sourceBazaar,
+                    this.sourceBazaar,
+                ]
+            },{
+                options: [
+                    "Treasurite",
+                ],
+                quantity: [
+                    64,
+                ],
+            },
+        ],
+        duration : 22,
+        hotmRequirement: 3,
+    },{ //48
+        name : "Petrified Starfall",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Starfall",
+                ],
+                quantity: [
+                    512,
+                ],
+                source:[
+                    this.sourceBazaar,
+                ]
+            },
+        ],
+        duration : 14,
+        hotmRequirement: 3,
+    },{ //49
+        name : "Pesto Goblin Omelette",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Green Goblin Egg",
+                ],
+                quantity: [
+                    99,
+                ],
+                source:[
+                    this.sourceBazaar,
+                ]
+            },{
+                options: [
+                    "Fine Jade Gemstone",
+                ],
+                quantity: [
+                    1,
+                ],
+                source:[
+                    this.sourceBazaar,
+                ]
+            },
+        ],
+        duration : 20,
+        hotmRequirement: 4,
+    },{ //50
+        name : "[Lvl 1] Ammonite",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Helix",
+                ],
+                quantity: [
+                    1,
+                ],
+            },{
+                options: [
+                    "Coins",
+                ],
+                quantity: [
+                    300000,
+                ],
+                prices: [
+                    1,
+                ],
+                source: [
+                    this.sourceOthers,
+                ],
+            },
+        ],
+        duration : 288, //12 days
+        hotmRequirement: 3,
+    },{ //50
+        name : "Ruby Drill TX-15",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Drill Engine",
+                ],
+                quantity: [
+                    1,
+                ],
+            },{
+                options: [
+                    "Fuel Tank",
+                ],
+                quantity: [
+                    1,
+                ],
+            },{
+                options: [
+                    "Fine Ruby Gemstone",
+                ],
+                quantity: [
+                    6,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+        ],
+        duration : 1,
+        hotmRequirement: 3,
+    },{ //51
+        name : "Travel Scroll to the Crystal Hollows",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Flawed Ruby Gemstone",
+                ],
+                quantity: [
+                    48,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },{
+                options: [
+                    "Fine Ruby Gemstone",
+                ],
+                quantity: [
+                    80,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },{
+                options: [
+                    "Enchanted Ender Pearl",
+                    "Ender Pearl",
+                ],
+                quantity: [
+                    16,
+                    320,
+
+                ],
+                source: [
+                    this.sourceBazaar,
+                    this.sourceBazaar,
+                ],
+            },{
+                options: [
+                    "Coins",
+                ],
+                quantity: [
+                    50000,
+                ],
+                prices: [
+                    1,
+                ],
+                source: [
+                    this.sourceOthers,
+                ],
+            },
+        ],
+        duration : 10,
+        hotmRequirement: 3,
+    },{ //52
+        name : "Mithril Drill SX-R326",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Mithril Drill SX-R226",
+                ],
+                quantity: [
+                    1,
+                ],
+            },{
+                options: [
+                    "Golden Plate",
+                ],
+                quantity: [
+                    10,
+                ],
+            },{
+                options: [
+                    "Mithril Plate",
+                ],
+                quantity: [
+                    2,
+                ],
+            },
+        ],
+        duration : 30/3600, //30 sec
+        hotmRequirement: 4,
+    },{ //53
+        name : "Titanium-Plated Drill Engine",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Drill Engine",
+                ],
+                quantity: [
+                    10,
+                ],
+            },{
+                options: [
+                    "Plasma",
+                ],
+                quantity: [
+                    5,
+                ],
+            },{
+                options: [
+                    "Mithril Plate",
+                ],
+                quantity: [
+                    4,
+                ],
+            },{
+                options: [
+                    "Refined Titanium",
+                ],
+                quantity: [
+                    5,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+        ],
+        duration : 30,
+        hotmRequirement: 4,
+    },
 ];
 
-//TOTAL: 16
+//TOTAL: 54
