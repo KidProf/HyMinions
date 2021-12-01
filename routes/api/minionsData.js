@@ -2638,19 +2638,19 @@ exports.minions = [
                     160,
                 ]
             },
-            {
-                item : "Enchanted Poisonous Potato",
-                perTime : 0.01, //0.01
-                npcPrice: 1600,
-                variants: [
-                    "Enchanted Poisonous Potato",
-                    "Enchanted Poisonous Potato", //need this line to make old calculation mode work, as need at least 1 enchanted form
-                ],
-                variantsEquiv: [
-                    1,
-                    1, //need this line to make old calculation mode work, as need at least 1 enchanted form
-                ]
-            },
+            // { //disabled since december 1
+            //     item : "Enchanted Poisonous Potato",
+            //     perTime : 0.01, //0.01
+            //     npcPrice: 1600,
+            //     variants: [
+            //         "Enchanted Poisonous Potato",
+            //         "Enchanted Poisonous Potato", //need this line to make old calculation mode work, as need at least 1 enchanted form
+            //     ],
+            //     variantsEquiv: [
+            //         1,
+            //         1, //need this line to make old calculation mode work, as need at least 1 enchanted form
+            //     ]
+            // },
             {
                 item : "Poisonous Potato",
                 perTime : 0.02, //0.02
