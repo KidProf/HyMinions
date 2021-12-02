@@ -223,7 +223,7 @@ block content
                                 | #{outputForge.hotmRequirement}
                                 if outputForge.gemstoneRequirement
                                     | <br />+ Gemstone #{outputForge.gemstoneRequirement}
-                            td(id="forge"+i+"Duration").forgeDuration=outputForge.duration
+                            td(id="forge"+i+"Duration").forgeDuration=Math.round(outputForge.duration*10000)/10000
                             td(id="forge"+i+"ProductPrice").forgeProductPrice=outputForge.priceText
                             td(id="forge"+i+"MaterialsName").forgeMaterialsName
                                 if outputForge.materials

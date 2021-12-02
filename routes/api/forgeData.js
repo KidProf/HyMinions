@@ -1410,6 +1410,9 @@ exports.forges = [
                 quantity: [
                     64,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
         ],
         duration : 22,
