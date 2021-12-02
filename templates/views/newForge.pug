@@ -216,6 +216,9 @@ block content
                             td(id="forge"+i+"Name")
                                 //- loss -> yellow label
                                 | #{outputForge.name}
+                                if outputForge.approximateMatch&&outputForge.approximateName
+                                    br
+                                    | (#{outputForge.approximateName})
                                 br
                                 span(class=(outputForge.profit<0?"warning":"")) (#{outputForge.profitText})
                             td(id="forge"+i+"Hotm" class=(outputForge.requirementNotMet==true?"warning":"")).forgeHotm
@@ -230,6 +233,9 @@ block content
                                     each material in outputForge.materials
                                         | #{material.quantity} x #{material.name}
                                         br
+                                        if material.approximateMatch&&material.approximateName
+                                            | (#{material.approximateName})
+                                            br
                             td(id="forge"+i+"UnitCost").forgeUnitCost
                                 if outputForge.materials
                                     each material in outputForge.materials

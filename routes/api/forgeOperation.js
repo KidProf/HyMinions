@@ -27,16 +27,34 @@ exports.calculateForge = async function(forges, settings){
                     gemstoneCollectionLevel = 11;
                 }else{
                     //for each collection entry
+                    forges.forEach((forge)=>{
+                        if(forge.collectionsRequirement){
+                            forge.collectionsRequirement.profilesCollection =  new Array(profilesAjax.length);
+                        }
+                    })
                     profile.rawCollections.forEach((rawCollection,index2)=>{
                         //e.g. to get "TARANTULA" from "TARANTULA_4"
                         let underscoreLocation = rawCollection.lastIndexOf("_");
                         let searchString = rawCollection.substring(0,underscoreLocation);
-                        //search it with each minion name
+                        //search it with gemstone
                         let minionString=gemstoneCollectionName;
                         if(minionString==searchString){
                             gemstoneCollectionLevel = Math.max(gemstoneCollectionLevel,rawCollection.substring(underscoreLocation+1));
-                            
                         }
+                            //search it with each forge name
+                        forges.forEach((forge,index4)=>{
+                            if(forge.collectionsRequirement){
+                                let collectionString;
+                                collectionString = forge.collectionsRequirement.rawCollectionId;
+                                if(collectionString==searchString){
+                                    let tier = rawCollection.substring(underscoreLocation+1);
+                                    if(tier==(forge.collectionsRequirement.tier)){
+                                        forge.collectionsRequirement.profilesCollection[index] = true;
+                                    }
+                                }
+                            }
+                            
+                        });
                     });
                 }
                
@@ -80,7 +98,18 @@ exports.calculateForge = async function(forges, settings){
             //incorporate minAuctions into forges
             forges.forEach((forge)=>{
                 if(!forge.source){ //not given source
-                    forge.price = minAuctions[forge.name] || 0; //product
+                    forge.price = minAuctions[forge.name] || 0;//product
+                    if(forge.approximateMatch){
+                        Object.keys(minAuctions).forEach((key)=>{
+                            if(key.includes(forge.name)){
+                                if(minAuctions[key]<forge.price||forge.price==0){
+                                    forge.price = minAuctions[key];
+                                    forge.approximateName = key;
+                                }
+                                
+                            }
+                        })
+                    }
                 } 
                 forge.materials.forEach((material)=>{
                     if(!material.prices){
@@ -90,6 +119,17 @@ exports.calculateForge = async function(forges, settings){
                     for(let i=0;i<material.options.length;i++){
                         if(!(material.source&&material.source[i])){
                             material.prices[i] = minAuctions[material.options[i]] || material.prices[i];
+                            if(material.approximateMatch){
+                                Object.keys(minAuctions).forEach((key)=>{
+                                    if(key.includes(material.options[i])){
+                                        if(minAuctions[key]<material.prices[i]||material.prices[i]==0){
+                                            material.prices[i] = minAuctions[key];
+                                            material.approximateNames[i] = key;
+                                        }
+                                        
+                                    }
+                                })
+                            }
                         }
                     }
                 })
@@ -117,6 +157,8 @@ exports.calculateForge = async function(forges, settings){
     forges.forEach((forge)=>{
         let outputForge = {
             name: forge.name,
+            approximateMatch: forge.approximateMatch,
+            approximateName: forge.approximateName,
             materials: new Array(forge.materials.length),
             totalCost: 0,
             duration: forge.duration,
@@ -170,6 +212,8 @@ exports.calculateForge = async function(forges, settings){
                 quantity: material.quantity[minIndex],
                 price: price,
                 priceText: priceText,
+                approximateMatch: material.approximateMatch?.[minIndex],
+                approximateName: material.approximateNames?.[minIndex],
             }
             outputForge.totalCost += price*outputForge.materials[index].quantity;
         });

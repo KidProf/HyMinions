@@ -45,6 +45,11 @@ exports.gemstoneCollectionName = "GEMSTONE_COLLECTION";
 //     duration : 10,
 //     hotmRequirement: 2, //hotm level
 //     gemstoneRequirement: 9 //remove this line of no need
+//collectionsRequirement: [{
+    // name: "Gemstone",
+    // tier: 10,
+    // rawCollectionId: "GEMSTONE_COLLECTION",
+// }],
 // },
 
 exports.forges = [
@@ -672,6 +677,7 @@ exports.forges = [
         hotmRequirement: 2,
     },{ //18
         name : "Titanium Talisman",
+        approximateMatch: true,
         npcPrice: 0,
         materials: [
             {
@@ -1354,6 +1360,9 @@ exports.forges = [
                 quantity: [
                     1,
                 ],
+                approximateMatch: [
+                    true,
+                ],
             },{
                 options: [
                     "Refined Titanium",
@@ -1464,7 +1473,8 @@ exports.forges = [
         duration : 20,
         hotmRequirement: 4,
     },{ //50
-        name : "[Lvl 1] Ammonite",
+        name : "Ammonite",
+        approximateMatch: true,
         npcPrice: 0,
         materials: [
             {

@@ -47,7 +47,7 @@ exports = module.exports = function (req, res) {
         }else{
             settings.useProfile= false;
             if(!settings.hotmLevel||!isWithinList(settings.hotmLevel,[0,1,2,3,4,5,6,7])){
-                settings.accuracy = 7;
+                settings.hotmLevel = 7;
             }
             if(!settings.gemstoneCollectionLevel||!isWithinList(settings.gemstoneCollectionLevel,[0,1,2,3,4,5,6,7,8,9,10,11])){
                 settings.gemstoneCollectionLevel = 11;
