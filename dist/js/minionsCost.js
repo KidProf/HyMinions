@@ -161,7 +161,7 @@ function generateLink(){
         keys.push("buyingMethod");
         values.push($("#overallBuyingMethod").children("option:selected").val());
     }
-    if($("#overallTax").val()!=1){
+    if($("#overallTax").val()!=1.125){
         keys.push("tax");
         values.push($("#overallTax").val());
     }
