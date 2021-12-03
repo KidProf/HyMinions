@@ -14,7 +14,7 @@ exports.gemstoneCollectionName = "GEMSTONE_COLLECTION";
 // { //3
 //     name : "name surrounded by double quotes",
 //     npcPrice: find it if you can, if not put 0 here,
-//     source: write this.fromBazaar if from bazaar, else do not add the source,
+//     source: write this.sourceBazaar if from bazaar, else do not add the source,
 //     materials: [
 //         {
 //             options: [ //for bazaar, probably may have more than one option
@@ -226,7 +226,7 @@ exports.forges = [
                 ],
             }
         ],
-        duration : 30,
+        duration : 30, //1 day 6 hours
         hotmRequirement: 3,
     },{ //6
         name : "Golden Plate",
@@ -1251,6 +1251,7 @@ exports.forges = [
         hotmRequirement: 3,
     },{ //41
         name : "Mithril Drill SX-R226",
+        approximateMatch: true,
         npcPrice: 0,
         materials: [
             {
@@ -1348,7 +1349,7 @@ exports.forges = [
                 ]
             }
         ],
-        duration : 30,
+        duration : 30, //1 day 6 hours
         hotmRequirement: 3,
     },{ //45
         name : "Titanium Ring",
@@ -1505,6 +1506,7 @@ exports.forges = [
         hotmRequirement: 3,
     },{ //50
         name : "Ruby Drill TX-15",
+        approximateMatch: true,
         npcPrice: 0,
         materials: [
             {
@@ -1592,6 +1594,7 @@ exports.forges = [
         hotmRequirement: 3,
     },{ //52
         name : "Mithril Drill SX-R326",
+        approximateMatch: true,
         npcPrice: 0,
         materials: [
             {
@@ -1600,6 +1603,9 @@ exports.forges = [
                 ],
                 quantity: [
                     1,
+                ],
+                approximateMatch: [
+                    true,
                 ],
             },{
                 options: [
@@ -1658,6 +1664,467 @@ exports.forges = [
         ],
         duration : 30,
         hotmRequirement: 4,
+    },{ //54
+        name : "Goblin Omelette",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Goblin Egg",
+                ],
+                quantity: [
+                    99,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+        ],
+        duration : 18,
+        hotmRequirement: 4,
+    },{ //55
+        name : "Beacon IV",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Beacon III",
+                ],
+                quantity: [
+                    1,
+                ],
+            },
+            {
+                options: [
+                    "Refined Mithril",
+                ],
+                quantity: [
+                    99,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Plasma",
+                ],
+                quantity: [
+                    1,
+                ],
+            },
+        ],
+        duration : 40, //1 day 16 hours
+        hotmRequirement: 4,
+    },{ //56
+        name : "Titanium Artifact",
+        approximateMatch: true,
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Titanium Ring",
+                ],
+                quantity: [
+                    1,
+                ],
+                approximateMatch: [
+                    true,
+                ]
+            },
+            {
+                options: [
+                    "Refined Titanium",
+                ],
+                quantity: [
+                    12,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+        ],
+        duration : 36, //1 day 12 hours
+        hotmRequirement: 4,
+    },{ //57
+        name : "Hot Stuff",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Hard Stone",
+                ],
+                quantity: [
+                    128,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Rough Amber Gemstone",
+                ],
+                quantity: [
+                    64,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+        ],
+        duration : 24, //1 day
+        hotmRequirement: 4,
+        collectionsRequirement: [{
+            name: "Hard Stone",
+            tier: 4,
+            rawCollectionId: "HARD_STONE",
+        }],
+    },{ //58
+        name : "Sunny Side Goblin Omelette",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Yellow Goblin Egg",
+                ],
+                quantity: [
+                    99,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Fine Topaz Gemstone",
+                ],
+                quantity: [
+                    1,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+        ],
+        duration : 20,
+        hotmRequirement: 6,
+    },{ //59
+        name : "Gemstone Drill LT-522",
+        approximateMatch: true,
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Ruby Drill TX-15",
+                ],
+                quantity: [
+                    1,
+                ],
+                approximateMatch: [
+                    true,
+                ]
+            },
+            {
+                options: [
+                    "Gemstone Mixture",
+                ],
+                quantity: [
+                    3,
+                ],
+            },
+        ],
+        duration : 30/3600, //30 secs
+        hotmRequirement: 4,
+    },{ //60
+        name : "Titanium Drill DR-X355",
+        approximateMatch: true,
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Drill Engine",
+                ],
+                quantity: [
+                    1,
+                ],
+            },
+            {
+                options: [
+                    "Fuel Tank",
+                ],
+                quantity: [
+                    1,
+                ],
+            },
+            {
+                options: [
+                    "Golden Plate",
+                ],
+                quantity: [
+                    6,
+                ],
+            },
+            {
+                options: [
+                    "Refined Titanium",
+                ],
+                quantity: [
+                    10,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Refined Mithril",
+                ],
+                quantity: [
+                    10,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+        ],
+        duration : 64, //2 days 16 hours
+        hotmRequirement: 5,
+    },{ //61
+        name : "Titanium Drill DR-X455",
+        approximateMatch: true,
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Titanium Drill DR-X355",
+                ],
+                quantity: [
+                    1,
+                ],
+                approximateMatch: [
+                    true,
+                ]
+            },
+            {
+                options: [
+                    "Refined Titanium",
+                ],
+                quantity: [
+                    16,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Refined Diamond",
+                ],
+                quantity: [
+                    10,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Mithril Plate",
+                ],
+                quantity: [
+                    6,
+                ],
+            },
+        ],
+        duration : 30/3600, //30 secs
+        hotmRequirement: 5,
+    },{ //62
+        name : "Titanium Drill DR-X555",
+        approximateMatch: true,
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Titanium Drill DR-X455",
+                ],
+                quantity: [
+                    1,
+                ],
+                approximateMatch: [
+                    true,
+                ]
+            },
+            {
+                options: [
+                    "Refined Titanium",
+                ],
+                quantity: [
+                    32,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Refined Diamond",
+                ],
+                quantity: [
+                    20,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Enchanted Iron Block",
+                    "Enchanted Iron",
+                    "Iron Ingot",
+                ],
+                quantity: [
+                    2,
+                    320,
+                    51200,
+                ],
+                source: [
+                    this.sourceBazaar,
+                    this.sourceBazaar,
+                    this.sourceBazaar,
+                ],
+            },
+            {
+                options: [
+                    "Mithril Plate",
+                ],
+                quantity: [
+                    15,
+                ],
+            },
+            {
+                options: [
+                    "Plasma",
+                ],
+                quantity: [
+                    20,
+                ],
+            },
+        ],
+        duration : 30/3600, //30 secs
+        hotmRequirement: 5,
+    },{ //63
+        name : "Titanium-Infused Fuel Tank",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Refined Titanium",
+                ],
+                quantity: [
+                    10,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Refined Diamond",
+                ],
+                quantity: [
+                    10,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Refined Mithril",
+                ],
+                quantity: [
+                    10,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Fuel Tank",
+                ],
+                quantity: [
+                    10,
+                ],
+            },
+        ],
+        duration : 25, //1 day 1 hour
+        hotmRequirement: 5,
+    },{ //64
+        name : "Beacon V",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Beacon IV",
+                ],
+                quantity: [
+                    1,
+                ],
+            },
+            {
+                options: [
+                    "Refined Mithril",
+                ],
+                quantity: [
+                    40,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Plasma",
+                ],
+                quantity: [
+                    5,
+                ],
+            },
+        ],
+        duration : 50, //2 day 2 hour
+        hotmRequirement: 5,
+    },{ //65
+        name : "Titanium Relic",
+        approximateMatch: true,
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Titanium Artifact",
+                ],
+                quantity: [
+                    1,
+                ],
+                approximateMatch: [
+                    true,
+                ]
+            },
+            {
+                options: [
+                    "Refined Titanium",
+                ],
+                quantity: [
+                    20,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+        ],
+        duration : 72, //3 days
+        hotmRequirement: 5,
     },
 ];
 

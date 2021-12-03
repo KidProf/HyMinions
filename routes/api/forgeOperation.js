@@ -120,6 +120,7 @@ exports.calculateForge = async function(forges, settings){
                         if(!(material.source&&material.source[i])){
                             material.prices[i] = minAuctions[material.options[i]] || material.prices[i];
                             if(material.approximateMatch){
+                                material.approximateNames = new Array(material.options.length);
                                 Object.keys(minAuctions).forEach((key)=>{
                                     if(key.includes(material.options[i])){
                                         if(minAuctions[key]<material.prices[i]||material.prices[i]==0){
