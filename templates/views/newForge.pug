@@ -6,7 +6,7 @@ block append js
     script(src="/js/newForge.js")
     	
 block append variables
-    - var currentPage = "minionsCost";
+    - var currentPage = "forge";
 
 block meta
     meta(name="description" content="It calculates the cheapest minions to level up to gain more minion slots, also tailor-made for each profile if you input your Minecraft name.")
@@ -227,6 +227,9 @@ block content
                                 | #{outputForge.hotmRequirement}
                                 if outputForge.gemstoneRequirement
                                     | <br />+ Gemstone #{outputForge.gemstoneRequirement}
+                                if outputForge.collectionsRequirement
+                                    for requirement in outputForge.collectionsRequirement
+                                        | <br />+ #{requirement.name} #{requirement.tier}
                             td(id="forge"+i+"Duration").forgeDuration=Math.round(outputForge.duration*10000)/10000
                             td(id="forge"+i+"ProductPrice").forgeProductPrice=outputForge.priceText
                             td(id="forge"+i+"MaterialsName").forgeMaterialsName

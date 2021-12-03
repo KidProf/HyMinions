@@ -29,7 +29,9 @@ exports.calculateForge = async function(forges, settings){
                     //for each collection entry
                     forges.forEach((forge)=>{
                         if(forge.collectionsRequirement){
-                            forge.collectionsRequirement.profilesCollection =  new Array(profilesAjax.length);
+                            forge.collectionsRequirement.forEach((requirement)=>{
+                                requirement.profilesCollection =  new Array(profilesAjax.length);
+                            });
                         }
                     })
                     profile.rawCollections.forEach((rawCollection,index2)=>{
@@ -44,14 +46,17 @@ exports.calculateForge = async function(forges, settings){
                             //search it with each forge name
                         forges.forEach((forge,index4)=>{
                             if(forge.collectionsRequirement){
-                                let collectionString;
-                                collectionString = forge.collectionsRequirement.rawCollectionId;
-                                if(collectionString==searchString){
-                                    let tier = rawCollection.substring(underscoreLocation+1);
-                                    if(tier==(forge.collectionsRequirement.tier)){
-                                        forge.collectionsRequirement.profilesCollection[index] = true;
+                                forge.collectionsRequirement.forEach((requirement)=>{
+                                    let collectionString;
+                                    collectionString = requirement.rawCollectionId;
+                                    if(collectionString==searchString){
+                                        let tier = rawCollection.substring(underscoreLocation+1);
+                                        if(tier==(requirement.tier)){
+                                            requirement.profilesCollection[index] = true;
+                                        }
                                     }
-                                }
+                                })
+                                
                             }
                             
                         });
@@ -168,6 +173,7 @@ exports.calculateForge = async function(forges, settings){
             duration: forge.duration,
             gemstoneRequirement: forge.gemstoneRequirement,
             hotmRequirement: forge.hotmRequirement,
+            collectionsRequirement: forge.collectionsRequirement,
             last: 0,
         };
         let price, priceText;
@@ -239,6 +245,17 @@ exports.calculateForge = async function(forges, settings){
                 outputForge.requirementNotMet = true;
                 outputForge.last = 1;
             };
+        }
+        if(outputForge.collectionsRequirement&&settings.useProfile&&!settings.collectionsDisabled){
+            //the forge has collection requirement && use profile && that profile has collection enabled
+            outputForge.collectionsRequirement.forEach((requirement)=>{
+                if(!requirement.profilesCollection[settings.profile]){
+                    outputForge.danger = true;
+                    outputForge.requirementNotMet = true;
+                    outputForge.last = 1;
+                }
+            })
+
         }
         if(outputForge.profit<0){
             outputForge.last += 2;
