@@ -1,3 +1,10 @@
+//PRESS ENTER = SUBMIT
+$("#overall").keydown(function(event) {
+    if (event.keyCode === 13) {
+        generateLink();
+    }
+});
+
 let hiddenCols = [];
 function hideCol(col){
     $("."+col).addClass("d-none");
