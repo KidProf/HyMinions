@@ -149,6 +149,9 @@ exports.calculateForge = async function(forges, settings){
     console.log("finished findBazaar and findProfile");
 
     if(settings.useProfile){
+        settings.profileNames=profileNames;
+        settings.profile=Math.min(settings.profile,settings.profileNames.length-1);
+        settings.collectionsDisabled=profileInfo.collectionsDisabled[settings.profile];
         settings.hotmLevel=profileInfo.hotmLevel[settings.profile];
         settings.gemstoneCollectionLevel=profileInfo.gemstoneCollectionLevel[settings.profile];
     }
