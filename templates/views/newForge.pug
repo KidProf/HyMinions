@@ -71,18 +71,18 @@ block content
                                 while k<settings.profileNames.length
                                     option(value=k selected=(settings.profile==k?'selected':undefined))=settings.profileNames[k]
                                     -k++;
-                    .form-group
+                    .form-group.profileAlt
                         span HOTM Level: &nbsp;
-                        select#overallHotmLevel.form-control
+                        select#overallHotmLevel.form-control(onchange="setNotProfile()")
                             -let j=0
                             while j<=7
                                 option(selected=(settings.hotmLevel==j ? 'selected':undefined))=j
                                 -j++;
                             //- 7: default
                             //- option(selected=(!settings.hotmLevel||settings.hotmLevel==7 ? 'selected':undefined) value="7") 7
-                    .form-group
+                    .form-group.profileAlt
                         span Gemstone Collection Level: &nbsp;
-                        select#overallGemstoneCollectionLevel.form-control
+                        select#overallGemstoneCollectionLevel.form-control(onchange="setNotProfile()")
                             -let l=0
                             while l<=11
                                 option(selected=(settings.gemstoneCollectionLevel==l ? 'selected':undefined))=l

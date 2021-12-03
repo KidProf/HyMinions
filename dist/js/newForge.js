@@ -3,14 +3,27 @@ $("#forgeTable").doubleScroll();
 //functions to provide interaction
 function toggleUseProfile(){
     let useProfile = $("#overallUseProfile").prop("checked");
+    if(useProfile){
+        $(".profileAlt").hide();
+    }else{
+        $(".profileAlt").show();
+    }
+    
 }
 
 function setUseProfile(){
     if($("#overallProfileName").val()!=""){
         $("#overallUseProfile").prop("checked",true);
+        $(".profileAlt").hide();
     }else{
         $("#overallUseProfile").prop("checked",false);
+        $(".profileAlt").show();
     }
+}
+
+function setNotProfile(){
+    $("#overallUseProfile").prop("checked",false);
+    $(".profileAlt").show();
 }
 
 function generateLink(){

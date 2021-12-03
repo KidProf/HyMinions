@@ -715,6 +715,7 @@ exports.forges = [
     },{ //20
         name : "Power Crystal",
         npcPrice: 0,
+        source: this.sourceBazaar,
         materials: [
             {
                 options: [
@@ -1351,6 +1352,7 @@ exports.forges = [
         hotmRequirement: 3,
     },{ //45
         name : "Titanium Ring",
+        approximateMatch: true,
         npcPrice: 0,
         materials: [
             {
