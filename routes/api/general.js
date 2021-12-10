@@ -76,6 +76,19 @@ function moneyRepresentationMagnitudeDetail(number){
     }
 }
 
+// copied from backend
+exports.merge = function merge(data1, data2) {
+    if (data1.length==0) {
+        return data2;
+    } else if (data2.length==0) {
+        return data1;
+    } else if (data1[0].unitPrice<data2[0].unitPrice) {
+        return [data1[0], ...merge(data1.slice(1), data2)];
+    } else {
+        return [data2[0], ...merge(data1, data2.slice(1))];
+    }
+}
+
 exports.findBazaar = async function findBazaar(settings){
     return new Promise((resolve)=>{
         setTimeout(() => {
@@ -209,73 +222,22 @@ exports.findProfile = async function findProfile(name,settings){
     });
 }
 
-//internal
-async function findAuction(settings,page){
-    return new Promise((resolve)=>{
-        setTimeout(() => {
-            fetch("https://api.hypixel.net/skyblock/auctions?page="+page)
-            .then(result => result.json())
-            .then(({ auctions,totalPages }) => {
-                settings.totalPages = totalPages;
-                let minAuctionFragment={}; //object with keys item names, values prices
-                auctions.forEach((auction)=>{
-                    if(auction.bin){
-                        let quantity = 1;
-                        // const data = Buffer.from(auction["item_bytes"], 'base64');
-                        // nbt.parse(data, (error, json) => {
-                        //     if (error) {
-                        //         console.log(error);
-                        //     }
-                        //     // console.log(json);
-                        //     quantity = json.value.i.value.value[0].Count.value || 1;
-                        //     return json;
-                        // });
-                        let currentPrice = auction["starting_bid"]/quantity;
-                        if(!minAuctionFragment[auction["item_name"]]||minAuctionFragment[auction["item_name"]]>currentPrice){
-                            minAuctionFragment[auction["item_name"]] = currentPrice;
-                        }
-                    }
-                    
-                });
-                console.log("auction page fetch done " + page);
-                resolve(minAuctionFragment);
-                
-            })
-            .catch((err)=>{
-                console.log("catch from findAuction",err);
-                settings.hasError=true;
-                settings.errorMsg = "Error occured when getting auction prices.";
-                resolve("error");
-            });
-        }, 1000);
-    });
-}
-
 exports.findAuctions = async function findAuctions(settings){
     return new Promise((resolve)=>{
         setTimeout(() => {
-            findAuction(settings,0).then((minAuctionFragment0)=>{
-                console.log(settings.totalPages);
-                let promiseList = [];
-                for(i=1;i<settings.totalPages;i++){
-                    promiseList.push(findAuction(settings,i));
-                }
-                Promise.all(promiseList).then((minAuctionFragments) => { //call other pages after knowing total number of pages
-                    let minAuctions = minAuctionFragment0;
-                    minAuctionFragments.forEach((minAuctionFragment)=>{
-                        Object.keys(minAuctionFragment).forEach((itemName)=>{
-                            if(!minAuctions[itemName]||minAuctions[itemName]>minAuctionFragment[itemName]){
-                                minAuctions[itemName] = minAuctionFragment[itemName];
-                            }
-                        });
-                    });
-                    resolve(minAuctions);
-                }).catch((err)=>{
-                    console.log("catch from findAuctions",err);
+            fetch(process.env.BACKEND_LINK)
+            .then(result => result.json())
+            .then(({finishTime,data,status,errorMsg}) => {
+                if(status!="success"){
+                    console.log("catch from auctions backend (catch from findAuctions reading backend)");
+                    settings.lastUpdatedAuction = new Date(finishTime);
                     settings.hasError=true;
-                    settings.errorMsg = "Error occured when getting auction prices.";
+                    settings.errorMsg = errorMsg || "Error occured when getting auction prices. (catch from findAuctions reading backend)";
                     resolve("error");
-                });;
+                }else{
+                    settings.lastUpdatedAuction = new Date(finishTime);
+                    resolve(data);
+                }
             }).catch((err)=>{
                 console.log("catch from findAuctions",err);
                 settings.hasError=true;
@@ -285,3 +247,79 @@ exports.findAuctions = async function findAuctions(settings){
         }, 1000);
     });
 }
+// //internal
+// async function findAuction(settings,page){
+//     return new Promise((resolve)=>{
+//         setTimeout(() => {
+//             fetch("https://api.hypixel.net/skyblock/auctions?page="+page)
+//             .then(result => result.json())
+//             .then(({ auctions,totalPages }) => {
+//                 settings.totalPages = totalPages;
+//                 let minAuctionFragment={}; //object with keys item names, values prices
+//                 auctions.forEach((auction)=>{
+//                     if(auction.bin){
+//                         let quantity = 1;
+//                         // const data = Buffer.from(auction["item_bytes"], 'base64');
+//                         // nbt.parse(data, (error, json) => {
+//                         //     if (error) {
+//                         //         console.log(error);
+//                         //     }
+//                         //     // console.log(json);
+//                         //     quantity = json.value.i.value.value[0].Count.value || 1;
+//                         //     return json;
+//                         // });
+//                         let currentPrice = auction["starting_bid"]/quantity;
+//                         if(!minAuctionFragment[auction["item_name"]]||minAuctionFragment[auction["item_name"]]>currentPrice){
+//                             minAuctionFragment[auction["item_name"]] = currentPrice;
+//                         }
+//                     }
+                    
+//                 });
+//                 console.log("auction page fetch done " + page);
+//                 resolve(minAuctionFragment);
+                
+//             })
+//             .catch((err)=>{
+//                 console.log("catch from findAuction",err);
+//                 settings.hasError=true;
+//                 settings.errorMsg = "Error occured when getting auction prices.";
+//                 resolve("error");
+//             });
+//         }, 1000);
+//     });
+// }
+
+// exports.findAuctions = async function findAuctions(settings){
+//     return new Promise((resolve)=>{
+//         setTimeout(() => {
+//             findAuction(settings,0).then((minAuctionFragment0)=>{
+//                 console.log(settings.totalPages);
+//                 let promiseList = [];
+//                 for(i=1;i<settings.totalPages;i++){
+//                     promiseList.push(findAuction(settings,i));
+//                 }
+//                 Promise.all(promiseList).then((minAuctionFragments) => { //call other pages after knowing total number of pages
+//                     let minAuctions = minAuctionFragment0;
+//                     minAuctionFragments.forEach((minAuctionFragment)=>{
+//                         Object.keys(minAuctionFragment).forEach((itemName)=>{
+//                             if(!minAuctions[itemName]||minAuctions[itemName]>minAuctionFragment[itemName]){
+//                                 minAuctions[itemName] = minAuctionFragment[itemName];
+//                             }
+//                         });
+//                     });
+//                     resolve(minAuctions);
+//                 }).catch((err)=>{
+//                     console.log("catch from findAuctions",err);
+//                     settings.hasError=true;
+//                     settings.errorMsg = "Error occured when getting auction prices.";
+//                     resolve("error");
+//                 });;
+//             }).catch((err)=>{
+//                 console.log("catch from findAuctions",err);
+//                 settings.hasError=true;
+//                 settings.errorMsg = "Error occured when getting auction prices.";
+//                 resolve("error");
+//             });
+//         }, 1000);
+//     });
+// }
