@@ -225,7 +225,7 @@ exports.findProfile = async function findProfile(name,settings){
 exports.findAuctions = async function findAuctions(settings){
     return new Promise((resolve)=>{
         setTimeout(() => {
-            fetch(process.env.BACKEND_LINK)
+            fetch(process.env.BACKEND_LINK+"/auctions")
             .then(result => result.json())
             .then(({finishTime,data,status,errorMsg}) => {
                 if(status!="success"){
@@ -241,7 +241,7 @@ exports.findAuctions = async function findAuctions(settings){
             }).catch((err)=>{
                 console.log("catch from findAuctions",err);
                 settings.hasError=true;
-                settings.errorMsg = "Error occured when getting auction prices.";
+                settings.errorMsg = "Error occured when getting auction prices. (catch from findAuctions)";
                 resolve("error");
             });
         }, 1000);
