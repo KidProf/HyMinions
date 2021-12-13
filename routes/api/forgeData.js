@@ -1623,7 +1623,7 @@ exports.forges = [
                 ],
             },
         ],
-        duration : 30/3600, //30 sec
+        duration : 30/3600, //30 secs
         hotmRequirement: 4,
     },{ //53
         name : "Titanium-Plated Drill Engine",
@@ -2125,7 +2125,534 @@ exports.forges = [
         ],
         duration : 72, //3 days
         hotmRequirement: 5,
+    },{ //66
+        name : "Spicy Goblin Omelette",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Red Goblin Egg",
+                ],
+                quantity: [
+                    99,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Flawless Ruby Gemstone",
+                ],
+                quantity: [
+                    1,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+        ],
+        duration : 20,
+        hotmRequirement: 5,
+    },{ //67
+        name : "Gemstone Chamber",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Worm Membrane",
+                ],
+                quantity: [
+                    100,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+            {
+                options: [
+                    "Gemstone Mixture",
+                ],
+                quantity: [
+                    1,
+                ],
+            },
+            {
+                options: [
+                    "Coins",
+                ],
+                quantity: [
+                    25000,
+                ],
+                source: [
+                    this.sourceOthers,
+                ]
+            },
+        ],
+        duration : 4,
+        hotmRequirement: 5,
+    },{ //68
+        name : "Topaz Drill KGR-12",
+        approximateMatch: true,
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Gemstone Drill LT-522",
+                ],
+                quantity: [
+                    1,
+                ],
+                approximateMatch: [
+                    true
+                ],
+            },
+            {
+                options: [
+                    "Flawless Topaz Gemstone",
+                ],
+                quantity: [
+                    1,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Gemstone Mixture",
+                ],
+                quantity: [
+                    3,
+                ],
+            },
+            {
+                options: [
+                    "Magma Core",
+                ],
+                quantity: [
+                    5,
+                ],
+            },
+        ],
+        duration : 30/3600, //30 secs
+        hotmRequirement: 5,
+    },{ //69
+        name : "Ruby-polished Drill Engine",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Mithril-Plated Drill Engine",
+                ],
+                quantity: [
+                    1,
+                ],
+            },
+            {
+                options: [
+                    "Superlite Motor",
+                ],
+                quantity: [
+                    10,
+                ],
+            },
+            {
+                options: [
+                    "Fine Ruby Gemstone",
+                ],
+                quantity: [
+                    10,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+        ],
+        duration : 20,
+        hotmRequirement: 5,
+    },{ //70
+        name : "Gemstone Fuel Tank",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Titanium-Infused Fuel Tank",
+                ],
+                quantity: [
+                    1,
+                ],
+            },
+            {
+                options: [
+                    "Control Switch",
+                ],
+                quantity: [
+                    30,
+                ],
+            },
+            {
+                options: [
+                    "Gemstone Mixture",
+                ],
+                quantity: [
+                    10,
+                ],
+            },
+        ],
+        duration : 30,
+        hotmRequirement: 5,
+    },{ //70
+        name : "Blue Cheese Goblin Omelette",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Perfect Sapphire Gemstone",
+                ],
+                quantity: [
+                    1,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+            {
+                options: [
+                    "Blue Goblin Egg",
+                ],
+                quantity: [
+                    99,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ],
+            },
+        ],
+        duration : 20,
+        hotmRequirement: 6,
+    },{ //71
+        name : "Titanium Drill DR-X655",
+        approximateMatch: true,
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Titanium Drill DR-X555",
+                ],
+                quantity: [
+                    1,
+                ],
+                approximateMatch: [
+                    true,
+                ]
+            },
+            {
+                options: [
+                    "Corleonite",
+                ],
+                quantity: [
+                    30,
+                ],
+            },
+            {
+                options: [
+                    "Flawless Ruby Gemstone",
+                ],
+                quantity: [
+                    1,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Refined Diamond",
+                ],
+                quantity: [
+                    5,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Mithril Plate",
+                ],
+                quantity: [
+                    5,
+                ],
+            },
+            {
+                options: [
+                    "Gemstone Mixture",
+                ],
+                quantity: [
+                    16,
+                ],
+            },
+            {
+                options: [
+                    "Refined Titanium",
+                ],
+                quantity: [
+                    12,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+        ],
+        duration : 30/3600, //30 secs
+        hotmRequirement: 6,
+    },{ //72
+        name : "Jasper Drill X",
+        approximateMatch: true,
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Topaz Drill KGR-12",
+                ],
+                quantity: [
+                    1,
+                ],
+                approximateMatch: [
+                    true,
+                ]
+            },
+            {
+                options: [
+                    "Flawless Jasper Gemstone",
+                ],
+                quantity: [
+                    1,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Treasurite",
+                ],
+                quantity: [
+                    1000,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+        ],
+        duration : 30/3600, //30 secs
+        hotmRequirement: 6,
+    },{ //73
+        name : "Sapphire-polished Drill Engine",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Titanium-Plated Drill Engine",
+                ],
+                quantity: [
+                    1,
+                ],
+            },
+            {
+                options: [
+                    "Electron Transmitter",
+                ],
+                quantity: [
+                    25,
+                ],
+            },
+            {
+                options: [
+                    "FTX 3070",
+                ],
+                quantity: [
+                    25,
+                ],
+            },
+            {
+                options: [
+                    "Fine Sapphire Gemstone",
+                ],
+                quantity: [
+                    20,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+        ],
+        duration : 20,
+        hotmRequirement: 6,
+    },{ //74
+        name : "Amber Material",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Golden Plate",
+                ],
+                quantity: [
+                    1,
+                ],
+            },
+            {
+                options: [
+                    "Fine Amber Gemstone",
+                ],
+                quantity: [
+                    12,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+        ],
+        duration : 20,
+        hotmRequirement: 6,
+    },{ //75
+        name : "Amber Material",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Golden Plate",
+                ],
+                quantity: [
+                    1,
+                ],
+            },
+            {
+                options: [
+                    "Fine Amber Gemstone",
+                ],
+                quantity: [
+                    12,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+        ],
+        duration : 7,
+        hotmRequirement: 6,
+    },{ //76
+        name : "Amber-polished Drill Engine",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Ruby-polished Drill Engine",
+                ],
+                quantity: [
+                    1,
+                ],
+            },
+            {
+                options: [
+                    "Sapphire-polished Drill Engine",
+                ],
+                quantity: [
+                    1,
+                ],
+            },
+            {
+                options: [
+                    "Robotron Reflector",
+                ],
+                quantity: [
+                    50,
+                ],
+            },
+            {
+                options: [
+                    "Flawless Amber Gemstone",
+                ],
+                quantity: [
+                    1,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+        ],
+        duration : 50, //2 days 2 hours
+        hotmRequirement: 7,
+    },{ //77
+        name : "Perfectly-Cut Fuel Tank",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Gemstone Fuel Tank",
+                ],
+                quantity: [
+                    1,
+                ],
+            },
+            {
+                options: [
+                    "Gemstone Mixture",
+                ],
+                quantity: [
+                    25,
+                ],
+            },
+            {
+                options: [
+                    "Synthetic Heart",
+                ],
+                quantity: [
+                    70,
+                ],
+            },
+        ],
+        duration : 50, //2 days 2 hours
+        hotmRequirement: 7,
+    },{ //78
+        name : "Divan's Drill",
+        npcPrice: 0,
+        materials: [
+            {
+                options: [
+                    "Divan's Alloy",
+                ],
+                quantity: [
+                    1,
+                ],
+            },
+            {
+                options: [
+                    "Titanium Drill DR-X655",
+                ],
+                quantity: [
+                    1,
+                ],
+                approximateMatch: [
+                    true,
+                ],
+            },
+            {
+                options: [
+                    "Coins",
+                ],
+                quantity: [
+                    50000000,
+                ],
+                price: [
+                    1,
+                ]
+            },
+        ],
+        duration : 60, //2 days 12 hours
+        hotmRequirement: 7,
     },
 ];
 
-//TOTAL: 54
+//TOTAL: 79
