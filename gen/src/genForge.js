@@ -850,6 +850,7 @@ let forges = [
         hotmRequirement: 2,
     },{ //22
         name : "Helmet Of Divan",
+        approximateMatch: true,
         npcPrice: 0,
         materials: [
             {
@@ -884,6 +885,7 @@ let forges = [
         hotmRequirement: 6,
     },{ //23
         name : "Chestplate Of Divan",
+        approximateMatch: true,
         npcPrice: 0,
         materials: [
             {
@@ -918,6 +920,7 @@ let forges = [
         hotmRequirement: 6,
     },{ //24
         name : "Leggings Of Divan",
+        approximateMatch: true,
         npcPrice: 0,
         materials: [
             {
@@ -952,6 +955,7 @@ let forges = [
         hotmRequirement: 6,	
     },{ //25
         name : "Boots Of Divan",
+        approximateMatch: true,
         npcPrice: 0,
         materials: [
             {
@@ -2247,9 +2251,12 @@ let forges = [
                 quantity: [
                     25000,
                 ],
+                prices: [
+                    1,
+                ],
                 source: [
                     this.sourceOthers,
-                ]
+                ],
             },
         ],
         duration : 4,
@@ -2555,6 +2562,7 @@ let forges = [
         hotmRequirement: 6,
     },{ //74
         name : "Divan's Drill",
+        approximateMatch: true,
         npcPrice: 0,
         materials: [
             {
@@ -2583,9 +2591,12 @@ let forges = [
                 quantity: [
                     50000000,
                 ],
-                price: [
+                prices: [
                     1,
-                ]
+                ],
+                source: [
+                    this.sourceOthers,
+                ],
             },
         ],
         duration : 60, //2 days 12 hours
