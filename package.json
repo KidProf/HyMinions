@@ -21,10 +21,15 @@
     "path": "^0.12.7",
     "pug": "^3.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "fs": "^0.0.1-security"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "genForgePretty": "node -e 'require(\"./gen/src/genForge.js\").genForgePretty()'",
+    "genForge": "node -e 'require(\"./gen/src/genForge.js\").genForge()'",
+    "genAuctions": "node -e 'require(\"./gen/src/genForge.js\").genAuctions()'"
   },
   "license": "ISC"
 }
