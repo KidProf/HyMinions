@@ -1,10 +1,14 @@
-var {moneyRepresentation, dateTimeToString, findBazaar, findProfile, findAuctions} = require("./general.js");
+var {moneyRepresentation, dateTimeToString, findBazaar, findProfile, findAuctions, updateAuctions} = require("./general.js");
 const { calculateMinionsCostLink } = require("./minionsCostOperation.js");
 var {sourceBazaar,sourceAuction,sourceWarning,sourceOthers,auctionTax,auctionTaxThreshold, gemstoneCollectionName, hotmXpList} = require("./forgeData.js");
 var {merge} = require("./general.js");
 
 let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, profileInfo, hadError=false;
-    
+
+const dataUnitPrice = "u";
+const dataQuantity = "q";
+const dataCurrentPrice = "c";
+
 exports.calculateForge = async function(forges, settings){
     console.log(settings.name,minecraftName);
     //console.log(Date.now()-lastUpdatedBazaar);
@@ -181,7 +185,7 @@ exports.calculateForge = async function(forges, settings){
             default: //AH
                 let priceBeforeTax = 0
                 if(forge.priceList.length>0){
-                    priceBeforeTax = forge.priceList[0].unitPrice;
+                    priceBeforeTax = forge.priceList[0][dataUnitPrice];
                 }else{
                     outputForge.productOutOfStock = true;
                 }
@@ -230,12 +234,12 @@ exports.calculateForge = async function(forges, settings){
                     //TODO: overbuy tolerance
                     let collectedMaterials = 0;
                     let auctionIndex = 0;
-                    price = material.pricesList[minIndex][0].unitPrice;
+                    price = material.pricesList[minIndex][0][dataUnitPrice];
                     while(collectedMaterials<quantity&&auctionIndex<material.pricesList.length){
                         let unit = material.pricesList[minIndex][auctionIndex];
-                        collectedMaterials += unit.quantity;
-                        componentCost += collectedMaterials > quantity ? unit.unitPrice * (unit.quantity-(collectedMaterials-quantity)) : unit.currentPrice;
-                        maxPrice = unit.unitPrice; //you dont know when the loop will end
+                        collectedMaterials += unit[dataQuantity];
+                        componentCost += collectedMaterials > quantity ? unit[dataUnitPrice] * (unit[dataQuantity]-(collectedMaterials-quantity)) : unit[dataCurrentPrice];
+                        maxPrice = unit[dataUnitPrice]; //you dont know when the loop will end
                         auctionIndex++;
                     }
                     if(collectedMaterials<quantity){
