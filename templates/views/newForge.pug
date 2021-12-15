@@ -109,7 +109,18 @@ block content
                             span &nbsp; %
                     p: small Tax in auction house is 1% when selling items above 1M coins. The AH prices below are the current lowest BIN. The bazaar prices are based on buy instantly and sell instantly.
                     br
-            
+                    .form-group
+                        span Sort by: &nbsp;
+                        select#overallSortBy.form-control
+                            option(value="0" selected=(settings.sortBy==0 ? 'selected':undefined)) Profit per forge
+                            option(value="1" selected=(settings.sortBy==1 ? 'selected':undefined)) Profit per hour
+                    .form-group
+                        span Overbuy tolerance: &nbsp;
+                        select#overallOverbuyTolerance.form-control
+                            option(value="1" selected=(settings.overbuyTolerance==1 ? 'selected':undefined)) 1x
+                            option(value="2" selected=(settings.overbuyTolerance==2 ? 'selected':undefined)) 2x
+                            option(value="3" selected=(settings.overbuyTolerance==3 ? 'selected':undefined)) 3x
+                            option(value="0" selected=(settings.overbuyTolerance==0 ? 'selected':undefined)) Infinite
             button#overallSettings.btn(onclick="generateLink()") Apply
         //-     span &nbsp; &nbsp; &nbsp;
         //-     button.btn.btn-link.read-more(onclick="clearInput()") Clear
@@ -118,10 +129,10 @@ block content
 
         #content
             hr
-            //- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3541192882647315" crossorigin="anonymous"></script>
-            //- //- <!-- forge-1 -->
-            //- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3541192882647315" data-ad-slot="9361469877" data-ad-format="auto" data-full-width-responsive="true"></ins>
-            //- <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3541192882647315" crossorigin="anonymous"></script>
+            //- <!-- forge-1 -->
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3541192882647315" data-ad-slot="9361469877" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
             if settings.useProfile
                 if settings.collectionsDisabled
                     p.loss Collection API access for this profile is disabled. Click <a href="https://www.youtube.com/watch?v=-_LIyA5lNMU">here</a> to see how to enable API access, so that we could put the minions that you cannot craft at the bottom of the list.
@@ -168,7 +179,10 @@ block content
                             th(scope="col")
                             th(scope="col") 
                                 | Product <br /> 
-                                | (Profit per forge) <br /> 
+                                if settings.sortBy==1
+                                    | (Profit per hour) <br /> 
+                                else
+                                    | (Profit per forge) <br /> 
                                 button#unhideAllCols.btn.btn-link(onClick="unhideCol()").invisible Unhide all columns
                             th(scope="col").forgeHotm 
                                 | Req. HOTM <br /> 
@@ -226,7 +240,7 @@ block content
                                 //- loss -> yellow label
                                 | #{outputForge.name}
                                 br
-                                span(class=(outputForge.profit<0?"warning":"")) (#{outputForge.profitText})
+                                span(class=(outputForge.profit<0?"warning":"")) (#{settings.sortBy==1 ? outputForge.profitPerHourText : outputForge.profitText})
                             td(id="forge"+i+"Hotm" class=(outputForge.requirementNotMet==true?"warning":"")).forgeHotm
                                 //- when requirement not met
                                 | #{outputForge.hotmRequirement}
@@ -235,7 +249,7 @@ block content
                                 if outputForge.collectionsRequirement
                                     for requirement in outputForge.collectionsRequirement
                                         | <br />+ #{requirement.name} #{requirement.tier}
-                            td(id="forge"+i+"Duration").forgeDuration=Math.round(outputForge.duration*10000)/10000
+                            td(id="forge"+i+"Duration").forgeDuration= outputForge.duration || outputForge.durationText
                             td(id="forge"+i+"ProductPrice").forgeProductPrice=outputForge.priceText
                             td(id="forge"+i+"MaterialsName").forgeMaterialsName
                                 if outputForge.materials

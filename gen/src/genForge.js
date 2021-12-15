@@ -1005,7 +1005,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 0,
+        durationText: "Crafting",
         hotmRequirement: 0,
         gemstoneRequirement: 5,
     },{ //27
@@ -1025,7 +1025,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 0,
+        durationText: "Crafting",
         hotmRequirement: 0,
         gemstoneRequirement: 5,
     },{ //28
@@ -1045,7 +1045,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 0,
+        durationText: "Crafting",
         hotmRequirement: 0,
         gemstoneRequirement: 5,
     },{ //29
@@ -1065,7 +1065,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 0,
+        durationText: "Crafting",
         hotmRequirement: 0,
         gemstoneRequirement: 5,
     },{ //30
@@ -1085,7 +1085,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 0,
+        durationText: "Crafting",
         hotmRequirement: 0,
         gemstoneRequirement: 5,
     },{ //31
@@ -1105,7 +1105,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 0,
+        durationText: "Crafting",
         hotmRequirement: 0,
         gemstoneRequirement: 5,
     },{ //32
@@ -1125,7 +1125,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 0,
+        durationText: "Crafting",
         hotmRequirement: 0,
         gemstoneRequirement: 5,
     },{ //33
@@ -1145,7 +1145,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 0,
+        durationText: "Crafting",
         hotmRequirement: 0,
         gemstoneRequirement: 9,
     },{ //34
@@ -1165,7 +1165,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 0,
+        durationText: "Crafting",
         hotmRequirement: 0,
         gemstoneRequirement: 9,
     },{ //35
@@ -1185,7 +1185,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 0,
+        durationText: "Crafting",
         hotmRequirement: 0,
         gemstoneRequirement: 9,
     },{ //36
@@ -1205,7 +1205,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 0,
+        durationText: "Crafting",
         hotmRequirement: 0,
         gemstoneRequirement: 9,
     },{ //37
@@ -1225,7 +1225,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 0,
+        durationText: "Crafting",
         hotmRequirement: 0,
         gemstoneRequirement: 9,
     },{ //38
@@ -1245,7 +1245,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 0,
+        durationText: "Crafting",
         hotmRequirement: 0,
         gemstoneRequirement: 9,
     },{ //39
@@ -1265,7 +1265,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 0,
+        durationText: "Crafting",
         hotmRequirement: 0,
         gemstoneRequirement: 9,
     },{ //40
@@ -1690,7 +1690,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 30/3600, //30 secs
+        durationText : "30 secs",
         hotmRequirement: 4,
     },{ //53
         name : "Titanium-Plated Drill Engine",
@@ -1901,7 +1901,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 30/3600, //30 secs
+        durationText : "30 secs",
         hotmRequirement: 4,
     },{ //60
         name : "Titanium Drill DR-X355",
@@ -2004,7 +2004,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 30/3600, //30 secs
+        durationText : "30 secs",
         hotmRequirement: 5,
     },{ //62
         name : "Titanium Drill DR-X555",
@@ -2078,7 +2078,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 30/3600, //30 secs
+        durationText : "30 secs",
         hotmRequirement: 5,
     },{ //63
         name : "Titanium-Infused Fuel Tank",
@@ -2305,7 +2305,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 30/3600, //30 secs
+        durationText : "30 secs",
         hotmRequirement: 5,
     },{ //69
         name : "Ruby-polished Drill Engine",
@@ -2475,7 +2475,7 @@ let forges = [
                 ]
             },
         ],
-        duration : 30/3600, //30 secs
+        durationText : "30 secs",
         hotmRequirement: 6,
     },{ //72
         name : "Jasper Drill X",
@@ -2516,7 +2516,7 @@ let forges = [
                 ]
             },
         ],
-        duration : 30/3600, //30 secs
+        durationText : "30 secs",
         hotmRequirement: 6,
     },{ //73
         name : "Sapphire-polished Drill Engine",

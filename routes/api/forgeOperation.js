@@ -76,7 +76,7 @@ exports.calculateForge = async function(forges, settings){
         });
     }
 
-    if(settings.accuracy>=1&&(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000)){ //1 min time out
+    if(settings.loadBazaar==1&&(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000)){ //1 min time out
         lastUpdatedBazaar = Date.now();
         await findBazaar(settings).then((bazaarPrices)=>{
             if(bazaarPrices=="error"){
@@ -102,7 +102,7 @@ exports.calculateForge = async function(forges, settings){
     }
     
     //TODO: a way to view it even when API is down
-    if(settings.accuracy>=1&&!lastUpdatedAuction||Date.now()-lastUpdatedAuction>5*60*1000){ //call again if prev result has error, 5 min timeout        
+    if(settings.loadAuction==1&&!lastUpdatedAuction||Date.now()-lastUpdatedAuction>5*60*1000){ //call again if prev result has error, 5 min timeout        
         await findAuctions(settings).then((minAuctions)=>{
             //incorporate minAuctions into forges
             forges.forEach((forge)=>{
@@ -166,6 +166,7 @@ exports.calculateForge = async function(forges, settings){
             materials: new Array(forge.materials.length),
             totalCost: 0,
             duration: forge.duration,
+            durationText: forge.durationText,
             gemstoneRequirement: forge.gemstoneRequirement,
             hotmRequirement: forge.hotmRequirement,
             collectionsRequirement: forge.collectionsRequirement,
@@ -271,10 +272,10 @@ exports.calculateForge = async function(forges, settings){
         });
         outputForge.totalCostText = moneyRepresentation(outputForge.totalCost);
         outputForge.profit = outputForge.price - outputForge.totalCost;
-        outputForge.profitPerHour = outputForge.profit/outputForge.duration;
+        if(outputForge.duration) outputForge.profitPerHour = outputForge.profit/outputForge.duration;
 
         outputForge.profitText = moneyRepresentation(outputForge.profit);
-        outputForge.profitPerHourText = moneyRepresentation(outputForge.profitPerHour);
+        outputForge.profitPerHourText = outputForge.duration ? moneyRepresentation(outputForge.profitPerHour) : "N/A";
 
         outputForge.materialsOutOfStock = materialsOutOfStock;
 
@@ -316,16 +317,42 @@ exports.calculateForge = async function(forges, settings){
         outputForges.push(outputForge);
     });
 
-    outputForges.sort((a,b)=>{
-        //last: things labelled last shd be put at the end
-        if(b.last<a.last) return 1; //last asc
-        else if(b.last>a.last) return -1; 
-        else if(b.profit>a.profit) return 1; //profit desc
-        else if(b.profit<a.profit) return -1;
-        else if(b.name<a.name) return 1; //name asc
-        else if(b.name>a.name) return -1;
-        else return 0;
-    });
+    if(settings.sortBy==1){ //sort by profit per hour
+        outputForges.sort((a,b)=>{
+            //last: things labelled last shd be put at the end
+            if(b.last<a.last) return 1; //last asc
+            else if(b.last>a.last) return -1; 
+            else{
+                if(!a.duration&&!b.duration){
+                    if(b.name<a.name) return 1; //name asc
+                    else if(b.name>a.name) return -1;
+                    else return 0;
+                }else if(a.duration&&b.duration){
+                    if(b.profitPerHour>a.profitPerHour) return 1; //profit desc
+                    else if(b.profitPerHour<a.profitPerHour) return -1;
+                    if(b.name<a.name) return 1; //name asc
+                    else if(b.name>a.name) return -1;
+                    else return 0;
+                }else if(b.duration){//if no duration, put at last 
+                    return 1; //b shd be before a
+                }else{
+                    return -1; //a shd be before b
+                }
+            }
+        });
+    }else{ //sort by total profit
+        outputForges.sort((a,b)=>{
+            //last: things labelled last shd be put at the end
+            if(b.last<a.last) return 1; //last asc
+            else if(b.last>a.last) return -1; 
+            else if(b.profit>a.profit) return 1; //profit desc
+            else if(b.profit<a.profit) return -1;
+            else if(b.name<a.name) return 1; //name asc
+            else if(b.name>a.name) return -1;
+            else return 0;
+        });
+    }
+
 
     
     return outputForges;

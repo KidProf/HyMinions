@@ -7,6 +7,8 @@ exports = module.exports = function (req, res) {
     let settings = req.query;
 
     if(settings.run==1){
+        settings.loadAuction = 1;
+        settings.loadBazaar = 1;
         if(!dataValidation(settings)){
             res.render("newForge",{settings: settings});
         }else{
@@ -21,6 +23,8 @@ exports = module.exports = function (req, res) {
             });
         }
     }else{
+        settings.sortBy = 0;
+        settings.overbuyTolerance = 2;
         settings.run = 0;
         settings.tax = 1.125;
         settings.accuracy = 2;
@@ -56,11 +60,14 @@ exports = module.exports = function (req, res) {
 
         
         //Advanced
-        if(!settings.accuracy||!isWithinList(settings.accuracy,[0,1,2,3])){
-            settings.accuracy = 2;
-        }
         if(!settings.tax||settings.tax<0){
             settings.tax = 1.125;
+        }
+        if(!settings.sortBy||!isWithinList(settings.sortBy,[0,1])){
+            settings.sortBy = 0;
+        }
+        if(!settings.overbuyTolerance||!isWithinList(settings.overbuyTolerance,[0,1,2,3])){
+            settings.overbuyTolerance = 2;
         }
 
         console.log(settings);

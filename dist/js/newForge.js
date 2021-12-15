@@ -60,6 +60,16 @@ function generateLink(){
         keys.push("tax");
         values.push($("#overallTax").val());
     }
+
+    if($("#overallSortBy").children("option:selected").val()!=0){
+        keys.push("sortBy");
+        values.push($("#overallSortBy").children("option:selected").val());
+    }
+
+    if($("#overallOverbuyTolerance").children("option:selected").val()!=2){
+        keys.push("overbuyTolerance");
+        values.push($("#overallSortBy").children("option:selected").val());
+    }
     
     let string = "/new-forge"
     for(let i=0;i<keys.length;i++){
