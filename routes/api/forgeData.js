@@ -2491,12 +2491,12 @@ exports.forges = [
         duration : 20,
         hotmRequirement: 6,
     },{ //74
-        name : "Amber Material",
+        name : "Divan's Drill",
         npcPrice: 0,
         materials: [
             {
                 options: [
-                    "Golden Plate",
+                    "Divan's Alloy",
                 ],
                 quantity: [
                     1,
@@ -2504,18 +2504,29 @@ exports.forges = [
             },
             {
                 options: [
-                    "Fine Amber Gemstone",
+                    "Titanium Drill DR-X655",
                 ],
                 quantity: [
-                    12,
+                    1,
                 ],
-                source: [
-                    this.sourceBazaar,
+                approximateMatch: [
+                    true,
+                ],
+            },
+            {
+                options: [
+                    "Coins",
+                ],
+                quantity: [
+                    50000000,
+                ],
+                price: [
+                    1,
                 ]
             },
         ],
-        duration : 20,
-        hotmRequirement: 6,
+        duration : 60, //2 days 12 hours
+        hotmRequirement: 7,
     },{ //75
         name : "Amber Material",
         npcPrice: 0,
@@ -2615,44 +2626,7 @@ exports.forges = [
         ],
         duration : 50, //2 days 2 hours
         hotmRequirement: 7,
-    },{ //78
-        name : "Divan's Drill",
-        npcPrice: 0,
-        materials: [
-            {
-                options: [
-                    "Divan's Alloy",
-                ],
-                quantity: [
-                    1,
-                ],
-            },
-            {
-                options: [
-                    "Titanium Drill DR-X655",
-                ],
-                quantity: [
-                    1,
-                ],
-                approximateMatch: [
-                    true,
-                ],
-            },
-            {
-                options: [
-                    "Coins",
-                ],
-                quantity: [
-                    50000000,
-                ],
-                price: [
-                    1,
-                ]
-            },
-        ],
-        duration : 60, //2 days 12 hours
-        hotmRequirement: 7,
     },
 ];
 
-//TOTAL: 79
+//TOTAL: 78
