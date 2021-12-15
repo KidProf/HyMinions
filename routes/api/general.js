@@ -229,17 +229,17 @@ exports.findProfile = async function findProfile(name,settings){
 exports.findAuctions = async function findAuctions(settings){
     return new Promise((resolve)=>{
         setTimeout(() => {
-            fetch(process.env.BACKEND_LINK+"/auctions")
+            fetch(process.env.BACKEND_LINK+"/auctions/forge")
             .then(result => result.json())
             .then(({finishTime,data,status,errorMsg}) => {
                 if(status!="success"){
                     console.log("catch from auctions backend (catch from findAuctions reading backend)");
-                    settings.lastUpdatedAuction = new Date(finishTime);
+                    settings.lastUpdatedAuctionServer = new Date(finishTime);
                     settings.hasError=true;
                     settings.errorMsg = errorMsg || "Error occured when getting auction prices. (catch from findAuctions reading backend)";
                     resolve("error");
                 }else{
-                    settings.lastUpdatedAuction = new Date(finishTime);
+                    settings.lastUpdatedAuctionServer = new Date(finishTime);
                     resolve(data);
                 }
             }).catch((err)=>{

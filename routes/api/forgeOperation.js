@@ -3,7 +3,7 @@ const { calculateMinionsCostLink } = require("./minionsCostOperation.js");
 var {sourceBazaar,sourceAuction,sourceWarning,sourceOthers,auctionTax,auctionTaxThreshold, gemstoneCollectionName, hotmXpList} = require("./forgeData.js");
 var {merge} = require("./general.js");
 
-let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, profileNames, profileInfo, hadError=false;
+let minecraftName, lastUpdatedProfile,lastUpdatedBazaar,lastUpdatedAuction, profileNames, profileInfo, hadError=false;
 
 const dataUnitPrice = "u";
 const dataQuantity = "q";
@@ -102,7 +102,7 @@ exports.calculateForge = async function(forges, settings){
     }
     
     //TODO: a way to view it even when API is down
-    if(settings.accuracy>=1&&!settings.lastUpdatedAuction||Date.now()-settings.lastUpdatedAuction>5*60*1000){ //call again if prev result has error, 5 min timeout        
+    if(settings.accuracy>=1&&!lastUpdatedAuction||Date.now()-lastUpdatedAuction>5*60*1000){ //call again if prev result has error, 5 min timeout        
         await findAuctions(settings).then((minAuctions)=>{
             //incorporate minAuctions into forges
             forges.forEach((forge)=>{
@@ -141,7 +141,7 @@ exports.calculateForge = async function(forges, settings){
     // settings.lastUpdatedAuction = lastUpdatedAuction ? dateTimeToString(lastUpdatedAuction): null;
     settings.lastUpdatedProfile = lastUpdatedProfile ? dateTimeToString(lastUpdatedProfile): null;
     settings.lastUpdatedBazaar = lastUpdatedBazaar ? dateTimeToString(lastUpdatedBazaar) : null;
-    settings.lastUpdatedAuctionString = settings.lastUpdatedAuction ? dateTimeToString(settings.lastUpdatedAuction) : null;
+    settings.lastUpdatedAuctionServerString = settings.lastUpdatedAuctionServer ? dateTimeToString(settings.lastUpdatedAuctionServer) : null;
     
     if(settings.hasError&&true){
         hadError = true;
@@ -235,10 +235,10 @@ exports.calculateForge = async function(forges, settings){
                     let collectedMaterials = 0;
                     let auctionIndex = 0;
                     price = material.pricesList[minIndex][0][dataUnitPrice];
-                    while(collectedMaterials<quantity&&auctionIndex<material.pricesList.length){
+                    while(collectedMaterials<quantity&&auctionIndex<material.pricesList[minIndex].length){
                         let unit = material.pricesList[minIndex][auctionIndex];
                         collectedMaterials += unit[dataQuantity];
-                        componentCost += collectedMaterials > quantity ? unit[dataUnitPrice] * (unit[dataQuantity]-(collectedMaterials-quantity)) : unit[dataCurrentPrice];
+                        componentCost += (collectedMaterials > quantity) ? (unit[dataUnitPrice] * (unit[dataQuantity]-(collectedMaterials-quantity))) : unit[dataCurrentPrice];
                         maxPrice = unit[dataUnitPrice]; //you dont know when the loop will end
                         auctionIndex++;
                     }
