@@ -1,9 +1,14 @@
-var {moneyRepresentation, dateTimeToString, findBazaar, findProfile, findAuctions} = require("./general.js");
+var {moneyRepresentation, dateTimeToString, findBazaar, findProfile, findAuctions, updateAuctions} = require("./general.js");
 const { calculateMinionsCostLink } = require("./minionsCostOperation.js");
 var {sourceBazaar,sourceAuction,sourceWarning,sourceOthers,auctionTax,auctionTaxThreshold, gemstoneCollectionName, hotmXpList} = require("./forgeData.js");
+var {merge} = require("./general.js");
 
-let minecraftName, lastUpdatedProfile,lastUpdatedBazaar, lastUpdatedAuction, profileNames, profileInfo, hadError=false;
-    
+let minecraftName, lastUpdatedProfile,lastUpdatedBazaar,lastUpdatedAuction, profileNames, profileInfo, hadError=false;
+
+const dataUnitPrice = "u";
+const dataQuantity = "q";
+const dataCurrentPrice = "c";
+
 exports.calculateForge = async function(forges, settings){
     console.log(settings.name,minecraftName);
     //console.log(Date.now()-lastUpdatedBazaar);
@@ -97,21 +102,16 @@ exports.calculateForge = async function(forges, settings){
     }
     
     //TODO: a way to view it even when API is down
-    if(settings.accuracy>=1&&lastUpdatedAuction==null||Date.now()-lastUpdatedAuction>5*60*1000){ //call again if prev result has error, 5 min timeout        
-        lastUpdatedAuction = Date.now();
+    if(settings.accuracy>=1&&!lastUpdatedAuction||Date.now()-lastUpdatedAuction>5*60*1000){ //call again if prev result has error, 5 min timeout        
         await findAuctions(settings).then((minAuctions)=>{
             //incorporate minAuctions into forges
             forges.forEach((forge)=>{
                 if(!forge.source){ //not given source
-                    forge.price = minAuctions[forge.name] || 0;//product
+                    forge.priceList = minAuctions[forge.name] || [];
                     if(forge.approximateMatch){
                         Object.keys(minAuctions).forEach((key)=>{
                             if(key.includes(forge.name)){
-                                if(minAuctions[key]<forge.price||forge.price==0){
-                                    forge.price = minAuctions[key];
-                                    forge.approximateName = key;
-                                }
-                                
+                                forge.priceList = merge(forge.priceList,minAuctions[key]);
                             }
                         })
                     }
@@ -119,20 +119,15 @@ exports.calculateForge = async function(forges, settings){
                 forge.materials.forEach((material)=>{
                     if(!material.prices){
                         material.prices = new Array(material.options.length).fill(0);
-                        //console.log(material.prices);
                     }
+                    material.pricesList = new Array(material.options.length).fill([]);
                     for(let i=0;i<material.options.length;i++){
                         if(!(material.source&&material.source[i])){
-                            material.prices[i] = minAuctions[material.options[i]] || material.prices[i];
+                            material.pricesList[i] = minAuctions[material.options[i]] || [];//product
                             if(material.approximateMatch){
-                                material.approximateNames = new Array(material.options.length);
                                 Object.keys(minAuctions).forEach((key)=>{
                                     if(key.includes(material.options[i])){
-                                        if(minAuctions[key]<material.prices[i]||material.prices[i]==0){
-                                            material.prices[i] = minAuctions[key];
-                                            material.approximateNames[i] = key;
-                                        }
-                                        
+                                        material.pricesList[i] = merge(material.pricesList[i],minAuctions[key]);
                                     }
                                 })
                             }
@@ -143,11 +138,12 @@ exports.calculateForge = async function(forges, settings){
         });
     }
 
-    settings.lastUpdatedAuction = lastUpdatedAuction ? dateTimeToString(lastUpdatedAuction): null;
+    // settings.lastUpdatedAuction = lastUpdatedAuction ? dateTimeToString(lastUpdatedAuction): null;
     settings.lastUpdatedProfile = lastUpdatedProfile ? dateTimeToString(lastUpdatedProfile): null;
     settings.lastUpdatedBazaar = lastUpdatedBazaar ? dateTimeToString(lastUpdatedBazaar) : null;
-
-    if(settings.hasError){
+    settings.lastUpdatedAuctionServerString = settings.lastUpdatedAuctionServer ? dateTimeToString(settings.lastUpdatedAuctionServer) : null;
+    
+    if(settings.hasError&&true){
         hadError = true;
         return;
     }
@@ -167,7 +163,6 @@ exports.calculateForge = async function(forges, settings){
         let outputForge = {
             name: forge.name,
             approximateMatch: forge.approximateMatch,
-            approximateName: forge.approximateName,
             materials: new Array(forge.materials.length),
             totalCost: 0,
             duration: forge.duration,
@@ -182,12 +177,20 @@ exports.calculateForge = async function(forges, settings){
                 price = forge.price*(1-settings.tax/100);
                 priceText = moneyRepresentation(price,settings.showDetails) + " (BZ)";
                 break;
-            case sourceOthers,sourceWarning:
+            case sourceOthers:
+            case sourceWarning:
                 price = forge.price;
                 priceText = moneyRepresentation(price,settings.showDetails);
                 break;
             default: //AH
-                price = forge.price >= auctionTaxThreshold ? forge.price*(1-auctionTax/100) : forge.price;
+                let priceBeforeTax = 0
+                if(forge.priceList.length>0){
+                    priceBeforeTax = forge.priceList[0][dataUnitPrice];
+                }else{
+                    outputForge.productOutOfStock = true;
+                }
+                
+                price = priceBeforeTax >= auctionTaxThreshold ? priceBeforeTax*(1-auctionTax/100) : priceBeforeTax;
                 priceText = moneyRepresentation(price,settings.showDetails) + " (AH)";
                 break;
         }
@@ -195,37 +198,73 @@ exports.calculateForge = async function(forges, settings){
         outputForge.priceText = priceText;
 
         forge.materials.forEach((material,index)=>{
-            let minIndex = compareMaterialCost(material);
-            let priceBeforeTax = material.prices[minIndex];
-            if(material.source){
-                switch(material.source[minIndex]){
-                    case sourceBazaar:
-                        price = priceBeforeTax*(1+settings.tax/100); //PLUS
-                        priceText = moneyRepresentation(price,settings.showDetails) + " (BZ)";
+            let minIndex = 0;
+            if(material.options.length!=1){
+                minIndex = compareMaterialCost(material); 
+                //*** will break if there are more than one auction options, as compareMaterialCost is not ready to accept new auction price system.
+            }
+            let quantity = material.quantity[minIndex],
+                price, 
+                priceText, 
+                componentCost = 0, 
+                maxPrice, 
+                materialOutOfStock=false;
+
+            switch(material.source ? material.source[minIndex]: sourceAuction){
+                case sourceBazaar:
+                    price = material.prices[minIndex]*(1+settings.tax/100); //PLUS
+                    priceText = moneyRepresentation(price,settings.showDetails) + " (BZ)";
+                    componentCost = price*quantity;
+                    break;
+                case sourceOthers:
+                case sourceWarning:
+                    price = material.prices[minIndex];
+                    priceText = moneyRepresentation(price,settings.showDetails);
+                    componentCost = price*quantity;
+                    break;
+                default: //AH
+                    //no tax when u buy stuff from AH
+                    if(material.pricesList[minIndex].length==0){
+                        materialOutOfStock = true;
+                        componentCost = 0;
+                        price = 0;
+                        priceText = "0 (AH)";
                         break;
-                    case sourceOthers,sourceWarning:
-                        price = priceBeforeTax;
-                        priceText = moneyRepresentation(price,settings.showDetails);
-                        break;
-                    default: //AH
-                        price = priceBeforeTax; //no tax when u buy stuff
+                    }
+                    //TODO: overbuy tolerance
+                    let collectedMaterials = 0;
+                    let auctionIndex = 0;
+                    price = material.pricesList[minIndex][0][dataUnitPrice];
+                    while(collectedMaterials<quantity&&auctionIndex<material.pricesList[minIndex].length){
+                        let unit = material.pricesList[minIndex][auctionIndex];
+                        collectedMaterials += unit[dataQuantity];
+                        componentCost += (collectedMaterials > quantity) ? (unit[dataUnitPrice] * (unit[dataQuantity]-(collectedMaterials-quantity))) : unit[dataCurrentPrice];
+                        maxPrice = unit[dataUnitPrice]; //you dont know when the loop will end
+                        auctionIndex++;
+                    }
+                    if(collectedMaterials<quantity){
+                        //out of stock
+                        materialOutOfStock = true;
+                    }
+                    if(price!=maxPrice){
+                        priceText = moneyRepresentation(price,settings.showDetails) + " to " + moneyRepresentation(maxPrice,settings.showDetails) + " (AH)";
+                    }else{
                         priceText = moneyRepresentation(price,settings.showDetails) + " (AH)";
-                        break;
-                }
-            }else{//AH
-                price = priceBeforeTax; //no tax when u buy stuff
-                priceText = moneyRepresentation(price,settings.showDetails) + " (AH)";
+                    }
+                    
+                    break;
             }
 
             outputForge.materials[index] = {
                 name: material.options[minIndex],
-                quantity: material.quantity[minIndex],
-                price: price,
+                quantity: quantity,
                 priceText: priceText,
+                componentCost: componentCost,
+                componentCostText: moneyRepresentation(componentCost),
+                materialOutOfStock: materialOutOfStock,
                 approximateMatch: material.approximateMatch?.[minIndex],
-                approximateName: material.approximateNames?.[minIndex],
             }
-            outputForge.totalCost += price*outputForge.materials[index].quantity;
+            outputForge.totalCost += outputForge.materials[index].componentCost;
         });
         outputForge.totalCostText = moneyRepresentation(outputForge.totalCost);
         outputForge.profit = outputForge.price - outputForge.totalCost;

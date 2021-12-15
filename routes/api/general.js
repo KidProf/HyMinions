@@ -1,7 +1,11 @@
 var fetch = require('cross-fetch');
 var nbt = require('nbt');
 var itemNames = require("./itemNames.json");
-var {forgeItems} = require("./forgeData.js");
+
+// const auctionsInForge = ["Amber Material","Amber-polished Drill Engine","Beacon I","Beacon II","Beacon III","Beacon IV","Beacon V","Blue Cheese Goblin Omelette","Diamonite","Divan's Alloy","Gemstone Chamber","Gemstone Fuel Tank","Goblin Omelette","Helix","Hot Stuff","Mithril Pickaxe","Mithril-Infused Fuel Tank","Mithril-Plated Drill Engine","Perfectly-Cut Fuel Tank","Pesto Goblin Omelette","Petrified Starfall","Pure Mithril","Refined Mithril Pickaxe","Rock Gemstone","Ruby-polished Drill Engine","Sapphire-polished Drill Engine","Spicy Goblin Omelette","Sunny Side Goblin Omelette","Titanium-Infused Fuel Tank","Titanium-Plated Drill Engine","Travel Scroll to the Crystal Hollows","Travel Scroll to the Dwarven Forge"]
+// const auctionsInForgeApprox = ["Titanium Talisman","Helmet Of Divan","Chestplate Of Divan","Leggings Of Divan","Boots Of Divan","Mithril Drill SX-R226","Titanium Ring","Ammonite","Ruby Drill TX-15","Mithril Drill SX-R326","Titanium Artifact","Gemstone Drill LT-522","Titanium Drill DR-X355","Titanium Drill DR-X455","Titanium Drill DR-X555","Titanium Relic","Topaz Drill KGR-12","Titanium Drill DR-X655","Jasper Drill X","Divan's Drill"]
+// const auctionsInForgeQuantity = ["Bejeweled Handle","Control Switch","Corleonite","Divan Fragment","Drill Engine","Electron Transmitter","FTX 3070","Fuel Tank","Gemstone Mixture","Glacite Jewel","Golden Plate","Magma Core","Mithril Plate","Plasma","Robotron Reflector","Superlite Motor","Synthetic Heart"]
+// const auctionsInForgeQuantityApprox = []
 
 //copied from events.js
 exports.dateTimeToString = function dateTimeToString(dateTime){
@@ -73,6 +77,19 @@ function moneyRepresentationMagnitudeDetail(number){
         return (Math.round(number*10000)/10000).toFixed(4); //0.0005
     }else if(number<1){
         return (Math.round(number*100)/100).toFixed(2); //0.05
+    }
+}
+
+// copied from backend
+exports.merge = function merge(data1, data2) {
+    if (data1.length==0) {
+        return data2;
+    } else if (data2.length==0) {
+        return data1;
+    } else if (data1[0].unitPrice<data2[0].unitPrice) {
+        return [data1[0], ...merge(data1.slice(1), data2)];
+    } else {
+        return [data2[0], ...merge(data1, data2.slice(1))];
     }
 }
 
@@ -209,79 +226,214 @@ exports.findProfile = async function findProfile(name,settings){
     });
 }
 
-//internal
-async function findAuction(settings,page){
+exports.findAuctions = async function findAuctions(settings){
     return new Promise((resolve)=>{
         setTimeout(() => {
-            fetch("https://api.hypixel.net/skyblock/auctions?page="+page)
+            fetch(process.env.BACKEND_LINK+"/auctions/forge")
             .then(result => result.json())
-            .then(({ auctions,totalPages }) => {
-                settings.totalPages = totalPages;
-                let minAuctionFragment={}; //object with keys item names, values prices
-                auctions.forEach((auction)=>{
-                    if(auction.bin){
-                        let quantity = 1;
-                        // const data = Buffer.from(auction["item_bytes"], 'base64');
-                        // nbt.parse(data, (error, json) => {
-                        //     if (error) {
-                        //         console.log(error);
-                        //     }
-                        //     // console.log(json);
-                        //     quantity = json.value.i.value.value[0].Count.value || 1;
-                        //     return json;
-                        // });
-                        let currentPrice = auction["starting_bid"]/quantity;
-                        if(!minAuctionFragment[auction["item_name"]]||minAuctionFragment[auction["item_name"]]>currentPrice){
-                            minAuctionFragment[auction["item_name"]] = currentPrice;
-                        }
-                    }
-                    
-                });
-                console.log("auction page fetch done " + page);
-                resolve(minAuctionFragment);
-                
-            })
-            .catch((err)=>{
-                console.log("catch from findAuction",err);
+            .then(({finishTime,data,status,errorMsg}) => {
+                if(status!="success"){
+                    console.log("catch from auctions backend (catch from findAuctions reading backend)");
+                    settings.lastUpdatedAuctionServer = new Date(finishTime);
+                    settings.hasError=true;
+                    settings.errorMsg = errorMsg || "Error occured when getting auction prices. (catch from findAuctions reading backend)";
+                    resolve("error");
+                }else{
+                    settings.lastUpdatedAuctionServer = new Date(finishTime);
+                    resolve(data);
+                }
+            }).catch((err)=>{
+                console.log("catch from findAuctions",err);
                 settings.hasError=true;
-                settings.errorMsg = "Error occured when getting auction prices.";
+                settings.errorMsg = "Error occured when getting auction prices. (catch from findAuctions)";
                 resolve("error");
             });
         }, 1000);
     });
 }
 
-exports.findAuctions = async function findAuctions(settings){
-    return new Promise((resolve)=>{
-        setTimeout(() => {
-            findAuction(settings,0).then((minAuctionFragment0)=>{
-                console.log(settings.totalPages);
-                let promiseList = [];
-                for(i=1;i<settings.totalPages;i++){
-                    promiseList.push(findAuction(settings,i));
-                }
-                Promise.all(promiseList).then((minAuctionFragments) => { //call other pages after knowing total number of pages
-                    let minAuctions = minAuctionFragment0;
-                    minAuctionFragments.forEach((minAuctionFragment)=>{
-                        Object.keys(minAuctionFragment).forEach((itemName)=>{
-                            if(!minAuctions[itemName]||minAuctions[itemName]>minAuctionFragment[itemName]){
-                                minAuctions[itemName] = minAuctionFragment[itemName];
-                            }
-                        });
-                    });
-                    resolve(minAuctions);
-                }).catch((err)=>{
-                    console.log("catch from findAuctions",err);
-                    settings.hasError=true;
-                    settings.errorMsg = "Error occured when getting auction prices.";
-                    resolve("error");
-                });;
-            }).catch((err)=>{
-                console.log("catch from findAuctions",err);
-                settings.hasError=true;
-                settings.errorMsg = "Error occured when getting auction prices.";
-                resolve("error");
-            });
-        }, 1000);
-    });
-}
+//NEW IMPLEMENTATION IN FRONTEND
+// // internal
+// function merge(data1, data2) {
+//     if (data1.length==0) {
+//         return data2;
+//     } else if (data2.length==0) {
+//         return data1;
+//     } else if (data1[0].unitPrice<data2[0].unitPrice) {
+//         return [data1[0], ...merge(data1.slice(1), data2)];
+//     } else {
+//         return [data2[0], ...merge(data1, data2.slice(1))];
+//     }
+// }
+
+// function checkValid(name) {
+//     if (auctionsInForge.includes(name)||auctionsInForgeQuantity.includes(name)) {
+//         return true;
+//     } else {
+//         for (let i=0; i<auctionsInForgeApprox.length; i++) {
+//             if (name.includes(auctionsInForgeApprox[i])) {
+//                 return true;
+//             }
+//         }
+//         for (let i=0; i<auctionsInForgeQuantityApprox.length; i++) {
+//             if (name.includes(auctionsInForgeQuantityApprox[i])) {
+//                 return true;
+//             }
+//         }
+//     }
+//     return false;
+// }
+
+// function checkQuantityNeeded(name) {
+//     if (auctionsInForgeQuantity.includes(name)) {
+//         return true;
+//     } else {
+//         for (let i=0; i<auctionsInForgeQuantityApprox.length; i++) {
+//             if (name.includes(auctionsInForgeQuantityApprox[i])) {
+//                 return true;
+//             }
+//         }
+//     }
+//     return false;
+// }
+// // internal
+// async function updateAuction(page) {
+//     return new Promise((resolve)=>{
+//         setTimeout(() => {
+//             const minAuctionFragment={
+//                 totalPages: null,
+//                 status: "success",
+//                 data: {}, // object with key = item name, value = array of prices
+//             }; // object with keys item names, values prices
+//             fetch("https://api.hypixel.net/skyblock/auctions?page="+page)
+//                 .then((result) => result.json())
+//                 .then(async ({auctions, totalPages}) => {
+//                     minAuctionFragment.totalPages = totalPages;
+//                     let taskNeeded = 0;
+//                     let taskFinished = 0; // counter for async await, only say resolve when taskFinished == taskNeeded
+//                     for (let i = 0; i<auctions.length; i++) {
+//                         const auction = auctions[i];
+
+//                         if (auction.bin&&checkValid(auction["item_name"])) {
+//                             const currentPrice = auction["starting_bid"];
+//                             if (checkQuantityNeeded(auction["item_name"])) {
+//                                 taskNeeded++;
+//                                 let quantity = 1;
+//                                 const itemBytes = Buffer.from(auction["item_bytes"], "base64");
+//                                 nbt.parse(itemBytes, (error, json) => {
+//                                     if (error) {
+//                                         console.log(error);
+//                                     }
+//                                     quantity = json.value.i.value.value[0].Count.value || 1;
+
+//                                     if (minAuctionFragment.data[auction["item_name"]]) {
+//                                         minAuctionFragment.data[auction["item_name"]].push({
+//                                             currentPrice: currentPrice,
+//                                             quantity: quantity,
+//                                             unitPrice: currentPrice/quantity,
+//                                         });
+//                                     } else {
+//                                         minAuctionFragment.data[auction["item_name"]] = [{
+//                                             currentPrice: currentPrice,
+//                                             quantity: quantity,
+//                                             unitPrice: currentPrice/quantity,
+//                                         }];
+//                                     }
+//                                     taskFinished++;
+//                                     if (taskFinished==taskNeeded) {
+//                                         Object.keys(minAuctionFragment.data).forEach((item)=>{
+//                                             minAuctionFragment.data[item].sort((a, b)=>{
+//                                                 return a.unitPrice-b.unitPrice;
+//                                             });
+//                                         });
+//                                         console.log("auction page fetch done " + page);
+//                                         resolve(minAuctionFragment);
+//                                     }
+//                                 });
+//                             } else {
+//                                 if (minAuctionFragment.data[auction["item_name"]]) {
+//                                     minAuctionFragment.data[auction["item_name"]].push({
+//                                         currentPrice: currentPrice,
+//                                         quantity: 1,
+//                                         unitPrice: currentPrice,
+//                                     });
+//                                 } else {
+//                                     minAuctionFragment.data[auction["item_name"]] = [{
+//                                         currentPrice: currentPrice,
+//                                         quantity: 1,
+//                                         unitPrice: currentPrice,
+//                                     }];
+//                                 }
+//                             }
+//                         }
+//                     }
+//                     if (taskFinished==taskNeeded) {
+//                         Object.keys(minAuctionFragment.data).forEach((item)=>{
+//                             minAuctionFragment.data[item].sort((a, b)=>{
+//                                 return a.unitPrice-b.unitPrice;
+//                             });
+//                         });
+//                         console.log("auction page fetch done " + page);
+//                         resolve(minAuctionFragment);
+//                     }
+//                 })
+//                 .catch((err)=>{
+//                     console.log("catch from updateAuction", err);
+//                     minAuctionFragment.status="error";
+//                     minAuctionFragment.errorMsg = "Error occured when getting auction prices. (catch from updateAuction)";
+//                     resolve(minAuctionFragment);
+//                 });
+//         }, 1000);
+//     });
+// }
+
+// // scheduled function every 5 minutes
+// exports.updateAuctions = async ()=>{
+//     return new Promise((resolve)=>{
+//         setTimeout(() => {
+//             const minAuctions = {
+//                 status: "success",
+//                 data: null,
+//                 startTime: Date.now(),
+//                 finishTime: null,
+//             };
+//             updateAuction(0).then((minAuctionFragment0)=>{
+//                 if (minAuctionFragment0.status!="success") {
+//                     throw new Error("error");
+//                 }
+//                 console.log(minAuctionFragment0.totalPages);
+//                 minAuctions.data=minAuctionFragment0.data;
+//                 const promiseList = [];
+//                 for (let i=1; i<minAuctionFragment0.totalPages; i++) {
+//                     promiseList.push(updateAuction(i));
+//                 }
+//                 Promise.all(promiseList).then(async (minAuctionFragments) => { // call other pages after knowing total number of pages
+//                     minAuctionFragments.forEach((minAuctionFragment)=>{
+//                         if (minAuctionFragment.status!="success") {
+//                             throw new Error("error");
+//                         }
+//                         Object.keys(minAuctionFragment.data).forEach((item)=>{
+//                             if (minAuctions.data[item]) {
+//                                 minAuctions.data[item] = merge(minAuctions.data[item], minAuctionFragment.data[item]);
+//                             } else {
+//                                 minAuctions.data[item] = minAuctionFragment.data[item];
+//                             }
+//                         });
+//                     });
+//                     minAuctions.finishTime = Date.now();
+//                     resolve(minAuctions);
+//                 }).catch((err)=>{
+//                     console.log("catch from updateAuctions", err);
+//                     minAuctions.status="error";
+//                     minAuctions.errorMsg = "Error occured when getting auction prices. (catch from updateAuctions)";
+//                     resolve(minAuctions);
+//                 });
+//             }).catch((err)=>{
+//                 console.log("catch from updateAuctions", err);
+//                 minAuctions.status="error";
+//                 minAuctions.errorMsg = "Error occured when getting auction prices. (catch from updateAuctions)";
+//                 resolve(minAuctions);
+//             });
+//         }, 1000);
+//     });
+// };

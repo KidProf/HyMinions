@@ -39,3 +39,5 @@ yarn.lock
 *.http
 
 .vscode/
+
+gen/output/

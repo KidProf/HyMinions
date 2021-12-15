@@ -198,8 +198,13 @@ block content
                                 i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeUnitCost')")
                                 //- | &nbsp;
                                 //- i.pt-2.fas.fa-question-circle(href="/forge/info")
+                            th(scope="col").forgeComponentCost
+                                | Total cost of material(s) <br />
+                                i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeComponentCost')")
+                                //- | &nbsp;
+                                //- i.pt-2.fas.fa-question-circle(href="/forge/info")
                             th(scope="col").forgeCost 
-                                | Cost of materials <br />
+                                | Total cost <br />
                                 i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeCost')")
                                 //- | &nbsp;
                                 //- i.pt-2.fas.fa-question-circle(href="/forge/info")
@@ -220,9 +225,6 @@ block content
                             td(id="forge"+i+"Name")
                                 //- loss -> yellow label
                                 | #{outputForge.name}
-                                if outputForge.approximateMatch&&outputForge.approximateName
-                                    br
-                                    | (#{outputForge.approximateName})
                                 br
                                 span(class=(outputForge.profit<0?"warning":"")) (#{outputForge.profitText})
                             td(id="forge"+i+"Hotm" class=(outputForge.requirementNotMet==true?"warning":"")).forgeHotm
@@ -240,16 +242,16 @@ block content
                                     each material in outputForge.materials
                                         | #{material.quantity} x #{material.name}
                                         br
-                                        if material.approximateMatch&&material.approximateName
-                                            | (#{material.approximateName})
-                                            br
                             td(id="forge"+i+"UnitCost").forgeUnitCost
                                 if outputForge.materials
                                     each material in outputForge.materials
                                         | #{material.priceText}
                                         br
-                                        if material.approximateMatch&&material.approximateName
-                                            br
+                            td(id="forge"+i+"ComponentCost").forgeComponentCost
+                                if outputForge.materials
+                                    each material in outputForge.materials
+                                        | #{material.componentCostText}
+                                        br
                             td(id="forge"+i+"Cost").forgeCost=outputForge.totalCostText
                             
                             td(id="forge"+i+"NetProfit" class=(outputForge.profit<0?"warning":"")).forgeNetProfit=outputForge.profitText
@@ -259,7 +261,7 @@ block content
             p: small
                 if(settings.lastUpdatedBazaar)
                     | Last updated time of bazaar price: #{settings.lastUpdatedBazaar} UTC
-                if(settings.lastUpdatedAuction)
-                    | <br /> Last updated time of auction price: #{settings.lastUpdatedAuction} UTC
+                if(settings.lastUpdatedAuctionServerString)
+                    | <br /> Last updated time of auction price: #{settings.lastUpdatedAuctionServerString} UTC
                 if(settings.lastUpdatedProfile)
                     | <br /> Last updated time of profile: #{settings.lastUpdatedProfile} UTC
