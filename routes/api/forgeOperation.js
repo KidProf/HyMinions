@@ -197,6 +197,7 @@ exports.calculateForge = async function(forges, settings){
         outputForge.price = price;
         outputForge.priceText = priceText;
 
+        let materialsOutOfStock = false;
         forge.materials.forEach((material,index)=>{
             let minIndex = 0;
             if(material.options.length!=1){
@@ -208,7 +209,7 @@ exports.calculateForge = async function(forges, settings){
                 priceText, 
                 componentCost = 0, 
                 maxPrice, 
-                materialOutOfStock=false;
+                outOfStock=false;
 
             switch(material.source ? material.source[minIndex]: sourceAuction){
                 case sourceBazaar:
@@ -225,7 +226,8 @@ exports.calculateForge = async function(forges, settings){
                 default: //AH
                     //no tax when u buy stuff from AH
                     if(material.pricesList[minIndex].length==0){
-                        materialOutOfStock = true;
+                        outOfStock = true;
+                        materialsOutOfStock = true;
                         componentCost = 0;
                         price = 0;
                         priceText = "0 (AH)";
@@ -244,7 +246,8 @@ exports.calculateForge = async function(forges, settings){
                     }
                     if(collectedMaterials<quantity){
                         //out of stock
-                        materialOutOfStock = true;
+                        outOfStock = true;
+                        materialsOutOfStock = true;
                     }
                     if(price!=maxPrice){
                         priceText = moneyRepresentation(price,settings.showDetails) + " to " + moneyRepresentation(maxPrice,settings.showDetails) + " (AH)";
@@ -261,7 +264,7 @@ exports.calculateForge = async function(forges, settings){
                 priceText: priceText,
                 componentCost: componentCost,
                 componentCostText: moneyRepresentation(componentCost),
-                materialOutOfStock: materialOutOfStock,
+                outOfStock: outOfStock,
                 approximateMatch: material.approximateMatch?.[minIndex],
             }
             outputForge.totalCost += outputForge.materials[index].componentCost;
@@ -272,6 +275,8 @@ exports.calculateForge = async function(forges, settings){
 
         outputForge.profitText = moneyRepresentation(outputForge.profit);
         outputForge.profitPerHourText = moneyRepresentation(outputForge.profitPerHour);
+
+        outputForge.materialsOutOfStock = materialsOutOfStock;
 
         if(outputForge.hotmRequirement>settings.hotmLevel){
             outputForge.danger = true;
@@ -296,12 +301,16 @@ exports.calculateForge = async function(forges, settings){
             })
 
         }
+        if(outputForge.materialsOutOfStock){
+            outputForge.last = 5;
+            outputForge.danger=true; //red label
+        }
         if(outputForge.profit<0){
             outputForge.last += 2;
             outputForge.danger=true; //red label
         } 
         
-        //so the order is: have requirements + profit (0) -> no requirements + profit (1) -> have requirements + loss (3) -> no requirements + loss (4)
+        //so the order is: have requirements + profit (0) -> no requirements + profit (1) -> have requirements + loss (3) -> no requirements + loss (4) -> materialsoutofstock (5/7)
         
 
         outputForges.push(outputForge);
