@@ -68,7 +68,7 @@ function generateLink(){
 
     if($("#overallOverbuyTolerance").children("option:selected").val()!=2){
         keys.push("overbuyTolerance");
-        values.push($("#overallSortBy").children("option:selected").val());
+        values.push($("#overallOverbuyTolerance").children("option:selected").val());
     }
     
     let string = "/new-forge"

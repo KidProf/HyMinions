@@ -210,7 +210,8 @@ exports.calculateForge = async function(forges, settings){
                 priceText, 
                 componentCost = 0, 
                 maxPrice, 
-                outOfStock=false;
+                outOfStock=false,
+                violateOverbuyTolerance=false;
 
             switch(material.source ? material.source[minIndex]: sourceAuction){
                 case sourceBazaar:
@@ -226,7 +227,10 @@ exports.calculateForge = async function(forges, settings){
                     break;
                 default: //AH
                     //no tax when u buy stuff from AH
-                    if(material.pricesList[minIndex].length==0){
+                    // console.log(material.options[0],quantity);
+                    let buyInfo = determineBuyList(material.pricesList[minIndex],quantity,settings.overbuyTolerance);
+                    // console.log(buyInfo);
+                    if(buyInfo.status=="fail"){
                         outOfStock = true;
                         materialsOutOfStock = true;
                         componentCost = 0;
@@ -234,22 +238,10 @@ exports.calculateForge = async function(forges, settings){
                         priceText = "0 (AH)";
                         break;
                     }
-                    //TODO: overbuy tolerance
-                    let collectedMaterials = 0;
-                    let auctionIndex = 0;
-                    price = material.pricesList[minIndex][0][dataUnitPrice];
-                    while(collectedMaterials<quantity&&auctionIndex<material.pricesList[minIndex].length){
-                        let unit = material.pricesList[minIndex][auctionIndex];
-                        collectedMaterials += unit[dataQuantity];
-                        componentCost += (collectedMaterials > quantity) ? (unit[dataUnitPrice] * (unit[dataQuantity]-(collectedMaterials-quantity))) : unit[dataCurrentPrice];
-                        maxPrice = unit[dataUnitPrice]; //you dont know when the loop will end
-                        auctionIndex++;
-                    }
-                    if(collectedMaterials<quantity){
-                        //out of stock
-                        outOfStock = true;
-                        materialsOutOfStock = true;
-                    }
+                    componentCost=buyInfo.componentCost;
+                    violateOverbuyTolerance=buyInfo.violateOverbuyTolerance;
+                    price = buyInfo.buyList[0][dataUnitPrice];
+                    maxPrice = buyInfo.buyList[buyInfo.buyList.length-1][dataUnitPrice];
                     if(price!=maxPrice){
                         priceText = moneyRepresentation(price,settings.showDetails) + " to " + moneyRepresentation(maxPrice,settings.showDetails) + " (AH)";
                     }else{
@@ -267,6 +259,7 @@ exports.calculateForge = async function(forges, settings){
                 componentCostText: moneyRepresentation(componentCost),
                 outOfStock: outOfStock,
                 approximateMatch: material.approximateMatch?.[minIndex],
+                violateOverbuyTolerance:violateOverbuyTolerance,
             }
             outputForge.totalCost += outputForge.materials[index].componentCost;
         });
@@ -379,5 +372,39 @@ exports.calculateForge = async function(forges, settings){
             }
         }
         return i;
+    }
+
+    function determineBuyList(pricesList,quantity,overbuyTolerance){
+        let buyList = [];
+        let collectedMaterials = 0;
+        let auctionIndex = 0;
+        let componentCost = 0;
+        while(collectedMaterials<quantity&&auctionIndex<pricesList.length){
+            let unit = pricesList[auctionIndex];
+            if(overbuyTolerance==0||unit[dataQuantity]<=overbuyTolerance*quantity){
+                collectedMaterials += unit[dataQuantity];
+                componentCost += (collectedMaterials > quantity) ? (unit[dataUnitPrice] * (unit[dataQuantity]-(collectedMaterials-quantity))) : unit[dataCurrentPrice];
+                buyList.push({auctionIndex,...unit});
+            }
+            auctionIndex++;
+        }
+        if(collectedMaterials<quantity){
+            if(overbuyTolerance!=0){
+                return {violateOverbuyTolerance: true,...determineBuyList(pricesList,quantity,0)}
+            }else{ //truely out of stock
+                return {
+                    status: "fail",
+                    buyList,
+                    violateOverbuyTolerance: false,
+                }
+            }
+        }else{
+            return {
+                status: "success",
+                buyList,
+                componentCost,
+                violateOverbuyTolerance: false,
+            }
+        }
     }
 }

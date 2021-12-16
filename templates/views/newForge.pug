@@ -254,13 +254,15 @@ block content
                             td(id="forge"+i+"MaterialsName").forgeMaterialsName
                                 if outputForge.materials
                                     each material in outputForge.materials
-                                        span(class=(material.outOfStock?"warning":"")) #{material.quantity} x #{material.name}
+                                        span(class=((material.outOfStock||material.violateOverbuyTolerance)?"warning":"")) #{material.quantity} x #{material.name}
                                         br
                             td(id="forge"+i+"UnitCost").forgeUnitCost
                                 if outputForge.materials
                                     each material in outputForge.materials
                                         if material.outOfStock
                                             span.warning #{material.priceText} (out of stock)
+                                        else if material.violateOverbuyTolerance
+                                            span.warning #{material.priceText} (overbuy)
                                         else
                                             | #{material.priceText}
                                         br

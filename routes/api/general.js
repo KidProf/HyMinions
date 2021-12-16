@@ -86,7 +86,7 @@ exports.merge = function merge(data1, data2) {
         return data2;
     } else if (data2.length==0) {
         return data1;
-    } else if (data1[0].unitPrice<data2[0].unitPrice) {
+    } else if (data1[0].u<data2[0].u) {
         return [data1[0], ...merge(data1.slice(1), data2)];
     } else {
         return [data2[0], ...merge(data1, data2.slice(1))];
