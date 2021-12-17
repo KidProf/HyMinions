@@ -9,7 +9,7 @@ block append variables
     - var currentPage = "forge";
 
 block meta
-    meta(name="description" content="It calculates the most profitable items to forge with realtime bazaar and auction prices.")
+    meta(name="description" content="It calculates the cheapest minions to level up to gain more minion slots, also tailor-made for each profile if you input your Minecraft name.")
 
 mixin infoBox(id,type,title)
     if(type=="info")
@@ -242,9 +242,9 @@ block content
                                 //- i.pt-2.fas.fa-question-circle(href="/forge/info")
                     - let i = 0
                     for outputForge in outputForges 
-                        tr(id="forge"+i+"Row" class=(outputForge.danger&&(settings.ah==1||settings.bz==1)?"loss":""))
+                        tr(id="forge"+i+"Row" class=(outputForge.danger&&(settings.ah==1&&settings.bz==1)?"loss":""))
                             td
-                                if (settings.ah==1||settings.bz==1)
+                                if !(settings.ah==0&&settings.bz==0)
                                     | ##{i+1}
                                 else
                                     | #?
@@ -269,14 +269,14 @@ block content
                             td(id="forge"+i+"MaterialsName").forgeMaterialsName
                                 if outputForge.materials
                                     each material in outputForge.materials
-                                        span(class=((material.outOfStock||material.violateOverbuyTolerance)&&(settings.ah==1||settings.bz==1))?"warning":"") #{material.quantity} x #{material.name}
+                                        span(class=((material.outOfStock||material.violateOverbuyTolerance)&&(settings.ah==1&&settings.bz==1))?"warning":"") #{material.quantity} x #{material.name}
                                         br
                             td(id="forge"+i+"UnitCost").forgeUnitCost
                                 if outputForge.materials
                                     each material in outputForge.materials
-                                        if material.outOfStock&&(settings.ah==1||settings.bz==1)
+                                        if material.outOfStock&&(settings.ah==1&&settings.bz==1)
                                             span.warning #{material.priceText} (out of stock)
-                                        else if material.violateOverbuyTolerance&&(settings.ah==1||settings.bz==1)
+                                        else if material.violateOverbuyTolerance&&(settings.ah==1&&settings.bz==1)
                                             span.warning #{material.priceText} (overbuy)
                                         else
                                             | #{material.priceText}
