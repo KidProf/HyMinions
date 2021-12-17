@@ -41,20 +41,14 @@ block content
         +infoBox("minionsTitleModal","info","Minions Crafts Calculator")
             p It calculates the cheapest minions to level up to gain more minion slots, also tailor-made for each profile if you input your Minecraft name. It also shows you how much money you need to spend on materials to unlock a new minion tier.
         p Most profitable forge options when you are offline.
-        h3 To be continued
-        ul.live
-            li IMPORTANT NOTE: The calculator is now underestimating the cost when buying large quantites of identitcal items from the Auction House.
-            li 0 (AH) means the item is sold out. So the forge might be less profitable than it claims to be. 
-            li Time is needed to think of a thorough way to tackle these problems above. Bare this in mind when making purchase using the calculator.
+        h3 Warning
         ul
             li Data may be inaccurate (<a href="/contact">Contact me</a> when you see a mistake)
-            li Customizable settings (e.g. HOTM level, sort by profit per forge/hour)
-            li Improvements for loading time (or at least make the loading responsive)
-            li Warning: This page is in beta, bugs may occur.
+            li This page is in beta, bugs may occur.
 
         #overall
             .row
-                #general.col-lg-6.col-12
+                #general.col-lg-6.col-12(class=(settings.ah==-1&&settings.bz==-1)?"notLoaded":"")
                     br
                     h3 General
                     .form-group
@@ -94,34 +88,44 @@ block content
                             //- 11: default
                             //- option(selected=(!settings.gemstoneCollectionLevel||settings.gemstoneCollectionLevel==10 ? 'selected':undefined) value="10") 10
                 #advanced.col-lg-6.col-12
-                    br
-                    h3 Advanced
-                    //- .form-group
-                    //-     label(for="overallAccuracy") Accuracy: &nbsp;
-                    //-     select#overallAccuracy.form-control
-                    //-         option(value="0" selected=(settings.accuracy==0?'selected':undefined)) No API
-                    //-         option(value="1" selected=(settings.accuracy==1?'selected':undefined)) Medium
-                    //-         option(value="2" selected=(settings.accuracy==2?'selected':undefined)) High
-                    //-         option(value="3" selected=(settings.accuracy==3?'selected':undefined)) Very High                             
+                    div(class=(settings.ah==-1&&settings.bz==-1)?"notLoaded":"")
+                        br
+                        h3 Advanced
+                        //- .form-group
+                        //-     label(for="overallAccuracy") Accuracy: &nbsp;
+                        //-     select#overallAccuracy.form-control
+                        //-         option(value="0" selected=(settings.accuracy==0?'selected':undefined)) No API
+                        //-         option(value="1" selected=(settings.accuracy==1?'selected':undefined)) Medium
+                        //-         option(value="2" selected=(settings.accuracy==2?'selected':undefined)) High
+                        //-         option(value="3" selected=(settings.accuracy==3?'selected':undefined)) Very High                             
+                        .form-group
+                            label(for="overallTax") Tax in bazaar: &nbsp; 
+                                input#overallTax.form-control(type="number" value=settings.tax min="0")
+                                span &nbsp; %
+                        p: small Tax in auction house is 1% when selling items above 1M coins. The AH prices below are the current lowest BIN. The bazaar prices are based on buy instantly and sell instantly.
+                        br
+                        .form-group
+                            span Sort by: &nbsp;
+                            select#overallSortBy.form-control
+                                option(value="0" selected=(settings.sortBy==0 ? 'selected':undefined)) Profit per forge
+                                option(value="1" selected=(settings.sortBy==1 ? 'selected':undefined)) Profit per hour
+                        .form-group
+                            span Overbuy tolerance: &nbsp;
+                            select#overallOverbuyTolerance.form-control
+                                option(value="1" selected=(settings.overbuyTolerance==1 ? 'selected':undefined)) 1x
+                                option(value="2" selected=(settings.overbuyTolerance==2 ? 'selected':undefined)) 2x
+                                option(value="3" selected=(settings.overbuyTolerance==3 ? 'selected':undefined)) 3x
+                                option(value="0" selected=(settings.overbuyTolerance==0 ? 'selected':undefined)) Infinite
                     .form-group
-                        label(for="overallTax") Tax in bazaar: &nbsp; 
-                            input#overallTax.form-control(type="number" value=settings.tax min="0")
-                            span &nbsp; %
-                    p: small Tax in auction house is 1% when selling items above 1M coins. The AH prices below are the current lowest BIN. The bazaar prices are based on buy instantly and sell instantly.
-                    br
+                        input#overallLoadAuctions.checkbox(type="checkbox" checked=(settings.ah!=-1 ? 'checked' : undefined))
+                        //-both 0 and 1 will make it checked
+                        label(for="overallLoadAuctions") &nbsp; Load Auctions
                     .form-group
-                        span Sort by: &nbsp;
-                        select#overallSortBy.form-control
-                            option(value="0" selected=(settings.sortBy==0 ? 'selected':undefined)) Profit per forge
-                            option(value="1" selected=(settings.sortBy==1 ? 'selected':undefined)) Profit per hour
-                    .form-group
-                        span Overbuy tolerance: &nbsp;
-                        select#overallOverbuyTolerance.form-control
-                            option(value="1" selected=(settings.overbuyTolerance==1 ? 'selected':undefined)) 1x
-                            option(value="2" selected=(settings.overbuyTolerance==2 ? 'selected':undefined)) 2x
-                            option(value="3" selected=(settings.overbuyTolerance==3 ? 'selected':undefined)) 3x
-                            option(value="0" selected=(settings.overbuyTolerance==0 ? 'selected':undefined)) Infinite
-            button#overallSettings.btn(onclick="generateLink()") Apply
+                        input#overallLoadBazaar.checkbox(type="checkbox" checked=(settings.bz!=-1 ? 'checked' : undefined))
+                        //-both 0 and 1 will make it checked
+                        label(for="overallLoadBazaar") &nbsp; Load Bazaar
+            button#overallSettings.btn(onclick="generateLink()") Apply and Load
+            small &nbsp; &nbsp; < Click to load data
         //-     span &nbsp; &nbsp; &nbsp;
         //-     button.btn.btn-link.read-more(onclick="clearInput()") Clear
         //-     br
@@ -137,9 +141,7 @@ block content
                 if settings.collectionsDisabled
                     p.loss Collection API access for this profile is disabled. Click <a href="https://www.youtube.com/watch?v=-_LIyA5lNMU">here</a> to see how to enable API access, so that we could put the minions that you cannot craft at the bottom of the list.
             br
-            if settings&&settings.run==0
-                p Click Apply to calculate. Please note that the loading time will be significantly longer than the other calculators, as it needs to make around 60 API calls to get all the auction data.
-            else if settings&&settings.hasError
+            if settings&&settings.hasError
                 h1 Error
                 p.lead=settings.errorMsg
                 h3 Is Hypixel API down?
@@ -173,16 +175,17 @@ block content
                 //-                     button#hideAll.btn.btn-link.read-more.d-none(onclick="hideAll()") Hide All
                 //-                 else
                 //-                     button.btn.btn-link#showAll.read-more(onclick="appendShowDetails(-1)") Load and Expand All
-                #doubleScroll: table#forgeTable.table.table-dark.w-100
+                #doubleScroll: table#forgeTable.table.table-dark.w-100(class=(settings.ah==0&&settings.bz==0)?"notLoaded":"")
                     thead
                         tr
                             th(scope="col")
                             th(scope="col") 
                                 | Product <br /> 
                                 if settings.sortBy==1
-                                    | (Profit per hour) <br /> 
+                                    | (Profit per hour)
                                 else
-                                    | (Profit per forge) <br /> 
+                                    | (Profit per forge) 
+                                | <br />
                                 button#unhideAllCols.btn.btn-link(onClick="unhideCol()").invisible Unhide all columns
                             th(scope="col").forgeHotm 
                                 | Req. HOTM <br /> 
@@ -234,13 +237,20 @@ block content
                                 //- i.pt-2.fas.fa-question-circle(href="/forge/info")
                     - let i = 0
                     for outputForge in outputForges 
-                        tr(id="forge"+i+"Row" class=(outputForge.danger?"loss":""))
-                            td="#"+(i+1)
+                        tr(id="forge"+i+"Row" class=(outputForge.danger&&(settings.ah==1&&settings.bz==1)?"loss":""))
+                            td
+                                if !(settings.ah==0&&settings.bz==0)
+                                    | ##{i+1}
+                                else
+                                    | #?
                             td(id="forge"+i+"Name")
                                 //- loss -> yellow label
                                 | #{outputForge.name}
                                 br
-                                span(class=(outputForge.profit<0?"warning":"")) (#{settings.sortBy==1 ? outputForge.profitPerHourText : outputForge.profitText})
+                                if (settings.ah==0&&settings.bz==0)
+                                    button.btn.btn-link(onclick="generateLink(true)") Click to load
+                                else
+                                    span(class=(outputForge.profit<0?"warning":"")) (#{settings.sortBy==1 ? outputForge.profitPerHourText : outputForge.profitText})
                             td(id="forge"+i+"Hotm" class=(outputForge.requirementNotMet==true?"warning":"")).forgeHotm
                                 //- when requirement not met
                                 | #{outputForge.hotmRequirement}
@@ -254,14 +264,14 @@ block content
                             td(id="forge"+i+"MaterialsName").forgeMaterialsName
                                 if outputForge.materials
                                     each material in outputForge.materials
-                                        span(class=((material.outOfStock||material.violateOverbuyTolerance)?"warning":"")) #{material.quantity} x #{material.name}
+                                        span(class=((material.outOfStock||material.violateOverbuyTolerance)&&(settings.ah==1&&settings.bz==1))?"warning":"") #{material.quantity} x #{material.name}
                                         br
                             td(id="forge"+i+"UnitCost").forgeUnitCost
                                 if outputForge.materials
                                     each material in outputForge.materials
-                                        if material.outOfStock
+                                        if material.outOfStock&&(settings.ah==1&&settings.bz==1)
                                             span.warning #{material.priceText} (out of stock)
-                                        else if material.violateOverbuyTolerance
+                                        else if material.violateOverbuyTolerance&&(settings.ah==1&&settings.bz==1)
                                             span.warning #{material.priceText} (overbuy)
                                         else
                                             | #{material.priceText}

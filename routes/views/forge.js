@@ -6,33 +6,18 @@ exports = module.exports = function (req, res) {
     console.log(req.query);
     let settings = req.query;
 
-    if(settings.run==1){
-        settings.loadAuction = 1;
-        settings.loadBazaar = 1;
-        if(!dataValidation(settings)){
-            res.render("newForge",{settings: settings});
-        }else{
-            calculateForge(forges, settings).then((outputForges)=>{
-                let output = {settings: settings, forges: forges, outputForges: outputForges};
-                console.log(output.settings);
-                res.render("newForge",output);
-        
-            }).catch((err)=>{
-                console.log(err);
-                res.render("newForge",{settings: settings});
-            });
-        }
-    }else{
-        settings.sortBy = 0;
-        settings.overbuyTolerance = 2;
-        settings.run = 0;
-        settings.tax = 1.125;
-        settings.accuracy = 2;
-        settings.gemstoneCollectionLevel = 11;
-        settings.hotmLevel = 7;
-
-        console.log(settings);
+    if(!dataValidation(settings)){
         res.render("newForge",{settings: settings});
+    }else{
+        calculateForge(forges, settings).then((outputForges)=>{
+            let output = {settings: settings, forges: forges, outputForges: outputForges};
+            console.log(output.settings);
+            res.render("newForge",output);
+    
+        }).catch((err)=>{
+            console.log(err);
+            res.render("newForge",{settings: settings});
+        });
     }
 
     function dataValidation(settings){
@@ -68,6 +53,12 @@ exports = module.exports = function (req, res) {
         }
         if(!settings.overbuyTolerance||!isWithinList(settings.overbuyTolerance,[0,1,2,3])){
             settings.overbuyTolerance = 2;
+        }
+        if(!settings.ah||!isWithinList(settings.ah,[-1,0,1])){
+            settings.ah = 0;
+        }
+        if(!settings.bz||!isWithinList(settings.bz,[-1,0,1])){
+            settings.bz = 0;
         }
 
         console.log(settings);

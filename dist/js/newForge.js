@@ -26,12 +26,8 @@ function setNotProfile(){
     $(".profileAlt").show();
 }
 
-function generateLink(){
+function generateLink(forceLoad){
     let keys = [], values = [];
-
-    //SPECIAL FOR FORGE PAGE
-    keys.push("run");
-    values.push("1");
 
     if($("#overallUseProfile").prop("checked")&&$("#overallProfileName").val()!=""){
         keys.push("name");
@@ -70,7 +66,29 @@ function generateLink(){
         keys.push("overbuyTolerance");
         values.push($("#overallOverbuyTolerance").children("option:selected").val());
     }
+    if(forceLoad){
+        keys.push("ah");
+        values.push(1);
+        keys.push("bz");
+        values.push(1); 
+    }else{
+        if($("#overallLoadAuctions").prop("checked")){
+            keys.push("ah");
+            values.push(1);        
+        }else{
+            keys.push("ah");
+            values.push(-1);   
+        }
     
+        if($("#overallLoadBazaar").prop("checked")){
+            keys.push("bz");
+            values.push(1);        
+        }else{
+            keys.push("bz");
+            values.push(-1);  
+        }
+    }
+
     let string = "/new-forge"
     for(let i=0;i<keys.length;i++){
         string += i==0 ? "?" : "&";

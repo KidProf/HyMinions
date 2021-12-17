@@ -76,7 +76,17 @@ exports.calculateForge = async function(forges, settings){
         });
     }
 
-    if(settings.loadBazaar==1&&(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000)){ //1 min time out
+    forges.forEach((forge)=>{
+        forge.price = 0;
+        forge.priceList = [];
+        forge.materials.forEach((material)=>{
+            material.prices = new Array(material.options.length).fill(0);
+            material.pricesList = new Array(material.options.length).fill([]);
+        })
+    })
+    //settings.bz = 1 load
+    //= -1/0 won't load. It is a UI difference - will precheck for users when it is 0, will not when it is -1
+    if(settings.bz==1&&(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000)){ //1 min time out
         lastUpdatedBazaar = Date.now();
         await findBazaar(settings).then((bazaarPrices)=>{
             if(bazaarPrices=="error"){
@@ -88,9 +98,6 @@ exports.calculateForge = async function(forges, settings){
                     forge.price = bazaarPrices[1][forge.name] || 0; //sell instantly
                 } 
                 forge.materials.forEach((material)=>{
-                    if(!material.prices){
-                        material.prices = new Array(material.options.length).fill(0);
-                    }
                     for(let i=0;i<material.options.length;i++){
                         if(material.source&&material.source[i]==sourceBazaar){
                             material.prices[i] = bazaarPrices[0][material.options[i]] || material.prices[i]; //buy instantly
@@ -101,8 +108,9 @@ exports.calculateForge = async function(forges, settings){
         });
     }
     
-    //TODO: a way to view it even when API is down
-    if(settings.loadAuction==1&&!lastUpdatedAuction||Date.now()-lastUpdatedAuction>5*60*1000){ //call again if prev result has error, 5 min timeout        
+    //settings.ah = 1 load
+    //= -1/0 won't load. It is a UI difference - will precheck for users when it is 0, will not when it is -1
+    if(settings.ah==1&&!lastUpdatedAuction||Date.now()-lastUpdatedAuction>5*60*1000){ //call again if prev result has error, 5 min timeout        
         await findAuctions(settings).then((minAuctions)=>{
             //incorporate minAuctions into forges
             forges.forEach((forge)=>{
@@ -117,10 +125,6 @@ exports.calculateForge = async function(forges, settings){
                     }
                 } 
                 forge.materials.forEach((material)=>{
-                    if(!material.prices){
-                        material.prices = new Array(material.options.length).fill(0);
-                    }
-                    material.pricesList = new Array(material.options.length).fill([]);
                     for(let i=0;i<material.options.length;i++){
                         if(!(material.source&&material.source[i])){
                             material.pricesList[i] = minAuctions[material.options[i]] || [];//product
@@ -218,6 +222,10 @@ exports.calculateForge = async function(forges, settings){
                     price = material.prices[minIndex]*(1+settings.tax/100); //PLUS
                     priceText = moneyRepresentation(price,settings.showDetails) + " (BZ)";
                     componentCost = price*quantity;
+                    if(settings.bz!=1){
+                        outOfStock = true;
+                        materialsOutOfStock = true;
+                    }
                     break;
                 case sourceOthers:
                 case sourceWarning:
