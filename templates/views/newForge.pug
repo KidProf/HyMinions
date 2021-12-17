@@ -35,11 +35,11 @@ block content
     .container
         h1.d-inline-block Forge
         span &nbsp; &nbsp;
-        img.d-inline-block.align-top(src="/images/minionsCost.png" width="40" height="40")
+        img.d-inline-block.align-top(src="/images/forge.png" width="40" height="40")
         //-TODO
         p.d-inline-block &nbsp; &nbsp; &nbsp;
         +infoBox("minionsTitleModal","info","Minions Crafts Calculator")
-            p It calculates the cheapest minions to level up to gain more minion slots, also tailor-made for each profile if you input your Minecraft name. It also shows you how much money you need to spend on materials to unlock a new minion tier.
+            p It calculates the most profitable items to forge with realtime bazaar and auction prices.
         p Most profitable forge options when you are offline.
         h3 Warning
         ul
@@ -141,17 +141,22 @@ block content
                 if settings.collectionsDisabled
                     p.loss Collection API access for this profile is disabled. Click <a href="https://www.youtube.com/watch?v=-_LIyA5lNMU">here</a> to see how to enable API access, so that we could put the minions that you cannot craft at the bottom of the list.
             br
+            if Date.now() - settings.lastUpdatedAuctionServer > 1800*1000 
+                //- 30 minutes
+                p.loss The latest update time for auction prices is #{settings.lastUpdatedAuctionServerString} UTC. It means that the auction prices are outdated. This is very likely to be an error, you may make a bug report <a href="/contact">here</a>. Sorry for the inconvenience caused.
             if settings&&settings.hasError
                 h1 Error
                 p.lead=settings.errorMsg
                 h3 Is Hypixel API down?
                 p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
+                p If so, you could still view the forge table without the real time prices with <a href="/forge?ah=-1&bz=-1">this set of settings</a>.
                 p If you think it is not an API problem, you may make a bug report <a href="/contact">here</a>. Sorry for the inconvenience caused.
             else if !forges || !settings
                 h1 Error
                 p.lead An unexpected error has occured.
                 h3 Is Hypixel API down?
                 p You could check to see if <a href="https://api.hypixel.net/skyblock/bazaar">this link</a> brings you to the raw bazaar data to see if Hypixel API is down.
+                p If so, you could still view the forge table without the real time prices with <a href="/forge?ah=-1&bz=-1">this set of settings</a>.
                 p If you think it is not an API problem, you may make a bug report <a href="/contact">here</a>. Sorry for the inconvenience caused.
             else
                 //-     #search: .form-group.row
