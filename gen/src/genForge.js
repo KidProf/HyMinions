@@ -466,7 +466,7 @@ let forges = [
                 source: [
                     this.sourceWarning,
                 ],
-                prices: [
+                codedPrices: [
                     0,
                 ]
             },
@@ -499,7 +499,7 @@ let forges = [
                 source: [
                     this.sourceWarning,
                 ],
-                prices: [
+                codedPrices: [
                     0,
                 ]
             },
@@ -532,7 +532,7 @@ let forges = [
                 source: [
                     this.sourceWarning,
                 ],
-                prices: [
+                codedPrices: [
                     0,
                 ]
             },
@@ -565,7 +565,7 @@ let forges = [
                 source: [
                     this.sourceWarning,
                 ],
-                prices: [
+                codedPrices: [
                     0,
                 ]
             },
@@ -598,7 +598,7 @@ let forges = [
                 source: [
                     this.sourceWarning,
                 ],
-                prices: [
+                codedPrices: [
                     0,
                 ]
             },
@@ -631,7 +631,7 @@ let forges = [
                 source: [
                     this.sourceWarning,
                 ],
-                prices: [
+                codedPrices: [
                     0,
                 ]
             },
@@ -664,7 +664,7 @@ let forges = [
                 source: [
                     this.sourceWarning,
                 ],
-                prices: [
+                codedPrices: [
                     0,
                 ]
             },
@@ -838,7 +838,7 @@ let forges = [
                 quantity: [
                     25000,
                 ],
-                prices: [
+                codedPrices: [
                     1,
                 ],
                 source: [
@@ -1561,7 +1561,7 @@ let forges = [
                 quantity: [
                     300000,
                 ],
-                prices: [
+                codedPrices: [
                     1,
                 ],
                 source: [
@@ -1649,7 +1649,7 @@ let forges = [
                 quantity: [
                     50000,
                 ],
-                prices: [
+                codedPrices: [
                     1,
                 ],
                 source: [
@@ -2251,7 +2251,7 @@ let forges = [
                 quantity: [
                     25000,
                 ],
-                prices: [
+                codedPrices: [
                     1,
                 ],
                 source: [
@@ -2591,7 +2591,7 @@ let forges = [
                 quantity: [
                     50000000,
                 ],
-                prices: [
+                codedPrices: [
                     1,
                 ],
                 source: [

@@ -76,14 +76,46 @@ exports.calculateForge = async function(forges, settings){
         });
     }
 
-    forges.forEach((forge)=>{
-        forge.price = 0;
-        forge.priceList = [];
-        forge.materials.forEach((material)=>{
-            material.prices = new Array(material.options.length).fill(0);
-            material.pricesList = new Array(material.options.length).fill([]);
+    if(settings.bz==1){
+        //check if not initialized properly
+        forges.forEach((forge)=>{
+            forge.price = forge.price || 0;
+            forge.materials.forEach((material)=>{
+                if(!material.prices){
+                    material.prices = new Array(material.options.length).fill(0);
+                }
+            })
         })
-    })
+    }else{
+        //reset all variables
+        forges.forEach((forge)=>{
+            forge.price = 0;
+            forge.materials.forEach((material)=>{
+                material.prices = new Array(material.options.length).fill(0);
+            })
+        })
+    }
+
+    if(settings.ah==1){
+        //check if not initialized properly
+        forges.forEach((forge)=>{
+            forge.priceList = forge.pricesList || [];
+            forge.materials.forEach((material)=>{
+                if(!material.pricesList){
+                    material.pricesList = new Array(material.options.length).fill([]);
+                }
+            })
+        })
+    }else{
+        //reset all variables
+        forges.forEach((forge)=>{
+            forge.priceList = [];
+            forge.materials.forEach((material)=>{
+                material.pricesList = new Array(material.options.length).fill([]);
+            })
+        })
+    }
+
     //settings.bz = 1 load
     //= -1/0 won't load. It is a UI difference - will precheck for users when it is 0, will not when it is -1
     if(settings.bz==1&&(lastUpdatedBazaar==null||Date.now()-lastUpdatedBazaar>60*1000)){ //1 min time out
@@ -178,6 +210,7 @@ exports.calculateForge = async function(forges, settings){
             gemstoneRequirement: forge.gemstoneRequirement,
             hotmRequirement: forge.hotmRequirement,
             collectionsRequirement: forge.collectionsRequirement,
+            source: forge.source,
             last: 0,
         };
         let price, priceText;
@@ -188,7 +221,7 @@ exports.calculateForge = async function(forges, settings){
                 break;
             case sourceOthers:
             case sourceWarning:
-                price = forge.price;
+                price = forge.codedPrice;
                 priceText = moneyRepresentation(price,settings.showDetails);
                 break;
             default: //AH
@@ -233,7 +266,7 @@ exports.calculateForge = async function(forges, settings){
                     break;
                 case sourceOthers:
                 case sourceWarning:
-                    price = material.prices[minIndex];
+                    price = material.codedPrices[minIndex];
                     priceText = moneyRepresentation(price,settings.showDetails);
                     componentCost = price*quantity;
                     break;
@@ -272,6 +305,7 @@ exports.calculateForge = async function(forges, settings){
                 outOfStock: outOfStock,
                 approximateMatch: material.approximateMatch?.[minIndex],
                 violateOverbuyTolerance:violateOverbuyTolerance,
+                source: material.source ? material.source[minIndex] : null,
             }
             outputForge.totalCost += outputForge.materials[index].componentCost;
         });
