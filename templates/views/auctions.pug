@@ -33,8 +33,7 @@ mixin infoBox(id,type,title)
 
 block content
     .container
-        h1.d-inline-block Auction Data
-        p BIN only
+        h1.d-inline-block Active Auctions
 
         #content
             hr
@@ -61,12 +60,14 @@ block content
                 p If so, you could still view the forge table without the real time prices with <a href="/forge?ah=-1&bz=-1">this set of settings</a>.
                 p If you think it is not an API problem, you may make a bug report <a href="/contact">here</a>. Sorry for the inconvenience caused.
             else
-                h1
+                h2
                     for name in settings.names
                         | #{name}
                 if settings.exactMatch
-                    p (Exact Match)
-
+                    p Exact Match
+                else
+                    p Approximate Match (e.g. allow reforges)
+                p BIN only
                 #doubleScroll: table#auctionsTable.table.table-dark.w-100
                     thead
                         tr

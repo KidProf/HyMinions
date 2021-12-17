@@ -99,3 +99,32 @@ function generateLink(forceLoad){
     if(location.origin+string==window.location.href) location.reload();
     else window.location.href=string;
 }
+
+function generateAuctionLink(name,approximateMatch,quantity,overbuyTolerance){
+    let keys = [], values = [];
+
+    keys.push("names[]");
+    values.push(name);
+
+    if(!approximateMatch){
+        keys.push("exactMatch");
+        values.push(1);
+    }
+
+    keys.push("quantity");
+    values.push(quantity);
+
+    if(overbuyTolerance!=0){
+        keys.push("overbuyTolerance");
+        values.push(overbuyTolerance);
+    }
+
+    let string = "/auctions"
+    for(let i=0;i<keys.length;i++){
+        string += i==0 ? "?" : "&";
+        string += keys[i]+"="+values[i];
+    }
+    // string += "#content";
+    
+    window.open(string);
+}

@@ -206,9 +206,11 @@ block content
                                 //- i.pt-2.fas.fa-question-circle(href="/forge/info")
                             th(scope="col").forgeProductPrice
                                 | Price of product  <br />
+                                | (With tax)  <br />
                                 i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeProductPrice')")
                                 //- | &nbsp;
                                 //- i.pt-2.fas.fa-question-circle(href="/forge/info")
+                            th(scope="col").forgeUnitCost
                             th(scope="col").forgeMaterialsName
                                 | Materials <br /> 
                                 | (Cheapest variant) <br />
@@ -220,6 +222,7 @@ block content
                                 i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeUnitCost')")
                                 //- | &nbsp;
                                 //- i.pt-2.fas.fa-question-circle(href="/forge/info")
+                            th(scope="col").forgeUnitCost
                             th(scope="col").forgeComponentCost
                                 | Total cost of material(s) <br />
                                 i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeComponentCost')")
@@ -266,6 +269,10 @@ block content
                                         | <br />+ #{requirement.name} #{requirement.tier}
                             td(id="forge"+i+"Duration").forgeDuration= outputForge.duration || outputForge.durationText
                             td(id="forge"+i+"ProductPrice").forgeProductPrice=outputForge.priceText
+                            td.forgeProductPrice
+                                if !outputForge.source
+                                    i.fas.fa-info-circle(onclick="generateAuctionLink(\""+outputForge.name+"\","+outputForge.approximateMatch+","+"1"+","+settings.overbuyTolerance+")")
+                                br
                             td(id="forge"+i+"MaterialsName").forgeMaterialsName
                                 if outputForge.materials
                                     each material in outputForge.materials
@@ -280,6 +287,12 @@ block content
                                             span.warning #{material.priceText} (overbuy)
                                         else
                                             | #{material.priceText}
+                                        br
+                            td.forgeUnitCost
+                                if outputForge.materials
+                                    each material in outputForge.materials
+                                        if !material.source
+                                            i.fas.fa-info-circle(onclick="generateAuctionLink(\""+material.name+"\","+material.approximateMatch+","+material.quantity+","+settings.overbuyTolerance+")")
                                         br
                             td(id="forge"+i+"ComponentCost").forgeComponentCost
                                 if outputForge.materials
