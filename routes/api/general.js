@@ -252,6 +252,32 @@ exports.findAuctions = async function findAuctions(settings){
     });
 }
 
+exports.findAuction = async function findAuction(queryString,settings){
+    return new Promise((resolve)=>{
+        setTimeout(() => {
+            fetch(process.env.BACKEND_LINK+"/auctions/get"+queryString)
+            .then(result => result.json())
+            .then(({finishTime,data,status,errorMsg}) => {
+                if(status!="success"){
+                    console.log("catch from auctions backend (catch from findAuction reading backend)");
+                    settings.lastUpdatedAuctionServer = new Date(finishTime);
+                    settings.hasError=true;
+                    settings.errorMsg = errorMsg || "Error occured when getting auction prices. (catch from findAuction reading backend)";
+                    resolve("error");
+                }else{
+                    settings.lastUpdatedAuctionServer = new Date(finishTime);
+                    resolve(data);
+                }
+            }).catch((err)=>{
+                console.log("catch from findAuctions",err);
+                settings.hasError=true;
+                settings.errorMsg = "Error occured when getting auction prices. (catch from findAuction)";
+                resolve("error");
+            });
+        }, 1000);
+    });
+}
+
 //NEW IMPLEMENTATION IN FRONTEND
 // // internal
 // function merge(data1, data2) {
