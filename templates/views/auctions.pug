@@ -34,10 +34,6 @@ mixin infoBox(id,type,title)
 block content
     .container
         h1.d-inline-block Active Auctions
-        if settings.news&&((!settings.news.postUntil)||settings.news.postUntil._seconds*1000>Date.now())
-            div(class=settings.news.isDanger?"loss":"")
-                h3 Server Info
-                p=settings.news.message
 
         #content
             hr
@@ -46,6 +42,10 @@ block content
             <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3541192882647315" data-ad-slot="1247091385" data-ad-format="auto" data-full-width-responsive="true"></ins>
             <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
 
+            if settings.news&&((!settings.news.postUntil)||settings.news.postUntil._seconds*1000>Date.now())
+                div(class=settings.news.isDanger?"loss":"")
+                    h3 Server Info
+                    p=settings.news.message
             if Date.now() - settings.lastUpdatedAuctionServer > 1800*1000 
                 //- 30 minutes
                 p.loss The latest update time for auction prices is #{settings.lastUpdatedAuctionServerString} UTC. It means that the auction prices are outdated. This is very likely to be an error, you may make a bug report <a href="/contact">here</a>. Sorry for the inconvenience caused.
@@ -72,6 +72,13 @@ block content
                 else
                     p Approximate Match (e.g. allow reforges)
                 p BIN only
+
+                if settings.quantity
+                    h3 Buy Info
+                    p Quantity: #{settings.quantity}
+                    p Overbuy tolerance: #{settings.overbuyToleranceText}
+                    p Total cost: #{settings.componentCostText || 0}
+
                 #doubleScroll: table#auctionsTable.table.table-dark.w-100
                     thead
                         tr
@@ -95,9 +102,15 @@ block content
                                 //- i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeProductPrice')")
                                 //- | &nbsp;
                                 //- i.pt-2.fas.fa-question-circle(href="/forge/info")
+                            if settings.descriptionCol
+                                th(scope="col").auctionsDescription
+                                    | Description (selected items only)
+                                    //- i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeProductPrice')")
+                                    //- | &nbsp;
+                                    //- i.pt-2.fas.fa-question-circle(href="/forge/info")
                     - let i = 0
                     for auction in auctions 
-                        tr(id="auction"+i+"Row")
+                        tr(id="auction"+i+"Row" class=(settings.buyIndices&&settings.buyIndices.includes(i))?"individualTableRow":"")
                             td="#"+(i+1)
                             td(id="auction"+i+"Name")
                                 | #{auction.name}
@@ -107,6 +120,17 @@ block content
                                 | #{auction.currentPriceText}
                             td(id="auction"+i+"UnitPrice")
                                 | #{auction.unitPriceText}
+                            if settings.descriptionCol
+                                td(id="auction"+i+"Description")
+                                    if auction.description
+                                        button.mt-2.btn.btn-blue(id="individualInfo"+i data-toggle="modal" data-target="#infoModal"+i) Description
+                        - i++;
+                #infoModals
+                    - i = 0
+                    for auction in auctions 
+                        if auction.description
+                            +infoBox("infoModal"+i,"rightInfo",auction.name)
+                                pre.color-white=auction.description
                         - i++;
             p: small
                 if(settings.lastUpdatedAuctionServerString)

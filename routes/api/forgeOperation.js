@@ -1,13 +1,10 @@
-var {moneyRepresentation, dateTimeToString, findBazaar, findProfile, findAuctions, updateAuctions} = require("./general.js");
+var {moneyRepresentation, dateTimeToString, findBazaar, findProfile, findAuctions, determineBuyList, dataUnitPrice} = require("./general.js");
 const { calculateMinionsCostLink } = require("./minionsCostOperation.js");
 var {sourceBazaar,sourceAuction,sourceWarning,sourceOthers,auctionTax,auctionTaxThreshold, gemstoneCollectionName, hotmXpList} = require("./forgeData.js");
 var {merge} = require("./general.js");
 
 let minecraftName, lastUpdatedProfile,lastUpdatedBazaar,lastUpdatedAuction, profileNames, profileInfo, hadError=false, news, lastUpdatedAuctionServer;
 
-const dataUnitPrice = "u";
-const dataQuantity = "q";
-const dataCurrentPrice = "c";
 
 exports.calculateForge = async function(forges, settings){
     console.log(settings.name,minecraftName);
@@ -186,7 +183,7 @@ exports.calculateForge = async function(forges, settings){
     settings.lastUpdatedAuctionServerString = settings.lastUpdatedAuctionServer ? dateTimeToString(settings.lastUpdatedAuctionServer) : null;
     settings.lastUpdatedAuctionServer = lastUpdatedAuctionServer;
     settings.news = news;
-    
+
     if(settings.hasError&&true){
         hadError = true;
         return;
@@ -422,39 +419,5 @@ exports.calculateForge = async function(forges, settings){
             }
         }
         return i;
-    }
-
-    function determineBuyList(pricesList,quantity,overbuyTolerance){
-        let buyList = [];
-        let collectedMaterials = 0;
-        let auctionIndex = 0;
-        let componentCost = 0;
-        while(collectedMaterials<quantity&&auctionIndex<pricesList.length){
-            let unit = pricesList[auctionIndex];
-            if(overbuyTolerance==0||unit[dataQuantity]<=overbuyTolerance*quantity){
-                collectedMaterials += unit[dataQuantity];
-                componentCost += (collectedMaterials > quantity) ? (unit[dataUnitPrice] * (unit[dataQuantity]-(collectedMaterials-quantity))) : unit[dataCurrentPrice];
-                buyList.push({auctionIndex,...unit});
-            }
-            auctionIndex++;
-        }
-        if(collectedMaterials<quantity){
-            if(overbuyTolerance!=0){
-                return {violateOverbuyTolerance: true,...determineBuyList(pricesList,quantity,0)}
-            }else{ //truely out of stock
-                return {
-                    status: "fail",
-                    buyList,
-                    violateOverbuyTolerance: false,
-                }
-            }
-        }else{
-            return {
-                status: "success",
-                buyList,
-                componentCost,
-                violateOverbuyTolerance: false,
-            }
-        }
     }
 }

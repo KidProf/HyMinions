@@ -2,10 +2,13 @@ var fetch = require('cross-fetch');
 var nbt = require('nbt');
 var itemNames = require("./itemNames.json");
 
-// const auctionsInForge = ["Amber Material","Amber-polished Drill Engine","Beacon I","Beacon II","Beacon III","Beacon IV","Beacon V","Blue Cheese Goblin Omelette","Diamonite","Divan's Alloy","Gemstone Chamber","Gemstone Fuel Tank","Goblin Omelette","Helix","Hot Stuff","Mithril Pickaxe","Mithril-Infused Fuel Tank","Mithril-Plated Drill Engine","Perfectly-Cut Fuel Tank","Pesto Goblin Omelette","Petrified Starfall","Pure Mithril","Refined Mithril Pickaxe","Rock Gemstone","Ruby-polished Drill Engine","Sapphire-polished Drill Engine","Spicy Goblin Omelette","Sunny Side Goblin Omelette","Titanium-Infused Fuel Tank","Titanium-Plated Drill Engine","Travel Scroll to the Crystal Hollows","Travel Scroll to the Dwarven Forge"]
-// const auctionsInForgeApprox = ["Titanium Talisman","Helmet Of Divan","Chestplate Of Divan","Leggings Of Divan","Boots Of Divan","Mithril Drill SX-R226","Titanium Ring","Ammonite","Ruby Drill TX-15","Mithril Drill SX-R326","Titanium Artifact","Gemstone Drill LT-522","Titanium Drill DR-X355","Titanium Drill DR-X455","Titanium Drill DR-X555","Titanium Relic","Topaz Drill KGR-12","Titanium Drill DR-X655","Jasper Drill X","Divan's Drill"]
-// const auctionsInForgeQuantity = ["Bejeweled Handle","Control Switch","Corleonite","Divan Fragment","Drill Engine","Electron Transmitter","FTX 3070","Fuel Tank","Gemstone Mixture","Glacite Jewel","Golden Plate","Magma Core","Mithril Plate","Plasma","Robotron Reflector","Superlite Motor","Synthetic Heart"]
-// const auctionsInForgeQuantityApprox = []
+exports.dataUnitPrice = "u";
+exports.dataQuantity = "q";
+exports.dataCurrentPrice = "c";
+
+const dataUnitPrice = "u";
+const dataQuantity = "q";
+const dataCurrentPrice = "c";
 
 //copied from events.js
 exports.dateTimeToString = function dateTimeToString(dateTime){
@@ -77,6 +80,41 @@ function moneyRepresentationMagnitudeDetail(number){
         return (Math.round(number*10000)/10000).toFixed(4); //0.0005
     }else if(number<1){
         return (Math.round(number*100)/100).toFixed(2); //0.05
+    }
+}
+
+//used by forge and auctions
+exports.determineBuyList = function determineBuyList(pricesList,quantity,overbuyTolerance){
+    let buyList = [];
+    let collectedMaterials = 0;
+    let auctionIndex = 0;
+    let componentCost = 0;
+    while(collectedMaterials<quantity&&auctionIndex<pricesList.length){
+        let unit = pricesList[auctionIndex];
+        if(overbuyTolerance==0||unit[dataQuantity]<=overbuyTolerance*quantity){
+            collectedMaterials += unit[dataQuantity];
+            componentCost += (collectedMaterials > quantity) ? (unit[dataUnitPrice] * (unit[dataQuantity]-(collectedMaterials-quantity))) : unit[dataCurrentPrice];
+            buyList.push({auctionIndex,...unit});
+        }
+        auctionIndex++;
+    }
+    if(collectedMaterials<quantity){
+        if(overbuyTolerance!=0){
+            return {violateOverbuyTolerance: true,...determineBuyList(pricesList,quantity,0)}
+        }else{ //truely out of stock
+            return {
+                status: "fail",
+                buyList,
+                violateOverbuyTolerance: false,
+            }
+        }
+    }else{
+        return {
+            status: "success",
+            buyList,
+            componentCost,
+            violateOverbuyTolerance: false,
+        }
     }
 }
 

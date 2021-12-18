@@ -41,10 +41,7 @@ block content
         +infoBox("minionsTitleModal","info","Minions Crafts Calculator")
             p It calculates the most profitable items to forge with realtime bazaar and auction prices.
         p Most profitable forge options when you are offline.
-        if settings.news&&((!settings.news.postUntil)||settings.news.postUntil._seconds*1000>Date.now())
-            div(class=settings.news.isDanger?"loss":"")
-                h3 Server Info
-                p=settings.news.message
+
         h3 Warning
         ul
             li Data may be inaccurate (<a href="/contact">Contact me</a> when you see a mistake)
@@ -141,6 +138,12 @@ block content
             //- <!-- forge-1 -->
             <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3541192882647315" data-ad-slot="9361469877" data-ad-format="auto" data-full-width-responsive="true"></ins>
             <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+
+            if settings.news&&((!settings.news.postUntil)||settings.news.postUntil._seconds*1000>Date.now())
+                div(class=settings.news.isDanger?"loss":"")
+                    h3 Server Info
+                    p=settings.news.message
+
             if settings.useProfile
                 if settings.collectionsDisabled
                     p.loss Collection API access for this profile is disabled. Click <a href="https://www.youtube.com/watch?v=-_LIyA5lNMU">here</a> to see how to enable API access, so that we could put the minions that you cannot craft at the bottom of the list.
