@@ -34,6 +34,10 @@ mixin infoBox(id,type,title)
 block content
     .container
         h1.d-inline-block Active Auctions
+        if settings.news&&((!settings.news.postUntil)||settings.news.postUntil._seconds*1000>Date.now())
+            div(class=settings.news.isDanger?"loss":"")
+                h3 Server Info
+                p=settings.news.message
 
         #content
             hr

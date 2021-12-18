@@ -41,6 +41,10 @@ block content
         +infoBox("minionsTitleModal","info","Minions Crafts Calculator")
             p It calculates the most profitable items to forge with realtime bazaar and auction prices.
         p Most profitable forge options when you are offline.
+        if settings.news&&((!settings.news.postUntil)||settings.news.postUntil._seconds*1000>Date.now())
+            div(class=settings.news.isDanger?"loss":"")
+                h3 Server Info
+                p=settings.news.message
         h3 Warning
         ul
             li Data may be inaccurate (<a href="/contact">Contact me</a> when you see a mistake)
@@ -144,9 +148,6 @@ block content
             if Date.now() - settings.lastUpdatedAuctionServer > 1800*1000 
                 //- 30 minutes
                 p.loss The latest update time for auction prices is #{settings.lastUpdatedAuctionServerString} UTC. It means that the auction prices are outdated. This is very likely to be an error, you may make a bug report <a href="/contact">here</a>. Sorry for the inconvenience caused.
-            if settings.news
-                h3 Server Info
-                p=settings.news
             if settings&&settings.hasError
                 h1 Error
                 p.lead=settings.errorMsg

@@ -5,8 +5,8 @@ exports = module.exports = function (req, res) {
     let settings = req.query;
 
     if(!dataValidation(settings)){
-        res.render("auctions",{settings: settings});
-        // res.render("error/404"); //temporary, not to give people an impression they can search whatever they want
+        // res.render("auctions",{settings: settings});
+        res.render("errors/404"); //temporary, not to give people an impression they can search whatever they want
     }else{
         let keys = [], values = [];
         settings.names.forEach((name)=>{
@@ -49,7 +49,8 @@ exports = module.exports = function (req, res) {
     
         }).catch((err)=>{
             console.log(err);
-            res.render("auctions",{settings: settings});
+            // res.render("auctions",{settings: settings});
+            res.render("errors/404"); //temporary, not to give people an impression they can search whatever they want
         });
     }
 

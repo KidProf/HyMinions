@@ -3,7 +3,7 @@ const { calculateMinionsCostLink } = require("./minionsCostOperation.js");
 var {sourceBazaar,sourceAuction,sourceWarning,sourceOthers,auctionTax,auctionTaxThreshold, gemstoneCollectionName, hotmXpList} = require("./forgeData.js");
 var {merge} = require("./general.js");
 
-let minecraftName, lastUpdatedProfile,lastUpdatedBazaar,lastUpdatedAuction, profileNames, profileInfo, hadError=false;
+let minecraftName, lastUpdatedProfile,lastUpdatedBazaar,lastUpdatedAuction, profileNames, profileInfo, hadError=false, news, lastUpdatedAuctionServer;
 
 const dataUnitPrice = "u";
 const dataQuantity = "q";
@@ -99,7 +99,7 @@ exports.calculateForge = async function(forges, settings){
     if(settings.ah==1){
         //check if not initialized properly
         forges.forEach((forge)=>{
-            forge.priceList = forge.pricesList || [];
+            forge.priceList = forge.priceList || [];
             forge.materials.forEach((material)=>{
                 if(!material.pricesList){
                     material.pricesList = new Array(material.options.length).fill([]);
@@ -143,8 +143,10 @@ exports.calculateForge = async function(forges, settings){
     //settings.ah = 1 load
     //= -1/0 won't load. It is a UI difference - will precheck for users when it is 0, will not when it is -1
     if(settings.ah==1&&!lastUpdatedAuction||Date.now()-lastUpdatedAuction>5*60*1000){ //call again if prev result has error, 5 min timeout        
-        lastUpdateAuction = Date.now();
+        lastUpdatedAuction = Date.now();
         await findAuctions(settings).then((minAuctions)=>{
+            lastUpdatedAuctionServer = settings.lastUpdatedAuctionServer;
+            news = settings.news;
             //incorporate minAuctions into forges
             forges.forEach((forge)=>{
                 if(!forge.source){ //not given source
@@ -182,6 +184,8 @@ exports.calculateForge = async function(forges, settings){
     settings.lastUpdatedProfile = lastUpdatedProfile ? dateTimeToString(lastUpdatedProfile): null;
     settings.lastUpdatedBazaar = lastUpdatedBazaar ? dateTimeToString(lastUpdatedBazaar) : null;
     settings.lastUpdatedAuctionServerString = settings.lastUpdatedAuctionServer ? dateTimeToString(settings.lastUpdatedAuctionServer) : null;
+    settings.lastUpdatedAuctionServer = lastUpdatedAuctionServer;
+    settings.news = news;
     
     if(settings.hasError&&true){
         hadError = true;
