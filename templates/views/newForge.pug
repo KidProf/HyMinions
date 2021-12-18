@@ -144,6 +144,9 @@ block content
             if Date.now() - settings.lastUpdatedAuctionServer > 1800*1000 
                 //- 30 minutes
                 p.loss The latest update time for auction prices is #{settings.lastUpdatedAuctionServerString} UTC. It means that the auction prices are outdated. This is very likely to be an error, you may make a bug report <a href="/contact">here</a>. Sorry for the inconvenience caused.
+            if settings.news
+                h3 Server Info
+                p=settings.news
             if settings&&settings.hasError
                 h1 Error
                 p.lead=settings.errorMsg

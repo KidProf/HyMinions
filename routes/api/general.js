@@ -231,15 +231,17 @@ exports.findAuctions = async function findAuctions(settings){
         setTimeout(() => {
             fetch(process.env.BACKEND_LINK+"/auctions/forge")
             .then(result => result.json())
-            .then(({finishTime,data,status,errorMsg}) => {
+            .then(({finishTime,data,status,errorMsg,news}) => {
                 if(status!="success"){
                     console.log("catch from auctions backend (catch from findAuctions reading backend)");
                     settings.lastUpdatedAuctionServer = new Date(finishTime);
                     settings.hasError=true;
                     settings.errorMsg = errorMsg || "Error occured when getting auction prices. (catch from findAuctions reading backend)";
+                    settings.news = news;
                     resolve("error");
                 }else{
                     settings.lastUpdatedAuctionServer = new Date(finishTime);
+                    settings.news = news;
                     resolve(data);
                 }
             }).catch((err)=>{
