@@ -51,8 +51,17 @@ exports = module.exports = function (req, res) {
         if(!settings.sortBy||!isWithinList(settings.sortBy,[0,1])){
             settings.sortBy = 0;
         }
-        if(!settings.overbuyTolerance||!isWithinList(settings.overbuyTolerance,[0,1,2,3])){
+        if(!settings.riskLevel||!isWithinList(settings.riskLevel,[0,1,2,3,4])){
+            settings.riskLevel = 2;
+        }
+        if(!settings.overbuyTolerance||(settings.overbuyTolerance<1&&settings.overbuyTolerance!=0)){
             settings.overbuyTolerance = 2;
+        }
+        if(!settings.noOfAuctionsMin||(settings.noOfAuctionsMin<1&&settings.noOfAuctionsMin!=0)){
+            settings.noOfAuctionsMin = 5;
+        }
+        if(!settings.budget||(settings.budget<0)){
+            settings.budget = 30*1000000;
         }
         if(!settings.ah||!isWithinList(settings.ah,[-1,0,1])){
             settings.ah = 0;

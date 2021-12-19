@@ -235,6 +235,7 @@ exports.calculateForge = async function(forges, settings){
                 
                 price = priceBeforeTax >= auctionTaxThreshold ? priceBeforeTax*(1-auctionTax/100) : priceBeforeTax;
                 priceText = moneyRepresentation(price,settings.showDetails) + " (AH)";
+                outputForge.noOfAuctions = forge.priceList.length;
                 break;
         }
         outputForge.price = price;

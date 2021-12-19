@@ -83,27 +83,27 @@ block content
                     thead
                         tr
                             th(scope="col")
-                            th(scope="col") 
+                            th(scope="col" style="width: 350px") 
                                 | Item name
                                 //- | <br />
                                 //- button#unhideAllCols.btn.btn-link(onClick="unhideCol()").invisible Unhide all columns
-                            th(scope="col").auctionsQuantity
+                            th(scope="col" style="width: 175px").auctionsQuantity
                                 | Quantity
                                 //- i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeHotm')")
                                 //- | &nbsp;
                                 //- i.pt-2.fas.fa-question-circle(href="/forge/info")
-                            th(scope="col").auctionsTotalPrice
+                            th(scope="col" style="width: 225px").auctionsTotalPrice
                                 | Total Price
                                 //- i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeDuration')")
                                 //- | &nbsp;
                                 //- i.pt-2.fas.fa-question-circle(href="/forge/info")
-                            th(scope="col").auctionsUnitPrice
+                            th(scope="col" style="width: 225px").auctionsUnitPrice
                                 | Unit Price
                                 //- i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeProductPrice')")
                                 //- | &nbsp;
                                 //- i.pt-2.fas.fa-question-circle(href="/forge/info")
                             if settings.descriptionCol
-                                th(scope="col").auctionsDescription
+                                th(scope="col" style="width: 350px").auctionsDescription
                                     | Description (selected items only)
                                     //- i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeProductPrice')")
                                     //- | &nbsp;

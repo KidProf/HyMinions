@@ -26,6 +26,46 @@ function setNotProfile(){
     $(".profileAlt").show();
 }
 
+
+function setRisk(){
+    let riskSelected = $("#overallRiskLevel").children("option:selected").val();
+    console.log("setRisk(",riskSelected);
+
+    if(riskSelected!=0){
+        if(riskSelected==4){
+            $("#overallBudgetCheck").prop("checked",false);
+            $("#overallNoOfAuctionsMinCheck").prop("checked",false);
+            $("#overallOverbuyToleranceCheck").prop("checked",false);
+        }else{
+            $("#overallBudgetCheck").prop("checked",true);
+            $("#overallNoOfAuctionsMinCheck").prop("checked",true);
+            $("#overallOverbuyToleranceCheck").prop("checked",true);
+        }
+        switch(riskSelected){
+            case "1":
+            case 1:
+                $("#overallBudgetValue").val("10");
+                $("#overallNoOfAuctionsMinValue").val("10");
+                $("#overallOverbuyToleranceValue").val("1");
+                break;
+            case "2":
+            case 2:
+                $("#overallBudgetValue").val("30");
+                $("#overallNoOfAuctionsMinValue").val("5");
+                $("#overallOverbuyToleranceValue").val("2");
+                break;
+            case "3":
+            case 3:
+                $("#overallBudgetValue").val("100");
+                $("#overallNoOfAuctionsMinValue").val("3");
+                $("#overallOverbuyToleranceValue").val("3");
+                break;
+            default:
+                break;
+        }
+    }
+}
+
 function generateLink(forceLoad){
     let keys = [], values = [];
 
@@ -62,10 +102,41 @@ function generateLink(forceLoad){
         values.push($("#overallSortBy").children("option:selected").val());
     }
 
-    if($("#overallOverbuyTolerance").children("option:selected").val()!=2){
-        keys.push("overbuyTolerance");
-        values.push($("#overallOverbuyTolerance").children("option:selected").val());
+    if($("#overallRiskLevel").children("option:selected").val()!=2){ //for input box only
+        keys.push("riskLevel");
+        values.push($("#overallRiskLevel").children("option:selected").val());
     }
+
+    if(!$("#overallBudgetCheck").prop("checked")){
+        keys.push("budget");
+        values.push(0);
+    }else{
+        if($("#overallBudgetValue").val()!=30){
+            keys.push("budget");
+            values.push($("#overallBudgetValue").val()*100000);
+        }
+    }
+
+    if(!$("#overallNoOfAuctionsMinCheck").prop("checked")){
+        keys.push("noOfAuctionsMin");
+        values.push(0);
+    }else{
+        if($("#overallNoOfAuctionsMinValue").val()!=5){
+            keys.push("noOfAuctionsMin");
+            values.push($("#overallNoOfAuctionsMinValue").val());
+        }
+    }
+
+    if(!$("#overallOverbuyToleranceCheck").prop("checked")){
+        keys.push("overbuyTolerance");
+        values.push(0);
+    }else{
+        if($("#overallOverbuyToleranceValue").val()!=2){
+            keys.push("overbuyTolerance");
+            values.push($("#overallOverbuyToleranceValue").val());
+        }
+    }
+
     if(forceLoad){
         keys.push("ah");
         values.push(1);

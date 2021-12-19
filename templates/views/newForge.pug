@@ -49,47 +49,47 @@ block content
 
         #overall
             .row
-                #general.col-lg-6.col-12(class=(settings.ah==-1&&settings.bz==-1)?"notLoaded":"")
-                    br
-                    h3 General
-                    .form-group
+                .col-lg-6.col-12(class=(settings.ah==-1&&settings.bz==-1)?"notLoaded":"")
+                    #general
+                        br
+                        h3 General
                         .form-group
-                            input#overallUseProfile.checkbox(type="checkbox" onclick="toggleUseProfile()" checked=(settings.useProfile==true ? 'checked' : undefined))
-                            label(for="overallUseProfile") &nbsp; Use Profile
-                    .form-group#profileName
-                        p Minecraft Name (Recommended): &nbsp; 
-                            input#overallProfileName.form-control(value=settings.name oninput="setUseProfile()")
-                            span &nbsp; &nbsp; 
-                            +infoBox("profileModal","question","Why is my Minecraft name required?")
-                                p If you enter your Minecraft name, it will calculate the cheapest minion ignoring the minion you have crafted. It could make the crafts list more personalized and useful.
-                                p Alternatively, you could uncheck this "Use Profile" box, and it would show the whole crafts list.
-                        if(settings.profileNames)
-                            label#overallProfileProfileLabel(for="overallProfileProfile") Profile: &nbsp;
-                            select#overallProfileProfile.form-control
-                                -let k=0
-                                while k<settings.profileNames.length
-                                    option(value=k selected=(settings.profile==k?'selected':undefined))=settings.profileNames[k]
-                                    -k++;
-                    .form-group.profileAlt
-                        span HOTM Level: &nbsp;
-                        select#overallHotmLevel.form-control(onchange="setNotProfile()")
-                            -let j=0
-                            while j<=7
-                                option(selected=(settings.hotmLevel==j ? 'selected':undefined))=j
-                                -j++;
-                            //- 7: default
-                            //- option(selected=(!settings.hotmLevel||settings.hotmLevel==7 ? 'selected':undefined) value="7") 7
-                    .form-group.profileAlt
-                        span Gemstone Collection Level: &nbsp;
-                        select#overallGemstoneCollectionLevel.form-control(onchange="setNotProfile()")
-                            -let l=0
-                            while l<=11
-                                option(selected=(settings.gemstoneCollectionLevel==l ? 'selected':undefined))=l
-                                -l++;
-                            //- 11: default
-                            //- option(selected=(!settings.gemstoneCollectionLevel||settings.gemstoneCollectionLevel==10 ? 'selected':undefined) value="10") 10
-                #advanced.col-lg-6.col-12
-                    div(class=(settings.ah==-1&&settings.bz==-1)?"notLoaded":"")
+                            .form-group
+                                input#overallUseProfile.checkbox(type="checkbox" onclick="toggleUseProfile()" checked=(settings.useProfile==true ? 'checked' : undefined))
+                                label(for="overallUseProfile") &nbsp; Use Profile
+                        .form-group#profileName
+                            p Minecraft Name (Recommended): &nbsp; 
+                                input#overallProfileName.form-control(value=settings.name oninput="setUseProfile()")
+                                span &nbsp; &nbsp; 
+                                +infoBox("profileModal","question","Why is my Minecraft name required?")
+                                    p If you enter your Minecraft name, it will calculate the cheapest minion ignoring the minion you have crafted. It could make the crafts list more personalized and useful.
+                                    p Alternatively, you could uncheck this "Use Profile" box, and it would show the whole crafts list.
+                            if(settings.profileNames)
+                                label#overallProfileProfileLabel(for="overallProfileProfile") Profile: &nbsp;
+                                select#overallProfileProfile.form-control
+                                    -let k=0
+                                    while k<settings.profileNames.length
+                                        option(value=k selected=(settings.profile==k?'selected':undefined))=settings.profileNames[k]
+                                        -k++;
+                        .form-group.profileAlt
+                            span HOTM Level: &nbsp;
+                            select#overallHotmLevel.form-control(onchange="setNotProfile()")
+                                -let j=0
+                                while j<=7
+                                    option(selected=(settings.hotmLevel==j ? 'selected':undefined))=j
+                                    -j++;
+                                //- 7: default
+                                //- option(selected=(!settings.hotmLevel||settings.hotmLevel==7 ? 'selected':undefined) value="7") 7
+                        .form-group.profileAlt
+                            span Gemstone Collection Level: &nbsp;
+                            select#overallGemstoneCollectionLevel.form-control(onchange="setNotProfile()")
+                                -let l=0
+                                while l<=11
+                                    option(selected=(settings.gemstoneCollectionLevel==l ? 'selected':undefined))=l
+                                    -l++;
+                                //- 11: default
+                                //- option(selected=(!settings.gemstoneCollectionLevel||settings.gemstoneCollectionLevel==10 ? 'selected':undefined) value="10") 10
+                    #advanced(class=(settings.ah==-1&&settings.bz==-1)?"notLoaded":"")
                         br
                         h3 Advanced
                         //- .form-group
@@ -104,27 +104,51 @@ block content
                                 input#overallTax.form-control(type="number" value=settings.tax min="0")
                                 span &nbsp; %
                         p: small Tax in auction house is 1% when selling items above 1M coins. The AH prices below are the current lowest BIN. The bazaar prices are based on buy instantly and sell instantly.
-                        br
+                        
                         .form-group
                             span Sort by: &nbsp;
                             select#overallSortBy.form-control
                                 option(value="0" selected=(settings.sortBy==0 ? 'selected':undefined)) Profit per forge
                                 option(value="1" selected=(settings.sortBy==1 ? 'selected':undefined)) Profit per hour
+                        br
+                .col-lg-6.col-12
+                    #miscellaneous 
+                        div(class=(settings.ah==-1&&settings.bz==-1)?"notLoaded":"")
+                            br
+                            h3 Risk Management
+                            .form-group
+                                span Risk Level: &nbsp;
+                                select#overallRiskLevel.form-control(onchange="setRisk()")
+                                    option(value="1" selected=(settings.riskLevel==1 ? 'selected':undefined)) Low
+                                    option(value="2" selected=(settings.riskLevel==2 ? 'selected':undefined)) Medium
+                                    option(value="3" selected=(settings.riskLevel==3 ? 'selected':undefined)) High
+                                    option(value="4" selected=(settings.riskLevel==4 ? 'selected':undefined)) Maximum
+                                    option(value="0" selected=(settings.riskLevel==0 ? 'selected': undefined)) Custom
+                            .form-group
+                                input#overallBudgetCheck.checkbox(type="checkbox" checked=(settings.budget!=0 ? 'checked' : undefined) onchange="setRiskCustom()")
+                                label &nbsp; Budget: &nbsp; 
+                                input#overallBudgetValue.form-control(type="number" value=settings.budget/1000000 min="0" oninput="setRiskCustom()")
+                                span &nbsp; M &nbsp;
+                            .form-group
+                                input#overallNoOfAuctionsMinCheck.checkbox(type="checkbox" checked=(settings.noOfAuctionsMin!=0 ? 'checked' : undefined) onchange="setRiskCustom()")
+                                label &nbsp; Minium items in AH: &nbsp; 
+                                input#overallNoOfAuctionsMinValue.form-control(type="number" value=settings.noOfAuctionsMin min="1" oninput="setRiskCustom()")
+                            .form-group
+                                input#overallOverbuyToleranceCheck.checkbox(type="checkbox" checked=(settings.overbuyTolerance!=0 ? 'checked' : undefined) onchange="setRiskCustom()")
+                                label &nbsp; Buy in bulk: &nbsp;
+                                input#overallOverbuyToleranceValue.form-control(type="number" value=settings.overbuyTolerance min="1" oninput="setRiskCustom()")
+                                span &nbsp; x &nbsp;
+                            p: small ^ Forges that do not satisfy these criteria would be highlighted in yellow at related cells, but they will not be moved to the bottom.
+                        h3 Switches
                         .form-group
-                            span Overbuy tolerance: &nbsp;
-                            select#overallOverbuyTolerance.form-control
-                                option(value="1" selected=(settings.overbuyTolerance==1 ? 'selected':undefined)) 1x
-                                option(value="2" selected=(settings.overbuyTolerance==2 ? 'selected':undefined)) 2x
-                                option(value="3" selected=(settings.overbuyTolerance==3 ? 'selected':undefined)) 3x
-                                option(value="0" selected=(settings.overbuyTolerance==0 ? 'selected':undefined)) Infinite
-                    .form-group
-                        input#overallLoadAuctions.checkbox(type="checkbox" checked=(settings.ah!=-1 ? 'checked' : undefined))
-                        //-both 0 and 1 will make it checked
-                        label(for="overallLoadAuctions") &nbsp; Load Auctions
-                    .form-group
-                        input#overallLoadBazaar.checkbox(type="checkbox" checked=(settings.bz!=-1 ? 'checked' : undefined))
-                        //-both 0 and 1 will make it checked
-                        label(for="overallLoadBazaar") &nbsp; Load Bazaar
+                            input#overallLoadAuctions.checkbox(type="checkbox" checked=(settings.ah!=-1 ? 'checked' : undefined))
+                            //-both 0 and 1 will make it checked
+                            label(for="overallLoadAuctions") &nbsp; Load Auctions
+                        .form-group
+                            input#overallLoadBazaar.checkbox(type="checkbox" checked=(settings.bz!=-1 ? 'checked' : undefined))
+                            //-both 0 and 1 will make it checked
+                            label(for="overallLoadBazaar") &nbsp; Load Bazaar
+                        p: small ^ Should only be used when there is error.
             button#overallSettings.btn(onclick="generateLink()") Apply and Load
             small &nbsp; &nbsp; < Click to load data
         //-     span &nbsp; &nbsp; &nbsp;
@@ -217,7 +241,12 @@ block content
                                 i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeProductPrice')")
                                 //- | &nbsp;
                                 //- i.pt-2.fas.fa-question-circle(href="/forge/info")
-                            th(scope="col").forgeUnitCost
+                            th(scope="col").forgeNoOfAuctions
+                                | No. of active  <br />
+                                | auctions  <br />
+                                i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeNoOfAuctions')")
+                                //- | &nbsp;
+                                //- i.pt-2.fas.fa-question-circle(href="/forge/info")
                             th(scope="col").forgeMaterialsName
                                 | Materials <br /> 
                                 | (Cheapest variant) <br />
@@ -276,10 +305,14 @@ block content
                                         | <br />+ #{requirement.name} #{requirement.tier}
                             td(id="forge"+i+"Duration").forgeDuration= outputForge.duration || outputForge.durationText
                             td(id="forge"+i+"ProductPrice").forgeProductPrice=outputForge.priceText
-                            td.forgeProductPrice
+                            td(id="forge"+i+"NoOfAuctions").forgeNoOfAuctions
                                 if !outputForge.source
+                                    if (settings.noOfAuctionsMin!=0&&outputForge.noOfAuctions<settings.noOfAuctionsMin)
+                                        span.warning #{outputForge.noOfAuctions} (price unstable) 
+                                    else
+                                        | #{outputForge.noOfAuctions} 
+                                    br
                                     i.fas.fa-info-circle(onclick="generateAuctionLink(\""+outputForge.name+"\","+outputForge.approximateMatch+","+"1"+","+settings.overbuyTolerance+")")
-                                br
                             td(id="forge"+i+"MaterialsName").forgeMaterialsName
                                 if outputForge.materials
                                     each material in outputForge.materials
@@ -306,8 +339,11 @@ block content
                                     each material in outputForge.materials
                                         | #{material.componentCostText}
                                         br
-                            td(id="forge"+i+"Cost").forgeCost=outputForge.totalCostText
-                            
+                            td(id="forge"+i+"Cost").forgeCost
+                                if (settings.budget!=0&&settings.budget<outputForge.totalCost)
+                                    span.warning #{outputForge.totalCostText} (overbudget)
+                                else
+                                    | #{outputForge.totalCostText}
                             td(id="forge"+i+"NetProfit" class=(outputForge.profit<0?"warning":"")).forgeNetProfit=outputForge.profitText
                             td(id="forge"+i+"ProfitPerHour" class=(outputForge.profit<0?"warning":"")).forgeProfitPerHour=outputForge.profitPerHourText
                             //- loss -> yellow label
