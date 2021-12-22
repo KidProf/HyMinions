@@ -13,9 +13,9 @@ block meta
 
 mixin infoBox(id,type,title)
     if(type=="info")
-        i.fas.fa-lg(data-toggle="modal" data-target="#"+id class="fa-info-circle")
+        i.fas(data-toggle="modal" data-target="#"+id class="fa-info-circle")
     else if(type=="question")
-        i.fas.fa-lg(data-toggle="modal" data-target="#"+id class="fa-question-circle")
+        i.fas(data-toggle="modal" data-target="#"+id class="fa-question-circle")
     .modal.fade.infoBox(id=id tabindex="-1" role="dialog" aria-labelledby=id+"Label" aria-hidden="true")
         .modal-dialog(role="document" class=(type=="rightInfo"?"modal-xl":undefined))
             .modal-content
@@ -40,11 +40,15 @@ block content
         p.d-inline-block &nbsp; &nbsp; &nbsp;
         +infoBox("minionsTitleModal","info","Minions Crafts Calculator")
             p It calculates the most profitable items to forge with realtime bazaar and auction prices.
+            p: a(href="/info/forge" target="_blank") Check out more documentation
         p Most profitable forge options when you are offline.
 
         h3 Warning
         ul
             li Data may be inaccurate (<a href="/contact">Contact me</a> when you see a mistake)
+            li
+                | Think twice before making an investment. There is a possibility that you might suffer from a loss. 
+                a(href="/info/forge#disclaimer" target="_blank"): i.pt-2.fas.fa-question-circle
             li This page is in beta, bugs may occur.
 
         #overall
@@ -62,8 +66,9 @@ block content
                                 input#overallProfileName.form-control(value=settings.name oninput="setUseProfile()")
                                 span &nbsp; &nbsp; 
                                 +infoBox("profileModal","question","Why is my Minecraft name required?")
-                                    p If you enter your Minecraft name, it will calculate the cheapest minion ignoring the minion you have crafted. It could make the crafts list more personalized and useful.
-                                    p Alternatively, you could uncheck this "Use Profile" box, and it would show the whole crafts list.
+                                    p If you enter your Minecraft name, it will determine your HOTM and Gemstone Collection level, making it more personalized and useful. (Note that API settings has to be changed in game in order to obtain for the calculator to obtain Gemstone Collection level.)
+                                    p Alternatively, you could uncheck this "Use Profile" box, and manually input your HOTM and Gemstone Collection level. 
+                                    p: a(href="/info/forge#minecraftName" target="_blank") Check out more documentation
                             if(settings.profileNames)
                                 label#overallProfileProfileLabel(for="overallProfileProfile") Profile: &nbsp;
                                 select#overallProfileProfile.form-control
@@ -102,8 +107,9 @@ block content
                         .form-group
                             label(for="overallTax") Tax in bazaar: &nbsp; 
                                 input#overallTax.form-control(type="number" value=settings.tax min="0")
-                                span &nbsp; %
-                        p: small Tax in auction house is 1% when selling items above 1M coins. The AH prices below are the current lowest BIN. The bazaar prices are based on buy instantly and sell instantly.
+                                span &nbsp; % &nbsp;
+                            a(href="/info/forge#tax" target="_blank"): i.pt-2.fas.fa-question-circle
+                        p: small Tax in auction house (BIN) is 2% when selling items above 1M coins, 1% otherwise. The AH prices below are the current lowest BIN. The bazaar prices are based on buy instantly and sell instantly.
                         
                         .form-group
                             span Sort by: &nbsp;
@@ -115,7 +121,9 @@ block content
                     #miscellaneous 
                         div(class=(settings.ah==-1&&settings.bz==-1)?"notLoaded":"")
                             br
-                            h3 Risk Management
+                            h3.d-inline-block Risk Management
+                            span.d-inline-block &nbsp; &nbsp;
+                            a.d-inline-block(href="/info/forge#riskManagement" target="_blank"): i.pt-2.fas.fa-question-circle
                             .form-group
                                 span Risk Level: &nbsp;
                                 select#overallRiskLevel.form-control(onchange="setRisk()")
@@ -124,21 +132,27 @@ block content
                                     option(value="3" selected=(settings.riskLevel==3 ? 'selected':undefined)) High
                                     option(value="4" selected=(settings.riskLevel==4 ? 'selected':undefined)) Maximum
                                     option(value="0" selected=(settings.riskLevel==0 ? 'selected': undefined)) Custom
+                                span &nbsp; &nbsp;
+                                a(href="/info/forge#riskLevel" target="_blank"): i.pt-2.fas.fa-question-circle
                             .form-group
                                 input#overallBudgetCheck.checkbox(type="checkbox" checked=(settings.budget!=0 ? 'checked' : undefined) onchange="setRiskCustom()")
                                 label &nbsp; Budget: &nbsp; 
                                 input#overallBudgetValue.form-control(type="number" value=settings.budget/1000000 min="0" oninput="setRiskCustom()")
                                 span &nbsp; M &nbsp;
+                                a(href="/info/forge#budget" target="_blank"): i.pt-2.fas.fa-question-circle
                             .form-group
                                 input#overallNoOfAuctionsMinCheck.checkbox(type="checkbox" checked=(settings.noOfAuctionsMin!=0 ? 'checked' : undefined) onchange="setRiskCustom()")
                                 label &nbsp; Minium items in AH: &nbsp; 
                                 input#overallNoOfAuctionsMinValue.form-control(type="number" value=settings.noOfAuctionsMin min="1" oninput="setRiskCustom()")
+                                span &nbsp; &nbsp;
+                                a(href="/info/forge#noOfAuctionsMin" target="_blank"): i.pt-2.fas.fa-question-circle
                             .form-group
                                 input#overallOverbuyToleranceCheck.checkbox(type="checkbox" checked=(settings.overbuyTolerance!=0 ? 'checked' : undefined) onchange="setRiskCustom()")
                                 label &nbsp; Buy in bulk: &nbsp;
                                 input#overallOverbuyToleranceValue.form-control(type="number" value=settings.overbuyTolerance min="1" oninput="setRiskCustom()")
                                 span &nbsp; x &nbsp;
-                            p: small ^ This is similar to an investment, there is a possibility of loss. Forges that do not satisfy the above criteria would be highlighted in yellow at related cells as a reminder hoping to reduce the potential loss, but they will not be moved to the bottom.
+                                a(href="/info/forge#overbuyTolerance" target="_blank"): i.pt-2.fas.fa-question-circle
+                            p: small ^ Trying to profit from the forge is similar to an investment, there is a possibility of loss. Forges that do not satisfy the above criteria would be highlighted in yellow at related cells as a reminder hoping to reduce the potential loss, but they will not be moved to the bottom.
                             p: small It is also a good idea to check on current auctions, auction history <i class="fa fa-history"></i>  provided by <a href="https://sky.coflnet.com/">Coflnet</a>.
                         h3 Switches
                         .form-group
@@ -238,16 +252,16 @@ block content
                                 //- i.pt-2.fas.fa-question-circle(href="/forge/info")
                             th(scope="col").forgeProductPrice
                                 | Price of product  <br />
-                                | (With tax)  <br />
+                                | (with tax)  <br />
                                 i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeProductPrice')")
-                                //- | &nbsp;
-                                //- i.pt-2.fas.fa-question-circle(href="/forge/info")
+                                | &nbsp;
+                                a(href="/info/forge#forgeProductPrice" target="_blank"): i.pt-2.fas.fa-question-circle
                             th(scope="col").forgeNoOfAuctions
                                 | No. of active  <br />
                                 | auctions  <br />
                                 i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeNoOfAuctions')")
-                                //- | &nbsp;
-                                //- i.pt-2.fas.fa-question-circle(href="/forge/info")
+                                | &nbsp;
+                                a(href="/info/forge#forgeNoOfAuctions" target="_blank"): i.pt-2.fas.fa-question-circle
                             th(scope="col").forgeMaterialsName
                                 | Materials <br /> 
                                 | (Cheapest variant) <br />
@@ -257,8 +271,8 @@ block content
                             th(scope="col").forgeUnitCost
                                 | Unit cost of material(s) <br />
                                 i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeUnitCost')")
-                                //- | &nbsp;
-                                //- i.pt-2.fas.fa-question-circle(href="/forge/info")
+                                | &nbsp;
+                                a(href="/info/forge#forgeUnitCost" target="_blank"): i.pt-2.fas.fa-question-circle
                             th(scope="col").forgeUnitCost
                             th(scope="col").forgeComponentCost
                                 | Total cost of material(s) <br />
