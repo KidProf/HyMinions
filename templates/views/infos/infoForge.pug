@@ -1,7 +1,139 @@
 extends ../../layouts/default
 
 block content
-	.container
-		h1 Coming Soon
+    .container
+        h1 Info: Forge
+        p Most profitable forge options when you are offline.
 
-		
+        p It calculates the most profitable items to forge with realtime bazaar and auction prices.
+
+        h3 Warning
+        ul
+            li Data may be inaccurate (<a href="/contact">Contact me</a> when you see a mistake)
+            li
+                | Think twice before making an investment. There is a possibility that you might suffer from a loss. 
+                a(href="#disclaimer" target="_blank"): i.pt-2.fas.fa-question-circle
+            li The forge calculator is in beta, bugs may occur and this documentation is not yet complete.
+        
+        h3 Features
+        ul
+            li Real time AH and bazaar prices (refreshed every 10 minutes)
+            li Taken reforges into account - it can recognise items with different reforges as the same item and gives you the correct lowest BIN.
+            li Risk Management - tries to reduce the risk by showing warnings if it exceeded the set budget, and more
+            li Tailor-made for each profile (HOTM Level and Gemstone Collection Level)
+            
+        //- h2.mt-5 Contents
+        //- hr
+        //- ol
+        //-     li
+        //-         | <a href="#settingsExplained"> Settings Explained</a>
+        //-         ul
+        //-             li: a(href="#minecraftName") Why is my Minecraft name required?
+        //-             li: a(href="#minionSlotsTierType") Estimate by number of minion slots
+        //-             li: a(href="#minionSlotsManualType") Manually choose tier
+        //-             li: a(href="#fuel") Fuel/ other perks
+        //-             li: a(href="#offlineTime") Offline time
+        //-             li: a(href="#diamondSpreading") Diamond Spreading
+        //-             li: a(href="#differentCompactors") Different compactors
+        //-             li: a(href="#noCrafting") No crafting
+        //-             li: a(href="#sellingTo") Selling to
+        //-             li: a(href="#rawDataButton") Show raw data button and details
+        //-             li: a(href="#lesserSoulflowEngine") Lesser Soulflow Engine
+        //-             li: a(href="#sellingMethodInBazaar") Selling method in bazaar
+        //-             li: a(href="#tax") Tax in bazaar
+
+        //-     li
+        //-         | <a href="#tableColumnsExplained"> Table Columns Explained</a>
+        //-         ul 
+        //-             li: a(href="#minionCol") Minion (Total Profit for 1 minion for (offline time))
+        //-             li: a(href="#tierCol") Tier
+        //-             li: a(href="#minionUpgrades") Minion Upgrades
+        //-             li: a(href="#itemsCol") Items
+        //-             li: a(href="#quantityCol") Quantity
+        //-             li: a(href="#unitPriceCol") Unit Price
+        //-             li: a(href="#totalProfitCol") Total Profit
+        //-             li: a(href="#profitPerHour") Profit Per Hour
+        //-     li: a(href="#algoithm") Algorithm
+        //-     li: a(href="#disclaimer") Disclaimer
+        //-     li: a(href="#faq") FAQ
+
+        h2#settingsExplained.mt-5 Settings Explained
+        hr
+        //- p TL;DR: Default settings should be suitable for most of you. In my opinion, your Minecraft name is the most crucial piece of information to make the calculator useful for you, but it is down to personal preference. If you prefer not to, there are alternative estimation methods including <a href="#minionSlotsTierType">Estimate by number of minion slots</a> and <a href="#manualTierType">Manually choose tier</a>.
+
+        br
+        h3#minecraftName Why is my Minecraft name required?
+        p If you enter your Minecraft name, it will determine your HOTM and Gemstone Collection level, making it more personalized and useful. (Note that API settings has to be changed in game in order to obtain for the calculator to obtain Gemstone Collection level.)
+        p Alternatively, you could uncheck this "Use Profile" box, and manually input your HOTM and Gemstone Collection level. 
+
+        br 
+        h3#tax Tax in bazaar
+        p The bazaar has a tax rate of 1.25% by default. The community center upgrade Bazaar Flipper can bring it down to 1.125% for free-to-play players, and a further decrease to 1% if you spend gems.
+
+        br
+        h3#riskManagement Risk Managemnt
+        p Trying to profit from the forge is similar to an investment, there is a possibility of loss. Forges that do not satisfy the above criteria would be highlighted in yellow at related cells as a reminder hoping to reduce the potential loss, but they will not be moved to the bottom.
+
+        br
+        h3#riskLevel Risk Level
+        p An advice on how to adjust the three settings below, which may be less intuitive.
+
+        br
+        h3#budget Budget
+        p Maximum amount of money you would spend to buy the materials for the forge.
+
+        br
+        h3#noOfAuctionsMin Minimum items in AH
+        p More items in AH currently means the price is more stable. Since individuals would have less impact on overall price.
+
+        br
+        h3#overbuyTolerance Buy in bulk 
+        p The amount of items you would buy at a time in Auction House at most.
+        p e.g. You need 20 plasma
+        p Current Auctions:
+        p 1. 20k for 1 plasma (20k per)
+        p 2. 1M for 40 plasma (25k per)
+        p 3. 600k for 20 plasma (30k per)
+        p The calculator would ignore 2., even if it is cheaper in terms of unit price.
+
+        h2#tableColumnsExplained.mt-5 Table Columns Explained
+        hr
+
+        br
+        h3#forgeProductPrice  Price of product (with tax)
+        p It includes tax when you are selling your product, so it would be lower than the numbers shown in game.
+        p Auction House (Buy It Now (BIN) mode): 1% if selling price is smaller than or equal to 1M, 2% otherwise.
+        p Bazaar: The bazaar has a tax rate of 1.25% by default. The community center upgrade Bazaar Flipper can bring it down to 1.125% for free-to-play players, and a further decrease to 1% if you spend gems. Tax rate can be adjusted in the settings.
+        br
+
+        h3#forgeNoOfAuctions No. of active auctions
+        p Shows number of BIN available on the auction house.
+        p More items in AH currently means the price is more stable. Since individuals would have less impact on overall price.
+        p <i class="fas fa-info-circle"></i> will bring you to a list of current BIN auctions. (note that the website is refreshed every 10 minutes, see <a href="#faq">FAQ</a>)
+        p <i class="fas fa-history"></i> will bring you to <a href="https://sky.coflnet.com/">Coflnet</a>, with graphs of the selling price of the product in the past. 
+        p It is highly encouraged to check on both of the links before investing on the materials, so that you know the potential variation of the selling price.
+        
+        br
+        h3#forgeUnitCost Unit cost of material(s)
+        p It may be a range of prices if multiple items are needed from the AH.
+        p <i class="fas fa-info-circle"></i> will bring you to a list of current BIN auctions of the materials. (note that the website is refreshed every 10 minutes, see <a href="#faq">FAQ</a>)
+
+        //- h2#algoithm.mt-5 Algorithm
+        //- hr
+        //- p It calculates the profit based on your frequency of collecting minions. For example, lapis minions could be a good minion for active players, who collect enchanted lapis before they are automatically converted into enchanted lapis blocks (selling enchanted lapis is more profitable than selling enchanted lapis blocks), but not for those who are less active.
+        //- p It generally follows this formula:
+        //- p sum of all products(offline duration(in hours)*3600/time between actions(in seconds)/2 (due to offline)*generated per time*(1+fuel(in %)/100)*max possible price)
+        
+        h2#disclaimer.mt-5 Disclaimer
+        hr
+        p Please note that the forge calculator calculates based on the instantaneous price of the items sold in bazaar and auction house, so the prices may fluctuate a lot from time to time, and so do the profit (as we all know the economy of Skyblock is quite unstable). 
+        p Think twice before making an investment. As the volume of items in Auction House is much less than items in Bazaar, the risk would be much higher than using the minions profit calculator, as you may make a loss from forges if you are unlucky. 
+        
+
+        h2#faq.mt-5 FAQ
+
+        br
+        h3 Q: How often does this website refresh?
+        p A: Bazaar prices would refresh as long as Hypixel API refreshes. While auction prices are refreshed every 10 minutes. As auction prices are stored in my server while bazaar prices are not.
+
+        p Feel free to <a href="/contacts">contact me</a> if you do not understand anything.

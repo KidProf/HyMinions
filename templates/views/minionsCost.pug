@@ -53,7 +53,7 @@ block content
                             input#overallProfileName.form-control(value=settings.name oninput="setUseProfile()")
                             span &nbsp; &nbsp; 
                             +infoBox("profileModal","question","Why is my Minecraft name required?")
-                                p If you enter your Minecraft name, it will calculate the cheapest minion ignoring the minion you have crafted. It could make the crafts list more personalized and useful.
+                                p If you enter your Minecraft name, it will calculate the cheapest minion ignoring the minion you have crafted. It could make the crafts list more personalized and useful. (Note that API settings has to be changed in game in order to obtain for the calculator to obtain collections information.)
                                 p Alternatively, you could uncheck this "Use Profile" box, and it would show the whole crafts list.
                         if(settings.profileNames)
                             label#overallProfileProfileLabel(for="overallProfileProfile") Profile: &nbsp;
