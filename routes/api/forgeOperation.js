@@ -213,6 +213,7 @@ exports.calculateForge = async function(forges, settings){
             collectionsRequirement: forge.collectionsRequirement,
             source: forge.source,
             last: 0,
+            rawId: forge.rawId || constructRawId(forge.name),
         };
         let price, priceText;
         switch(forge.source){
@@ -420,5 +421,15 @@ exports.calculateForge = async function(forges, settings){
             }
         }
         return i;
+    }
+
+    function constructRawId(name){
+        return ([...name].map((character)=>{
+            if(character==' '||character=='-'){
+                return '_';
+            }else{
+                return character.toUpperCase();
+            }
+        })).join('');
     }
 }

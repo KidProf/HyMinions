@@ -138,7 +138,8 @@ block content
                                 label &nbsp; Buy in bulk: &nbsp;
                                 input#overallOverbuyToleranceValue.form-control(type="number" value=settings.overbuyTolerance min="1" oninput="setRiskCustom()")
                                 span &nbsp; x &nbsp;
-                            p: small ^ Forges that do not satisfy these criteria would be highlighted in yellow at related cells, but they will not be moved to the bottom.
+                            p: small ^ This is similar to an investment, there is a possibility of loss. Forges that do not satisfy the above criteria would be highlighted in yellow at related cells as a reminder hoping to reduce the potential loss, but they will not be moved to the bottom.
+                            p: small It is also a good idea to check on current auctions, auction history <i class="fa fa-history"></i>  provided by <a href="https://sky.coflnet.com/">Coflnet</a>.
                         h3 Switches
                         .form-group
                             input#overallLoadAuctions.checkbox(type="checkbox" checked=(settings.ah!=-1 ? 'checked' : undefined))
@@ -313,6 +314,8 @@ block content
                                         | #{outputForge.noOfAuctions} 
                                     br
                                     i.fas.fa-info-circle(onclick="generateAuctionLink(\""+outputForge.name+"\","+outputForge.approximateMatch+","+"1"+","+settings.overbuyTolerance+")")
+                                    span &nbsp; &nbsp;
+                                    a(href="https://sky.coflnet.com/item/"+outputForge.rawId target="_blank"): i.fas.fa-history
                             td(id="forge"+i+"MaterialsName").forgeMaterialsName
                                 if outputForge.materials
                                     each material in outputForge.materials

@@ -715,6 +715,7 @@ let forges = [
         hotmRequirement: 2,
     },{ //17
         name : "Beacon II",
+        rawId: "BEACON_2",
         npcPrice: 0,
         materials: [
             {
@@ -796,6 +797,7 @@ let forges = [
         hotmRequirement: 2,
     },{ //21
         name : "Travel Scroll to the Dwarven Forge",
+        rawId: "FORGE_TRAVEL_SCROLL",
         npcPrice: 0,
         materials: [
             {
@@ -1395,6 +1397,7 @@ let forges = [
         hotmRequirement: 3,
     },{ //44
         name : "Beacon III",
+        rawId: "BEACON_3",
         npcPrice: 0,
         materials: [
             {
@@ -1606,6 +1609,7 @@ let forges = [
         hotmRequirement: 3,
     },{ //51
         name : "Travel Scroll to the Crystal Hollows",
+        rawId: "CRYSTAL_HOLLOWS_TRAVEL_SCROLL",
         npcPrice: 0,
         materials: [
             {
@@ -1694,6 +1698,7 @@ let forges = [
         hotmRequirement: 4,
     },{ //53
         name : "Titanium-Plated Drill Engine",
+        rawId: "TITANIUM_DRILL_ENGINE",
         npcPrice: 0,
         materials: [
             {
@@ -1751,6 +1756,7 @@ let forges = [
         hotmRequirement: 4,
     },{ //55
         name : "Beacon IV",
+        rawId: "BEACON_4",
         npcPrice: 0,
         materials: [
             {
@@ -1905,6 +1911,7 @@ let forges = [
         hotmRequirement: 4,
     },{ //60
         name : "Titanium Drill DR-X355",
+        rawId: "TITANIUM_DRILL_1",
         approximateMatch: true,
         npcPrice: 0,
         materials: [
@@ -1959,6 +1966,7 @@ let forges = [
         hotmRequirement: 5,
     },{ //61
         name : "Titanium Drill DR-X455",
+        rawId: "TITANIUM_DRILL_2",
         approximateMatch: true,
         npcPrice: 0,
         materials: [
@@ -2008,6 +2016,7 @@ let forges = [
         hotmRequirement: 5,
     },{ //62
         name : "Titanium Drill DR-X555",
+        rawId: "TITANIUM_DRILL_3",
         approximateMatch: true,
         npcPrice: 0,
         materials: [
@@ -2082,6 +2091,7 @@ let forges = [
         hotmRequirement: 5,
     },{ //63
         name : "Titanium-Infused Fuel Tank",
+        rawId: "TITANIUM_FUEL_TANK",
         npcPrice: 0,
         materials: [
             {
@@ -2130,6 +2140,7 @@ let forges = [
         hotmRequirement: 5,
     },{ //64
         name : "Beacon V",
+        rawId: "BEACON_5",
         npcPrice: 0,
         materials: [
             {
@@ -2403,6 +2414,7 @@ let forges = [
         hotmRequirement: 6,
     },{ //71
         name : "Titanium Drill DR-X655",
+        rawId: "TITANIUM_DRILL_4",
         approximateMatch: true,
         npcPrice: 0,
         materials: [
