@@ -1,6 +1,6 @@
 var {moneyRepresentation, dateTimeToString, findBazaar, findProfile, findAuctions, determineBuyList, dataUnitPrice} = require("./general.js");
 const { calculateMinionsCostLink } = require("./minionsCostOperation.js");
-var {sourceBazaar,sourceAuction,sourceWarning,sourceOthers,auctionTax,auctionTaxThreshold, gemstoneCollectionName, hotmXpList} = require("./forgeData.js");
+var {sourceBazaar,sourceAuction,sourceWarning,sourceOthers,auctionTax,auctionTaxUnderThreshold,auctionTaxThreshold, gemstoneCollectionName, hotmXpList} = require("./forgeData.js");
 var {merge} = require("./general.js");
 
 let minecraftName, lastUpdatedProfile,lastUpdatedBazaar,lastUpdatedAuction, profileNames, profileInfo, hadError=false, news, lastUpdatedAuctionServer;
@@ -234,7 +234,7 @@ exports.calculateForge = async function(forges, settings){
                     outputForge.productOutOfStock = true;
                 }
                 
-                price = priceBeforeTax >= auctionTaxThreshold ? priceBeforeTax*(1-auctionTax/100) : priceBeforeTax;
+                price = priceBeforeTax >= auctionTaxThreshold ? priceBeforeTax*(1-auctionTax/100) : priceBeforeTax*(1-auctionTaxUnderThreshold/100);
                 priceText = moneyRepresentation(price,settings.showDetails) + " (AH)";
                 outputForge.noOfAuctions = forge.priceList.length;
                 break;

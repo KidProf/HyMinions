@@ -3,7 +3,8 @@ exports.sourceAuction = 2;
 exports.sourceWarning = 3;
 exports.sourceOthers = 4;
 
-exports.auctionTax = 1;
+exports.auctionTax = 2;
+exports.auctionTaxUnderThreshold = 1;
 exports.auctionTaxThreshold = 1000000;
 
 exports.hotmXpList = [0,3000,12000,37000,97000,197000,347000];
