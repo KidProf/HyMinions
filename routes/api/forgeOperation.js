@@ -139,7 +139,7 @@ exports.calculateForge = async function(forges, settings){
     
     //settings.ah = 1 load
     //= -1/0 won't load. It is a UI difference - will precheck for users when it is 0, will not when it is -1
-    if(settings.ah==1&&!lastUpdatedAuction||Date.now()-lastUpdatedAuction>5*60*1000){ //call again if prev result has error, 5 min timeout        
+    if(settings.ah==1&&(!lastUpdatedAuction||Date.now()-lastUpdatedAuction>5*60*1000)){ //call again if prev result has error, 5 min timeout        
         lastUpdatedAuction = Date.now();
         await findAuctions(settings).then((minAuctions)=>{
             lastUpdatedAuctionServer = settings.lastUpdatedAuctionServer;

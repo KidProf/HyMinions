@@ -66,6 +66,10 @@ function setRisk(){
     }
 }
 
+function setRiskCustom(){
+    $("#overallRiskLevel").val(0);
+}
+
 function generateLink(forceLoad){
     let keys = [], values = [];
 
@@ -113,7 +117,7 @@ function generateLink(forceLoad){
     }else{
         if($("#overallBudgetValue").val()!=30){
             keys.push("budget");
-            values.push($("#overallBudgetValue").val()*100000);
+            values.push($("#overallBudgetValue").val()*1000000);
         }
     }
 
