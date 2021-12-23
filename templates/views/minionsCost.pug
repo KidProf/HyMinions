@@ -10,26 +10,6 @@ block append variables
 block meta
     meta(name="description" content="It calculates the cheapest minions to level up to gain more minion slots, also tailor-made for each profile if you input your Minecraft name.")
 
-mixin infoBox(id,type,title)
-    if(type=="info")
-        i.fas.fa-lg(data-toggle="modal" data-target="#"+id class="fa-info-circle")
-    else if(type=="question")
-        i.fas.fa-lg(data-toggle="modal" data-target="#"+id class="fa-question-circle")
-    .modal.fade.infoBox(id=id tabindex="-1" role="dialog" aria-labelledby=id+"Label" aria-hidden="true")
-        .modal-dialog(role="document" class=(type=="rightInfo"?"modal-xl":undefined))
-            .modal-content
-                .modal-header
-                    h3.modal-title(id=id+"Label")=title
-                    button.close(type="button" data-dismiss="modal" aria-label="Close")
-                        span(aria-hidden="true") &times;
-                .modal-body
-                    if block 
-                        block 
-                    else
-                        p Nothing to see here
-                .modal-footer
-                    button.btn.btn-secondary(type="button" data-dismiss="modal") Close
-
 block content
     .container
         h1.d-inline-block Minions (Crafts)

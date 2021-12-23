@@ -15,7 +15,14 @@ block meta
 
 block content
     .container
-        h1 Events <img src="/images/events.png" width="40" height="40"/>
+        h1.d-inline-block Events <img src="/images/events.png" width="40" height="40"/>
+        p.d-inline-block &nbsp; &nbsp; &nbsp;
+        +infoBox("eventsTitleModal","info","Events Timer")
+            p This is the page that shows the time remaining to regular SkyBlock events.
+            p Live events are shown in yellow. The large countdown timers show the time left until the next events/ time left until the events end. The bracketed dates and times show when the events start/end according to your local time zone.
+            p If the time displayed is wrong, probably due to DST, calibrate your time by click on the "Wrong time displayed?" button.
+        
+        br
         a(data-toggle="collapse" href="#collapseManualTime" aria-expanded="false" aria-controls="collapseManualTime").read-more Wrong time displayed?
         #collapseManualTime.collapse
             br
