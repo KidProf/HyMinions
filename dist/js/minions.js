@@ -70,7 +70,7 @@ function generateLink(){
         // keys.push("tierType");
         // values.push(1);
         keys.push("name");
-        values.push($("#overallProfileName").val().toLowerCase());
+        values.push($("#overallProfileName").val().toLowerCase().trim());
         if($("#overallProfileProfile")&&$("#overallProfileProfile").children("option:selected").val()!=0&&$("#overallProfileProfile").children("option:selected").val()!=undefined){{
             
             keys.push("profile");
