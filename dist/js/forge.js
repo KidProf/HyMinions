@@ -203,3 +203,20 @@ function generateAuctionLink(name,approximateMatch,quantity,overbuyTolerance){
     
     window.open(string);
 }
+
+function search(){
+    window.location.hash="#content";
+    let searchingName = $("#searchInput").val().toLowerCase();
+    let results = new Array();
+    for(i=0;i<$("#searchDatalist").children("option").length;i++){
+        let target = $("#searchDatalist").children("option").eq(i).val().toLowerCase();
+        if(target==searchingName){ //if exact match, then directly move to the row
+            window.location.hash="#forge"+i+"Row";
+        }
+        if(target.includes(searchingName)){ //ALT: searchingName==target.substring(0,searchingName.length)
+            results.push(i);
+        };
+    }
+    console.log(results);
+    if(results.length==1) window.location.hash="#forge"+results[0]+"Row";
+}
