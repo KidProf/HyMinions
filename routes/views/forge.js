@@ -7,16 +7,16 @@ exports = module.exports = function (req, res) {
     let settings = req.query;
 
     if(!dataValidation(settings)){
-        res.render("newForge",{settings: settings});
+        res.render("forge",{settings: settings});
     }else{
         calculateForge(forges, settings).then((outputForges)=>{
             let output = {settings: settings, forges: forges, outputForges: outputForges};
             console.log(output.settings);
-            res.render("newForge",output);
+            res.render("forge",output);
     
         }).catch((err)=>{
             console.log(err);
-            res.render("newForge",{settings: settings});
+            res.render("forge",{settings: settings});
         });
     }
 
