@@ -122,7 +122,7 @@ block content
                                 a(href="/info/forge#budget" target="_blank"): i.pt-2.fas.fa-question-circle
                             .form-group
                                 input#overallNoOfAuctionsMinCheck.checkbox(type="checkbox" checked=(settings.noOfAuctionsMin!=0 ? 'checked' : undefined) onchange="setRiskCustom()")
-                                label &nbsp; Minium items in AH: &nbsp; 
+                                label &nbsp; Minimum items in AH: &nbsp; 
                                 input#overallNoOfAuctionsMinValue.form-control(type="number" value=settings.noOfAuctionsMin min="1" oninput="setRiskCustom()")
                                 span &nbsp; &nbsp;
                                 a(href="/info/forge#noOfAuctionsMin" target="_blank"): i.pt-2.fas.fa-question-circle
