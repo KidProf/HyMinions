@@ -48,7 +48,7 @@ exports = module.exports = function (req, res) {
         if(!settings.tax||settings.tax<0){
             settings.tax = 1.125;
         }
-        if(!settings.sortBy||!isWithinList(settings.sortBy,[0,1])){
+        if(!settings.sortBy||!isWithinList(settings.sortBy,[0,1,2])){
             settings.sortBy = 0;
         }
         if(!settings.riskLevel||!isWithinList(settings.riskLevel,[0,1,2,3,4])){

@@ -315,10 +315,11 @@ exports.calculateForge = async function(forges, settings){
         outputForge.totalCostText = moneyRepresentation(outputForge.totalCost);
         outputForge.profit = outputForge.price - outputForge.totalCost;
         if(outputForge.duration) outputForge.profitPerHour = outputForge.profit/outputForge.duration;
+        if(outputForge.totalCost != 0) outputForge.profitRatio = outputForge.price/outputForge.totalCost;
 
         outputForge.profitText = moneyRepresentation(outputForge.profit);
         outputForge.profitPerHourText = outputForge.duration ? moneyRepresentation(outputForge.profitPerHour) : "N/A";
-
+        outputForge.profitRatioText = outputForge.totalCost != 0 ? Math.round(outputForge.profitRatio*100)/100 : "N/A";
         outputForge.materialsOutOfStock = materialsOutOfStock;
 
         if(outputForge.hotmRequirement>settings.hotmLevel){
@@ -376,6 +377,29 @@ exports.calculateForge = async function(forges, settings){
                     else if(b.name>a.name) return -1;
                     else return 0;
                 }else if(b.duration){//if no duration, put at last 
+                    return 1; //b shd be before a
+                }else{
+                    return -1; //a shd be before b
+                }
+            }
+        });
+    }else if(settings.sortBy==2){ //sort by ratio
+        outputForges.sort((a,b)=>{
+            //last: things labelled last shd be put at the end
+            if(b.last<a.last) return 1; //last asc
+            else if(b.last>a.last) return -1; 
+            else{
+                if(a.totalCost == 0&&b.totalCost == 0){
+                    if(b.name<a.name) return 1; //name asc
+                    else if(b.name>a.name) return -1;
+                    else return 0;
+                }else if(a.totalCost != 0&&b.totalCost != 0){
+                    if(b.profitRatio>a.profitRatio) return 1; //profit desc
+                    else if(b.profitRatio<a.profitRatio) return -1;
+                    if(b.name<a.name) return 1; //name asc
+                    else if(b.name>a.name) return -1;
+                    else return 0;
+                }else if(b.totalCost == 0){//if no duration, put at last 
                     return 1; //b shd be before a
                 }else{
                     return -1; //a shd be before b

@@ -96,6 +96,7 @@ block content
                             select#overallSortBy.form-control
                                 option(value="0" selected=(settings.sortBy==0 ? 'selected':undefined)) Profit per forge
                                 option(value="1" selected=(settings.sortBy==1 ? 'selected':undefined)) Profit per hour
+                                option(value="2" selected=(settings.sortBy==2 ? 'selected':undefined)) Product/ material cost ratio
                         br
                 .col-lg-6.col-12
                     #miscellaneous 
@@ -201,6 +202,8 @@ block content
                                 | Product <br /> 
                                 if settings.sortBy==1
                                     | (Profit per hour)
+                                else if settings.sortBy==2
+                                    | (Product/ material cost ratio)
                                 else
                                     | (Profit per forge) 
                                 | <br />
@@ -261,6 +264,9 @@ block content
                                 i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeProfitPerHour')")
                                 //- | &nbsp;
                                 //- i.pt-2.fas.fa-question-circle(href="/forge/info")
+                            th(scope="col").forgeProfitRatio
+                                | Product/ material cost ratio <br />
+                                i.pt-2.fas.fa-minus-circle(onclick="hideCol('forgeProfitRatio')")
                     - let i = 0
                     for outputForge in outputForges 
                         tr(id="forge"+i+"Row" class=(outputForge.danger&&(settings.ah==1||settings.bz==1)?"loss":""))
@@ -330,6 +336,7 @@ block content
                                     | #{outputForge.totalCostText}
                             td(id="forge"+i+"NetProfit" class=(outputForge.profit<0?"warning":"")).forgeNetProfit=outputForge.profitText
                             td(id="forge"+i+"ProfitPerHour" class=(outputForge.profit<0?"warning":"")).forgeProfitPerHour=outputForge.profitPerHourText
+                            td(id="forge"+i+"ProfitRatio" class=(outputForge.profit<0?"warning":"")).forgeProfitRatio=outputForge.profitRatioText
                             //- loss -> yellow label
                         - i++;
             p: small
