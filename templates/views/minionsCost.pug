@@ -46,6 +46,12 @@ block content
                     br
                     h3 Advanced
                     .form-group
+                        input#overallGroupCheck.checkbox(type="checkbox" checked=(settings.group!=0 ? 'checked' : undefined))
+                        label &nbsp; Group same minions every &nbsp; 
+                        input#overallGroupValue.form-control(type="number" value=settings.group min="1")
+                        span &nbsp; slot(s) &nbsp;
+                        a(href="/info/forge#budget" target="_blank"): i.pt-2.fas.fa-question-circle
+                    .form-group
                         label(for="overallBuyingMethod") Buying method in bazaar: &nbsp;
                         select#overallBuyingMethod.form-control
                             option(value="1" selected=(settings.buyingMethod==1?'selected':undefined)) Buy order
@@ -112,10 +118,11 @@ block content
                             label(for="filterMinionsSelectAll") &nbsp; Select All
                             hr
                             #filterMinionsBody
-                                for minion in minions
-                                    .form-group
-                                        input.checkbox(type="checkbox" value=minion.id id="filterMinions"+minion.id checked=(settings.filterMinions&&settings.filterMinions.includes(minion.id.toString()) ? undefined:"checked") onclick="setFilterMinionsSelectAll()")
-                                        label(for="filterMinions"+minion.id) &nbsp; !{minion.name}
+                                if minions
+                                    for minion in minions
+                                        .form-group
+                                            input.checkbox(type="checkbox" value=minion.id id="filterMinions"+minion.id checked=(settings.filterMinions&&settings.filterMinions.includes(minion.id.toString()) ? undefined:"checked") onclick="setFilterMinionsSelectAll()")
+                                            label(for="filterMinions"+minion.id) &nbsp; !{minion.name}
                         br
                         br
                     .col-lg-6.col-12
@@ -175,7 +182,7 @@ block content
                     p Minion Crafts: #{settings.minionCrafts}
                     p Minion Slots: #{settings.minionSlots} + #{settings.communitySlots} (Community Center)
                     p Crafts to next: #{settings.minionSlotsNext.length!=1? settings.minionSlotsNext[0]: "MAXED"}
-                    p Coins to next: #{settings.minionSlotsCostText[0]}
+                    p Coins to next: #{minionsCost[0].costText}
                     if settings.collectionsDisabled && settings.filterCollections==1
                         p.loss Collection API access for this profile is disabled. Click <a href="https://www.youtube.com/watch?v=-_LIyA5lNMU">here</a> to see how to enable API access, so that we could put the minions that you cannot craft at the bottom of the list.
                 #search: .form-group.row
@@ -183,13 +190,14 @@ block content
                         label(for="searchInput") Search: &nbsp;
                         input#searchInput(list="searchDatalist").form-control
                         datalist#searchDatalist
-                            -let nextIndexSearch = 0;
-                            -let j=0;
-                            while nextIndexSearch<settings.minionSlotsNext.length && j<minionsCost.length
-                                while j<settings.minionSlotsNext[nextIndexSearch]&&j<minionsCost.length
-                                    option(value=minionsCost[j].name.substring(0,minionsCost[j].name.lastIndexOf(" "))+" "+minionsCost[j].tier)
-                                    -j++;
-                                -nextIndexSearch++;
+                            //- TODO:
+                            //- -let nextIndexSearch = 0;
+                            //- -let j=0;
+                            //- while nextIndexSearch<settings.minionSlotsNext.length && j<minionsCost.length
+                            //-     while j<settings.minionSlotsNext[nextIndexSearch]&&j<minionsCost.length
+                            //-         option(value=minionsCost[j].name.substring(0,minionsCost[j].name.lastIndexOf(" "))+" "+minionsCost[j].tier)
+                            //-         -j++;
+                            //-     -nextIndexSearch++;
                         span &nbsp; &nbsp; &nbsp;
                         button#searchButton.btn(onclick="search()") Search
                     .col-12.col-md-3.col-lg-6
@@ -213,37 +221,40 @@ block content
 
                     if (settings.showDetails==1)
                         //-show top 50, until next minion slot, hide others
-                        -let nextIndex = 0;
-                        -let i=0;
-                        while i<Math.min(50,minionsCost.length)
+                        -let i=0, j=0, ij = 0;
+                        while i < minionsCost.length && ij < 50
                             if settings.showSlots==1
-                                +slotRow(nextIndex,true,true)
-                            while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
-                                +minionCostRow(minionsCost[i],i,nextIndex,true)
-                                -i++;
-                            -nextIndex++;
-                        while nextIndex<settings.minionSlotsNext.length && i<minionsCost.length
+                                +slotRow(i,minionsCost[i].context,minionsCost[i].costText,minionsCost[i].isRemaining,true,true)
+                            while j<minionsCost[i].minions.length
+                                +minionCostRow(minionsCost[i].minions[j],ij,i,true)
+                                -j++;
+                                -ij++;
+                            -j=0;
+                            -i++;
+                        while i < minionsCost.length
                             if settings.showSlots==1
-                                +slotRow(nextIndex,false,true)
-                            while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
-                                +minionCostRow(minionsCost[i],i,nextIndex,false)
-                                -i++;
-                            -nextIndex++;
+                                +slotRow(i,minionsCost[i].context,minionsCost[i].costText,minionsCost[i].isRemaining,false,true)
+                            while j<minionsCost[i].minions.length
+                                +minionCostRow(minionsCost[i].minions[j],ij,i,false)
+                                -j++;
+                                -ij++;
+                            -j=0;
+                            -i++;
                     else
                         //-show top 50, until next minion slot, dont load others
-                        -let nextIndex = 0;
-                        -let i=0;
-                        while i<Math.min(50,minionsCost.length)
+                        -let i=0, j=0, ij = 0;
+                        while i < minionsCost.length && ij < 50
                             if settings.showSlots==1
-                                +slotRow(nextIndex,true,true)
-                            while i<settings.minionSlotsNext[nextIndex]&&i<minionsCost.length
-                                +minionCostRow(minionsCost[i],i,nextIndex,true)
-                                -i++;
-                            -nextIndex++;
-                        while nextIndex<settings.minionSlotsNext.length && settings.minionSlotsNext[nextIndex-1] <minionsCost.length
+                                +slotRow(i,minionsCost[i].context,minionsCost[i].costText,minionsCost[i].isRemaining,true,true)
+                            while j<minionsCost[i].minions.length
+                                +minionCostRow(minionsCost[i].minions[j],ij,i,true)
+                                -j++;
+                                -ij++;
+                            -i++;
+                        while i < minionsCost.length
                             if settings.showSlots==1
-                                +slotRow(nextIndex,false,false)
-                            -nextIndex++;
+                                +slotRow(i,minionsCost[i].context,minionsCost[i].costText,minionsCost[i].isRemaining,false,false)
+                            -i++;
 
             if settings.showSlots==0
                 if settings.showDetails == 0
@@ -258,7 +269,7 @@ block content
                 if(settings.lastUpdatedProfile)
                     | <br /> Last updated time of profile: #{settings.lastUpdatedProfile} UTC
 
-mixin slotRow(nextIndex,isShown,isLoaded)
+mixin slotRow(nextIndex,context,cost,isRemaining,isShown,isLoaded)
     tr(id="slot"+nextIndex+"Row" class="color-row-"+nextIndex%7)
         td.text-center.py-3
             if isLoaded == true 
@@ -271,17 +282,29 @@ mixin slotRow(nextIndex,isShown,isLoaded)
             else
                 i.fas.fa-lg.fa-cloud-download-alt(id="showNextButton"+nextIndex onclick="appendShowDetails("+nextIndex+")")
         td(colspan="100%").py-3
-            -let slotNumber = settings.minionSlots+nextIndex+1
-            if nextIndex+1 == settings.minionSlotsNext.length || settings.minionSlotsNext[nextIndex] > minionsCost.length
-                span Remaining minions: #{settings.minionSlotsCostText[nextIndex]} coins
-            else if slotNumber == 1 || slotNumber == 21
-                span #{slotNumber}st slot: #{settings.minionSlotsCostText[nextIndex]} coins
-            else if slotNumber == 2 || slotNumber == 22
-                span #{slotNumber}nd slot: #{settings.minionSlotsCostText[nextIndex]} coins
-            else if slotNumber == 3 || slotNumber == 23
-                span #{slotNumber}rd slot: #{settings.minionSlotsCostText[nextIndex]} coins
-            else
-                span #{slotNumber}th slot: #{settings.minionSlotsCostText[nextIndex]} coins
+            span
+                //- TODO:
+                if isRemaining
+                    | Remaining minions
+                else
+                    - let i = 0
+                    for slotNumber in context
+                        if i != 0
+                            | &nbsp;,
+                        else if slotNumber == 1 || slotNumber == 21
+                            | #{slotNumber}st
+                        else if slotNumber == 2 || slotNumber == 22
+                            | #{slotNumber}nd
+                        else if slotNumber == 3 || slotNumber == 23
+                            | #{slotNumber}rd
+                        else
+                            | #{slotNumber}th
+                        -i++;
+                    if i == 1 
+                        | &nbsp;slot
+                    else
+                        | &nbsp;slots
+                | : #{cost} coins
 
 mixin minionCostRow(minionCost,i,nextIndex,isShown)
     tr(id="minion"+i+"Row" class="collapseNext"+nextIndex class=isShown?undefined:"d-none").collapseNext

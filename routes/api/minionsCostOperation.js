@@ -151,52 +151,13 @@ exports.calculateMinionsCost = async function(minions, settings){
 
     console.log("finished findBazaar and findProfile");
 
-    let unsortedMinionsCost = new Array(); //2D array
-    let unsortedMinionsCostLast = new Array(); //2D array
+    let unsortedMinionsCost = new Array(); //2D array, grouped by minion
+    let unsortedMinionsCostLast = new Array(); //2D array, grouped by minion
     let totalTiers = 0;
     minions.forEach((minion)=>{
         calculateMinionCost(settings,minion);
     });
 
-    let minionsCost = new Array(); //1D array
-    while(unsortedMinionsCost.length!=0){ //iterate until all elements are sorted, ~~ merge list
-        let minVal, minValIndex;
-        for(let j=0;j<unsortedMinionsCost.length;j++){
-            if(!minVal || unsortedMinionsCost[j][0].totalCost < minVal){
-                minVal = unsortedMinionsCost[j][0].totalCost;
-                minValIndex = j;
-            }
-        }
-        //console.log(minValIndex);
-        minionsCost.push(unsortedMinionsCost[minValIndex][0]); //add to sorted list
-        unsortedMinionsCost[minValIndex].shift(); //remove element from unsorted list
-        if(unsortedMinionsCost[minValIndex].length==0){ //remove whole 1D array if it is empty
-            unsortedMinionsCost.splice(minValIndex,1);
-        }
-    }
-    //console.log(unsortedMinionsCostLast);
-    while(unsortedMinionsCostLast.length!=0){ //iterate until all elements are sorted, ~~ merge list
-        let minVal, minValIndex;
-        for(let k=0;k<unsortedMinionsCostLast.length;k++){
-            if(minVal==undefined || unsortedMinionsCostLast[k][0].totalCost < minVal){
-                // console.log("minVal",minVal);
-                // console.log("unsortedMinionsCostLast[k][0].name",unsortedMinionsCostLast[k][0].name);
-                // console.log("unsortedMinionsCostLast[k][0].totalCost",unsortedMinionsCostLast[k][0].totalCost);
-                // console.log("minValIndex",k);
-                // console.log("___");
-                minVal = unsortedMinionsCostLast[k][0].totalCost;
-                minValIndex = k;
-            }
-        }
-        console.log(unsortedMinionsCostLast[minValIndex][0].name,unsortedMinionsCostLast[minValIndex][0].tier);
-        //console.log(minValIndex);
-        minionsCost.push(unsortedMinionsCostLast[minValIndex][0]); //add to sorted list
-        unsortedMinionsCostLast[minValIndex].shift(); //remove element from unsorted list
-        if(unsortedMinionsCostLast[minValIndex].length==0){ //remove whole 1D array if it is empty
-            unsortedMinionsCostLast.splice(minValIndex,1);
-        }
-    }
-    
     //prepare for the profiles info section
     //minionSlots, minionSlotsNext
     settings.minionSlotsNext = new Array();
@@ -230,24 +191,111 @@ exports.calculateMinionsCost = async function(minions, settings){
         settings.minionSlotsNext.push(totalTiers); //total-last element
     }
 
-    //minionSlotsCosts
-    settings.minionSlotsCost = new Array(settings.minionSlotsNext.length);
-    for(i=0;i<settings.minionSlotsCost.length;i++){ //init
-        settings.minionSlotsCost[i] = 0;
-    }
-    let nextIndex=0;
-    minionsCost.forEach((minionCost,index)=>{ //calculate
-        settings.minionSlotsCost[nextIndex]+=minionCost.totalCost;
-        if(index+1>=settings.minionSlotsNext[nextIndex]){
-            nextIndex++;
-        }
-    });
-    settings.minionSlotsCostText = new Array(settings.minionSlotsCost.length);
-    settings.minionSlotsCost.forEach((cost,index2)=>{ //turn to proper string
-        settings.minionSlotsCostText[index2] = moneyRepresentation(cost);
-    });
+    console.log("minionSlotsNext",settings.minionSlotsNext);
 
-    minions.sort((a,b) =>{
+    let ungroupedMinionsCost = new Array(); //1D array, all minions sorted by cost
+    while(unsortedMinionsCost.length!=0){ //iterate until all elements are sorted, ~~ merge list
+        let minVal, minValIndex;
+        for(let j=0;j<unsortedMinionsCost.length;j++){
+            if(!minVal || unsortedMinionsCost[j][0].totalCost < minVal){
+                minVal = unsortedMinionsCost[j][0].totalCost;
+                minValIndex = j;
+            }
+        }
+        //console.log(minValIndex);
+        ungroupedMinionsCost.push(unsortedMinionsCost[minValIndex][0]); //add to sorted list
+        unsortedMinionsCost[minValIndex].shift(); //remove element from unsorted list
+        if(unsortedMinionsCost[minValIndex].length==0){ //remove whole 1D array if it is empty
+            unsortedMinionsCost.splice(minValIndex,1);
+        }
+    }
+    //console.log(unsortedMinionsCostLast);
+    while(unsortedMinionsCostLast.length!=0){ //iterate until all elements are sorted, ~~ merge list
+        let minVal, minValIndex;
+        for(let k=0;k<unsortedMinionsCostLast.length;k++){
+            if(minVal==undefined || unsortedMinionsCostLast[k][0].totalCost < minVal){
+                // console.log("minVal",minVal);
+                // console.log("unsortedMinionsCostLast[k][0].name",unsortedMinionsCostLast[k][0].name);
+                // console.log("unsortedMinionsCostLast[k][0].totalCost",unsortedMinionsCostLast[k][0].totalCost);
+                // console.log("minValIndex",k);
+                // console.log("___");
+                minVal = unsortedMinionsCostLast[k][0].totalCost;
+                minValIndex = k;
+            }
+        }
+        console.log(unsortedMinionsCostLast[minValIndex][0].name,unsortedMinionsCostLast[minValIndex][0].tier);
+        //console.log(minValIndex);
+        ungroupedMinionsCost.push(unsortedMinionsCostLast[minValIndex][0]); //add to sorted list
+        unsortedMinionsCostLast[minValIndex].shift(); //remove element from unsorted list
+        if(unsortedMinionsCostLast[minValIndex].length==0){ //remove whole 1D array if it is empty
+            unsortedMinionsCostLast.splice(minValIndex,1);
+        }
+    }
+
+    let minionsCost = []; //2D array, grouped by minion slots
+
+    if(settings.group!=0){
+        // let nextIndex = settings.group-1;
+        // let minGrouped = 0;
+        // let maxGrouped = settings.minionSlotsNext[nextIndex];
+        // while(nextIndex < settings.minionSlotsNext.length){
+        //     let minionsCostGroup = minions.slice(minGrouped,maxGrouped);
+        //     minionsGroup.sort((a,b)=>{
+
+        //     })
+        //     nextIndex += settings.group;
+        //     minGrouped = maxGrouped;
+        //     maxGrouped = settings.minionSlotsNext[nextIndex];
+        // }
+        // settings.minionSlotsNext
+    }else{
+        let minGrouped = 0;
+        let maxGrouped = settings.minionSlotsNext[0];
+        for(let i=1;i<settings.minionSlotsNext.length;i++){
+            let minionsGroup = ungroupedMinionsCost.slice(minGrouped,maxGrouped)
+            let costGroup = 0;
+            minionsGroup.forEach((minionCost)=>{
+                costGroup+=minionCost.totalCost;
+            });
+            let costTextGroup = moneyRepresentation(costGroup);
+            console.log(i,{
+                context: [settings.minionSlots + i],
+                cost: costGroup,
+                costText: costTextGroup,
+            },minionsGroup.length);
+            minionsCost.push({
+                context: [settings.minionSlots + i],
+                cost: costGroup,
+                costText: costTextGroup,
+                minions: minionsGroup,
+            });
+            minGrouped = maxGrouped;
+            maxGrouped = settings.minionSlotsNext[i];
+        }
+        let remainingGroup = ungroupedMinionsCost.slice(minGrouped);
+        if(remainingGroup.length>=1){
+            let costGroup = 0;
+            remainingGroup.forEach((minionCost)=>{
+                costGroup+=minionCost.totalCost;
+            });
+            let costTextGroup = moneyRepresentation(costGroup);
+            console.log({
+                context: [],
+                cost: costGroup,
+                costText: costTextGroup,
+                isRemaining: true,
+            },remainingGroup.length);
+            minionsCost.push({
+                context: [],
+                cost: costGroup,
+                costText: costTextGroup,
+                minions: remainingGroup,
+                isRemaining: true,
+            });
+        }
+    }
+
+    minions.sort((a,b) =>{ //for the sorting part
         if(b.name<a.name) return 1; //name asc
         else if(b.name>a.name) return -1;
         else return 0;

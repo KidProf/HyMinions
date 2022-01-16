@@ -151,6 +151,16 @@ function generateLink(){
     //     keys.push("buyingFrom");
     //     values.push($("#overallBuyingFrom").children("option:selected").val());
     // }
+    if(!$("#overallGroupCheck").prop("checked")){
+        keys.push("group");
+        values.push(0);
+    }else{
+        if($("#overallGroupValue").val()!=1){
+            keys.push("group");
+            values.push($("#overallGroupValue").val());
+        }
+    }
+
     if($("#overallBuyingMethod").children("option:selected").val()!=0){
         keys.push("buyingMethod");
         values.push($("#overallBuyingMethod").children("option:selected").val());
