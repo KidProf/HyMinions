@@ -253,7 +253,14 @@ function appendShowDetails(nextIndex,minionIndex){
             leftString = leftString.substring(keysEndLocation+1);
             valuesEndLocation = leftString.indexOf("&");
             if(valuesEndLocation==-1){
-                if(leftString!="") values.push(leftString.substring(0,leftString.indexOf("#")));
+                let hashLocation = leftString.indexOf("#");
+                if(leftString!=""){
+                    if(hashLocation!=-1){
+                        values.push(leftString.substring(0,hashLocation));
+                    }else{
+                        values.push(leftString);
+                    }
+                }
             }else{
                 if(leftString.substring(0,valuesEndLocation)!="") values.push(leftString.substring(0,valuesEndLocation));
                 leftString = leftString.substring(valuesEndLocation+1);

@@ -190,14 +190,12 @@ block content
                         label(for="searchInput") Search: &nbsp;
                         input#searchInput(list="searchDatalist").form-control
                         datalist#searchDatalist
-                            //- TODO:
-                            //- -let nextIndexSearch = 0;
-                            //- -let j=0;
-                            //- while nextIndexSearch<settings.minionSlotsNext.length && j<minionsCost.length
-                            //-     while j<settings.minionSlotsNext[nextIndexSearch]&&j<minionsCost.length
-                            //-         option(value=minionsCost[j].name.substring(0,minionsCost[j].name.lastIndexOf(" "))+" "+minionsCost[j].tier)
-                            //-         -j++;
-                            //-     -nextIndexSearch++;
+                            - let i=0,j=0;
+                            while i<minionsCost.length
+                                while j<minionsCost[i].minions.length
+                                    option(value=minionsCost[i].minions[j].name.substring(0,minionsCost[i].minions[j].name.lastIndexOf(" "))+" "+minionsCost[i].minions[j].tier)
+                                    -j++;
+                                -i++;
                         span &nbsp; &nbsp; &nbsp;
                         button#searchButton.btn(onclick="search()") Search
                     .col-12.col-md-3.col-lg-6
@@ -250,6 +248,7 @@ block content
                                 +minionCostRow(minionsCost[i].minions[j],ij,i,true)
                                 -j++;
                                 -ij++;
+                            -j=0;
                             -i++;
                         while i < minionsCost.length
                             if settings.showSlots==1
@@ -283,15 +282,14 @@ mixin slotRow(nextIndex,context,cost,isRemaining,isShown,isLoaded)
                 i.fas.fa-lg.fa-cloud-download-alt(id="showNextButton"+nextIndex onclick="appendShowDetails("+nextIndex+")")
         td(colspan="100%").py-3
             span
-                //- TODO:
                 if isRemaining
                     | Remaining minions
                 else
                     - let i = 0
                     for slotNumber in context
                         if i != 0
-                            | &nbsp;,
-                        else if slotNumber == 1 || slotNumber == 21
+                            | ,&nbsp;
+                        if slotNumber == 1 || slotNumber == 21
                             | #{slotNumber}st
                         else if slotNumber == 2 || slotNumber == 22
                             | #{slotNumber}nd
