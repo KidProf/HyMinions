@@ -194,6 +194,7 @@ block content
                                 while j<minionsCost[i].minions.length
                                     option(value=minionsCost[i].minions[j].name.substring(0,minionsCost[i].minions[j].name.lastIndexOf(" "))+" "+minionsCost[i].minions[j].tier)
                                     -j++;
+                                -j=0;
                                 -i++;
                         span &nbsp; &nbsp; &nbsp;
                         button#searchButton.btn(onclick="search()") Search

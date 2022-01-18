@@ -315,10 +315,21 @@ function appendShowDetails(nextIndex,minionIndex){
 }
 
 function clearInput(){
+    $("#overallUseProfile").prop("checked",false);
     $("#overallProfileName").val("");
     $("#overallProfileProfile").addClass("d-none");
     $("#overallProfileProfileLabel").addClass("d-none");
+    $("#overallGroupCheck").prop("checked",true);
+    $("#overallGroupValue").val(1);
     $("#overallBuyingMethod").val("0");
-    $("#overallTax").val(1);
-    $("#overallShowDetails").prop("checked",false);
+    $("#overallTax").val(1.125);
+    $("#overallFilterSlayers").prop("checked",true);
+    $("#overallFilterCollections").prop("checked",true);
+    $("#overallBottomSlayers").prop("checked",false);
+    $("#overallDisplayMethod").val("1");
+    $("#overallShowSlots").prop("checked",true);
+    $("#filterMinionsSelectAll").prop("checked",true);
+    toggleFilterMinionsSelectAll();
+    $("#filterTiersSelectAll").prop("checked",true);
+    toggleFilterTiersSelectAll();
 }

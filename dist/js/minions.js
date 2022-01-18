@@ -320,5 +320,5 @@ function clearInput(){
     
     //misc
     $("#overallSellingMethod").val("1");
-    $("#overallTax").val(1);
+    $("#overallTax").val(1.125);
 }
