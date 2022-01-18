@@ -2,7 +2,7 @@ mixin infoBox(id,type,title)
     if(type=="info")
         i.fas.fa-lg(data-toggle="modal" data-target="#"+id class="fa-info-circle")
     else if(type=="question")
-        i.fas.fa-lg(data-toggle="modal" data-target="#"+id class="fa-question-circle")
+        i.fas(data-toggle="modal" data-target="#"+id class="fa-question-circle")
     .modal.fade.infoBox(id=id tabindex="-1" role="dialog" aria-labelledby=id+"Label" aria-hidden="true")
         .modal-dialog(role="document" class=(type=="rightInfo"?"modal-xl":undefined))
             .modal-content

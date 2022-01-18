@@ -18,6 +18,7 @@ block content
         p.d-inline-block &nbsp; &nbsp; &nbsp;
         +infoBox("minionsTitleModal","info","Minions Crafts Calculator")
             p It calculates the cheapest minions to level up to gain more minion slots, also tailor-made for each profile if you input your Minecraft name. It also shows you how much money you need to spend on materials to unlock a new minion tier.
+            p: a(href="/info/minionscost" target="_blank") Check out more documentation
         p What are the cheapest minions to level up to gain more minion slots?
         #overall
             .row
@@ -35,6 +36,7 @@ block content
                             +infoBox("profileModal","question","Why is my Minecraft name required?")
                                 p If you enter your Minecraft name, it will calculate the cheapest minion ignoring the minion you have crafted. It could make the crafts list more personalized and useful. (Note that API settings has to be changed in game in order to obtain for the calculator to obtain collections information.)
                                 p Alternatively, you could uncheck this "Use Profile" box, and it would show the whole crafts list.
+                                p: a(href="/info/minionscost#minecraftName" target="_blank") Check out more documentation
                         if(settings.profileNames)
                             label#overallProfileProfileLabel(for="overallProfileProfile") Profile: &nbsp;
                             select#overallProfileProfile.form-control
@@ -44,23 +46,27 @@ block content
                                     -k++;
                 #advanced.col-lg-6.col-12
                     br
-                    h3 Advanced
+                    h3 New Feature
                     .form-group
                         input#overallGroupCheck.checkbox(type="checkbox" checked=(settings.group!=0 ? 'checked' : undefined))
-                        label &nbsp; Group same minions every &nbsp; 
-                        input#overallGroupValue.form-control(type="number" value=settings.group min="1")
+                        label &nbsp; Sort by minion name every &nbsp; 
+                        input#overallGroupValue.form-control(type="number" value=(settings.group == 0 ? 1 : settings.group) min="1")
                         span &nbsp; slot(s) &nbsp;
-                        a(href="/info/forge#budget" target="_blank"): i.pt-2.fas.fa-question-circle
+                        a(href="/info/minionscost#group" target="_blank"): i.pt-2.fas.fa-question-circle
+                    br
+                    h3 Advanced
                     .form-group
-                        label(for="overallBuyingMethod") Buying method in bazaar: &nbsp;
+                        label(for="overallBuyingMethod") Buying method in bazaar: &nbsp; 
                         select#overallBuyingMethod.form-control
                             option(value="1" selected=(settings.buyingMethod==1?'selected':undefined)) Buy order
                             option(value="0" selected=(settings.buyingMethod==0?'selected':undefined)) Buy instantly
-                            
+                        span &nbsp; &nbsp;
+                        a(href="/info/minionscost#buyingMethodInBazaar" target="_blank"): i.pt-2.fas.fa-question-circle    
                     .form-group
                         label(for="overallTax") Tax in bazaar: &nbsp; 
                             input#overallTax.form-control(type="number" value=settings.tax min="0")
-                            span &nbsp; %
+                            span &nbsp; % &nbsp;
+                        a(href="/info/minionscost#tax" target="_blank"): i.pt-2.fas.fa-question-circle
             #filter
                 br
                 h3 Excludes
@@ -71,20 +77,16 @@ block content
                             .form-group
                                 input#overallFilterSlayers.checkbox(type="checkbox" checked=(settings.filterSlayers==1 ? 'checked' : undefined))
                                 label(for="overallFilterSlayers") &nbsp; Exclude locked slayer minions &nbsp; 
-                                +infoBox("filterSlayersModal","question","Exclude locked slayer minions")
-                                    p If checked, slayer minions that you cannot craft based on your slayer level will be put at the end of the list/ removed from the list. (based on your selection)
+                                a(href="/info/minionscost#filterSlayers" target="_blank"): i.pt-2.fas.fa-question-circle
                             .form-group
                                 input#overallFilterCollections.checkbox(type="checkbox" checked=(settings.filterCollections==1 ? 'checked' : undefined))
                                 label(for="overallFilterCollections") &nbsp; Exclude locked minions (collections) &nbsp; 
-                                +infoBox("filterCollectionsModal","question","Exclude locked minions (collections)")
-                                    p If checked, minions that you cannot craft based on the collections you have will be put at the end of the list/ removed from the list. (based on your selection)
-                                    p This feature would require collections API enabled. Click <a href="https://www.youtube.com/watch?v=-_LIyA5lNMU">here</a> to see how to enable API access.
+                                a(href="/info/minionscost#filterCollections" target="_blank"): i.pt-2.fas.fa-question-circle
                         #slayerCollectionsNoProfile(class=(settings.useProfile==true ? 'd-none' : undefined))
                             .form-group
                                 input#overallBottomSlayers.checkbox(type="checkbox" checked=(settings.bottomSlayers==1 ? 'checked' : undefined))
                                 label(for="overallBottomSlayers") &nbsp; Exclude slayer minions &nbsp; 
-                                +infoBox("bottomSlayersModal","question","Exclude slayer minions")
-                                    p If checked, all slayer minions will be put at the end of the list/ removed from the list. (based on your selection)
+                                a(href="/info/minionscost#bottomSlayers" target="_blank"): i.pt-2.fas.fa-question-circle
                     .col-lg-6.col-12
                         .form-group
                             label(for="overallDisplayMethod") Excluded crafts should be &nbsp;
@@ -92,18 +94,15 @@ block content
                                 option(value="1" selected=(settings.displayMethod==1?'selected':undefined)) put at the end of list
                                 option(value="0" selected=(settings.displayMethod==0?'selected':undefined)) removed
                             span &nbsp; &nbsp; 
-                            +infoBox("excludedCraftsModal","question","Excluded crafts should be ...")
-                                p Decide whether the excluded minions (as you selected on the left/ above), should be put at the end of list or removed from the list.
+                            a(href="/info/minionscost#excludedCrafts" target="_blank"): i.pt-2.fas.fa-question-circle
                         .form-group
                             input#overallShowSlots.checkbox(type="checkbox" checked=(settings.showSlots==1 ? 'checked' : undefined))
                             label(for="overallShowSlots") &nbsp; Show slot information &nbsp; 
-                            +infoBox("showSlotsModal","question","Show slot information")
-                                p If checked, the colored line showing amount of coins needed and the slot that you are unlocking, should appear, such as "6th slot: 901.7 coins"
+                            a(href="/info/minionscost#showSlots" target="_blank"): i.pt-2.fas.fa-question-circle
                 br
                 h3.d-inline-block Filters
                 p.d-inline-block &nbsp; &nbsp; &nbsp;
-                +infoBox("filtersModal","question","Filters")
-                    p Only checked minions/tiers would appear in the list.
+                a(href="/info/minionscost#filters" target="_blank"): i.pt-2.fas.fa-question-circle
                 br
                 .row
                     //- filtered minions must be removed
@@ -209,13 +208,42 @@ block content
                     thead
                         tr
                             th(scope="col").minionRankHeader
-                            th(scope="col").minionNameHeader Minion
-                            th(scope="col") Tier
-                            th(scope="col") Upgrade Cost
-                            th(scope="col").upgradeMaterialsHeader Upgrade materials
-                            th(scope="col") Quantity
-                            th(scope="col") Unit Price (Bazaar)
-                            th(scope="col").upgradeCostHeader Upgrade Cost 
+                            th(scope="col").minionNameHeader.minionCol
+                                | Minion  <br />
+                                if settings.group != 0
+                                    | (sorted by name within slot)  <br />
+                                a(href="/info/minionscost#minionCol" target="_blank"): i.pt-2.fas.fa-question-circle
+                                | &nbsp; &nbsp;
+                                button#unhideAllCols.btn.btn-link(onClick="unhideCol()").invisible Unhide all columns
+                            th(scope="col").tierCol
+                                | Tier <br />
+                                i.pt-2.fas.fa-minus-circle(onclick="hideCol('tierCol')").invisible
+                                //- a(href="/info/minionscost#tierCol" target="_blank"): i.pt-2.fas.fa-question-circle
+                            th(scope="col").totalCostFrontCol
+                                | Upgrade Cost <br />
+                                i.pt-2.fas.fa-minus-circle(onclick="hideCol('totalCostFrontCol')")
+                                //- | &nbsp;
+                                //- a(href="/info/minions#tierCol" target="_blank"): i.pt-2.fas.fa-question-circle
+                            th(scope="col").upgradeMaterialsHeader.upgradeMaterialsCol
+                                | Upgrade Materials <br />
+                                i.pt-2.fas.fa-minus-circle(onclick="hideCol('upgradeMaterialsCol')")
+                                //- | &nbsp;
+                                //- a(href="/info/minions#tierCol" target="_blank"): i.pt-2.fas.fa-question-circle
+                            th(scope="col").quantityCol
+                                | Quantity <br />
+                                i.pt-2.fas.fa-minus-circle(onclick="hideCol('quantityCol')")
+                                //- | &nbsp;
+                                //- a(href="/info/minions#tierCol" target="_blank"): i.pt-2.fas.fa-question-circle
+                            th(scope="col").unitPriceCol
+                                | Unit Price (Bazaar) <br />
+                                i.pt-2.fas.fa-minus-circle(onclick="hideCol('unitPriceCol')")
+                                //- | &nbsp;
+                                //- a(href="/info/minions#tierCol" target="_blank"): i.pt-2.fas.fa-question-circle Unit Price (Bazaar)
+                            th(scope="col").upgradeCostHeader.totalCostCol
+                                | Upgrade Cost <br />
+                                i.pt-2.fas.fa-minus-circle(onclick="hideCol('totalCostCol')")
+                                //- | &nbsp;
+                                //- a(href="/info/minions#tierCol" target="_blank"): i.pt-2.fas.fa-question-circle Unit Price (Bazaar)
 
                     if (settings.showDetails==1)
                         //-show top 50, until next minion slot, hide others
@@ -310,22 +338,22 @@ mixin minionCostRow(minionCost,i,nextIndex,isShown)
             | ##{i+1}
             br
             img(src="/images/minions/"+minionCost.name+".png" width="30" height="30")
-        td(id="minion"+i+"Name")=minionCost.name
-        td(id="minion"+i+"Tier")=minionCost.tier
-        td(id="minion"+i+"TotalCostFront").text-right=minionCost.totalCostText
-        td(id="minion"+i+"Items" class=(minionCost.warning?"live":"") class=(minionCost.danger?"loss":""))
+        td(id="minion"+i+"Name").minionCol=minionCost.name
+        td(id="minion"+i+"Tier").tierCol=minionCost.tier
+        td(id="minion"+i+"TotalCostFront").totalCostFrontCol.text-right=minionCost.totalCostText
+        td(id="minion"+i+"Items" class=(minionCost.warning?"live":"") class=(minionCost.danger?"loss":"")).upgradeMaterialsCol
             if minionCost.upgradeMaterials
                 each material in minionCost.upgradeMaterials
                     | #{material}
                     br
-        td(id="minion"+i+"NumberOfItems")
+        td(id="minion"+i+"NumberOfItems").quantityCol
             if minionCost.upgradeQuantities
                 each quantity in minionCost.upgradeQuantities
                     | #{quantity}
                     br
-        td(id="minion"+i+"BazaarPrices")
+        td(id="minion"+i+"BazaarPrices").unitPriceCol
             if minionCost.unitPrices
                 each unitPrice in minionCost.unitPrices
                     | #{unitPrice}
                     br
-        td(id="minion"+i+"TotalCost").text-right=minionCost.totalCostTextDetail
+        td(id="minion"+i+"TotalCost").totalCostCol.text-right=minionCost.totalCostTextDetail

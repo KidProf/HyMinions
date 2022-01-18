@@ -37,7 +37,7 @@ app.get('/contact',(req,res)=>{res.render("contact");});
 
 app.get('/info/minions',(req,res)=>{res.render("infos/infoMinions");});
 app.get('/info/forge',(req,res)=>{res.render("infos/infoForge");});
-
+app.get('/info/minionscost',(req,res)=>{res.render("infos/infoMinionsCost")})
 //api
 app.get('/api/get-minions-api',getMinionsApi);
 app.get('/api/get-profile-api/:name',getProfileApi);

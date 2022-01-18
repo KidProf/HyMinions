@@ -1,0 +1,123 @@
+extends ../../layouts/default
+
+block content
+    .container
+        h1 Info: Minions (Crafts)
+        p What are the cheapest minions to level up to gain more minion slots?
+
+        p It calculates the cheapest minions to level up to gain more minion slots, also tailor-made for each profile if you input your Minecraft name. It also shows you how much money you need to spend on materials to unlock a new minion tier.
+        
+        p This documentation is not 100% complete, but it explains features that the majority of you might get confused with.
+        
+        h3 Features
+        ul
+            li Real time bazaar prices
+            li Filtering for specific minions or tiers.
+            li
+                | If Minecraft name is inputted:
+                ul
+                    li Will move locked slayer minions to the end of list 
+                    li Will move minions that you do not have the collection to craft to the end of list 
+            
+        //- h2.mt-5 Contents
+        //- hr
+        //- ol
+        //-     li
+        //-         | <a href="#settingsExplained"> Settings Explained</a>
+        //-         ul
+        //-             li: a(href="#minecraftName") Why is my Minecraft name required?
+        //-             li: a(href="#minionSlotsTierType") Estimate by number of minion slots
+        //-             li: a(href="#minionSlotsManualType") Manually choose tier
+        //-             li: a(href="#fuel") Fuel/ other perks
+        //-             li: a(href="#offlineTime") Offline time
+        //-             li: a(href="#diamondSpreading") Diamond Spreading
+        //-             li: a(href="#differentCompactors") Different compactors
+        //-             li: a(href="#noCrafting") No crafting
+        //-             li: a(href="#sellingTo") Selling to
+        //-             li: a(href="#rawDataButton") Show raw data button and details
+        //-             li: a(href="#lesserSoulflowEngine") Lesser Soulflow Engine
+        //-             li: a(href="#sellingMethodInBazaar") Selling method in bazaar
+        //-             li: a(href="#tax") Tax in bazaar
+
+        //-     li
+        //-         | <a href="#tableColumnsExplained"> Table Columns Explained</a>
+        //-         ul 
+        //-             li: a(href="#minionCol") Minion (Total Profit for 1 minion for (offline time))
+        //-             li: a(href="#tierCol") Tier
+        //-             li: a(href="#minionUpgrades") Minion Upgrades
+        //-             li: a(href="#itemsCol") Items
+        //-             li: a(href="#quantityCol") Quantity
+        //-             li: a(href="#unitPriceCol") Unit Price
+        //-             li: a(href="#totalProfitCol") Total Profit
+        //-             li: a(href="#profitPerHour") Profit Per Hour
+        //-     li: a(href="#algoithm") Algorithm
+        //-     li: a(href="#disclaimer") Disclaimer
+        //-     li: a(href="#faq") FAQ
+
+        h2#settingsExplained.mt-5 Settings Explained
+        hr
+        //- p TL;DR: Default settings should be suitable for most of you. In my opinion, your Minecraft name is the most crucial piece of information to make the calculator useful for you, but it is down to personal preference. If you prefer not to, there are alternative estimation methods including <a href="#minionSlotsTierType">Estimate by number of minion slots</a> and <a href="#manualTierType">Manually choose tier</a>.
+
+        br
+        h3#minecraftName Why is my Minecraft name required?
+        p If you enter your Minecraft name, it will calculate the cheapest minion ignoring the minion you have crafted. It could make the crafts list more personalized and useful. (Note that API settings has to be changed in game in order to obtain for the calculator to obtain collections information.)
+        p Alternatively, you could uncheck this "Use Profile" box, and it would show the whole crafts list.
+
+        br 
+        h3#group Sort by minion name every _ slot(s)
+        p It will sort by alphabetical order of minion name instead of ascending order of upgrade cost WITHIN each tier. So that you can upgrade the same minion multiple times in one go if needed, rather than having to go back and forth.
+        
+        br
+        h3#buyingMethodInBazaar Buying method in bazaar
+        p Copied from <a href='https://hypixel.net/threads/guide-a-basic-guide-about-the-bazaar.3064624/'>Hypixel Forums</a>: 
+        p Typically, creating buy and sell orders allow players to buy items at a lower price and sell items at a higher price. However, as a player would have to instantly buy/sell the item for the order to be filled, buy/sell orders tend to take longer to fill up.
+
+        br 
+        h3#tax Tax in bazaar
+        p The bazaar has a tax rate of 1.25% by default. The community center upgrade Bazaar Flipper can bring it down to 1.125% for free-to-play players, and a further decrease to 1% if you spend gems.
+
+        br
+        h3#filterSlayers Exclude locked slayer minions
+        p If checked, slayer minions that you cannot craft based on your slayer level will be put at the end of the list/ removed from the list. (based on your selection)
+
+        br
+        h3#filterCollections Exclude locked minions (collections)
+        p If checked, minions that you cannot craft based on the collections you have will be put at the end of the list/ removed from the list. (based on your selection)
+        p This feature would require collections API enabled. Click <a href="https://www.youtube.com/watch?v=-_LIyA5lNMU">here</a> to see how to enable API access.
+
+        br
+        h3#bottomSlayers Exclude slayer minions
+        p If checked, all slayer minions will be put at the end of the list/ removed from the list. (based on your selection)
+
+        br
+        h3#excludedCrafts Excluded crafts should be put at the end of list / removed
+        p Decide whether the excluded minions (as you selected on the left/ above), should be put at the end of list or removed from the list.
+
+        br
+        h3#showSlots Show slot information
+        p If checked, the colored line showing amount of coins needed and the slot that you are unlocking, should appear, such as "6th slot: 901.7 coins"
+
+        br
+        h3#filters Filters
+        p Only checked minions/tiers would appear in the list.
+
+        h2#tableColumnsExplained.mt-5 Table Columns Explained
+        hr
+
+        br
+        h3#minionCol Minion
+        p See <a href="#group">above</a> on how the minions are ordered.
+
+        //- h2#disclaimer.mt-5 Disclaimer
+        //- hr
+        //- p Please note that the forge calculator calculates based on the instantaneous price of the items sold in bazaar and auction house, so the prices may fluctuate a lot from time to time, and so do the profit (as we all know the economy of Skyblock is quite unstable). 
+        //- p Think twice before making an investment. As the volume of items in Auction House is much less than items in Bazaar, the risk would be much higher than using the minions profit calculator, as you may make a loss from forges if you are not careful. 
+        
+
+        //- h2#faq.mt-5 FAQ
+
+        //- br
+        //- h3 Q: How often does this website refresh?
+        //- p A: Bazaar prices would refresh as long as Hypixel API refreshes. While auction prices are refreshed every 10 minutes. As auction prices are stored in my server while bazaar prices are not.
+
+        //- p Feel free to <a href="/contacts">contact me</a> if you do not understand anything.

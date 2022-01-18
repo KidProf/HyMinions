@@ -106,31 +106,31 @@ block content
                             span.d-inline-block &nbsp; &nbsp;
                             a.d-inline-block(href="/info/forge#riskManagement" target="_blank"): i.pt-2.fas.fa-question-circle
                             .form-group
-                                span Risk Level: &nbsp;
+                                span Protection: &nbsp;
                                 select#overallRiskLevel.form-control(onchange="setRisk()")
-                                    option(value="1" selected=(settings.riskLevel==1 ? 'selected':undefined)) Low
+                                    option(value="1" selected=(settings.riskLevel==1 ? 'selected':undefined)) High
                                     option(value="2" selected=(settings.riskLevel==2 ? 'selected':undefined)) Medium
-                                    option(value="3" selected=(settings.riskLevel==3 ? 'selected':undefined)) High
-                                    option(value="4" selected=(settings.riskLevel==4 ? 'selected':undefined)) Maximum
+                                    option(value="3" selected=(settings.riskLevel==3 ? 'selected':undefined)) Low
+                                    option(value="4" selected=(settings.riskLevel==4 ? 'selected':undefined)) None
                                     option(value="0" selected=(settings.riskLevel==0 ? 'selected': undefined)) Custom
                                 span &nbsp; &nbsp;
                                 a(href="/info/forge#riskLevel" target="_blank"): i.pt-2.fas.fa-question-circle
                             .form-group
                                 input#overallBudgetCheck.checkbox(type="checkbox" checked=(settings.budget!=0 ? 'checked' : undefined) onchange="setRiskCustom()")
                                 label &nbsp; Budget: &nbsp; 
-                                input#overallBudgetValue.form-control(type="number" value=settings.budget/1000000 min="0" oninput="setRiskCustom()")
+                                input#overallBudgetValue.form-control(type="number" value=(settings.budget == 0 ? 30 : settings.budget/1000000) min="0" oninput="setRiskCustom()")
                                 span &nbsp; M &nbsp;
                                 a(href="/info/forge#budget" target="_blank"): i.pt-2.fas.fa-question-circle
                             .form-group
                                 input#overallNoOfAuctionsMinCheck.checkbox(type="checkbox" checked=(settings.noOfAuctionsMin!=0 ? 'checked' : undefined) onchange="setRiskCustom()")
                                 label &nbsp; Minimum items in AH: &nbsp; 
-                                input#overallNoOfAuctionsMinValue.form-control(type="number" value=settings.noOfAuctionsMin min="1" oninput="setRiskCustom()")
+                                input#overallNoOfAuctionsMinValue.form-control(type="number" value=(settings.noOfAuctionsMin == 0 ? 5 : settings.noOfAuctionsMin) min="1" oninput="setRiskCustom()")
                                 span &nbsp; &nbsp;
                                 a(href="/info/forge#noOfAuctionsMin" target="_blank"): i.pt-2.fas.fa-question-circle
                             .form-group
                                 input#overallOverbuyToleranceCheck.checkbox(type="checkbox" checked=(settings.overbuyTolerance!=0 ? 'checked' : undefined) onchange="setRiskCustom()")
                                 label &nbsp; Buy in bulk: &nbsp;
-                                input#overallOverbuyToleranceValue.form-control(type="number" value=settings.overbuyTolerance min="1" oninput="setRiskCustom()")
+                                input#overallOverbuyToleranceValue.form-control(type="number" value=(settings.overbuyTolerance == 0 ? 2 : settings.overbuyTolerance) min="1" oninput="setRiskCustom()")
                                 span &nbsp; x &nbsp;
                                 a(href="/info/forge#overbuyTolerance" target="_blank"): i.pt-2.fas.fa-question-circle
                             p: small ^ Trying to profit from the forge is similar to an investment, there is a possibility of loss. Forges that do not satisfy the above criteria would be highlighted in yellow at related cells as a reminder hoping to reduce the potential loss, but they will not be moved to the bottom.
