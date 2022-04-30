@@ -1,4 +1,4 @@
-exports.minionSlotsCriteria = [5,15,30,50,75,100,125,150,175,200,225,250,275,300,350,400,450,500,550,600];
+exports.minionSlotsCriteria = [5,15,30,50,75,100,125,150,175,200,225,250,275,300,350,400,450,500,550,600,650];
 //                      Slots: 6,7 ,8, 9, ...
 //translate to minion slots = position+6
 //total available minions must be larger than the last element of minionSlotsCriteria
@@ -4435,10 +4435,299 @@ exports.minions = [
                 ],
             },
         ]      
+    },{ //55
+        name: "Red Sand Minion",
+        id: 55,
+        rawId: "RED_SAND",
+        rawCollectionId: "SAND:1",
+        tierDelay : [26,25,24,23,22,21,20,19,18,16,13,6], //12
+        storage: [64,128,192,320,384,512,576,704,768,896,960,960],
+        upgrade:{
+            materials: [
+                ["Wooden Shovel","Red Sand","* Requires 500 Barbarian Reputation"],
+                ["Red Sand","* Requires 1000 Barbarian Reputation"],
+                ["Red Sand","* Requires 1500 Barbarian Reputation"],
+                ["Enchanted Red Sand","* Requires 2000 Barbarian Reputation"],
+                ["Enchanted Red Sand","* Requires 3000 Barbarian Reputation"],
+                ["Enchanted Red Sand","* Requires 4000 Barbarian Reputation"],
+                ["Enchanted Red Sand","* Requires 5500 Barbarian Reputation"],
+                ["Enchanted Red Sand","* Requires 6500 Barbarian Reputation"],
+                ["Enchanted Red Sand","* Requires 7500 Barbarian Reputation"],
+                ["Enchanted Red Sand Cube","* Requires 9000 Barbarian Reputation"],
+                ["Enchanted Red Sand Cube","* Requires 10000 Barbarian Reputation"],
+                ["Enchanted Red Sand Cube","Coins","* Requires 12000 Barbarian Reputation"],
+            ],
+            quantities: [
+                [1,80,undefined],
+                [256,undefined],
+                [512,undefined],
+                [16,undefined],
+                [32,undefined],
+                [64,undefined],
+                [128,undefined],
+                [256,undefined],
+                [512,undefined],
+                [8,undefined],
+                [16,undefined],
+                [32,2000000,undefined],
+            ],
+        },
+        products : [
+            {
+                item : "Red Sand",
+                perTime : 1,
+                npcPrice: 2,
+                variants: [
+                    "Red Sand",
+                    "Enchanted Red Sand",
+                    "Enchanted Red Sand Cube",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600,
+                ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
+        ]
+    },{ //56
+        name: "Mycelium Minion",
+        id: 56,
+        rawId: "MYCELIUM",
+        rawCollectionId: "MYCEL",
+        tierDelay : [26,25,24,23,22,21,20,19,18,16,13,6], //12
+        storage: [64,128,192,320,384,512,576,704,768,896,960,960],
+        upgrade:{
+            materials: [
+                ["Wooden Shovel","Mycelium","* Requires 500 Mage Reputation"],
+                ["Mycelium","* Requires 1000 Mage Reputation"],
+                ["Mycelium","* Requires 1500 Mage Reputation"],
+                ["Enchanted Mycelium","* Requires 2000 Mage Reputation"],
+                ["Enchanted Mycelium","* Requires 3000 Mage Reputation"],
+                ["Enchanted Mycelium","* Requires 4000 Mage Reputation"],
+                ["Enchanted Mycelium","* Requires 5500 Mage Reputation"],
+                ["Enchanted Mycelium","* Requires 6500 Mage Reputation"],
+                ["Enchanted Mycelium","* Requires 7500 Mage Reputation"],
+                ["Enchanted Mycelium Cube","* Requires 9000 Mage Reputation"],
+                ["Enchanted Mycelium Cube","* Requires 10000 Mage Reputation"],
+                ["Enchanted Mycelium Cube","Coins","* Requires 12000 Mage Reputation"],
+            ],
+            quantities: [
+                [1,80,undefined],
+                [256,undefined],
+                [512,undefined],
+                [16,undefined],
+                [32,undefined],
+                [64,undefined],
+                [128,undefined],
+                [256,undefined],
+                [512,undefined],
+                [8,undefined],
+                [16,undefined],
+                [32,2000000,undefined],
+            ],
+        },
+        products : [
+            {
+                item : "Mycelium",
+                perTime : 1,
+                npcPrice: 5,
+                variants: [
+                    "Mycelium",
+                    "Enchanted Mycelium",
+                    "Enchanted Mycelium Cube",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600,
+                ]
+            },
+            {
+                item: "Diamond (Spreading)",
+                npcPrice: 8,
+                canCompactor: true,
+                compactor: {
+                    variant: "Block of Diamond (Spreading)",
+                    variantEquiv: 9,
+                },
+                variants: [
+                    "Diamond (Spreading)",
+                    "Enchanted Diamond (Spreading)",
+                    "Enchanted Diamond Block (Spreading)",
+                ],
+                variantsEquiv: [
+                    1,
+                    160,
+                    25600
+                ],
+            },
+        ]
+    },{ //57
+        name: "Inferno Minion",
+        id: 54,
+        rawCollectionId: "NONE",
+        tierDelay : [1102,1068,1033,999,964,930,895,861,827,792,792],
+        storage: [64,192,192,384,384,576,576,768,768,960,960],
+        warning: "* Not implemented yet",
+        toolsRequired: ["* Not implemented yet"],
+        upgrade:{
+            defaultPutAtLast: 1,
+            materials: [
+                ["* Not implemented yet"],
+                ["* Not implemented yet"],
+                ["* Not implemented yet"],
+                ["* Not implemented yet"],
+                ["* Not implemented yet"],
+                ["* Not implemented yet"],
+                ["* Not implemented yet"],
+                ["* Not implemented yet"],
+                ["* Not implemented yet"],
+                ["* Not implemented yet"],
+                ["* Not implemented yet"],
+            ],
+            quantities: [
+                [undefined],
+                [undefined],
+                [undefined],
+                [undefined],
+                [undefined],
+                [undefined],
+                [undefined],
+                [undefined],
+                [undefined],
+                [undefined],
+                [undefined],
+            ],
+        },
+        products : [
+        ]      
     },
+    // },{ //57
+    //     name: "Inferno Minion",
+    //     id: 57,
+    //     rawCollectionId: "NONE",
+    //     tierDelay : [1102,1068,1033,999,964,930,895,861,827,792,792],
+    //     storage: [64,192,192,384,384,576,576,768,768,960,960],
+    //     upgrade:{
+    //         materials: [
+    //             ["Derelict Ashe","Blaze Rod","^ For Enderman Minion Tier 1","* Requires Voidling Tier 4"],
+    //             ["Null Sphere","Blaze Rod","^ For Obsidian Minion Tier 1","* Requires Voidling Tier 4"],
+    //             ["Null Sphere","Ender Pearl","^ For Enderman Minion Tier 2","* Requires Voidling Tier 4"],
+    //             ["Null Sphere","Obsidian","^ For Obsidian Minion Tier 3","* Requires Voidling Tier 4"],
+    //             ["Null Ovoid","Enchanted Ender Pearl","Ender Pearl","^ For Enderman Minion Tier 4","* Requires Voidling Tier 4"],
+    //             ["Null Ovoid","Enchanted Obsidian","Obsidian","^ For Obsidian Minion Tier 5","* Requires Voidling Tier 4"],
+    //             ["Null Ovoid","Enchanted Ender Pearl","Ender Pearl","^ For Enderman Minion Tier 6","* Requires Voidling Tier 4"],
+    //             ["Null Ovoid","Enchanted Obsidian","Obsidian","^ For Obsidian Minion Tier 7","* Requires Voidling Tier 4"],
+    //             ["Null Ovoid","Enchanted Eye of Ender","Enchanted Ender Pearl","Ender Pearl","^ For Enderman Minion Tier 8","* Requires Voidling Tier 4"],
+    //             ["Null Ovoid","Enchanted Obsidian","Obsidian","^ For Obsidian Minion Tier 9","* Requires Voidling Tier 4"],
+    //             ["Null Ovoid","Enchanted Eye of Ender","Enchanted Ender Pearl","Ender Pearl","^ For Enderman Minion Tier 10","* Requires Voidling Tier 4"],
+    //         ],
+    //         quantities: [
+    //             [80,64,undefined,undefined],
+    //             [140,80,undefined,undefined],
+    //             [280,128+64,undefined,undefined],
+    //             [448,320+160+80,undefined,undefined],
+    //             [7,24+8,128+64,undefined,undefined],
+    //             [14,8,512+320+160+80,undefined,undefined],
+    //             [28,96+48+24+8,128+64,undefined,undefined],
+    //             [56,32+16+8,512+320+160+80,undefined,undefined],
+    //             [112,24+8,96+48+24+8,128+64,undefined,undefined],
+    //             [224,128+64+32+16+8,512+320+160+80,undefined,undefined],
+    //             [448,96+48+24+8,96+48+24+8,128+64,undefined,undefined],
+    //         ],
+    //         slayerRequirements: [
+    //             "voidling4",
+    //             "voidling4",
+    //             "voidling4",
+    //             "voidling4",
+    //             "voidling4",
+    //             "voidling4",
+    //             "voidling4",
+    //             "voidling4",
+    //             "voidling4",
+    //             "voidling4",
+    //             "voidling4",
+    //         ]
+    //     },
+    //     //noDiamondSpreading : 1,
+    //     products : [
+    //         {
+    //             item : "Nether Quartz",
+    //             perTime : 0.4,
+    //             npcPrice: 4,
+    //             canCompactor: true,
+    //             compactor: {
+    //                 variant: "Block of Quartz",
+    //                 variantEquiv: 4, //4
+    //                 minimumEnchanted: 1,
+    //             },
+    //             variants: [
+    //                 "Nether Quartz",
+    //                 "Enchanted Quartz",
+    //                 "Enchanted Quartz Block"
+    //             ],
+    //             variantsEquiv: [
+    //                 1,
+    //                 160,
+    //                 25600,
+    //             ]
+    //         },
+    //         {
+    //             item : "Obsidian",
+    //             perTime : 2.42,
+    //             npcPrice: 12,
+    //             variants: [
+    //                 "Obsidian",
+    //                 "Enchanted Obsidian",
+    //             ],
+    //             variantsEquiv: [
+    //                 1,
+    //                 160,
+    //             ]
+    //         },
+    //         {
+    //             item: "Diamond (Spreading)",
+    //             npcPrice: 8,
+    //             canCompactor: true,
+    //             compactor: {
+    //                 variant: "Block of Diamond (Spreading)",
+    //                 variantEquiv: 9,
+    //             },
+    //             variants: [
+    //                 "Diamond (Spreading)",
+    //                 "Enchanted Diamond (Spreading)",
+    //                 "Enchanted Diamond Block (Spreading)",
+    //             ],
+    //             variantsEquiv: [
+    //                 1,
+    //                 160,
+    //                 25600
+    //             ],
+    //         },
+    //     ]      
+    // },
 
-    //TOTAL: 55
-    //flower minion not functioning
+    //TOTAL: 58
+    //flower minion, inferno minion not functioning
 ];
 
 
