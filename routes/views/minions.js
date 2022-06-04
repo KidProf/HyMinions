@@ -4,23 +4,48 @@ var {calculateMinionsProfit} = require("../api/minionsOperation.js");
 exports = module.exports = function (req, res) {
     console.log(req.method);
     console.log(req.query);
+    console.log(req.api);
 
     let settings = req.query;
 
     //data validation
     if(!dataValidation(settings)){
-        res.render("minions",{settings: settings});
+        if(req.api){
+            res.json({
+                status: "error",
+                errorMsg: settings.errorMsg,
+                settings: settings,
+            })
+        }else{
+            res.render("minions",{settings: settings});
+        }
     }else{
         //go to minions operation.js
         //asyncAwait
         calculateMinionsProfit(minions, settings).then(()=>{
             let output = {settings: settings, minions: minions};
             console.log(output.settings);
-            res.render("minions",output);
-
+            if(req.api){
+                res.json({
+                    status: "success",
+                    settings: settings,
+                    ...output
+                })
+            }else{
+                res.render("minions",output);
+            }
         }).catch((err)=>{
             console.log(err);
-            res.render("minions",{settings: settings});
+            if(req.api){
+                res.json({
+                    status: "error",
+                    errorMsg: err,
+                    settings: settings,
+                })
+            }else{
+                res.render("minions",{settings: settings});
+            }
+            
         });
     }
 

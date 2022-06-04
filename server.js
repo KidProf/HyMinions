@@ -7,13 +7,14 @@ const express = require('express');
 const env = require('dotenv');
 const lessMiddleware = require('less-middleware');
 const path = require('path');
-const getMinionsApi = require('./routes/api/getBazaarApiForge');
-const getProfileApi = require('./routes/api/getProfileApiForge');
+// const getMinionsApi = require('./routes/api/getBazaarApiForge');
+// const getProfileApi = require('./routes/api/getProfileApiForge');
 const minionsView = require("./routes/views/minions.js");
 const minionsCostView = require("./routes/views/minionsCost.js");
 const forgeView = require("./routes/views/forge.js");
 const auctionsView = require("./routes/views/auctions.js");
 const indexView = require("./routes/views/index.js");
+const apiTest = require('./routes/api/apiTest');
 
 //constants
 const app = express();
@@ -38,9 +39,17 @@ app.get('/contact',(req,res)=>{res.render("contact");});
 app.get('/info/minions',(req,res)=>{res.render("infos/infoMinions");});
 app.get('/info/forge',(req,res)=>{res.render("infos/infoForge");});
 app.get('/info/minionscost',(req,res)=>{res.render("infos/infoMinionsCost")})
-//api
-app.get('/api/get-minions-api',getMinionsApi);
-app.get('/api/get-profile-api/:name',getProfileApi);
+
+//new public api
+app.get('/api',apiTest);
+app.get('/api/minions',(req,res)=>{
+    req.api = true;
+    minionsView(req,res);
+});
+
+//old api
+// app.get('/api/get-minions-api',getMinionsApi);
+// app.get('/api/get-profile-api/:name',getProfileApi);
 
 //app.set, app.use
 app.set("view engine","pug");
