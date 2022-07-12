@@ -38,10 +38,13 @@ app.get('/auctions',auctionsView);
 app.get('/abouts',(req,res)=>{res.render("abouts");});
 app.get('/abouts/pastupdates',(req,res)=>{res.render("pastUpdates");});
 app.get('/contact',(req,res)=>{res.render("contact");});
+app.get('/contribute',(req,res)=>{res.render("contribute");});
 
 app.get('/info/minions',(req,res)=>{res.render("infos/infoMinions");});
 app.get('/info/forge',(req,res)=>{res.render("infos/infoForge");});
 app.get('/info/minionscost',(req,res)=>{res.render("infos/infoMinionsCost")})
+app.get('/info/api',(req,res)=>{res.render("infos/infoApi");});
+app.get('/info/sourcecode',(req,res)=>{res.render("infos/infoSourceCode");});
 
 //new public api
 app.get('/api',apiTest);

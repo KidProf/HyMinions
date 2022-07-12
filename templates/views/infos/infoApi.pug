@@ -1,0 +1,82 @@
+extends ../../layouts/default
+
+block content
+    .container
+        h1 Info: API
+        
+        p Currently there is only 1 API that gives you the profit information of the minions. More will be released in the future.
+        
+        //- h2.mt-5 Contents
+        //- hr
+        //- ol
+        //-     li
+        //-         | <a href="#settingsExplained"> Settings Explained</a>
+        //-         ul
+        //-             li: a(href="#minecraftName") Why is my Minecraft name required?
+        //-             li: a(href="#minionSlotsTierType") Estimate by number of minion slots
+        //-             li: a(href="#minionSlotsManualType") Manually choose tier
+        //-             li: a(href="#fuel") Fuel/ other perks
+        //-             li: a(href="#offlineTime") Offline time
+        //-             li: a(href="#diamondSpreading") Diamond Spreading
+        //-             li: a(href="#differentCompactors") Different compactors
+        //-             li: a(href="#noCrafting") No crafting
+        //-             li: a(href="#sellingTo") Selling to
+        //-             li: a(href="#rawDataButton") Show raw data button and details
+        //-             li: a(href="#lesserSoulflowEngine") Lesser Soulflow Engine
+        //-             li: a(href="#sellingMethodInBazaar") Selling method in bazaar
+        //-             li: a(href="#tax") Tax in bazaar
+
+        //-     li
+        //-         | <a href="#tableColumnsExplained"> Table Columns Explained</a>
+        //-         ul 
+        //-             li: a(href="#minionCol") Minion (Total Profit for 1 minion for (offline time))
+        //-             li: a(href="#tierCol") Tier
+        //-             li: a(href="#minionUpgrades") Minion Upgrades
+        //-             li: a(href="#itemsCol") Items
+        //-             li: a(href="#quantityCol") Quantity
+        //-             li: a(href="#unitPriceCol") Unit Price
+        //-             li: a(href="#totalProfitCol") Total Profit
+        //-             li: a(href="#profitPerHour") Profit Per Hour
+        //-     li: a(href="#algoithm") Algorithm
+        //-     li: a(href="#disclaimer") Disclaimer
+        //-     li: a(href="#faq") FAQ
+
+        h2#guidelines.mt-5 Guidelines
+        hr
+        p You need an API key to access all of the APIs. You could <a href="/contact">contact me</a> to obtain one.
+        p Citing the name of my website - HyMinions, and including a link to HyMinions in your own application is appreciated, but not necessary.
+
+        h2#minions.mt-5 Minions API 
+        p.warning The documentation is not finished, <a href="/contact">contact me</a> if anything is unclear to you. Thank you.
+        p: code GET /api/minions/
+        
+        h3 Inputs
+        p Your input should be in the form of a query string, for example <code>/api/minions?key=RANDOM&name=KidProf</code>
+        p Refer to the <a href="/info/minions">documentation</a> of the minions page if you are not sure what some of the settings below do.
+        ul
+            li <code>key</code> (REQUIRED): Your API key
+            li <code>name</code>: Minecraft Name for tier estimate
+            li <code>profile</code>: Profile number (0 represents the first profile, 1 represents the second...)
+            li <code>slots</code>: Number of minion slots for tier estimate (It defaults to 23 minion slots when <code>slots</code>, <code>name</code> and <code>tierType</code> are not present)
+            li <code>tierType</code>,<code>tier</code>: Set all minions to a specific tier. To do so, set <code>tier</code> to a number between 1 to 12. (12 means max level), and <code>tierType</code> to 0.
+            li <code>fuel</code>: Fuel level of minions (in percentage) (default: 25)
+            li <code>offlineTimeUnit</code>: 0 for hours, 1 for days (default: hours)
+            li <code>offlineTime</code>: Offline time in hours (default: 24)
+            li <code>soulflow</code>: 1 when soulflow is used (default: 0)
+            li <code>superCompactor</code>:  3 for Dwarven Super Compactor, 2 for Super Compactor, 1 for Compactor, 0 for none (default: 3)
+            li <code>diamondSpreading</code>: 1 when diamond spreading is used (default: 1)
+            li <code>noCrafting</code>: 1 when no crafting (default: 0)
+            li <code>showDetails</code>: 1 for showing details (default: 1)
+            li <code>sellingTo</code>: 1 for max profit, 0 for NPC only (default: 1)
+            li <code>sellingMethod</code>: Selling method in bazaar, 1 for sell instantly, 0 for sell offer (default: 1)
+            li <code>tax</code>: Tax in percentage (default: 1.125)
+
+
+        
+        //- h2#faq.mt-5 FAQ
+
+        //- br
+        //- h3 Q: How often does this website refresh?
+        //- p A: Bazaar prices would refresh as long as Hypixel API refreshes. While auction prices are refreshed every 10 minutes. As auction prices are stored in my server while bazaar prices are not.
+
+        p Feel free to <a href="/contacts">contact me</a> if you find any of this unclear.
