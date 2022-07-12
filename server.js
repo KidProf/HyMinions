@@ -20,6 +20,9 @@ const apiTest = require('./routes/api/apiTest');
 const app = express();
 const port = process.env.PORT || 3000;
 
+//to allow POST request 
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 //ROUTING
 //views
