@@ -29,7 +29,8 @@
     "start": "node server.js",
     "genForgePretty": "node -e 'require(\"./gen/src/genForge.js\").genForgePretty()'",
     "genForge": "node -e 'require(\"./gen/src/genForge.js\").genForge()'",
-    "genAuctions": "node -e 'require(\"./gen/src/genForge.js\").genAuctions()'"
+    "genAuctions": "node -e 'require(\"./gen/src/genForge.js\").genAuctions()'",
+    "deploy": " git push heroku minions:main"
   },
   "license": "ISC"
 }
