@@ -37,4 +37,5 @@ More contributing guidelines at https://hyminions.herokuapp.com/contribute
 
 ## License
 Copyright © 2020 KidProf
+
 This work is licensed under the [MIT license](https://choosealicense.com/licenses/mit/).

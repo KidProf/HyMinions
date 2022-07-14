@@ -47,6 +47,7 @@ block content
         p Citing the name of my website - HyMinions, and including a link to HyMinions in your own application is appreciated, but not necessary.
 
         h2#minions.mt-5 Minions API 
+        hr
         p.live The documentation is not finished, <a href="/contact">contact me</a> if anything is unclear to you. Thank you.
         p: code GET /api/minions/
         
@@ -68,12 +69,12 @@ block content
             li <code>noCrafting</code>: 1 when no crafting (default: 0)
             li <code>showDetails</code>: 1 for showing details (default: 1)
             li <code>sellingTo</code>: 1 for max profit, 0 for NPC only (default: 1)
-            li <code>sellingMethod</code>: Selling method in bazaar, 1 for sell instantly, 0 for sell offer (default: 1)
+            li <code>sellingMethod</code>: Selling method in the bazaar, 1 for sell instantly, 0 for sell offer (default: 1)
             li <code>tax</code>: Tax in percentage (default: 1.125)
 
         h3 Outputs
         p A JSON will be returned
-        p Refer to the <a href="/info/minions">documentation</a> of the minions page if you are not sure what some of the outputs below are. There are more outputs over there for website internal use only and of no use, so you could safely ignore unmentioned fields.
+        p Refer to the <a href="/info/minions">documentation</a> of the minions page if you are not sure what some of the outputs below are. There are more outputs over there for HyMinions internal use only and of no use, so you could safely ignore unmentioned fields.
         ul
             li <code>status</code>: Will give <code>success</code> when there is no error, and <code>error</code> when there is.
             li <code>errorMsg</code>: A string describing the error when <code>status</code> is <code>error</code>.
@@ -95,10 +96,18 @@ block content
                     //-         li <code>selectedVariant</code>: Shows the index of the variant selected by my algorithm that gives maximum profit, or suits your settings.
                     li <code>tier</code>: Tier of the minion (according to your settings)
                     li <code>fuel</code>: Fuel of the minion (according to your settings)
-                    li <code>hasDiamondSpreading</code>: Whether the minion has diamond spreading (according to your settings)
-
-
-
+                    li <code>hasDiamondSpreading</code>: Whether the minion has diamond spreading (according to your settings, and whether there is enough minion slots)
+                    li 
+                        | <code>outputProducts</code>: Raw products the minion generates, an element of the array corresponds to each output product (as a side note, <code>products</code> is for HyMinions internal use only, which can be ignored)
+                        ul
+                            li <code>name</code>: Name of the product 
+                            li <code>numberOfItems</code>: Number of products it generates in the duration you specified in your settings
+                            li <code>unitPrice</code>: Unit price of the product in string
+                            li <code>profitPerItem</code>: <code>numberOfItems</code>*<code>unitPrice</code> in floating point
+                    li <code>totalProfit</code>: Total profit in floating point 
+                    li <code>totalProfitText</code>: Total profit in string
+                    li <code>tools</code>: Minion upgrades used
+                            
             
         //- h2#faq.mt-5 FAQ
 
