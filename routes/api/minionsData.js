@@ -4587,8 +4587,8 @@ exports.minions = [
         rawCollectionId: "NONE",
         tierDelay : [1102,1068,1033,999,964,930,895,861,827,792,792],
         storage: [64,192,192,384,384,576,576,768,768,960,960],
-        warning: "* Not implemented yet",
-        toolsRequired: ["* Not implemented yet"],
+        warning: "* Not implemented",
+        toolsRequired: ["* Not implemented"],
         upgrade:{
             defaultPutAtLast: 1,
             materials: [
