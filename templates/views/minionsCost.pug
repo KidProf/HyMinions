@@ -46,15 +46,13 @@ block content
                                     -k++;
                 #advanced.col-lg-6.col-12
                     br
-                    h3 New Feature
+                    h3 Advanced
                     .form-group
                         input#overallGroupCheck.checkbox(type="checkbox" checked=(settings.group!=0 ? 'checked' : undefined))
                         label &nbsp; Sort by minion name every &nbsp; 
                         input#overallGroupValue.form-control(type="number" value=(settings.group == 0 ? 1 : settings.group) min="1")
                         span &nbsp; slot(s) &nbsp;
                         a(href="/info/minionscost#group" target="_blank"): i.pt-2.fas.fa-question-circle
-                    br
-                    h3 Advanced
                     .form-group
                         label(for="overallBuyingMethod") Buying method in bazaar: &nbsp; 
                         select#overallBuyingMethod.form-control

@@ -227,6 +227,9 @@ exports.findProfile = async function findProfile(name,settings){
                                 if(profile["members"][member]["slayer_bosses"]?.["enderman"]?.["claimed_levels"]?.["level_4"]){
                                     profilesAjax[index]["slayerBosses"]["voidling4"] = true;
                                 }
+                                if(profile["members"][member]["slayer_bosses"]?.["blaze"]?.["claimed_levels"]?.["level_3"]){
+                                    profilesAjax[index]["slayerBosses"]["inferno3"] = true;
+                                }
                             }
 
                             //hotm level for forge cal
