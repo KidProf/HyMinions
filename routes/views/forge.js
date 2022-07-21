@@ -1,3 +1,5 @@
+var fetch = require('cross-fetch');
+
 var {forges} = require("../api/forgeData.js");
 var {findAuction} = require("../api/general.js");
 var {calculateForge} = require("../api/forgeOperation.js");
@@ -7,16 +9,58 @@ exports = module.exports = function (req, res) {
     let settings = req.query;
 
     if(!dataValidation(settings)){
-        res.render("forge",{settings: settings});
+        if(req.api){
+            res.json({
+                status: "error",
+                errorMsg: settings.errorMsg,
+                settings: settings,
+            })
+        }else{
+            res.render("forge",{settings: settings});
+        }
     }else{
         calculateForge(forges, settings).then((outputForges)=>{
             let output = {settings: settings, forges: forges, outputForges: outputForges};
             console.log(output.settings);
-            res.render("forge",output);
+            if(req.api){
+                fetch(process.env.BACKEND_LINK+"/apilog/forge/"+settings.key, {
+                    method: "post",
+                    headers: {
+                        'Accept': 'application/text',
+                        'Content-Type': 'application/json'
+                        //text/plain
+                    },
+        
+                    //make sure to serialize your JSON body
+                    body: JSON.stringify({})
+                }) //just leave it async, return the page first
+                res.json({
+                    status: "success",
+                    ...output
+                })
+            }else{
+                if(req.api){
+                    res.json({
+                        status: "error",
+                        errorMsg: err,
+                        settings: settings,
+                    })
+                }else{
+                    res.render("forge",output);
+                }
+            }
     
         }).catch((err)=>{
             console.log(err);
-            res.render("forge",{settings: settings});
+            if(req.api){
+                res.json({
+                    status: "error",
+                    errorMsg: err,
+                    settings: settings,
+                })
+            }else{
+                res.render("forge",{settings: settings});
+            }
         });
     }
 
@@ -77,6 +121,16 @@ exports = module.exports = function (req, res) {
             console.log("Invalid Minecraft Name");
             settings.hasError = true;
             settings.errorMsg = "Invalid Minecraft Name. It should only contains letters, numbers and underscores.";
+            return false;
+        }else if(req.api&&!settings.key){
+            console.log("Missing API key");
+            settings.hasError = true;
+            settings.errorMsg = "Missing API key. You need to apply one at https://hyminions.herokuapp.com/contact";
+            return false;
+        }else if(req.api&&(!reg.test(settings.key)||settings.key.length!=10)){
+            console.log("Invalid API key");
+            settings.hasError = true;
+            settings.errorMsg = "Invalid API key. You need to apply one at https://hyminions.herokuapp.com/contact";
             return false;
         }else{
             return true;

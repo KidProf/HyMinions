@@ -1,26 +1,63 @@
+var fetch = require('cross-fetch');
+
 var {minions} = require("../api/minionsData.js");
 var {calculateMinionsCost} = require("../api/minionsCostOperation.js");
 
 exports = module.exports = function (req, res) {
     console.log(req.method);
     console.log(req.query);
+    console.log(req.api);
 
     let settings = req.query;
 
     //data validation
     if(!dataValidation(settings)){
-        res.render("minionsCost",{settings: settings});
+        if(req.api){
+            res.json({
+                status: "error",
+                errorMsg: settings.errorMsg,
+                settings: settings,
+            })
+        }else{
+            res.render("minionsCost",{settings: settings});
+        }
     }else{
         //go to minions cost operation.js
         //asyncAwait
         calculateMinionsCost(minions, settings).then((minionsCost)=>{
             let output = {settings: settings, minionsCost: minionsCost, minions: minions};
             console.log(output.settings);
-            res.render("minionsCost",output);
+            if(req.api){
+                fetch(process.env.BACKEND_LINK+"/apilog/minionscost/"+settings.key, {
+                    method: "post",
+                    headers: {
+                        'Accept': 'application/text',
+                        'Content-Type': 'application/json'
+                        //text/plain
+                    },
+        
+                    //make sure to serialize your JSON body
+                    body: JSON.stringify({})
+                }) //just leave it async, return the page first
+                res.json({
+                    status: "success",
+                    ...output
+                })
+            }else{
+                res.render("minionsCost",output);
+            }
 
         }).catch((err)=>{
             console.log(err);
-            res.render("minionsCost",{settings: settings});
+            if(req.api){
+                res.json({
+                    status: "error",
+                    errorMsg: settings.errorMsg,
+                    settings: settings,
+                })
+            }else{
+                res.render("minionsCost",{settings: settings});
+            }
         });
     }
 
@@ -84,6 +121,16 @@ exports = module.exports = function (req, res) {
             console.log("Invalid Minecraft Name");
             settings.hasError = true;
             settings.errorMsg = "Invalid Minecraft Name. It should only contains letters, numbers and underscores.";
+            return false;
+        }else if(req.api&&!settings.key){
+            console.log("Missing API key");
+            settings.hasError = true;
+            settings.errorMsg = "Missing API key. You need to apply one at https://hyminions.herokuapp.com/contact";
+            return false;
+        }else if(req.api&&(!reg.test(settings.key)||settings.key.length!=10)){
+            console.log("Invalid API key");
+            settings.hasError = true;
+            settings.errorMsg = "Invalid API key. You need to apply one at https://hyminions.herokuapp.com/contact";
             return false;
         }else{
             return true;

@@ -52,6 +52,16 @@ app.get('/api/minions',(req,res)=>{
     req.api = true;
     minionsView(req,res);
 });
+app.get('/api/minionscost',(req,res)=>{
+    req.api = true;
+    minionsCostView(req,res);
+});
+app.get('/api/forge',(req,res)=>{
+    req.api = true;
+    forgeView(req,res);
+});
+
+
 
 //old api
 // app.get('/api/get-minions-api',getMinionsApi);
