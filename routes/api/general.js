@@ -210,6 +210,7 @@ exports.findProfile = async function findProfile(name,settings){
                             "revenant9": false,
                             "tarantula5": false,
                             "voidling4": false,
+                            "inferno3": false,
                         };
                         profilesAjax[index]["hotmXp"] = -1;
                         Object.keys(profile["members"]).forEach((member, index2)=>{
