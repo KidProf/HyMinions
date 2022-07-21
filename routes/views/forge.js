@@ -64,10 +64,10 @@ exports = module.exports = function (req, res) {
             settings.budget = 30*1000000;
         }
         if(!settings.ah||!isWithinList(settings.ah,[-1,0,1])){
-            settings.ah = 0;
+            settings.ah = 1;
         }
         if(!settings.bz||!isWithinList(settings.bz,[-1,0,1])){
-            settings.bz = 0;
+            settings.bz = 1;
         }
 
         console.log(settings);
