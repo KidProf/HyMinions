@@ -80,7 +80,7 @@ exports = module.exports = function (req, res) {
     
         //Advanced
         if(!settings.group||settings.group<0){
-            settings.group = 1;
+            settings.group = 0;
         }else{
             settings.group = parseInt(settings.group);
         }

@@ -760,8 +760,8 @@ exports.minions = [
         name: "Blaze Minion",
         id: 8,
         rawCollectionId: "BLAZE_ROD",
-        tierDelay : [33,33,31,31,28.5,28.5,25,25,21,21,16.5],
-        storage: [64,192,192,384,384,576,576,768,768,960,960],
+        tierDelay : [33,33,31,31,28.5,28.5,25,25,21,21,16.5,15], //12
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
                 ["Wooden Sword","Blaze Rod"],
@@ -775,6 +775,7 @@ exports.minions = [
                 ["Enchanted Blaze Powder"],
                 ["Enchanted Blaze Powder"],
                 ["Enchanted Blaze Rod"],
+                ["Enchanted Blaze Rod","Coins"],//,"https://hypixel-skyblock.fandom.com/wiki/Hilda or","https://hypixel-skyblock.fandom.com/wiki/Marthos"],
             ],
             quantities: [
                 [1,80],
@@ -788,6 +789,7 @@ exports.minions = [
                 [256],
                 [512],
                 [8],
+                [16,2000000],
             ],
         },
         products : [
@@ -2233,8 +2235,8 @@ exports.minions = [
         name: "Glowstone Minion",
         id: 27,
         rawCollectionId: "GLOWSTONE_DUST",
-        tierDelay : [25,25,23,23,21,21,19,19,16,16,13],
-        storage: [64,192,192,384,384,576,576,768,768,960,960],
+        tierDelay : [25,25,23,23,21,21,19,19,16,16,13,11], //12
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
                 ["Wooden Pickaxe","Glowstone Dust"],
@@ -2248,6 +2250,7 @@ exports.minions = [
                 ["Enchanted Glowstone Dust"],
                 ["Enchanted Glowstone"],
                 ["Enchanted Glowstone"],
+                ["Enchanted Glowstone","Coins"],
             ],
             quantities: [
                 [1,128],
@@ -2261,6 +2264,7 @@ exports.minions = [
                 [512],
                 [8],
                 [16],
+                [32,2000000],
             ],
         },
         products : [
@@ -3085,8 +3089,8 @@ exports.minions = [
         name: "Ghast Minion",
         id: 38,
         rawCollectionId: "GHAST_TEAR",
-        tierDelay : [50,50,47,47,44,44,41,41,38,38,32],
-        storage: [64,192,192,384,384,576,576,768,768,960,960],
+        tierDelay : [50,50,47,47,44,44,41,41,38,38,32,30], //12
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
                 ["Wooden Sword","Ghast Tear"],
@@ -3100,6 +3104,7 @@ exports.minions = [
                 ["Enchanted Ghast Tear"],
                 ["Enchanted Ghast Tear"],
                 ["Enchanted Ghast Tear"],
+                ["Enchanted Ghast Tear","Coins"],//,"https://hypixel-skyblock.fandom.com/wiki/Hilda or","https://hypixel-skyblock.fandom.com/wiki/Marthos"],
             ],
             quantities: [
                 [1,64],
@@ -3113,6 +3118,7 @@ exports.minions = [
                 [128*25],
                 [256*25],
                 [512*25],
+                [1024*25, 2000000],
             ],
         },
         products : [
@@ -3229,8 +3235,8 @@ exports.minions = [
         id: 40,
         rawId: "MAGMA_CUBE",
         rawCollectionId: "MAGMA_CREAM",
-        tierDelay : [32,32,30,30,28,28,25,25,22,22,18],
-        storage: [64,192,192,384,384,576,576,768,768,960,960],
+        tierDelay : [32,32,30,30,28,28,25,25,22,22,18,16], //12
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
                 ["Wooden Sword","Magma Cream"],
@@ -3244,6 +3250,7 @@ exports.minions = [
                 ["Enchanted Magma Cream"],
                 ["Enchanted Magma Cream"],
                 ["Enchanted Magma Cream"],
+                ["Enchanted Blaze Rod","Coins"], //,"https://hypixel-skyblock.fandom.com/wiki/Hilda or","https://hypixel-skyblock.fandom.com/wiki/Marthos"],
             ],
             quantities: [
                 [1,80],
@@ -3257,6 +3264,7 @@ exports.minions = [
                 [128],
                 [256],
                 [512],
+                [1024,2000000],
             ],
         },
         products : [
@@ -4440,7 +4448,7 @@ exports.minions = [
         id: 55,
         rawId: "RED_SAND",
         rawCollectionId: "SAND:1",
-        tierDelay : [26,25,24,23,22,21,20,19,18,16,13,6], //12
+        tierDelay : [26,25,24,23,22,21,20,19,18,16,13,11], //12
         storage: [64,128,192,320,384,512,576,704,768,896,960,960],
         upgrade:{
             materials: [
@@ -4455,7 +4463,7 @@ exports.minions = [
                 ["Enchanted Red Sand","* Requires 7500 Barbarian Reputation"],
                 ["Enchanted Red Sand Cube","* Requires 9000 Barbarian Reputation"],
                 ["Enchanted Red Sand Cube","* Requires 10000 Barbarian Reputation"],
-                ["Enchanted Red Sand Cube","Coins","* Requires 12000 Barbarian Reputation"],
+                ["Enchanted Red Sand Cube","Coins","* Requires 12000 Barbarian Reputation"],//,"https://hypixel-skyblock.fandom.com/wiki/Marthos"],
             ],
             quantities: [
                 [1,80,undefined],
@@ -4513,7 +4521,7 @@ exports.minions = [
         id: 56,
         rawId: "MYCELIUM",
         rawCollectionId: "MYCEL",
-        tierDelay : [26,25,24,23,22,21,20,19,18,16,13,6], //12
+        tierDelay : [26,25,24,23,22,21,20,19,18,16,13,11], //12
         storage: [64,128,192,320,384,512,576,704,768,896,960,960],
         upgrade:{
             materials: [
@@ -4528,7 +4536,7 @@ exports.minions = [
                 ["Enchanted Mycelium","* Requires 7500 Mage Reputation"],
                 ["Enchanted Mycelium Cube","* Requires 9000 Mage Reputation"],
                 ["Enchanted Mycelium Cube","* Requires 10000 Mage Reputation"],
-                ["Enchanted Mycelium Cube","Coins","* Requires 12000 Mage Reputation"],
+                ["Enchanted Mycelium Cube","Coins","* Requires 12000 Mage Reputation"], //"https://hypixel-skyblock.fandom.com/wiki/Hilda"
             ],
             quantities: [
                 [1,80,undefined],

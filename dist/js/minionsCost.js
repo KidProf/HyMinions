@@ -151,14 +151,9 @@ function generateLink(){
     //     keys.push("buyingFrom");
     //     values.push($("#overallBuyingFrom").children("option:selected").val());
     // }
-    if(!$("#overallGroupCheck").prop("checked")){
+    if($("#overallGroupCheck").prop("checked")){
         keys.push("group");
-        values.push(0);
-    }else{
-        if($("#overallGroupValue").val()!=1){
-            keys.push("group");
-            values.push($("#overallGroupValue").val());
-        }
+        values.push($("#overallGroupValue").val());
     }
 
     if($("#overallBuyingMethod").children("option:selected").val()!=0){
@@ -319,7 +314,7 @@ function clearInput(){
     $("#overallProfileName").val("");
     $("#overallProfileProfile").addClass("d-none");
     $("#overallProfileProfileLabel").addClass("d-none");
-    $("#overallGroupCheck").prop("checked",true);
+    $("#overallGroupCheck").prop("checked",false);
     $("#overallGroupValue").val(1);
     $("#overallBuyingMethod").val("0");
     $("#overallTax").val(1.125);

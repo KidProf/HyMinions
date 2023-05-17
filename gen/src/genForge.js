@@ -1607,62 +1607,62 @@ let forges = [
         ],
         duration : 1,
         hotmRequirement: 3,
-    },{ //51
-        name : "Travel Scroll to the Crystal Hollows",
-        rawId: "CRYSTAL_HOLLOWS_TRAVEL_SCROLL",
-        npcPrice: 0,
-        materials: [
-            {
-                options: [
-                    "Flawed Ruby Gemstone",
-                ],
-                quantity: [
-                    48,
-                ],
-                source: [
-                    this.sourceBazaar,
-                ],
-            },{
-                options: [
-                    "Fine Ruby Gemstone",
-                ],
-                quantity: [
-                    80,
-                ],
-                source: [
-                    this.sourceBazaar,
-                ],
-            },{
-                options: [
-                    "Enchanted Ender Pearl",
-                    "Ender Pearl",
-                ],
-                quantity: [
-                    16,
-                    320,
+    // },{ //51
+    //     name : "Travel Scroll to the Crystal Hollows",
+    //     rawId: "CRYSTAL_HOLLOWS_TRAVEL_SCROLL",
+    //     npcPrice: 0,
+    //     materials: [
+    //         {
+    //             options: [
+    //                 "Flawed Ruby Gemstone",
+    //             ],
+    //             quantity: [
+    //                 48,
+    //             ],
+    //             source: [
+    //                 this.sourceBazaar,
+    //             ],
+    //         },{
+    //             options: [
+    //                 "Fine Ruby Gemstone",
+    //             ],
+    //             quantity: [
+    //                 80,
+    //             ],
+    //             source: [
+    //                 this.sourceBazaar,
+    //             ],
+    //         },{
+    //             options: [
+    //                 "Enchanted Ender Pearl",
+    //                 "Ender Pearl",
+    //             ],
+    //             quantity: [
+    //                 16,
+    //                 320,
 
-                ],
-                source: [
-                    this.sourceBazaar,
-                    this.sourceBazaar,
-                ],
-            },{
-                options: [
-                    "Coins",
-                ],
-                quantity: [
-                    50000,
-                ],
-                codedPrices: [
-                    1,
-                ],
-                source: [
-                    this.sourceOthers,
-                ],
-            },
-        ],
-        duration : 10,
-        hotmRequirement: 3,
+    //             ],
+    //             source: [
+    //                 this.sourceBazaar,
+    //                 this.sourceBazaar,
+    //             ],
+    //         },{
+    //             options: [
+    //                 "Coins",
+    //             ],
+    //             quantity: [
+    //                 50000,
+    //             ],
+    //             codedPrices: [
+    //                 1,
+    //             ],
+    //             source: [
+    //                 this.sourceOthers,
+    //             ],
+    //         },
+    //     ],
+    //     duration : 10,
+    //     hotmRequirement: 3,
     },{ //52
         name : "Mithril Drill SX-R326",
         approximateMatch: true,
@@ -2715,4 +2715,4 @@ let forges = [
     },
 ];
 
-//TOTAL: 78
+//TOTAL: 78 -1 (item 51 commented)
