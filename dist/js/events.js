@@ -29,14 +29,14 @@ function updateEvents(){
             eventsData[i].isLive = true;
             eventsData[i].timeDisplayed = durationToString(eventsData[i].duration - timeAfterEvent);
             //start time + duration
-            eventsData[i].exactDateTime = dateTimeToString((numberOfEventsPassed)*eventsData[i].interval+eventsData[i].duration+eventsData[i].refTime.valueOf() -currentTime.getTimezoneOffset()*1000*60);
+            eventsData[i].exactDateTime = dateTimeToString((numberOfEventsPassed)*eventsData[i].interval+eventsData[i].duration+eventsData[i].refTime.valueOf() -totalTimezoneOffset);
             
             if(eventsData[i].major) majorPointer++; else minorPointer++;
         }else{
             eventsData[i].isLive = false;
             eventsData[i].timeDisplayed = durationToString(eventsData[i].interval - timeAfterEvent);
             //previous start time + 1
-            eventsData[i].exactDateTime = dateTimeToString((numberOfEventsPassed+1)*eventsData[i].interval+eventsData[i].refTime.valueOf() -currentTime.getTimezoneOffset()*1000*60);
+            eventsData[i].exactDateTime = dateTimeToString((numberOfEventsPassed+1)*eventsData[i].interval+eventsData[i].refTime.valueOf() -totalTimezoneOffset);
         
             // if(i==0){
             //     console.log(numberOfEventsPassed);
