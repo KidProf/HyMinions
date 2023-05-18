@@ -2090,8 +2090,8 @@ exports.minions = [
     },{ //25
         name: "Quartz Minion",
         id: 25,
-        tierDelay : [22.5,22.5,21,21,19,19,17,17,14.5,14.5,11.5],
-        storage: [64,192,192,384,384,576,576,768,768,960,960],
+        tierDelay : [22.5,22.5,21,21,19,19,17,17,14.5,14.5,11.5,10], //12
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
                 ["Wooden Pickaxe","Nether Quartz"],
@@ -2105,6 +2105,7 @@ exports.minions = [
                 ["Enchanted Quartz"],
                 ["Enchanted Quartz"],
                 ["Enchanted Quartz Block"],
+                ["Enchanted Quartz Block","Coins"],
             ],
             quantities: [
                 [1,80],
@@ -2118,6 +2119,7 @@ exports.minions = [
                 [256],
                 [512],
                 [8],
+                [16,2000000],
             ],
         },
         products : [
@@ -2312,8 +2314,8 @@ exports.minions = [
     },{ //28
         name: "Ice Minion",
         id: 28,
-        tierDelay : [14,14,12,12,10,10,9,9,8,8,7],
-        storage: [64,192,192,384,384,576,576,768,768,960,960],
+        tierDelay : [14,14,12,12,10,10,9,9,8,8,7,6], //12
+        storage: [64,192,192,384,384,576,576,768,768,960,960,960],
         upgrade:{
             materials: [
                 ["Wooden Pickaxe","Ice"],
@@ -2327,6 +2329,7 @@ exports.minions = [
                 ["Enchanted Ice"],
                 ["Enchanted Ice"],
                 ["Enchanted Ice"],
+                ["Enchanted Ice","Coins","North Stars"],
             ],
             quantities: [
                 [1,80],
@@ -2340,6 +2343,7 @@ exports.minions = [
                 [128],
                 [256],
                 [512],
+                [1024,1000000,300],
             ],
         },
         products : [
@@ -3861,7 +3865,7 @@ exports.minions = [
         name: "Snow Minion",
         rawCollectionId: "NONE",
         id: 48,
-        tierDelay : [13,13,12,12,11,11,9.5,9.5,8,8,6.5],
+        tierDelay : [13,13,12,12,11,11,9.5,9.5,8,8,6.5,5.8], //12
         storage: [64,192,192,384,384,576,576,768,768,960,960],
         upgrade:{
             detachTier1: true,
@@ -3877,6 +3881,7 @@ exports.minions = [
                 ["Enchanted Snow Block"],
                 ["Enchanted Snow Block"],
                 ["Enchanted Snow Block"],
+                ["Enchanted Snow Block","Coins","North Stars"],
             ],
             quantities: [
                 [83.33333,1],
@@ -3890,6 +3895,7 @@ exports.minions = [
                 [32],
                 [64],
                 [128],
+                [1024,2000000,500],
             ],
             materialsAlt: [
                 ["White Gift","* based on 0.4% drop rate"],
@@ -4378,8 +4384,8 @@ exports.minions = [
         name: "Flower Minion",
         id: 54,
         rawCollectionId: "NONE",
-        tierDelay : [30,29,28,27,26,25,24,23,22,20,18],
-        storage: [960,960,960,960,960,960,960,960,960,960,960],
+        tierDelay : [30,29,28,27,26,25,24,23,22,20,18,15], //12
+        storage: [960,960,960,960,960,960,960,960,960,960,960,960],
         warning: "* Auction House prices not supported",
         toolsRequired: ["* Auction House prices not supported"],
         upgrade:{
@@ -4396,6 +4402,7 @@ exports.minions = [
                 ["Enchanted Dandelion","* Auction House prices not supported"],
                 ["Enchanted Dandelion","* Auction House prices not supported"],
                 ["Enchanted Poppy","* Auction House prices not supported"],
+                ["Enchanted Poppy","* Auction House prices not supported"],
             ],
             quantities: [
                 [1,undefined],
@@ -4409,6 +4416,7 @@ exports.minions = [
                 [256,undefined],
                 [512,undefined],
                 [8,undefined],
+                [16,undefined],
             ],
         },
         products : [
