@@ -174,10 +174,31 @@ exports.findProfile = async function findProfile(name,settings){
             fetch("https://api.mojang.com/users/profiles/minecraft/"+name)
             .then(result => result.json())
             .then(({id, name}) => {
+                if(!name){
+                    console.log("error from mojang api")
+                    settings.hasError=true;
+                    settings.errorMsg = "Error occured when finding the profile. The player does not exist.";
+                    resolve("error");
+                    return;
+                }
                 settings.name=name; //fix case
                 fetch("https://api.hypixel.net/skyblock/profiles?key="+process.env.HYPIXEL_KEY+"&uuid="+id)
                 .then(result => result.json())
-                .then(({profiles}) => {
+                .then(({success, profiles}) => {
+                    if(!success){
+                        console.log("error getting API")
+                        settings.hasError=true;
+                        settings.errorMsg = "Error occurred when communicating with the Hypixel API.";
+                        resolve("error");
+                        return;
+                    }
+                    if(!profiles){
+                        console.log("api no profiles");
+                        settings.hasError=true;
+                        settings.errorMsg = "Error occured when finding the profile. The player has not played Skyblock before.";
+                        resolve("error");
+                        return;
+                    }
                     let profilesAjax = new Array();
                     profiles.forEach((profile, index)=>{
                         profilesAjax[index] = new Object();
@@ -254,7 +275,7 @@ exports.findProfile = async function findProfile(name,settings){
                 .catch((err)=>{
                     console.log("catch from skyblock",err);
                     settings.hasError=true;
-                    settings.errorMsg = "Error occured when finding the profile. The player has not played Skyblock before.";
+                    settings.errorMsg = "Error occurred when communicating with the Hypixel API."
                     resolve("error");
                 });
             })
