@@ -147,13 +147,15 @@ exports.calculateForge = async function(forges, settings){
             //incorporate minAuctions into forges
             forges.forEach((forge)=>{
                 if(!forge.source){ //not given source
-                    forge.priceList = minAuctions[forge.name] || [];
+                    forge.priceList = [];
                     if(forge.approximateMatch){
                         Object.keys(minAuctions).forEach((key)=>{
                             if(key.includes(forge.name)){
                                 forge.priceList = merge(forge.priceList,minAuctions[key]);
                             }
                         })
+                    }else{
+                        forge.priceList = minAuctions[forge.name] || [];
                     }
                 } 
                 forge.materials.forEach((material)=>{

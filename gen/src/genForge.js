@@ -188,6 +188,7 @@ let forges = [
     },{ //3
         name : "Fuel Tank",
         npcPrice: 51000,
+        source: this.sourceBazaar,
         materials: [
             {
                 options: [
@@ -211,6 +212,7 @@ let forges = [
         hotmRequirement: 2,
     },{ //4
         name : "Bejeweled Handle",
+        source: this.sourceBazaar,
         npcPrice: 100,
         materials: [
             {
@@ -220,12 +222,16 @@ let forges = [
                 quantity: [
                     3,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ],
             }
         ],
         duration : 0.5,
         hotmRequirement: 2,
     },{ //5
         name : "Drill Engine",
+        source: this.sourceBazaar,
         npcPrice: 0,
         materials: [
             {
@@ -267,6 +273,9 @@ let forges = [
                 quantity: [
                     1,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },{
                 options: [
                     "Treasurite",
@@ -293,6 +302,7 @@ let forges = [
         hotmRequirement: 3,
     },{ //6
         name : "Golden Plate",
+        source: this.sourceBazaar,
         npcPrice: 0,
         materials: [
             {
@@ -318,6 +328,9 @@ let forges = [
                 quantity: [
                     5,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ],
             },{
                 options: [
                     "Refined Diamond",
@@ -334,6 +347,7 @@ let forges = [
         hotmRequirement: 3,
     },{ //7
         name : "Mithril Plate",
+        source: this.sourceBazaar,
         npcPrice: 0,
         materials: [
             {
@@ -353,6 +367,9 @@ let forges = [
                 quantity: [
                     1,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },{
                 options: [
                     "Enchanted Iron Block",
@@ -385,6 +402,7 @@ let forges = [
         hotmRequirement: 3,
     },{ //8
         name : "Gemstone Mixture",
+        source: this.sourceBazaar,
         npcPrice: 0,
         materials: [
             {
@@ -696,6 +714,9 @@ let forges = [
                 quantity: [
                     1,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ],
             },{
                 options: [
                     "Enchanted Gold",
@@ -760,6 +781,7 @@ let forges = [
         hotmRequirement: 2,
     },{ //19
         name : "Diamonite",
+        source: this.sourceBazaar,
         npcPrice: 0,
         materials: [
             {
@@ -851,7 +873,7 @@ let forges = [
         duration : 5,
         hotmRequirement: 2,
     },{ //22
-        name : "Helmet Of Divan",
+        name : "Helmet of Divan",
         approximateMatch: true,
         npcPrice: 0,
         materials: [
@@ -862,6 +884,9 @@ let forges = [
                 quantity: [
                     5,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ],
 
             },{
                 options: [
@@ -869,6 +894,9 @@ let forges = [
                 ],
                 quantity: [
                     10,
+                ],
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -886,7 +914,7 @@ let forges = [
         duration : 23,
         hotmRequirement: 6,
     },{ //23
-        name : "Chestplate Of Divan",
+        name : "Chestplate of Divan",
         approximateMatch: true,
         npcPrice: 0,
         materials: [
@@ -897,13 +925,18 @@ let forges = [
                 quantity: [
                     8,
                 ],
-
+                source: [
+                    this.sourceBazaar,
+                ],
             },{
                 options: [
                     "Gemstone Mixture",
                 ],
                 quantity: [
                     10,
+                ],
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -921,7 +954,7 @@ let forges = [
         duration : 23,
         hotmRequirement: 6,
     },{ //24
-        name : "Leggings Of Divan",
+        name : "Leggings of Divan",
         approximateMatch: true,
         npcPrice: 0,
         materials: [
@@ -932,13 +965,18 @@ let forges = [
                 quantity: [
                     7,
                 ],
-
+                source: [
+                    this.sourceBazaar,
+                ],
             },{
                 options: [
                     "Gemstone Mixture",
                 ],
                 quantity: [
                     10,
+                ],
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -956,7 +994,7 @@ let forges = [
         duration : 23,
         hotmRequirement: 6,	
     },{ //25
-        name : "Boots Of Divan",
+        name : "Boots of Divan",
         approximateMatch: true,
         npcPrice: 0,
         materials: [
@@ -967,13 +1005,18 @@ let forges = [
                 quantity: [
                     4,
                 ],
-
+                source: [
+                    this.sourceBazaar,
+                ],
             },{
                 options: [
                     "Gemstone Mixture",
                 ],
                 quantity: [
                     10,
+                ],
+                source: [
+                    this.sourceBazaar,
                 ],
             },{
                 options: [
@@ -1291,6 +1334,9 @@ let forges = [
                 quantity: [
                     2,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ],
             },{
                 options: [
                     "Refined Diamond",
@@ -1330,6 +1376,9 @@ let forges = [
                 quantity: [
                     1,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },{
                 options: [
                     "Refined Mithril",
@@ -1347,6 +1396,9 @@ let forges = [
                 quantity: [
                     1,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
         ],
         duration : 4,
@@ -1362,6 +1414,9 @@ let forges = [
                 quantity: [
                     3,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },{
                 options: [
                     "Fuel Tank",
@@ -1369,6 +1424,9 @@ let forges = [
                 quantity: [
                     5,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             }
         ],
         duration : 10,
@@ -1384,6 +1442,9 @@ let forges = [
                 quantity: [
                     3,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },{
                 options: [
                     "Drill Engine",
@@ -1391,6 +1452,9 @@ let forges = [
                 quantity: [
                     2,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             }
         ],
         duration : 15,
@@ -1452,6 +1516,7 @@ let forges = [
         hotmRequirement: 3,
     },{ //46
         name : "Pure Mithril",
+        source: this.sourceBazaar,
         npcPrice: 0,
         materials: [
             {
@@ -1470,6 +1535,7 @@ let forges = [
         hotmRequirement: 3,
     },{ //47
         name : "Rock Gemstone",
+        source: this.sourceBazaar,
         npcPrice: 0,
         materials: [
             {
@@ -1501,6 +1567,7 @@ let forges = [
         hotmRequirement: 3,
     },{ //48
         name : "Petrified Starfall",
+        source: this.sourceBazaar,
         npcPrice: 0,
         materials: [
             {
@@ -1519,6 +1586,7 @@ let forges = [
         hotmRequirement: 3,
     },{ //49
         name : "Pesto Goblin Omelette",
+        rawId: "GOBLIN_OMELETTE_PESTO",
         npcPrice: 0,
         materials: [
             {
@@ -1586,6 +1654,9 @@ let forges = [
                 quantity: [
                     1,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },{
                 options: [
                     "Fuel Tank",
@@ -1593,6 +1664,9 @@ let forges = [
                 quantity: [
                     1,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },{
                 options: [
                     "Fine Ruby Gemstone",
@@ -1685,6 +1759,9 @@ let forges = [
                 quantity: [
                     10,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },{
                 options: [
                     "Mithril Plate",
@@ -1692,6 +1769,9 @@ let forges = [
                 quantity: [
                     2,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
         ],
         durationText : "30 secs",
@@ -1708,6 +1788,9 @@ let forges = [
                 quantity: [
                     10,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },{
                 options: [
                     "Plasma",
@@ -1715,6 +1798,9 @@ let forges = [
                 quantity: [
                     5,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },{
                 options: [
                     "Mithril Plate",
@@ -1722,6 +1808,9 @@ let forges = [
                 quantity: [
                     4,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },{
                 options: [
                     "Refined Titanium",
@@ -1785,6 +1874,9 @@ let forges = [
                 quantity: [
                     1,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
         ],
         duration : 40, //1 day 16 hours
@@ -1821,6 +1913,7 @@ let forges = [
         hotmRequirement: 4,
     },{ //57
         name : "Hot Stuff",
+        source: this.sourceBazaar,
         npcPrice: 0,
         materials: [
             {
@@ -1855,6 +1948,7 @@ let forges = [
         }],
     },{ //58
         name : "Sunny Side Goblin Omelette",
+        rawId: "GOBLIN_OMELETTE_SUNNY_SIDE",
         npcPrice: 0,
         materials: [
             {
@@ -1905,6 +1999,9 @@ let forges = [
                 quantity: [
                     3,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ],
             },
         ],
         durationText : "30 secs",
@@ -1922,6 +2019,9 @@ let forges = [
                 quantity: [
                     1,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
             {
                 options: [
@@ -1930,6 +2030,9 @@ let forges = [
                 quantity: [
                     1,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
             {
                 options: [
@@ -1938,6 +2041,9 @@ let forges = [
                 quantity: [
                     6,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
             {
                 options: [
@@ -2010,6 +2116,9 @@ let forges = [
                 quantity: [
                     6,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
         ],
         durationText : "30 secs",
@@ -2077,6 +2186,9 @@ let forges = [
                 quantity: [
                     15,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
             {
                 options: [
@@ -2085,6 +2197,9 @@ let forges = [
                 quantity: [
                     20,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
         ],
         durationText : "30 secs",
@@ -2134,6 +2249,9 @@ let forges = [
                 quantity: [
                     10,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
         ],
         duration : 25, //1 day 1 hour
@@ -2169,6 +2287,9 @@ let forges = [
                 quantity: [
                     5,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
         ],
         duration : 50, //2 day 2 hour
@@ -2254,6 +2375,9 @@ let forges = [
                 quantity: [
                     1,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ],
             },
             {
                 options: [
@@ -2306,6 +2430,9 @@ let forges = [
                 quantity: [
                     3,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ],
             },
             {
                 options: [
@@ -2337,6 +2464,9 @@ let forges = [
                 quantity: [
                     10,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
             {
                 options: [
@@ -2371,6 +2501,9 @@ let forges = [
                 quantity: [
                     30,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ],
             },
             {
                 options: [
@@ -2379,12 +2512,16 @@ let forges = [
                 quantity: [
                     10,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ],
             },
         ],
         duration : 30,
         hotmRequirement: 5,
     },{ //70
         name : "Blue Cheese Goblin Omelette",
+        rawId: "GOBLIN_OMELETTE_BLUE_CHEESE",
         npcPrice: 0,
         materials: [
             {
@@ -2436,6 +2573,9 @@ let forges = [
                 quantity: [
                     30,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
             {
                 options: [
@@ -2466,6 +2606,9 @@ let forges = [
                 quantity: [
                     5,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
             {
                 options: [
@@ -2473,6 +2616,9 @@ let forges = [
                 ],
                 quantity: [
                     16,
+                ],
+                source: [
+                    this.sourceBazaar,
                 ],
             },
             {
@@ -2549,6 +2695,9 @@ let forges = [
                 quantity: [
                     25,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
             {
                 options: [
@@ -2557,6 +2706,9 @@ let forges = [
                 quantity: [
                     25,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
             {
                 options: [
@@ -2616,6 +2768,7 @@ let forges = [
     },{ //75
         name : "Amber Material",
         npcPrice: 0,
+        source: this.sourceBazaar,
         materials: [
             {
                 options: [
@@ -2624,6 +2777,9 @@ let forges = [
                 quantity: [
                     1,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
             {
                 options: [
@@ -2666,6 +2822,9 @@ let forges = [
                 quantity: [
                     50,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
             {
                 options: [
@@ -2700,6 +2859,9 @@ let forges = [
                 quantity: [
                     25,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ],
             },
             {
                 options: [
@@ -2708,6 +2870,9 @@ let forges = [
                 quantity: [
                     70,
                 ],
+                source: [
+                    this.sourceBazaar,
+                ]
             },
         ],
         duration : 50, //2 days 2 hours
