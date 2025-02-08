@@ -1,4 +1,5 @@
 var {dateTimeToString, findAuction, moneyRepresentation, determineBuyList, dataQuantity, dataCurrentPrice, dataUnitPrice} = require("../api/general.js");
+var {formatLoreString} = require("../api/loreFormatting.js");
 
 exports = module.exports = function (req, res) {
     console.log(req.query);
@@ -41,7 +42,7 @@ exports = module.exports = function (req, res) {
                         currentPrice: data.c,
                         unitPriceText: moneyRepresentation(data.u),
                         currentPriceText: moneyRepresentation(data.c),
-                        description: data.l,
+                        description: formatLoreString(data.l),
                     });
                     if(data.l) settings.descriptionCol = true;
                 });

@@ -110,7 +110,7 @@ block content
                     for auction in auctions 
                         if auction.description
                             +infoBox("infoModal"+i,"rightInfo",auction.name)
-                                pre.color-white=auction.description
+                                pre.color-white !{auction.description}
                         - i++;
             p: small
                 if(settings.lastUpdatedAuctionServerString)
