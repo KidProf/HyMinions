@@ -1611,14 +1611,24 @@ let forges = [
                     "Green Goblin Egg",
                 ],
                 quantity: [
-                    99,
+                    96,
+                ],
+                source:[
+                    this.sourceBazaar,
+                ]
+			},{
+               options: [
+                    "Goblin Egg",
+                ],
+                quantity: [
+                    96,
                 ],
                 source:[
                     this.sourceBazaar,
                 ]
             },{
                 options: [
-                    "Fine Jade Gemstone",
+                    "Flawless Jade Gemstone",
                 ],
                 quantity: [
                     1,
@@ -1628,7 +1638,7 @@ let forges = [
                 ]
             },
         ],
-        duration : 20,
+        duration : 18,
         hotmRequirement: 4,
     },{ //50
         name : "Ammonite",
@@ -1698,7 +1708,7 @@ let forges = [
                 ],
             },
         ],
-        duration : 1,
+        duration : 4,
         hotmRequirement: 3,
     // },{ //51
     //     name : "Travel Scroll to the Crystal Hollows",
@@ -1854,7 +1864,7 @@ let forges = [
                     "Goblin Egg",
                 ],
                 quantity: [
-                    99,
+                    96,
                 ],
                 source: [
                     this.sourceBazaar,
@@ -1938,7 +1948,7 @@ let forges = [
         materials: [
             {
                 options: [
-                    "Hard Stone",
+                    "Enchanted Hard Stone",
                 ],
                 quantity: [
                     128,
@@ -1949,10 +1959,10 @@ let forges = [
             },
             {
                 options: [
-                    "Rough Amber Gemstone",
+                    "Flawless Topaz Gemstone",
                 ],
                 quantity: [
-                    64,
+                    1,
                 ],
                 source: [
                     this.sourceBazaar,
@@ -1976,7 +1986,7 @@ let forges = [
                     "Yellow Goblin Egg",
                 ],
                 quantity: [
-                    99,
+                    96,
                 ],
                 source: [
                     this.sourceBazaar,
@@ -1984,7 +1994,18 @@ let forges = [
             },
             {
                 options: [
-                    "Fine Topaz Gemstone",
+                    "Goblin Egg",
+                ],
+                quantity: [
+                    96,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Flawless Topaz Gemstone",
                 ],
                 quantity: [
                     1,
@@ -2352,7 +2373,18 @@ let forges = [
                     "Red Goblin Egg",
                 ],
                 quantity: [
-                    99,
+                    96,
+                ],
+                source: [
+                    this.sourceBazaar,
+                ]
+            },
+            {
+                options: [
+                    "Goblin Egg",
+                ],
+                quantity: [
+                    96,
                 ],
                 source: [
                     this.sourceBazaar,
@@ -2459,7 +2491,7 @@ let forges = [
                     "Magma Core",
                 ],
                 quantity: [
-                    5,
+                    8,
                 ],
                 source: [
                     this.sourceBazaar,
@@ -2549,7 +2581,7 @@ let forges = [
         materials: [
             {
                 options: [
-                    "Perfect Sapphire Gemstone",
+                    "Flawless Sapphire Gemstone",
                 ],
                 quantity: [
                     1,
@@ -2557,13 +2589,23 @@ let forges = [
                 source: [
                     this.sourceBazaar,
                 ],
-            },
+            },{
+               options: [
+                    "Goblin Egg",
+                ],
+                quantity: [
+                    96,
+                ],
+                source:[
+                    this.sourceBazaar,
+                ],
+			},
             {
                 options: [
                     "Blue Goblin Egg",
                 ],
                 quantity: [
-                    99,
+                    96,
                 ],
                 source: [
                     this.sourceBazaar,
